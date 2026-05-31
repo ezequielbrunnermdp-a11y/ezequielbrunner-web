@@ -710,6 +710,11 @@ a {
   font-size: 0.82rem;
 }
 
+.site-footer .footer-update {
+  margin-top: 6px;
+  font-size: 0.64rem;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(28px);
