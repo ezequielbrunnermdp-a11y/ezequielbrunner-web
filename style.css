@@ -862,3 +862,23 @@ a {
     width: 100%;
   }
 }
+
+/* Gastronomía y postulaciones */
+.section { scroll-margin-top: 110px; }
+.site-nav { gap: 13px; }
+.site-nav a { font-size: .86rem; }
+.brand { flex-shrink: 0; }
+.subsection-heading { margin-top: 32px; }
+.career-list { list-style: none; padding: 0; margin: 24px 0; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.career-list li { border-left: 3px solid var(--accent-line); padding: 4px 22px; }
+.career-list h3 { margin: 8px 0; }
+.career-list p, .career-source { color: var(--muted); }
+.career-source a { text-decoration: underline; text-underline-offset: 3px; }
+.recruitment-panel { background: #e3ecf2; }
+.recruitment-panel h2 { margin-bottom: 20px; }
+.recruitment-panel .cv-help { margin-top: 16px; font-size: .9rem; }
+.recruitment-email { display: inline-block; margin-top: 10px; overflow-wrap: anywhere; }
+.recruitment-panel > div { min-width: 0; }
+a:focus-visible, button:focus-visible { outline: 3px solid #bd792e; outline-offset: 4px; }
+@media (max-width: 1050px) and (min-width: 761px) { .site-header { flex-wrap: wrap; border-radius: 24px; } .site-nav { flex-wrap: wrap; } }
+@media (max-width: 760px) { .career-list { grid-template-columns: 1fr; } .site-nav a { font-size: 1rem; } .recruitment-panel { display: block; } }
