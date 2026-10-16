@@ -1,67 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080e13">
-<title>Ezequiel Brunner | Gastronomía e Inteligencia Artificial</title>
-<meta name="description" content="Dos áreas, una trayectoria. Explorá el trabajo de Ezequiel Brunner en inteligencia artificial y Derecho, o su experiencia en gestión gastronómica.">
-<link rel="canonical" href="https://ezequielbrunner.com/">
-<link rel="preload" as="image" href="assets/profile.jpeg">
-<style>
-*{box-sizing:border-box}html{background:#080e13}body{margin:0;color:#f4f1eb;font-family:Arial,Helvetica,sans-serif}
-a{color:inherit} .gateway{position:relative;isolation:isolate;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:#080e13}
-.portrait{position:absolute;z-index:-3;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;filter:blur(3px) saturate(.45);opacity:.55;transform:scale(1.025)}
-.gateway:before{content:"";position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(5,22,32,.92),rgba(7,15,23,.34) 45%,rgba(24,18,13,.34) 55%,rgba(28,17,9,.9)),linear-gradient(0deg,#080e13 0%,transparent 48%,rgba(8,14,19,.62) 100%)}
-.grid{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(#8bbdcc0b 1px,transparent 1px),linear-gradient(90deg,#8bbdcc0b 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,#000,transparent 40%,transparent 60%,#000)}
-header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:30px 5vw;border-bottom:1px solid #ffffff1a}
-.brand{text-decoration:none;font-size:15px;letter-spacing:.06em;font-weight:600}.location{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#c9c6c1}
-.identity{text-align:center;padding:48px 20px 22px}.eyebrow{margin:0 0 16px;font-size:10px;letter-spacing:.27em;text-transform:uppercase;color:#d0d3d3}
-h1{margin:0;font-size:clamp(30px,4vw,58px);font-weight:400;letter-spacing:-.045em}.intro{font-size:13px;color:#d1d2d0;margin:15px 0 0}
-.choices{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:410px;width:100%;max-width:1600px;margin:auto}
-.choice{position:relative;display:flex;flex-direction:column;justify-content:center;text-decoration:none;padding:44px max(28px,6vw);transition:background .3s ease;outline-offset:-6px}
-.choice.ai{--accent:#9bddeb}.choice.food{--accent:#e5b787;border-left:1px solid #ffffff24}
-.choice:hover,.choice:focus-visible{background:linear-gradient(0deg,transparent,#ffffff0b,transparent)}
-.choice:focus-visible{outline:2px solid var(--accent)}
-.symbol{width:76px;height:64px;fill:none;stroke:var(--accent);stroke-width:1;opacity:.85;margin-bottom:20px}
-.meta{font-size:10px;line-height:1.7;letter-spacing:.19em;text-transform:uppercase;color:var(--accent)}
-h2{margin:18px 0 16px;font-weight:400;font-size:clamp(31px,4.2vw,67px);line-height:1.05;letter-spacing:-.045em}
-.food h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.04em}
-.description{font-size:14px;line-height:1.8;color:#d5d4d0;max-width:330px;margin:0}
-.enter{display:flex;align-items:center;gap:24px;margin-top:33px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
-.arrow{display:grid;place-items:center;border:1px solid #ffffff40;width:40px;height:40px;border-radius:50%;font-size:21px;transition:transform .25s,border-color .25s}
-.choice:hover .arrow{transform:translateX(5px);border-color:var(--accent)}
-footer{margin:0 5vw;padding:23px 0;display:flex;justify-content:space-between;gap:20px;border-top:1px solid #ffffff24;font-size:10px;letter-spacing:.08em;color:#b2b5b5}
-footer a{text-decoration:none}footer a:hover{text-decoration:underline}
-@media(min-width:1600px){.portrait{object-position:50% 40%}}
-@media(max-width:600px){header{padding:22px 6vw}.location{font-size:8px;letter-spacing:.12em}.identity{padding:35px 16px 18px}.choices{min-height:380px}.choice{padding:30px 16px;justify-content:flex-start}.symbol{width:58px;height:52px;margin-bottom:22px}.meta{font-size:8px;letter-spacing:.1em;min-height:28px}h2{font-size:clamp(25px,6.5vw,39px);margin:14px 0}.description{font-size:12px;line-height:1.7}.enter{font-size:9px;letter-spacing:.04em;gap:9px;margin-top:auto;padding-top:26px}.arrow{width:28px;height:28px;flex-shrink:0;font-size:16px}.portrait{object-position:50% 25%;opacity:.5}.gateway:before{background:linear-gradient(90deg,#051620b3,#080e1333,#24180eb3),linear-gradient(0deg,#080e13,transparent 85%)}footer{font-size:9px;margin:0 6vw;line-height:1.5}.intro{font-size:12px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101315">
+  <title>Ezequiel Brunner | Gastronomía, Inteligencia Artificial y Derecho</title>
+  <meta name="description" content="El universo profesional de Ezequiel Brunner. Gestión gastronómica, inteligencia artificial y Derecho. Elegí el perfil que querés conocer.">
+  <meta property="og:title" content="Ezequiel Brunner — Gastronomía e Inteligencia Artificial">
+  <meta property="og:description" content="Dos áreas. Una misma mirada. Conocé mi trabajo en gastronomía, inteligencia artificial y Derecho.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ezequielbrunner.com/">
+  <meta property="og:image" content="https://ezequielbrunner.com/assets/profile.jpeg">
+  <link rel="canonical" href="https://ezequielbrunner.com/">
+  <link rel="preload" as="image" href="assets/profile.jpeg">
+  <style>
+    :root { color-scheme: dark; --paper: #eeeae2; --muted: #afb2b2; --ice: #b0cbd0; --warm: #d5b898; --bg: #101315; }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; color: var(--paper); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+    a:focus-visible { outline: 1px solid var(--paper); outline-offset: 8px; }
+    ::selection { background: #d5b898; color: #101315; }
+    .gateway { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; background: radial-gradient(ellipse at 12% 46%, #21303930, transparent 45%), radial-gradient(ellipse at 90% 60%, #49332625, transparent 45%), var(--bg); }
+    .masthead { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 4.5vw; }
+    .signature { display: inline-flex; align-items: center; gap: 13px; }
+    .monogram { font-family: Georgia, serif; font-size: 27px; letter-spacing: -.08em; }
+    .signature-name { max-width: 100px; font-size: 9px; line-height: 1.6; text-transform: uppercase; letter-spacing: .18em; }
+    .location, .contact { font-size: 10px; letter-spacing: .12em; color: #b7b8b5; }
+    .contact { padding: 10px 0; }
+    .contact:hover { color: var(--paper); }
+    .contact span { margin-left: 9px; }
+    .stage { position: relative; flex: 1; min-height: 625px; isolation: isolate; }
+    .aura { position: absolute; pointer-events: none; z-index: -2; inset: -10% -5%; opacity: .5; background: radial-gradient(ellipse at 38% 48%, #779ba22b, transparent 37%), radial-gradient(ellipse at 65% 53%, #bc8e5e26, transparent 35%); transition: opacity 1s; }
+    .portrait { position: absolute; z-index: -1; left: 50%; top: 7%; bottom: -7%; width: min(51vw, 730px); transform: translateX(-50%); pointer-events: none; overflow: hidden; opacity: .79; mask-image: radial-gradient(ellipse 56% 63% at 50% 43%, black 25%, #000d 48%, transparent 86%); -webkit-mask-image: radial-gradient(ellipse 56% 63% at 50% 43%, black 25%, #000d 48%, transparent 86%); }
+    .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: grayscale(.93) brightness(.76) contrast(1.08) blur(.65px); }
+    .portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #2239433d, transparent 42%, #a6784530), linear-gradient(0deg, #101315 0%, #10131570 17%, transparent 58%, #10131520); }
+    .identity { position: relative; z-index: 2; text-align: center; padding: 15px 20px 0; }
+    .identity .overline { margin: 0 0 17px; text-transform: uppercase; font-size: 9px; line-height: 1.6; letter-spacing: .27em; color: #b5b5b0; }
+    h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(45px, 5.1vw, 78px); line-height: 1.1; font-weight: 400; letter-spacing: -.055em; text-shadow: 0 3px 30px #10131580; }
+    h1 em { font-weight: 400; }
+    .paths { position: absolute; inset: 37% 6vw 18%; display: flex; justify-content: space-between; align-items: center; gap: 20px; z-index: 2; }
+    .path { display: block; width: max-content; max-width: 30%; padding: 12px 0; }
+    .path-ai { --accent: var(--ice); }
+    .path-food { --accent: var(--warm); text-align: right; }
+    .path-label { display: block; margin-bottom: 19px; color: var(--accent); font-size: 9px; letter-spacing: .17em; line-height: 1.7; text-transform: uppercase; }
+    .path-title { display: block; margin: 0; font-size: clamp(27px, 3vw, 46px); font-weight: 300; line-height: 1.12; letter-spacing: -.055em; transition: color .4s; }
+    .path-food .path-title { font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 3.5vw, 53px); font-style: italic; letter-spacing: -.045em; }
+    .path-description { display: block; margin-top: 17px; font-size: 11px; color: var(--muted); letter-spacing: .03em; line-height: 1.75; }
+    .path-enter { display: inline-flex; align-items: center; gap: 16px; margin-top: 27px; padding-bottom: 6px; color: var(--accent); font-size: 10px; letter-spacing: .08em; border-bottom: 1px solid transparent; transition: border-color .4s; }
+    .path-enter svg { width: 28px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1; transition: transform .4s; }
+    .path-ai .path-enter svg { order: -1; transform: rotate(180deg); }
+    .path:hover .path-title, .path:focus-visible .path-title { color: var(--accent); }
+    .path:hover .path-enter, .path:focus-visible .path-enter { border-color: var(--accent); }
+    .path-food:hover .path-enter svg { transform: translateX(5px); }
+    .path-ai:hover .path-enter svg { transform: rotate(180deg) translateX(5px); }
+    .traces { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .48; }
+    .traces .cool { stroke: #849fa5; }
+    .traces .warm { stroke: #bda483; }
+    .traces path, .traces ellipse { fill: none; stroke-width: .55; }
+    .traces circle { fill: #849fa5; }
+    .traces .warm-dot { fill: #bda483; }
+    .invitation { position: absolute; z-index: 2; bottom: 25px; left: 20px; right: 20px; margin: 0; text-align: center; font-size: 10px; letter-spacing: .12em; line-height: 1.6; color: #c4c3bc; }
+    .invitation::before { content: ""; display: block; height: 30px; width: 1px; background: linear-gradient(transparent, #b4b2a760); margin: 0 auto 15px; }
+    .colophon { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 22px 4.5vw; font-size: 9px; color: #a1a5a5; letter-spacing: .07em; }
+    .colophon p { margin: 0; }
+    .colophon a { padding: 8px 0; }
+    .colophon a:hover { color: var(--paper); }
+    .colophon .edition { color: #777f80; }
+    @media (min-width: 1550px) { .paths { left: 12vw; right: 12vw; } }
+    @media (max-width: 900px) and (min-width: 601px) { .paths { left: 4vw; right: 4vw; } .path { max-width: 29%; } .path-label { font-size: 8px; letter-spacing: .1em; } .path-description { font-size: 10px; } .portrait { width: 62vw; } }
+    @media (max-width: 600px) {
+      .masthead { padding: 18px 6vw; }
+      .monogram { font-size: 25px; }
+      .signature-name { font-size: 8px; }
+      .location { display: none; }
+      .contact { font-size: 9px; }
+      .stage { min-height: 660px; }
+      .identity { padding: 21px 16px 0; }
+      .identity .overline { font-size: 8px; letter-spacing: .15em; margin-bottom: 15px; }
+      h1 { font-size: clamp(37px, 10.3vw, 61px); }
+      .portrait { top: 14%; bottom: 7%; width: min(112vw, 510px); opacity: .76; mask-image: radial-gradient(ellipse 55% 63% at 50% 40%, black 18%, #000d 43%, transparent 82%); -webkit-mask-image: radial-gradient(ellipse 55% 63% at 50% 40%, black 18%, #000d 43%, transparent 82%); }
+      .portrait img { object-position: center 22%; }
+      .portrait::after { background: linear-gradient(90deg, #22394329, transparent 45%, #a6784526), linear-gradient(0deg, #101315 2%, #1013158c 28%, transparent 64%); }
+      .paths { inset: auto 7vw 57px; align-items: flex-start; gap: 12px; }
+      .path { max-width: 48%; padding: 12px 0; }
+      .path-label { font-size: 7px; letter-spacing: .1em; margin-bottom: 12px; }
+      .path-title { font-size: clamp(20px, 5.8vw, 31px); line-height: 1.2; }
+      .path-food .path-title { font-size: clamp(23px, 6.3vw, 34px); }
+      .path-description { display: none; }
+      .path-enter { margin-top: 19px; gap: 10px; font-size: 9px; }
+      .path-enter svg { width: 24px; }
+      .traces { opacity: .25; }
+      .invitation { bottom: 8px; font-size: 9px; letter-spacing: .06em; }
+      .invitation::before { height: 15px; margin-bottom: 9px; }
+      .colophon { padding: 18px 6vw; font-size: 8px; }
+      .edition { display: none; }
+    }
+    @media (max-height: 730px) and (min-width: 601px) { .stage { min-height: 520px; } .identity { padding-top: 0; } h1 { font-size: 55px; } .paths { top: 30%; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .identity, .path, .colophon { animation: reveal 1s both; }
+      .path { animation-delay: .15s; }
+      .colophon { animation-delay: .3s; }
+      @keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
 </head>
 <body>
-<main class="gateway">
-<img class="portrait" src="assets/profile.jpeg" alt="" fetchpriority="high">
-<div class="grid" aria-hidden="true"></div>
-<header><a class="brand" href="index.html">EB.</a><span class="location">Mar del Plata · Argentina</span></header>
-<div class="identity"><p class="eyebrow">Dos áreas. Una trayectoria.</p><h1>Ezequiel Brunner</h1><p class="intro">Elegí el universo que querés explorar.</p></div>
-<nav class="choices" aria-label="Elegí tu área de interés">
-<a class="choice ai" href="inteligencia-artificial.html">
-<svg class="symbol" viewBox="0 0 80 64" aria-hidden="true"><ellipse cx="40" cy="32" rx="35" ry="13" transform="rotate(-35 40 32)"/><ellipse cx="40" cy="32" rx="35" ry="13" transform="rotate(35 40 32)"/><ellipse cx="40" cy="32" rx="13" ry="30"/><circle cx="40" cy="32" r="4"/><circle cx="65" cy="16" r="3"/></svg>
-<span class="meta">01 / Tecnología, ciencia y Derecho</span>
-<h2>Inteligencia<br>Artificial</h2>
-<p class="description">Investigación, pensamiento crítico y los desafíos del mundo que viene.</p>
-<span class="enter">Explorar IA y Derecho <span class="arrow" aria-hidden="true">↗</span></span>
-</a>
-<a class="choice food" href="gastronomia.html">
-<svg class="symbol" viewBox="0 0 80 64" aria-hidden="true"><path d="M10 46h60M15 44a25 25 0 0 1 50 0M7 51h66M40 15v4"/><circle cx="40" cy="12" r="3"/><path d="M28 9c-5-5 4-5 0-10M52 11c-5-5 4-5 0-10" transform="translate(0 5)"/><path d="M24 38c2-7 5-11 10-13"/></svg>
-<span class="meta">02 / Gestión, equipos y experiencias</span>
-<h2>Gastronomía</h2>
-<p class="description">La precisión de la operación. El arte de recibir. Las personas que lo hacen posible.</p>
-<span class="enter">Explorar gastronomía <span class="arrow" aria-hidden="true">↗</span></span>
-</a>
-</nav>
-<footer><span>© 2026 Ezequiel Brunner</span><a href="mailto:contacto@ezequielbrunner.com">Contacto ↗</a></footer>
-</main>
-<script src="profile-router.js"></script>
+  <div class="gateway" data-design="portrait-editorial-v2">
+    <header class="masthead">
+      <a class="signature" href="index.html" aria-label="Ezequiel Brunner, inicio"><span class="monogram" aria-hidden="true">EB.</span><span class="signature-name" aria-hidden="true">Ezequiel<br>Brunner</span></a>
+      <span class="location">Mar del Plata, Argentina</span>
+      <a class="contact" href="mailto:contacto@ezequielbrunner.com">Conversemos <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="stage" aria-labelledby="name">
+      <div class="aura" aria-hidden="true"></div>
+      <div class="portrait" aria-hidden="true"><img src="assets/profile.jpeg" width="697" height="1046" alt="" fetchpriority="high"></div>
+      <svg class="traces" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="cool" d="M-100 630C165 650 166 78 500 99S730 704 1060 680" opacity=".28"/>
+        <path class="cool" d="M-70 514L120 481L205 553L329 416L410 451" opacity=".35"/>
+        <circle cx="120" cy="481" r="2"/><circle cx="205" cy="553" r="2"/><circle cx="329" cy="416" r="2"/>
+        <ellipse class="warm" cx="1200" cy="439" rx="274" ry="127" transform="rotate(-27 1200 439)" opacity=".3"/>
+        <ellipse class="warm" cx="1200" cy="439" rx="309" ry="146" transform="rotate(-27 1200 439)" opacity=".15"/>
+        <circle class="warm-dot" cx="1410" cy="291" r="2"/>
+        <path class="warm" d="M1116 667C1060 591 1204 574 1146 496M1141 687C1085 611 1229 594 1171 516" opacity=".2"/>
+      </svg>
+      <div class="identity"><p class="overline">Gastronomía · Tecnología · Derecho</p><h1 id="name">Ezequiel <em>Brunner</em></h1></div>
+      <nav class="paths" aria-label="Elegí el perfil que querés conocer">
+        <a class="path path-ai" href="inteligencia-artificial.html" aria-label="Entrar a Inteligencia Artificial y Derecho">
+          <span class="path-label">01 — Ideas y futuro</span>
+          <h2 class="path-title">Inteligencia<br>Artificial</h2>
+          <span class="path-description">Derecho, investigación<br>y pensamiento crítico.</span>
+          <span class="path-enter">Explorar<svg viewBox="0 0 30 12" aria-hidden="true"><path d="M1 6h27m-5-5 5 5-5 5"/></svg></span>
+        </a>
+        <a class="path path-food" href="gastronomia.html" aria-label="Entrar a Gastronomía y gestión operativa">
+          <span class="path-label">02 — Personas y experiencias</span>
+          <h2 class="path-title">Gastronomía</h2>
+          <span class="path-description">Gestión, equipos<br>y el arte de recibir.</span>
+          <span class="path-enter">Explorar<svg viewBox="0 0 30 12" aria-hidden="true"><path d="M1 6h27m-5-5 5 5-5 5"/></svg></span>
+        </a>
+      </nav>
+      <p class="invitation">Dos áreas. Una misma mirada.</p>
+    </main>
+    <footer class="colophon"><p>© 2026 Ezequiel Brunner</p><p class="edition">Operación &amp; pensamiento</p><a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></footer>
+  </div>
+  <script src="profile-router.js"></script>
 </body>
 </html>
