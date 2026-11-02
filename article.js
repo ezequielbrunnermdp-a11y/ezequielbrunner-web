@@ -46,7 +46,7 @@ if (articleContainer) {
   }
 }
 
-initializeRevealAnimations();
+
 
 function formatArticleDate(dateString) {
   const date = new Date(`${dateString}T12:00:00`);
@@ -63,9 +63,22 @@ function formatArticleDate(dateString) {
 }
 
 function updateArticleSeo(item) {
+  const url = `${window.location.origin}${window.location.pathname}?slug=${encodeURIComponent(item.slug)}`;
   setMetaContent("description", item.seo?.description || item.summary);
   setMetaContent("keywords", item.seo?.keywords || "");
-  setCanonicalUrl(`${window.location.origin}${window.location.pathname}?slug=${item.slug}`);
+  setCanonicalUrl(url);
+  setMetaProperty("og:title", `${item.title} | Ezequiel Brunner`);
+  setMetaProperty("og:description", item.seo?.description || item.summary);
+  setMetaProperty("og:type", "article");
+  setMetaProperty("og:url", url);
+  setMetaContent("twitter:title", `${item.title} | Ezequiel Brunner`);
+  setMetaContent("twitter:description", item.seo?.description || item.summary);
+}
+
+function setMetaProperty(property, content) {
+  let meta = document.querySelector(`meta[property="${property}"]`);
+  if (!meta) { meta = document.createElement("meta"); meta.setAttribute("property", property); document.head.appendChild(meta); }
+  meta.setAttribute("content", content);
 }
 
 function setMetaContent(name, content) {
@@ -94,58 +107,4 @@ function setCanonicalUrl(url) {
   }
 
   canonical.setAttribute("href", url);
-}
-
-const menuButton = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".site-nav");
-
-if (menuButton && nav) {
-  menuButton.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("is-open");
-    menuButton.classList.toggle("is-open", isOpen);
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      menuButton.classList.remove("is-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    });
-  });
-}
-
-function initializeRevealAnimations() {
-  const revealTargets = [
-    ...document.querySelectorAll(".article-back, .article-card, .site-header, .site-footer")
-  ];
-
-  revealTargets.forEach((element, index) => {
-    element.classList.add("reveal");
-    element.style.setProperty("--reveal-delay", `${Math.min(index * 0.06, 0.2)}s`);
-  });
-
-  if (!("IntersectionObserver" in window)) {
-    revealTargets.forEach((element) => element.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: "0px 0px -8% 0px"
-    }
-  );
-
-  revealTargets.forEach((element) => observer.observe(element));
 }
