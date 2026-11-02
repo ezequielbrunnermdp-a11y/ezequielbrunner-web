@@ -60,3 +60,36 @@ if (consultancyMenu && consultancyNav) {
     consultancyMenu.focus();
   });
 }
+
+// A quiet reading indicator and progressive entrance motion, with reduced-motion support.
+const readingProgress = document.createElement('div');
+readingProgress.className = 'reading-progress';
+readingProgress.setAttribute('aria-hidden', 'true');
+document.body.prepend(readingProgress);
+let progressFrame = false;
+function updateReadingProgress() {
+  const distance = document.documentElement.scrollHeight - window.innerHeight;
+  const fraction = distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0;
+  readingProgress.style.transform = `scaleX(${fraction})`;
+  progressFrame = false;
+}
+window.addEventListener('scroll', () => {
+  if (!progressFrame) { progressFrame = true; window.requestAnimationFrame(updateReadingProgress); }
+}, { passive: true });
+window.addEventListener('resize', updateReadingProgress);
+updateReadingProgress();
+
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const entranceObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('modern-visible');
+        entranceObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.service-item, .method-step, .engagement').forEach((item) => {
+    item.classList.add('modern-reveal');
+    entranceObserver.observe(item);
+  });
+}
