@@ -2,23 +2,75 @@
 (() => {
   const menu = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.site-nav');
+  const header = document.querySelector('.site-header');
+  const dropdowns = [...document.querySelectorAll('[data-nav-dropdown]')];
+  const desktop = window.matchMedia('(min-width: 820px)');
+  function closeDropdowns(except) {
+    dropdowns.forEach(dropdown => {
+      if (dropdown !== except) dropdown.open = false;
+    });
+  }
   function closeMenu(returnFocus = false) {
     if (!menu || !nav) return;
+    closeDropdowns();
     nav.classList.remove('is-open');
     menu.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-label', 'Abrir navegación');
+    menu.setAttribute('aria-label', 'Abrir menú de secciones');
     if (returnFocus) menu.focus();
   }
   menu?.addEventListener('click', () => {
     const open = menu.getAttribute('aria-expanded') !== 'true';
+    closeDropdowns();
     nav.classList.toggle('is-open', open);
     menu.setAttribute('aria-expanded', String(open));
-    menu.setAttribute('aria-label', open ? 'Cerrar navegación' : 'Abrir navegación');
+    menu.setAttribute('aria-label', open ? 'Cerrar menú de secciones' : 'Abrir menú de secciones');
   });
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
+  dropdowns.forEach(dropdown => dropdown.addEventListener('toggle', () => {
+    if (dropdown.open) closeDropdowns(dropdown);
+  }));
+  const pagePath = path => path.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+  function markCurrentLocation() {
+    nav?.querySelectorAll('.nav-panel a').forEach(link => {
+      const target = new URL(link.href);
+      const samePage = pagePath(target.pathname) === pagePath(window.location.pathname);
+      link.removeAttribute('aria-current');
+      if (samePage && target.hash === window.location.hash) {
+        link.setAttribute('aria-current', target.hash ? 'location' : 'page');
+      }
+    });
+  }
+  markCurrentLocation();
+  window.addEventListener('hashchange', markCurrentLocation);
+  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    closeMenu();
+    const target = new URL(link.href);
+    if (target.hash && pagePath(target.pathname) === pagePath(window.location.pathname)) {
+      const section = document.getElementById(decodeURIComponent(target.hash.slice(1)));
+      if (section) {
+        section.setAttribute('tabindex', '-1');
+        requestAnimationFrame(() => section.focus({ preventScroll: true }));
+      }
+    }
+  }));
+  document.addEventListener('click', event => {
+    if (header && !header.contains(event.target)) closeMenu();
+  });
+  document.addEventListener('focusin', event => {
+    if (header && !header.contains(event.target)) closeMenu();
+  });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && menu?.getAttribute('aria-expanded') === 'true') closeMenu(true);
+    if (event.key !== 'Escape') return;
+    const openDropdown = dropdowns.find(dropdown => dropdown.open);
+    if (openDropdown) {
+      event.preventDefault();
+      openDropdown.open = false;
+      openDropdown.querySelector('summary').focus();
+    } else if (menu?.getAttribute('aria-expanded') === 'true') {
+      event.preventDefault();
+      closeMenu(true);
+    }
   });
+  desktop.addEventListener('change', () => closeMenu());
 
   // Drafts contain explicit placeholders. They are absent from the normal public view.
   if (new URLSearchParams(window.location.search).get('edicion') === '1') {

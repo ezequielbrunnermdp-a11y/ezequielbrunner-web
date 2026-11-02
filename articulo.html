@@ -21,10 +21,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="site.css?v=20261101-menu">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/articulo#page", "url": "https://ezequielbrunner.com/articulo", "name": "Artículo | Ezequiel Brunner", "description": "Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}]}</script>
     <script src="news-data.js" defer></script>
-    <script src="site.js" defer></script>
+    <script src="site.js?v=20261101-menu" defer></script>
     <script src="article.js" defer></script>
   </head>
   <body data-page="article">
@@ -35,15 +35,53 @@
           <span class="brand-mark" aria-hidden="true">EB.</span>
           <span class="brand-name">Ezequiel<br>Brunner</span>
         </a>
-        <button class="menu-toggle" type="button" aria-label="Abrir navegación" aria-expanded="false" aria-controls="site-nav">
-          <span></span>
-          <span></span>
+        <button class="menu-toggle" type="button" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="site-nav">
+          <span class="menu-toggle-label">Menú</span>
+          <span class="menu-toggle-icon" aria-hidden="true"><i></i><i></i></span>
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
           <a href="index.html">Inicio</a>
-          <a href="inteligencia-artificial.html">IA para empresas</a>
-          <a href="gastronomia.html">Gastronomía</a>
-          <a class="nav-contact" href="index.html#contacto">Conversemos ↗</a>
+          <details class="nav-dropdown" data-nav-dropdown>
+            <summary><span>IA para empresas</span><span class="nav-chevron" aria-hidden="true"></span></summary>
+            <div class="nav-panel">
+              <p class="nav-panel-label">Ir a una sección</p>
+              <a class="nav-panel-overview" href="inteligencia-artificial.html">Presentación del área</a>
+              <a href="inteligencia-artificial.html#servicios">Servicios</a>
+              <a href="inteligencia-artificial.html#aplicaciones">Ejemplos de aplicación</a>
+              <a href="inteligencia-artificial.html#flujo">Cómo se conecta un proceso</a>
+              <a href="inteligencia-artificial.html#metodo">Cómo trabajo</a>
+              <a href="inteligencia-artificial.html#modalidades">Modalidades de trabajo</a>
+              <a href="inteligencia-artificial.html#preguntas">Preguntas frecuentes</a>
+            </div>
+          </details>
+          <details class="nav-dropdown" data-nav-dropdown>
+            <summary><span>Gastronomía</span><span class="nav-chevron" aria-hidden="true"></span></summary>
+            <div class="nav-panel">
+              <p class="nav-panel-label">Ir a una sección</p>
+              <a class="nav-panel-overview" href="gastronomia.html">Presentación del área</a>
+              <a href="gastronomia.html#servicios">Servicios</a>
+              <a href="gastronomia.html#gastronomia">Experiencia operativa</a>
+              <a href="gastronomia.html#tu-negocio">Etapas de tu negocio</a>
+              <a href="gastronomia.html#metodo">Cómo trabajo</a>
+              <a href="gastronomia.html#modalidades">Modalidades de trabajo</a>
+              <a href="gastronomia.html#preguntas">Preguntas frecuentes</a>
+            </div>
+          </details>
+          <details class="nav-dropdown" data-nav-dropdown data-current>
+            <summary><span>Sobre mí</span><span class="nav-chevron" aria-hidden="true"></span></summary>
+            <div class="nav-panel">
+              <p class="nav-panel-label">Ir a una sección</p>
+              <a href="inteligencia-artificial.html#sobre-mi">Trayectoria y enfoque</a>
+              <a href="inteligencia-artificial.html#investigacion">Investigación en IA</a>
+              <a href="gastronomia.html#formacion">Formación académica</a>
+              <a href="inteligencia-artificial.html#publicaciones">Publicaciones</a>
+              <a href="inteligencia-artificial.html#dossier">Dossier legislativo</a>
+              <a href="inteligencia-artificial.html#medios">Medios y menciones</a>
+              <a href="inteligencia-artificial.html#novedades">Artículos y novedades</a>
+              <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
+            </div>
+          </details>
+          <a class="nav-contact" href="index.html#contacto">Contacto ↗</a>
         </nav>
       </div>
     </header>
