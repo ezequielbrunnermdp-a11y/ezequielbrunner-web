@@ -116,10 +116,109 @@
     archive.innerHTML = entries.slice(3).map(render).join('') || '<p class="news-empty">Todavía no hay notas anteriores publicadas.</p>';
   }
 
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Efectos visuales compartidos con la página de inicio.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+  // Título de portada: cada palabra sube desde abajo.
+  const heroTitle = document.querySelector('.page-hero h1');
+  if (heroTitle && !reduce) {
+    let index = 0;
+    const wrap = node => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.append(' '); return; }
+            const outer = document.createElement('span'), inner = document.createElement('span');
+            outer.className = 'wd'; inner.textContent = part;
+            inner.style.animationDelay = (index++ * 0.07) + 's';
+            outer.append(inner); frag.append(outer);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1 && child.tagName !== 'BR') wrap(child);
+      });
+    };
+    wrap(heroTitle);
+  }
+
+  // Luz suave que sigue al cursor y textura de fondo.
+  const grain = document.createElement('div'); grain.className = 'grain'; grain.setAttribute('aria-hidden', 'true');
+  document.body.prepend(grain);
+  if (fine && !reduce) {
+    const glow = document.createElement('div'); glow.className = 'cursor-glow'; glow.setAttribute('aria-hidden', 'true');
+    document.body.prepend(glow);
+    window.addEventListener('pointermove', event => {
+      glow.style.setProperty('--cx', event.clientX + 'px');
+      glow.style.setProperty('--cy', event.clientY + 'px');
+    }, { passive: true });
+    $$('.button').forEach(button => {
+      button.addEventListener('pointermove', event => {
+        const box = button.getBoundingClientRect();
+        button.style.transform = `translate(${(event.clientX - box.left - box.width / 2) * .16}px, ${(event.clientY - box.top - box.height / 2) * .26}px)`;
+      });
+      button.addEventListener('pointerleave', () => {
+        button.style.transition = 'transform .5s cubic-bezier(.2,.75,.2,1)';
+        button.style.transform = '';
+        setTimeout(() => { button.style.transition = ''; }, 500);
+      });
+    });
+  }
+
+  // Tarjetas con luz e inclinación (también las que se crean después, como las novedades).
+  const cardSelector = '.service-card, .usecase-card, .panel, .publication-card, .media-card, .news-card';
+  if (fine && !reduce) {
+    document.addEventListener('pointermove', event => {
+      const card = event.target.closest && event.target.closest(cardSelector);
+      if (!card) return;
+      const box = card.getBoundingClientRect();
+      const px = (event.clientX - box.left) / box.width - .5, py = (event.clientY - box.top) / box.height - .5;
+      card.style.setProperty('--x', (px + .5) * 100 + '%');
+      card.style.setProperty('--y', (py + .5) * 100 + '%');
+      card.style.setProperty('--rx', (-py * 4) + 'deg');
+      card.style.setProperty('--ry', (px * 4) + 'deg');
+    });
+    document.addEventListener('pointerout', event => {
+      const card = event.target.closest && event.target.closest(cardSelector);
+      if (!card || card.contains(event.relatedTarget)) return;
+      card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg');
+    });
+  }
+
+  // Aparición gradual al bajar. Lo que ya está a la vista al cargar no se oculta.
+  if ('IntersectionObserver' in window && !reduce) {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-    }), { threshold: .06, rootMargin: '0px 0px -12px 0px' });
-    document.querySelectorAll('[data-reveal]').forEach(element => { element.classList.add('reveal-ready'); observer.observe(element); });
+    }), { threshold: .08, rootMargin: '0px 0px -6% 0px' });
+    const targets = '[data-reveal], .section-heading, .split-section .prose, .service-card, .usecase-card, .step, .faq-item, .panel, .publication-card, .media-card, .news-card, .career-list li, .principle-strip, .contact-section, .bridge, .recruitment, .process-diagram, .archive-details, .subsection-heading, .article-card';
+    $$(targets).forEach(element => {
+      if (element.classList.contains('reveal-ready') || element.closest('.page-hero')) return;
+      if (element.getBoundingClientRect().top < window.innerHeight * .92) return;
+      const siblings = element.parentElement ? [...element.parentElement.children] : [element];
+      element.style.setProperty('--i', Math.min(siblings.indexOf(element), 4));
+      element.classList.add('reveal-ready');
+      observer.observe(element);
+    });
   }
+
+  // Barra de progreso en el encabezado y movimiento suave de la imagen de portada.
+  const hero = document.querySelector('.page-hero-media');
+  let ticking = false;
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (header) header.style.setProperty('--sp', max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+    if (hero && !reduce) {
+      const box = hero.getBoundingClientRect();
+      if (box.bottom > 0 && box.top < window.innerHeight) hero.style.setProperty('--pv', Math.min(1, Math.max(0, 1 - box.top / window.innerHeight)).toFixed(3));
+    }
+  };
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { onScroll(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
 })();
