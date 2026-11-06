@@ -42,7 +42,7 @@ Referencias: [contraste de texto, W3C](https://www.w3.org/WAI/WCAG22/Understandi
 | `assets/` | Retrato WebP, imágenes de especialidades, retrato para Open Graph y favicon |
 | `robots.txt` / `sitemap.xml` | Descubrimiento básico para buscadores |
 
-HTML, CSS y JavaScript nativos. No requiere instalación de paquetes ni compilación. La navegación usa archivos `.html`, compatibles con la publicación actual; los enlaces canónicos usan las rutas públicas sin extensión.
+HTML, CSS y JavaScript nativos. No requiere instalación de paquetes ni compilación. La capa visual avanzada (punto 5) se sirve con archivos propios y librerías incluidas en `assets/js/vendor/`; no depende de CDN externos. La navegación usa archivos `.html`, compatibles con la publicación actual; los enlaces canónicos usan las rutas públicas sin extensión.
 
 ### Editar logos y testimonios
 
@@ -95,6 +95,60 @@ El formulario valida los campos y prepara una consulta en la aplicación de corr
 - Para cada caso: situación inicial, alcance, tiempo de trabajo, cambio implementado y evidencia del resultado.
 - Si se publica un ahorro, reducción de merma o mejora de servicio: indicar cómo se midió, con qué base se compara y durante qué período.
 - Definir modalidades de trabajo, alcance geográfico, disponibilidad y canal preferido de consulta.
+
+## 5. Capa visual avanzada (6 de noviembre de 2026)
+
+Todas las páginas comparten un escenario WebGL detrás del contenido. Es un único sistema de partículas que cambia de forma a medida que se baja por la página: el retrato de Ezequiel se deshace en una nube, se ordena como una red neuronal, sube como vapor sobre el plato, se estructura en un organigrama, se reparte en una retícula, fluye, se abre como un portal en el contacto y termina escribiendo el nombre sobre el pie de página.
+
+### Archivos
+
+| Archivo | Función |
+| --- | --- |
+| `assets/js/scene.js` | Motor WebGL2 propio: partículas con formas, planos de imagen con refracción y disolución. Sin dependencias |
+| `assets/js/fx.js` | Orquestador: une el scroll con las escenas, cursor, transición entre páginas, revelados, arranque |
+| `assets/js/home.js` | Comportamiento propio del inicio (menú móvil, frases que rotan, manifiesto, contadores, formulario) |
+| `assets/css/fx.css` | Capa visual compartida: lienzo, cursor, cortina, vidrio y borde de luz |
+| `assets/css/home.css` | Composición de la página de inicio |
+| `site.css` / `site.js` | Páginas interiores (la parte final de `site.css`, “Nivel 2”, adapta su aspecto) |
+| `assets/portrait-map.png` | Mapa de densidad del retrato (R = brillo, G = relieve). Genera las partículas de la cara |
+| `assets/js/vendor/` | GSAP, ScrollTrigger y SplitText 3.15 (licencia estándar sin cargo de GreenSock) y Lenis 1.3 (MIT). Se sirven desde el propio sitio |
+
+### Cómo se asigna una forma a cada sección
+
+Cada sección lleva atributos `data-scene` en el HTML:
+
+- `data-scene="portrait | network | steam | org | cloud | lattice | flow | ring | wordmark"`: la forma.
+- `data-anchor=".selector"`: la forma se centra sobre ese elemento (por ejemplo, la imagen de la sección). Sin ancla, se usa `data-pos="x,y"` (fracción de la pantalla) y `data-size`.
+- `data-fit`, `data-fit-mode` (`min`, `h`, `w`) y `data-off="x,y"`: ajustan tamaño y desplazamiento.
+- `data-intensity`: brillo (0 a 1). Las variantes `-m` (`data-pos-m`, `data-size-m`, `data-intensity-m`) valen para el celular; `data-anchor-m="none"` desactiva el ancla en el celular.
+- `data-warm`: usa la paleta cálida (gastronomía).
+- `data-gl-image`: la imagen se dibuja en WebGL con refracción y disolución (`data-gray`, `data-zoom`, `data-par` ajustan el filtro).
+- `data-intro="n"`: orden de entrada de los elementos de la portada.
+
+Para cambiar una forma basta con editar el atributo de la sección. No hay que tocar el código.
+
+### Rendimiento, accesibilidad y respaldo
+
+- **Calidad adaptativa:** 36.000 partículas en computadoras potentes, 14.000 a 22.000 en celulares y equipos medios. Si la fluidez cae, se reduce la cantidad, luego la resolución, y por último se quita el desenfoque del vidrio (clase `fx-lite`). Con “ahorro de datos” activado se usa la calidad mínima.
+- **Pausa automática** cuando la pestaña no está visible.
+- **Reducir movimiento:** con la preferencia del sistema activada no hay arranque animado, cursor propio, cortina ni scroll suave. El escenario muestra formas quietas y el contenido aparece completo.
+- **Sin WebGL o sin JavaScript:** el sitio sigue completo. En el inicio se ve la foto real con su máscara original.
+- **Accesibilidad:** el texto sigue siendo texto real (los títulos animados conservan su lectura para lectores de pantalla), los lienzos son decorativos, el cursor nativo se mantiene y la navegación por teclado y los enlaces de salto no cambian.
+- **Transición entre páginas:** una cortina circular que nace donde se hizo clic. Respeta los atajos del navegador (Ctrl/Cmd+clic, nueva pestaña) y el botón Atrás.
+
+### Detalles que se descubren
+
+- El cursor ilumina y aparta las partículas; los botones y tarjetas envían una onda al escenario.
+- Al mantener apretado el mouse (o el dedo quieto en el celular) la nube se arremolina hacia el puntero y, al soltar, sale despedida.
+- El nombre de la portada engrosa su tipografía según la cercanía del cursor.
+- En “Sobre mí” la foto real aparece en blanco y negro y recupera el color bajo el cursor.
+- Al bajar rápido, las partículas dejan estela.
+
+### Pruebas y herramientas
+
+Parámetros de dirección para revisar el sitio: `?fxq=high|mid|low` fija la calidad (y desactiva la adaptación), `?fxs=3.5` fija la escena. No afectan a los visitantes.
+
+Los textos se verificaron contra la versión anterior: no cambió ninguno. Solo se agregaron adornos ocultos para lectores de pantalla: el riel lateral con los nombres de las secciones del menú y la firma grande del pie.
 
 ## Operación del sitio
 

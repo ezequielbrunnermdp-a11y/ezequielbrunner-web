@@ -18,17 +18,40 @@
     <meta name="twitter:title" content="IA para empresas y procesos | Ezequiel Brunner">
     <meta name="twitter:description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <script>
+      /* Mejora progresiva: los efectos se activan solo si el navegador los soporta y no se pidió reducir el movimiento. */
+      (function () {
+        var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        d.classList.add('js');
+        if (!rm) d.classList.add('fx');
+        if (!window.WebGL2RenderingContext) d.classList.add('no-gl');
+        try {
+          var c = sessionStorage.getItem('eb-curtain');
+          if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); }
+        } catch (e) { }
+        setTimeout(function () { if (!(window.EB && window.EB.ready)) { d.classList.add('fx-failed'); d.classList.remove('curtain-on'); } }, 6000);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site.css?v=20261105-diseno">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/fx.css?v=20261106">
+    <link rel="stylesheet" href="site.css?v=20261106">
+    <link rel="preload" as="image" href="assets/portrait-map.png">
     <link rel="preload" as="image" href="assets/procesos-ia-v2.webp">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/inteligencia-artificial#page", "url": "https://ezequielbrunner.com/inteligencia-artificial", "name": "IA para empresas y procesos | Ezequiel Brunner", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}, {"@type": "Service", "name": "IA y optimización de procesos para empresas", "url": "https://ezequielbrunner.com/inteligencia-artificial", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "provider": {"@id": "https://ezequielbrunner.com/#ezequiel"}}]}</script>
     <script src="news-data.js" defer></script>
-    <script src="site.js?v=20261105-diseno" defer></script>
+    <script src="site.js?v=20261106" defer></script>
+      <script src="assets/js/vendor/gsap.min.js" defer></script>
+    <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/js/vendor/SplitText.min.js" defer></script>
+    <script src="assets/js/vendor/lenis.min.js" defer></script>
+    <script src="assets/js/scene.js?v=20261106" defer></script>
+    <script src="assets/js/fx.js?v=20261106" defer></script>
   </head>
   <body data-page="ai">
     <a class="skip-link" href="#contenido">Ir al contenido</a>
+    <div class="fx-grain" aria-hidden="true"></div>
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
@@ -87,23 +110,23 @@
       </div>
     </header>
     <main class="container" id="contenido">
-      <section class="page-hero" id="inicio" aria-labelledby="ai-title">
+      <section class="page-hero" id="inicio" aria-labelledby="ai-title" data-scene="network" data-anchor=".page-hero-media" data-fit-mode="min" data-fit="0.95" data-fit-m="1.1" data-intensity="0.9" data-intensity-m="0.55">
         <div class="hero-copy">
-          <p class="eyebrow">
+          <p class="eyebrow" data-intro="1">
             <span class="dot" aria-hidden="true"></span>IA y optimización de procesos para empresas</p>
-          <h1 id="ai-title">Menos tareas<br>repetidas.<br>
+          <h1 data-intro="2" id="ai-title">Menos tareas<br>repetidas.<br>
             <em>Más capacidad.</em>
           </h1>
-          <p class="hero-summary">Diseño soluciones de organización, automatización e inteligencia artificial para que tu empresa ordene información, simplifique tareas y trabaje con mejores procesos.</p>
-          <div class="actions">
+          <p class="hero-summary" data-intro="4">Diseño soluciones de organización, automatización e inteligencia artificial para que tu empresa ordene información, simplifique tareas y trabaje con mejores procesos.</p>
+          <div class="actions" data-intro="5">
             <a class="button button-primary" href="#contacto">Conversemos sobre tu empresa<span class="button-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="button button-secondary" href="#aplicaciones">Ver aplicaciones<span class="button-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
-          <p class="hero-fine">Primero el proceso. Después, la herramienta adecuada.</p>
+          <p class="hero-fine" data-intro="6">Primero el proceso. Después, la herramienta adecuada.</p>
         </div>
-        <figure class="page-hero-media">
+        <figure class="page-hero-media" data-intro="3" data-gl-image>
           <img class="media-monochrome" src="assets/procesos-ia-v2.webp" width="1088" height="1448" alt="Ilustración conceptual de una estructura de procesos conectados" fetchpriority="high" decoding="async">
           <figcaption class="media-caption">
             <span>Organizar. Analizar. Validar.</span>
@@ -130,7 +153,7 @@
           </a>
         </div>
       </section>
-      <section class="section" id="servicios">
+      <section class="section" id="servicios" data-scene="lattice" data-pos="0.86,0.5" data-size="0.55" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.3">
         <div class="section-heading">
           <p class="eyebrow">Servicios para empresas</p>
           <h2>Procesos más claros.<br>
@@ -235,7 +258,7 @@
           </article>
         </div>
       </section>
-      <section class="section" id="aplicaciones">
+      <section class="section" id="aplicaciones" data-scene="flow" data-pos="0.5,0.5" data-size="1.0" data-intensity="0.4" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.28">
         <div class="section-heading">
           <p class="eyebrow">Aplicaciones concretas</p>
           <h2>Empezar por una tarea.<br>
@@ -318,7 +341,7 @@
           </article>
         </div>
       </section>
-      <section class="section" id="flujo">
+      <section class="section" id="flujo" data-scene="network" data-pos="0.5,0.5" data-size="0.95" data-intensity="0.45" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.3">
         <div class="section-heading">
           <p class="eyebrow">Ejemplo de aplicación</p>
           <h2>Así se conecta<br>
@@ -365,7 +388,7 @@
           </figcaption>
         </figure>
       </section>
-      <section class="section section-line" id="metodo">
+      <section class="section section-line" id="metodo" data-scene="cloud" data-pos="0.82,0.5" data-size="0.75" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.35">
         <div class="section-heading">
           <p class="eyebrow">Cómo trabajo</p>
           <h2>Un proceso de mejora.<br>
@@ -465,7 +488,7 @@
           </details>
         </div>
       </section>
-      <aside class="bridge" aria-label="Asesoramiento gastronómico">
+      <aside class="bridge" aria-label="Asesoramiento gastronómico" data-scene="steam" data-pos="0.8,0.55" data-size="0.7" data-intensity="0.8" data-pos-m="0.5,0.35" data-size-m="0.8" data-intensity-m="0.4">
         <div>
           <p class="eyebrow">La experiencia también cuenta</p>
           <h2>Gestión real.<br>Una base para pensar procesos.</h2>
@@ -474,7 +497,7 @@
         <a class="text-link" href="gastronomia.html">Conocé mi perfil gastronómico <span aria-hidden="true">↗</span>
         </a>
       </aside>
-      <section class="contact-section" id="contacto" aria-labelledby="contact-title">
+      <section class="contact-section" id="contacto" aria-labelledby="contact-title" data-scene="ring" data-pos="0.5,0.5" data-size="0.8" data-intensity="0.7" data-pos-m="0.5,0.25" data-size-m="0.8" data-intensity-m="0.4">
         <div class="contact-copy">
           <p class="eyebrow">Tu próximo paso</p>
           <h2 id="contact-title">Empecemos por<br>
@@ -518,7 +541,7 @@
           <p class="form-status" data-form-status role="status"></p>
         </form>
       </section>
-      <section class="section section-line" id="investigacion">
+      <section class="section section-line" id="investigacion" data-scene="portrait" data-pos="0.82,0.5" data-size="0.85" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.28">
         <div class="section-heading">
           <p class="eyebrow">Investigación y publicaciones</p>
           <h2>Inteligencia Artificial<br>
@@ -591,7 +614,7 @@
           <a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">Ver formación y actividad en LinkedIn</a>
         </p>
       </section>
-      <section id="publicaciones" class="section">
+      <section id="publicaciones" class="section" data-scene="lattice" data-pos="0.84,0.45" data-size="0.5" data-intensity="0.45" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.28">
         <div class="section-heading">
           <p class="eyebrow">Publicaciones</p>
           <h2>Doctrinas y trabajos publicados</h2>
@@ -775,7 +798,7 @@
           </div>
         </details>
       </section>
-      <section id="novedades" class="section">
+      <section id="novedades" class="section" data-scene="cloud" data-pos="0.5,0.5" data-size="0.9" data-intensity="0.35" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.25">
         <div class="section-heading">
           <p class="eyebrow">Novedades y artículos</p>
           <h2>Actualidad y análisis</h2>
@@ -794,7 +817,8 @@
       </section>
     </main>
     <div class="container">
-      <footer class="site-footer">
+      <footer class="site-footer" data-scene="wordmark" data-anchor=".wordmark" data-fit-mode="w" data-fit="1.0" data-intensity="1" data-intensity-m="0.9">
+        <p class="wordmark" aria-hidden="true">Ezequiel <em>Brunner</em></p>
         <div>
           <p class="footer-signature">Ezequiel <em>Brunner</em>
           </p>

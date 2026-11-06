@@ -18,17 +18,40 @@
     <meta name="twitter:title" content="Artículo | Ezequiel Brunner">
     <meta name="twitter:description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <script>
+      /* Mejora progresiva: los efectos se activan solo si el navegador los soporta y no se pidió reducir el movimiento. */
+      (function () {
+        var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        d.classList.add('js');
+        if (!rm) d.classList.add('fx');
+        if (!window.WebGL2RenderingContext) d.classList.add('no-gl');
+        try {
+          var c = sessionStorage.getItem('eb-curtain');
+          if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); }
+        } catch (e) { }
+        setTimeout(function () { if (!(window.EB && window.EB.ready)) { d.classList.add('fx-failed'); d.classList.remove('curtain-on'); } }, 6000);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site.css?v=20261105-diseno">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/fx.css?v=20261106">
+    <link rel="stylesheet" href="site.css?v=20261106">
+    <link rel="preload" as="image" href="assets/portrait-map.png">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/articulo#page", "url": "https://ezequielbrunner.com/articulo", "name": "Artículo | Ezequiel Brunner", "description": "Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}]}</script>
     <script src="news-data.js" defer></script>
-    <script src="site.js?v=20261105-diseno" defer></script>
+    <script src="site.js?v=20261106" defer></script>
     <script src="article.js" defer></script>
+      <script src="assets/js/vendor/gsap.min.js" defer></script>
+    <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/js/vendor/SplitText.min.js" defer></script>
+    <script src="assets/js/vendor/lenis.min.js" defer></script>
+    <script src="assets/js/scene.js?v=20261106" defer></script>
+    <script src="assets/js/fx.js?v=20261106" defer></script>
   </head>
   <body data-page="article">
     <a class="skip-link" href="#contenido">Ir al contenido</a>
+    <div class="fx-grain" aria-hidden="true"></div>
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
@@ -87,13 +110,14 @@
       </div>
     </header>
     <main class="container" id="contenido">
-      <section class="section article-shell">
+      <section class="section article-shell" data-scene="network" data-pos="0.86,0.3" data-size="0.7" data-intensity="0.4" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.28">
         <a class="article-back" href="inteligencia-artificial.html#novedades">← Volver a novedades</a>
         <article class="article-card" id="article-content" aria-live="polite"></article>
       </section>
     </main>
     <div class="container">
-      <footer class="site-footer">
+      <footer class="site-footer" data-scene="wordmark" data-anchor=".wordmark" data-fit-mode="w" data-fit="1.0" data-intensity="1" data-intensity-m="0.9">
+        <p class="wordmark" aria-hidden="true">Ezequiel <em>Brunner</em></p>
         <div>
           <p class="footer-signature">Ezequiel <em>Brunner</em>
           </p>
