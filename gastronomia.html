@@ -19,113 +19,100 @@
     <meta name="twitter:description" content="Asesoramiento gastronómico en costos, recursos humanos, microprocedimientos, procedimientos disciplinarios y servicio. Ezequiel Brunner, Mar del Plata.">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <script>
-      /* Mejora progresiva: los efectos se activan solo si el navegador los soporta y no se pidió reducir el movimiento. */
-      (function () {
-        var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        d.classList.add('js');
-        if (!rm) d.classList.add('fx');
-        if (!window.WebGL2RenderingContext) d.classList.add('no-gl');
-        try {
-          var c = sessionStorage.getItem('eb-curtain');
-          if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); }
-        } catch (e) { }
-        setTimeout(function () { if (!(window.EB && window.EB.ready)) { d.classList.add('fx-failed'); d.classList.remove('curtain-on'); } }, 6000);
-      })();
-    </script>
+/* Mejora progresiva: sin JavaScript, sin WebGL o con movimiento reducido el sitio se ve completo. */
+(function () {
+  var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  d.classList.add('js');
+  if (rm) d.classList.add('reduced');
+  try {
+    var c = sessionStorage.getItem('eb-curtain');
+    if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); setTimeout(function () { d.classList.remove('curtain-on'); }, 2500); }
+  } catch (e) { }
+})();
+</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/fx.css?v=20261106">
-    <link rel="stylesheet" href="site.css?v=20261106">
-    <link rel="preload" as="image" href="assets/portrait-map.png">
+    <link rel="stylesheet" href="assets/css/base.css?v=20261107">
+    <link rel="stylesheet" href="site.css?v=20261107">
     <link rel="preload" as="image" href="assets/gastronomia-editorial-v2.webp">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/gastronomia#page", "url": "https://ezequielbrunner.com/gastronomia", "name": "Asesoramiento gastronómico | Ezequiel Brunner", "description": "Asesoramiento gastronómico en costos, recursos humanos, microprocedimientos, procedimientos disciplinarios y servicio. Ezequiel Brunner, Mar del Plata.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}, {"@type": "Service", "name": "Asesoramiento gastronómico", "url": "https://ezequielbrunner.com/gastronomia", "description": "Asesoramiento gastronómico en costos, recursos humanos, microprocedimientos, procedimientos disciplinarios y servicio. Ezequiel Brunner, Mar del Plata.", "provider": {"@id": "https://ezequielbrunner.com/#ezequiel"}}]}</script>
-    <script src="site.js?v=20261106" defer></script>
+    <script src="site.js?v=20261107" defer></script>
       <script src="assets/js/vendor/gsap.min.js" defer></script>
     <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/js/vendor/SplitText.min.js" defer></script>
     <script src="assets/js/vendor/lenis.min.js" defer></script>
-    <script src="assets/js/scene.js?v=20261106" defer></script>
-    <script src="assets/js/fx.js?v=20261106" defer></script>
+    <script src="assets/js/fx.js?v=20261107" defer></script>
   </head>
   <body data-page="food">
-    <a class="skip-link" href="#contenido">Ir al contenido</a>
-    <div class="fx-grain" aria-hidden="true"></div>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
-          <span class="brand-mark" aria-hidden="true">EB</span>
-          <span class="brand-name">Ezequiel Brunner</span>
-        </a>
-        <button class="menu-toggle" type="button" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="site-nav">
-          <span class="menu-toggle-label">Menú</span>
-          <span class="menu-toggle-icon" aria-hidden="true"><i></i><i></i></span>
-        </button>
-        <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
-          <a href="index.html">Inicio</a>
-          <details class="nav-dropdown" data-nav-dropdown>
-            <summary><span>IA para empresas</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a class="nav-panel-overview" href="inteligencia-artificial.html">Presentación del área</a>
-              <a href="inteligencia-artificial.html#servicios">Servicios</a>
-              <a href="inteligencia-artificial.html#aplicaciones">Ejemplos de aplicación</a>
-              <a href="inteligencia-artificial.html#flujo">Cómo se conecta un proceso</a>
-              <a href="inteligencia-artificial.html#metodo">Cómo trabajo</a>
-              <a href="inteligencia-artificial.html#modalidades">Modalidades de trabajo</a>
-              <a href="inteligencia-artificial.html#preguntas">Preguntas frecuentes</a>
-            </div>
-          </details>
-          <details class="nav-dropdown" data-nav-dropdown data-current>
-            <summary><span>Gastronomía</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a class="nav-panel-overview" href="gastronomia.html">Presentación del área</a>
-              <a href="gastronomia.html#servicios">Servicios</a>
-              <a href="gastronomia.html#recursos-humanos">Recursos humanos y procedimientos</a>
-              <a href="gastronomia.html#gastronomia">Experiencia operativa</a>
-              <a href="gastronomia.html#tu-negocio">Etapas de tu negocio</a>
-              <a href="gastronomia.html#metodo">Cómo trabajo</a>
-              <a href="gastronomia.html#modalidades">Modalidades de trabajo</a>
-              <a href="gastronomia.html#preguntas">Preguntas frecuentes</a>
-            </div>
-          </details>
-          <details class="nav-dropdown" data-nav-dropdown>
-            <summary><span>Sobre mí</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a href="inteligencia-artificial.html#sobre-mi">Trayectoria y enfoque</a>
-              <a href="inteligencia-artificial.html#investigacion">Investigación en IA</a>
-              <a href="gastronomia.html#formacion">Formación académica</a>
-              <a href="inteligencia-artificial.html#publicaciones">Publicaciones</a>
-              <a href="inteligencia-artificial.html#dossier">Dossier legislativo</a>
-              <a href="inteligencia-artificial.html#medios">Medios y menciones</a>
-              <a href="inteligencia-artificial.html#novedades">Artículos y novedades</a>
-              <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
-            </div>
-          </details>
-          <a class="nav-contact" href="#contacto">Contacto ↗</a>
-        </nav>
-      </div>
-    </header>
+    <a class="skip" href="#contenido">Ir al contenido</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="hdr" id="top">
+<div class="wrap hdr-in">
+<a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
+<svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><ellipse class="m3" cx="20" cy="20" rx="18" ry="7.4" transform="rotate(-18 20 20)"/><ellipse class="m2" cx="20" cy="20" rx="15.5" ry="15.5"/><ellipse class="m1" cx="20" cy="20" rx="7.4" ry="17" transform="rotate(24 20 20)"/></svg>
+<span class="brand-name">Ezequiel <em>Brunner</em></span>
+</a>
+<nav class="nav" aria-label="Principal">
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="publicaciones.html">Publicaciones</a></li>
+<li class="has-sub"><div class="sub-row"><a href="index.html#servicios">Servicios</a><button class="sub-btn" type="button" aria-expanded="false" aria-controls="sub-servicios"><span class="sr">Mostrar áreas de servicio</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6"/></svg></button></div>
+<ul class="sub" id="sub-servicios">
+<li><a href="inteligencia-artificial.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA<small>Inteligencia artificial para empresas</small></a></li>
+<li><a href="gastronomia.html" aria-current="page"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía<small>Consultoría gastronómica</small></a></li>
+<li><a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas<small>Recursos humanos y gestión de personal</small></a></li>
+</ul>
+</li>
+<li><a href="index.html#metodo">Método</a></li>
+<li><a href="index.html#sobre-mi">Sobre mí</a></li>
+<li><a href="#contacto">Contacto</a></li>
+</ul>
+</nav>
+<a class="btn p hdr-cta" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav"><span class="menu-label">Menú</span><i aria-hidden="true"></i></button>
+</div>
+</header>
+<div class="mnav" id="mnav" data-lenis-prevent>
+<nav aria-label="Menú del sitio">
+<ol>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="publicaciones.html">Publicaciones</a></li>
+<li><a href="index.html#servicios">Servicios</a>
+<div class="mnav-sub">
+<a href="inteligencia-artificial.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA</a>
+<a href="gastronomia.html" aria-current="page"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía</a>
+<a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas</a>
+</div>
+</li>
+<li><a href="index.html#metodo">Método</a></li>
+<li><a href="index.html#sobre-mi">Sobre mí</a></li>
+<li><a href="#contacto">Contacto</a></li>
+</ol>
+</nav>
+<div class="mnav-foot">
+<a class="btn p" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<p>contacto@ezequielbrunner.com · Mar del Plata, Argentina</p>
+</div>
+</div>
     <main class="container" id="contenido">
-      <section class="page-hero" id="inicio" aria-labelledby="food-title" data-scene="steam" data-anchor=".page-hero-media" data-fit-mode="h" data-fit="0.95" data-fit-m="1.0" data-off="0,-0.05" data-intensity="1" data-intensity-m="0.6">
+      <section class="page-hero" data-stage="frame" id="inicio" aria-labelledby="food-title">
         <div class="hero-copy">
-          <p class="eyebrow" data-intro="1">
+          <p class="eyebrow">
             <span class="dot" aria-hidden="true"></span>Asesoramiento gastronómico · Gestión y operaciones</p>
-          <h1 data-intro="2" id="food-title">Un buen negocio<br>se construye en<br>
+          <h1 id="food-title">Un buen negocio<br>se construye en<br>
             <em>la operación.</em>
           </h1>
-          <p class="hero-summary" data-intro="4">Te ayudo a ordenar costos, recursos humanos y procedimientos para que tu restaurante, cafetería o grupo gastronómico funcione con más control y una dirección clara.</p>
-          <div class="actions" data-intro="5">
+          <p class="hero-summary">Te ayudo a ordenar costos, recursos humanos y procedimientos para que tu restaurante, cafetería o grupo gastronómico funcione con más control y una dirección clara.</p>
+          <div class="actions">
             <a class="button button-primary" href="#contacto">Hablemos de tu negocio<span class="button-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="button button-secondary" href="#servicios">Explorar servicios<span class="button-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
-          <p class="hero-fine" data-intro="6">Experiencia en la gestión diaria. Un plan a la medida de tu realidad.</p>
+          <p class="hero-fine">Experiencia en la gestión diaria. Un plan a la medida de tu realidad.</p>
         </div>
-        <figure class="page-hero-media" data-intro="3" data-gl-image>
+        <figure class="page-hero-media">
           <img src="assets/gastronomia-editorial-v2.webp" width="1088" height="1448" alt="Imagen conceptual de una cafetería con barra y salón preparados para el servicio" fetchpriority="high" decoding="async">
           <figcaption class="media-caption">
             <span>Costos · Equipos · Servicio</span>
@@ -133,7 +120,7 @@
           </figcaption>
         </figure>
       </section>
-      <div class="sector-strip">
+      <div data-stage="park" class="sector-strip">
         <span>Una mirada de negocio</span>
         <span>Restaurantes</span>
         <span>Cafeterías y bares</span>
@@ -152,7 +139,7 @@
           </a>
         </div>
       </section>
-      <section class="section" id="servicios" data-scene="lattice" data-warm data-pos="0.86,0.5" data-size="0.55" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.3">
+      <section class="section" id="servicios">
         <div class="section-heading">
           <p class="eyebrow">Servicios de asesoramiento</p>
           <h2>Lo que tu negocio necesita.<br>
@@ -257,7 +244,7 @@
           </article>
         </div>
       </section>
-      <section class="section" id="recursos-humanos" aria-labelledby="people-title" data-scene="org" data-warm data-pos="0.76,0.46" data-size="0.78" data-intensity="0.42" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.3">
+      <section class="section" id="recursos-humanos" aria-labelledby="people-title">
         <div class="section-heading">
           <p class="eyebrow">Personas y operación</p>
           <h2 id="people-title">Recursos humanos.<br><em>Orden en cada paso.</em></h2>
@@ -299,7 +286,7 @@
           </article>
         </div>
       </section>
-      <section id="gastronomia" class="section" data-scene="steam" data-pos="0.84,0.55" data-size="0.7" data-intensity="0.7" data-pos-m="0.5,0.35" data-size-m="0.8" data-intensity-m="0.4">
+      <section id="gastronomia" class="section">
         <div class="section-heading">
           <p class="eyebrow">Experiencia operativa y trayectoria</p>
           <h2 class="profile-title">Gerente gastronómico</h2>
@@ -367,7 +354,7 @@
           </article>
         </div>
       </section>
-      <section class="section" id="tu-negocio" data-scene="flow" data-warm data-pos="0.5,0.5" data-size="1.0" data-intensity="0.4" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.28">
+      <section class="section" id="tu-negocio">
         <div class="section-heading">
           <p class="eyebrow">Tu punto de partida</p>
           <h2>Cada etapa pide<br>
@@ -417,7 +404,7 @@
           </article>
         </div>
       </section>
-      <section class="section section-line" id="metodo" data-scene="cloud" data-warm data-pos="0.82,0.5" data-size="0.75" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.9" data-intensity-m="0.35">
+      <section class="section section-line" id="metodo">
         <div class="section-heading">
           <p class="eyebrow">Cómo trabajo</p>
           <h2>Del diagnóstico<br>
@@ -518,7 +505,7 @@
           </details>
         </div>
       </section>
-      <aside class="bridge" aria-label="Tecnología aplicada a la gestión" data-scene="network" data-pos="0.78,0.5" data-size="0.75" data-intensity="0.75" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.35">
+      <aside class="bridge" aria-label="Tecnología aplicada a la gestión">
         <div>
           <p class="eyebrow">Gestión + tecnología</p>
           <h2>La operación también<br>puede trabajar más inteligente.</h2>
@@ -527,7 +514,7 @@
         <a class="text-link" href="inteligencia-artificial.html">Conocé los servicios de IA <span aria-hidden="true">↗</span>
         </a>
       </aside>
-      <section class="contact-section" id="contacto" aria-labelledby="contact-title" data-scene="ring" data-pos="0.5,0.5" data-size="0.8" data-intensity="0.7" data-pos-m="0.5,0.25" data-size-m="0.8" data-intensity-m="0.4">
+      <section class="contact-section" id="contacto" aria-labelledby="contact-title">
         <div class="contact-copy">
           <p class="eyebrow">Tu próximo paso</p>
           <h2 id="contact-title">Hablemos de<br>
@@ -573,7 +560,7 @@
           <p class="form-status" data-form-status role="status"></p>
         </form>
       </section>
-      <section id="formacion" class="section" data-scene="portrait" data-warm data-pos="0.82,0.5" data-size="0.85" data-intensity="0.5" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.28">
+      <section id="formacion" class="section">
         <div class="section-heading">
           <p class="eyebrow">Estudios y capacitación</p>
           <h2>Formación académica</h2>
@@ -637,21 +624,16 @@
         </div>
       </section>
     </main>
-    <div class="container">
-      <footer class="site-footer" data-scene="wordmark" data-anchor=".wordmark" data-fit-mode="w" data-fit="1.0" data-intensity="1" data-intensity-m="0.9">
-        <p class="wordmark" aria-hidden="true">Ezequiel <em>Brunner</em></p>
-        <div>
-          <p class="footer-signature">Ezequiel <em>Brunner</em>
-          </p>
-          <p class="footer-description">IA para empresas · Asesoramiento gastronómico<br>Mar del Plata, Argentina</p>
-          <p class="footer-small">© 2026 Ezequiel Brunner · Actualizado el 1 de noviembre de 2026</p>
-        </div>
-        <nav class="footer-links" aria-label="Enlaces del pie de página">
-          <a href="mailto:contacto@ezequielbrunner.com">Email ↗</a>
-          <a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
-        </nav>
-      </footer>
-    </div>
+    <footer class="ftr">
+<div class="wrap">
+<p class="ftr-word" aria-hidden="true">Ezequiel <em>Brunner</em></p>
+<div class="ftr-grid">
+<div><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
+<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="index.html">Inicio</a></li><li><a href="publicaciones.html">Publicaciones</a></li><li><a href="index.html#servicios">Servicios</a></li><li><a href="index.html#metodo">Método</a></li><li><a href="index.html#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul></nav>
+<div><h2>Contacto</h2><ul><li><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a></li><li><a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></li><li><a href="publicaciones.html">Todas las publicaciones</a></li><li><a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a></li></ul></div>
+</div>
+<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><span><a href="#top">Volver arriba ↑</a></span></div>
+</div>
+</footer>
   </body>
 </html>

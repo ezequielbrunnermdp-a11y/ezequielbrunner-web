@@ -1,135 +1,127 @@
 <!DOCTYPE html>
 <html lang="es-AR">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0e1214">
-    <title>Artículo | Ezequiel Brunner</title>
-    <meta name="description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
-    <link rel="canonical" href="https://ezequielbrunner.com/articulo">
-    <meta property="og:title" content="Artículo | Ezequiel Brunner">
-    <meta property="og:description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ezequielbrunner.com/articulo">
-    <meta property="og:image" content="https://ezequielbrunner.com/assets/profile.jpeg">
-    <meta property="og:image:alt" content="Ezequiel Brunner">
-    <meta property="og:locale" content="es_AR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Artículo | Ezequiel Brunner">
-    <meta name="twitter:description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <script>
-      /* Mejora progresiva: los efectos se activan solo si el navegador los soporta y no se pidió reducir el movimiento. */
-      (function () {
-        var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        d.classList.add('js');
-        if (!rm) d.classList.add('fx');
-        if (!window.WebGL2RenderingContext) d.classList.add('no-gl');
-        try {
-          var c = sessionStorage.getItem('eb-curtain');
-          if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); }
-        } catch (e) { }
-        setTimeout(function () { if (!(window.EB && window.EB.ready)) { d.classList.add('fx-failed'); d.classList.remove('curtain-on'); } }, 6000);
-      })();
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/fx.css?v=20261106">
-    <link rel="stylesheet" href="site.css?v=20261106">
-    <link rel="preload" as="image" href="assets/portrait-map.png">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/articulo#page", "url": "https://ezequielbrunner.com/articulo", "name": "Artículo | Ezequiel Brunner", "description": "Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}]}</script>
-    <script src="news-data.js" defer></script>
-    <script src="site.js?v=20261106" defer></script>
-    <script src="article.js" defer></script>
-      <script src="assets/js/vendor/gsap.min.js" defer></script>
-    <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
-    <script src="assets/js/vendor/SplitText.min.js" defer></script>
-    <script src="assets/js/vendor/lenis.min.js" defer></script>
-    <script src="assets/js/scene.js?v=20261106" defer></script>
-    <script src="assets/js/fx.js?v=20261106" defer></script>
-  </head>
-  <body data-page="article">
-    <a class="skip-link" href="#contenido">Ir al contenido</a>
-    <div class="fx-grain" aria-hidden="true"></div>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
-          <span class="brand-mark" aria-hidden="true">EB</span>
-          <span class="brand-name">Ezequiel Brunner</span>
-        </a>
-        <button class="menu-toggle" type="button" aria-label="Abrir menú de secciones" aria-expanded="false" aria-controls="site-nav">
-          <span class="menu-toggle-label">Menú</span>
-          <span class="menu-toggle-icon" aria-hidden="true"><i></i><i></i></span>
-        </button>
-        <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
-          <a href="index.html">Inicio</a>
-          <details class="nav-dropdown" data-nav-dropdown>
-            <summary><span>IA para empresas</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a class="nav-panel-overview" href="inteligencia-artificial.html">Presentación del área</a>
-              <a href="inteligencia-artificial.html#servicios">Servicios</a>
-              <a href="inteligencia-artificial.html#aplicaciones">Ejemplos de aplicación</a>
-              <a href="inteligencia-artificial.html#flujo">Cómo se conecta un proceso</a>
-              <a href="inteligencia-artificial.html#metodo">Cómo trabajo</a>
-              <a href="inteligencia-artificial.html#modalidades">Modalidades de trabajo</a>
-              <a href="inteligencia-artificial.html#preguntas">Preguntas frecuentes</a>
-            </div>
-          </details>
-          <details class="nav-dropdown" data-nav-dropdown>
-            <summary><span>Gastronomía</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a class="nav-panel-overview" href="gastronomia.html">Presentación del área</a>
-              <a href="gastronomia.html#servicios">Servicios</a>
-              <a href="gastronomia.html#recursos-humanos">Recursos humanos y procedimientos</a>
-              <a href="gastronomia.html#gastronomia">Experiencia operativa</a>
-              <a href="gastronomia.html#tu-negocio">Etapas de tu negocio</a>
-              <a href="gastronomia.html#metodo">Cómo trabajo</a>
-              <a href="gastronomia.html#modalidades">Modalidades de trabajo</a>
-              <a href="gastronomia.html#preguntas">Preguntas frecuentes</a>
-            </div>
-          </details>
-          <details class="nav-dropdown" data-nav-dropdown data-current>
-            <summary><span>Sobre mí</span><span class="nav-chevron" aria-hidden="true"></span></summary>
-            <div class="nav-panel">
-              <p class="nav-panel-label">Ir a una sección</p>
-              <a href="inteligencia-artificial.html#sobre-mi">Trayectoria y enfoque</a>
-              <a href="inteligencia-artificial.html#investigacion">Investigación en IA</a>
-              <a href="gastronomia.html#formacion">Formación académica</a>
-              <a href="inteligencia-artificial.html#publicaciones">Publicaciones</a>
-              <a href="inteligencia-artificial.html#dossier">Dossier legislativo</a>
-              <a href="inteligencia-artificial.html#medios">Medios y menciones</a>
-              <a href="inteligencia-artificial.html#novedades">Artículos y novedades</a>
-              <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
-            </div>
-          </details>
-          <a class="nav-contact" href="index.html#contacto">Contacto ↗</a>
-        </nav>
-      </div>
-    </header>
-    <main class="container" id="contenido">
-      <section class="section article-shell" data-scene="network" data-pos="0.86,0.3" data-size="0.7" data-intensity="0.4" data-pos-m="0.5,0.3" data-size-m="0.8" data-intensity-m="0.28">
-        <a class="article-back" href="inteligencia-artificial.html#novedades">← Volver a novedades</a>
-        <article class="article-card" id="article-content" aria-live="polite"></article>
-      </section>
-    </main>
-    <div class="container">
-      <footer class="site-footer" data-scene="wordmark" data-anchor=".wordmark" data-fit-mode="w" data-fit="1.0" data-intensity="1" data-intensity-m="0.9">
-        <p class="wordmark" aria-hidden="true">Ezequiel <em>Brunner</em></p>
-        <div>
-          <p class="footer-signature">Ezequiel <em>Brunner</em>
-          </p>
-          <p class="footer-description">IA para empresas · Asesoramiento gastronómico<br>Mar del Plata, Argentina</p>
-          <p class="footer-small">© 2026 Ezequiel Brunner · Actualizado el 1 de noviembre de 2026</p>
-        </div>
-        <nav class="footer-links" aria-label="Enlaces del pie de página">
-          <a href="mailto:contacto@ezequielbrunner.com">Email ↗</a>
-          <a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
-        </nav>
-      </footer>
-    </div>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c1013">
+<title>Artículo | Ezequiel Brunner</title>
+<meta name="description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
+<link rel="canonical" href="https://ezequielbrunner.com/articulo">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Artículo | Ezequiel Brunner">
+<meta property="og:description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ezequielbrunner.com/articulo">
+<meta property="og:image" content="https://ezequielbrunner.com/assets/profile.jpeg">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Artículo | Ezequiel Brunner">
+<meta name="twitter:description" content="Artículo de Ezequiel Brunner sobre inteligencia artificial, Derecho y transformación tecnológica.">
+<script>
+/* Mejora progresiva: sin JavaScript, sin WebGL o con movimiento reducido el sitio se ve completo. */
+(function () {
+  var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  d.classList.add('js');
+  if (rm) d.classList.add('reduced');
+  try {
+    var c = sessionStorage.getItem('eb-curtain');
+    if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); setTimeout(function () { d.classList.remove('curtain-on'); }, 2500); }
+  } catch (e) { }
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="assets/css/base.css?v=20261107">
+<link rel="stylesheet" href="assets/css/pages.css?v=20261107">
+</head>
+<body data-page="article">
+<a class="skip" href="#main">Ir al contenido</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="hdr" id="top">
+<div class="wrap hdr-in">
+<a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
+<svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><ellipse class="m3" cx="20" cy="20" rx="18" ry="7.4" transform="rotate(-18 20 20)"/><ellipse class="m2" cx="20" cy="20" rx="15.5" ry="15.5"/><ellipse class="m1" cx="20" cy="20" rx="7.4" ry="17" transform="rotate(24 20 20)"/></svg>
+<span class="brand-name">Ezequiel <em>Brunner</em></span>
+</a>
+<nav class="nav" aria-label="Principal">
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="publicaciones.html" aria-current="page">Publicaciones</a></li>
+<li class="has-sub"><div class="sub-row"><a href="index.html#servicios">Servicios</a><button class="sub-btn" type="button" aria-expanded="false" aria-controls="sub-servicios"><span class="sr">Mostrar áreas de servicio</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6"/></svg></button></div>
+<ul class="sub" id="sub-servicios">
+<li><a href="inteligencia-artificial.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA<small>Inteligencia artificial para empresas</small></a></li>
+<li><a href="gastronomia.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía<small>Consultoría gastronómica</small></a></li>
+<li><a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas<small>Recursos humanos y gestión de personal</small></a></li>
+</ul>
+</li>
+<li><a href="index.html#metodo">Método</a></li>
+<li><a href="index.html#sobre-mi">Sobre mí</a></li>
+<li><a href="index.html#contacto">Contacto</a></li>
+</ul>
+</nav>
+<a class="btn p hdr-cta" href="index.html#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav"><span class="menu-label">Menú</span><i aria-hidden="true"></i></button>
+</div>
+</header>
+<div class="mnav" id="mnav" data-lenis-prevent>
+<nav aria-label="Menú del sitio">
+<ol>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="publicaciones.html" aria-current="page">Publicaciones</a></li>
+<li><a href="index.html#servicios">Servicios</a>
+<div class="mnav-sub">
+<a href="inteligencia-artificial.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA</a>
+<a href="gastronomia.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía</a>
+<a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas</a>
+</div>
+</li>
+<li><a href="index.html#metodo">Método</a></li>
+<li><a href="index.html#sobre-mi">Sobre mí</a></li>
+<li><a href="index.html#contacto">Contacto</a></li>
+</ol>
+</nav>
+<div class="mnav-foot">
+<a class="btn p" href="index.html#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<p>contacto@ezequielbrunner.com · Mar del Plata, Argentina</p>
+</div>
+</div>
+<main id="main">
+<div class="wrap a-page">
+<nav class="crumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="publicaciones.html">Publicaciones</a><span aria-hidden="true">/</span><span id="crumb-cat" aria-current="page">Nota</span></nav>
+<article class="art" id="article-content" aria-live="polite">
+<noscript><p class="art-dek">Para leer esta nota activá JavaScript o visitá el <a href="publicaciones.html">archivo de publicaciones</a>.</p></noscript>
+</article>
+<aside class="art-cta" id="art-cta" aria-labelledby="art-cta-title" hidden>
+<p class="eyebrow">Después de leer</p>
+<h2 id="art-cta-title">Conversemos sobre <em>este tema.</em></h2>
+<p class="art-cta-t" id="art-cta-topic"></p>
+<div class="cta"><a class="btn p" id="art-mail" href="mailto:contacto@ezequielbrunner.com">Escribime sobre esta nota <span class="arr" aria-hidden="true">→</span></a><a class="btn" id="art-form" href="index.html#contacto">Usar el formulario <span class="arr" aria-hidden="true">→</span></a><a class="more" href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></div>
+</aside>
+<section class="more-notes" id="more-notes" aria-labelledby="more-title" hidden>
+<div class="reads-head"><h2 class="label" id="more-title">Más lecturas</h2><a class="more" href="publicaciones.html">Todas las publicaciones <span class="arr" aria-hidden="true">→</span></a></div>
+<ol class="reads-list" id="more-list"></ol>
+</section>
+</div>
+</main>
+
+<footer class="ftr">
+<div class="wrap">
+<p class="ftr-word" aria-hidden="true">Ezequiel <em>Brunner</em></p>
+<div class="ftr-grid">
+<div><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
+<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="index.html">Inicio</a></li><li><a href="publicaciones.html">Publicaciones</a></li><li><a href="index.html#servicios">Servicios</a></li><li><a href="index.html#metodo">Método</a></li><li><a href="index.html#sobre-mi">Sobre mí</a></li><li><a href="index.html#contacto">Contacto</a></li></ul></nav>
+<div><h2>Contacto</h2><ul><li><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a></li><li><a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></li><li><a href="publicaciones.html">Todas las publicaciones</a></li><li><a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a></li></ul></div>
+</div>
+<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><span><a href="#top">Volver arriba ↑</a></span></div>
+</div>
+</footer>
+<script src="news-data.js" defer></script>
+<script src="assets/js/vendor/gsap.min.js" defer></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/vendor/SplitText.min.js" defer></script>
+<script src="assets/js/vendor/lenis.min.js" defer></script>
+<script src="assets/js/fx.js?v=20261107" defer></script>
+<script src="article.js?v=20261107" defer></script>
+</body>
 </html>

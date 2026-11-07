@@ -3,191 +3,295 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#07090b">
+<meta name="theme-color" content="#0c1013">
+<title>Ezequiel Brunner | IA, gestión gastronómica y personas</title>
+<meta name="description" content="Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.">
 <link rel="canonical" href="https://ezequielbrunner.com/">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Ezequiel Brunner | IA, gestión gastronómica y personas">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ezequielbrunner.com/">
 <meta property="og:image" content="https://ezequielbrunner.com/assets/profile.jpeg">
-<title>Ezequiel Brunner | IA, gestión gastronómica y personas</title>
-<meta name="description" content="Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.">
 <script>
-/* Mejora progresiva: los efectos se activan solo si el navegador los soporta y no se pidió reducir el movimiento. */
+/* Mejora progresiva: sin JavaScript, sin WebGL o con movimiento reducido el sitio se ve completo. */
 (function () {
   var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   d.classList.add('js');
-  if (!rm) d.classList.add('fx');
-  if (!window.WebGL2RenderingContext) d.classList.add('no-gl');
+  if (rm) d.classList.add('reduced');
   try {
     var c = sessionStorage.getItem('eb-curtain');
-    if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); }
+    if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); setTimeout(function () { d.classList.remove('curtain-on'); }, 2500); }
   } catch (e) { }
-  setTimeout(function () { if (!(window.EB && window.EB.ready)) { d.classList.add('fx-failed'); d.classList.remove('curtain-on'); } }, 6000);
 })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="preload" as="image" href="assets/portrait-map.png">
-<link rel="stylesheet" href="assets/css/fx.css?v=20261106">
-<link rel="stylesheet" href="assets/css/home.css?v=20261106">
+<link rel="preload" as="image" href="assets/hero-poster.webp" fetchpriority="high">
+<link rel="stylesheet" href="assets/css/base.css?v=20261107">
+<link rel="stylesheet" href="assets/css/home.css?v=20261107">
 </head>
 <body data-page="home">
 <a class="skip" href="#main">Ir al contenido</a>
-<div class="fx-grain" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
-<header id="top">
-<nav aria-label="Principal">
-<a class="logo" href="#inicio"><b>EB</b>Ezequiel Brunner</a>
-<div class="links"><a href="#ia">IA</a><a href="#gastronomia">Gastronomía</a><a href="#personas">Personas</a><a href="#procesos">Método</a><a href="#sobre-mi">Sobre mí</a></div>
-<a class="btn p" href="#contacto">Hablemos <span class="arr">→</span></a>
-<button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav"><span></span></button>
+<header class="hdr" id="top">
+<div class="wrap hdr-in">
+<a class="brand" href="#inicio" aria-label="Ezequiel Brunner, inicio">
+<svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><ellipse class="m3" cx="20" cy="20" rx="18" ry="7.4" transform="rotate(-18 20 20)"/><ellipse class="m2" cx="20" cy="20" rx="15.5" ry="15.5"/><ellipse class="m1" cx="20" cy="20" rx="7.4" ry="17" transform="rotate(24 20 20)"/></svg>
+<span class="brand-name">Ezequiel <em>Brunner</em></span>
+</a>
+<nav class="nav" aria-label="Principal">
+<ul>
+<li><a href="#inicio">Inicio</a></li>
+<li><a href="#publicaciones">Publicaciones</a></li>
+<li class="has-sub"><div class="sub-row"><a href="#servicios">Servicios</a><button class="sub-btn" type="button" aria-expanded="false" aria-controls="sub-servicios"><span class="sr">Mostrar áreas de servicio</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6"/></svg></button></div>
+<ul class="sub" id="sub-servicios">
+<li><a href="#servicios-ia"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA<small>Inteligencia artificial para empresas</small></a></li>
+<li><a href="#servicios-gastronomia"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía<small>Consultoría gastronómica</small></a></li>
+<li><a href="#servicios-personas"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas<small>Recursos humanos y gestión de personal</small></a></li>
+</ul>
+</li>
+<li><a href="#metodo">Método</a></li>
+<li><a href="#sobre-mi">Sobre mí</a></li>
+<li><a href="#contacto">Contacto</a></li>
+</ul>
 </nav>
-<div class="mobile-nav" id="mnav" data-lenis-prevent>
-<a href="#ia">Inteligencia <em>artificial</em></a>
-<a href="#gastronomia">Gastronomía</a>
-<a href="#personas">Personas</a>
-<a href="#procesos">Método</a>
-<a href="#sobre-mi">Sobre mí</a>
-<a href="#contacto"><em>Hablemos →</em></a>
+<a class="btn p hdr-cta" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav"><span class="menu-label">Menú</span><i aria-hidden="true"></i></button>
 </div>
 </header>
-
-<nav class="hud" aria-hidden="true">
-<a href="#ia" tabindex="-1" data-for="ia"><span>IA</span><i></i></a>
-<a href="#gastronomia" tabindex="-1" data-for="gastronomia"><span>Gastronomía</span><i></i></a>
-<a href="#personas" tabindex="-1" data-for="personas"><span>Personas</span><i></i></a>
-<a href="#procesos" tabindex="-1" data-for="procesos"><span>Método</span><i></i></a>
-<a href="#sobre-mi" tabindex="-1" data-for="sobre-mi"><span>Sobre mí</span><i></i></a>
-<a href="#contacto" tabindex="-1" data-for="contacto"><span>Contacto</span><i></i></a>
+<div class="mnav" id="mnav" data-lenis-prevent>
+<nav aria-label="Menú del sitio">
+<ol>
+<li><a href="#inicio">Inicio</a></li>
+<li><a href="#publicaciones">Publicaciones</a></li>
+<li><a href="#servicios">Servicios</a>
+<div class="mnav-sub">
+<a href="#servicios-ia"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="t" cx="20" cy="20" r="12"/></svg>IA</a>
+<a href="#servicios-gastronomia"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="17"/><circle class="a" cx="20" cy="20" r="13"/></svg>Gastronomía</a>
+<a href="#servicios-personas"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><circle class="ghost" cx="20" cy="20" r="11"/><circle class="i" cx="20" cy="20" r="17"/></svg>Personas</a>
+</div>
+</li>
+<li><a href="#metodo">Método</a></li>
+<li><a href="#sobre-mi">Sobre mí</a></li>
+<li><a href="#contacto">Contacto</a></li>
+</ol>
 </nav>
+<div class="mnav-foot">
+<a class="btn p" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
+<p>contacto@ezequielbrunner.com · Mar del Plata, Argentina</p>
+</div>
+</div>
 
 <main id="main">
 
-<section class="hero" id="inicio" data-scene="portrait" data-anchor=".portrait" data-fit-mode="h" data-fit="1.12" data-fit-m="1.08" data-off="0,-0.04"><div class="wrap hero-grid">
+<section class="hero" id="inicio" data-stage="hero" aria-labelledby="hero-title">
+<div class="wrap hero-grid">
 <div class="hero-copy">
-<p class="hello" data-intro="1"><i></i>Consultoría empresarial · Mar del Plata</p>
-<h1 data-intro="2" data-chars>Ezequiel <em>Brunner</em></h1>
-<p class="rotator" data-intro="4">Hago que <span class="word" aria-hidden="true"><span class="on">la tecnología</span><span>los números</span><span>los equipos</span><span>los procesos</span></span><span class="sr">la tecnología, los números, los equipos y los procesos</span> trabajen a tu favor.</p>
-<p class="lead" data-intro="5">Inteligencia artificial, gestión gastronómica y organización de equipos. Transformo procesos complejos en operaciones más eficientes.</p>
-<div class="cta" data-intro="6"><a class="btn p" href="#contacto">Conversemos sobre tu negocio <span class="arr">→</span></a><a class="btn" href="#ia">Ver especialidades</a></div>
+<p class="kicker"><i aria-hidden="true"></i>Consultoría empresarial · Mar del Plata</p>
+<h1 id="hero-title" class="hero-name">Ezequiel <em>Brunner</em></h1>
+<p class="rotator">Hago que <span class="word" aria-hidden="true"><span class="on">la tecnología</span><span>los números</span><span>los equipos</span><span>los procesos</span></span><span class="sr">la tecnología, los números, los equipos y los procesos</span> trabajen a tu favor.</p>
+<p class="hero-lead">Inteligencia artificial, gestión gastronómica y organización de equipos. Transformo procesos complejos en operaciones más eficientes.</p>
+<div class="hero-cta"><a class="btn p" href="#publicaciones">Ver mis publicaciones <span class="arr" aria-hidden="true">→</span></a><a class="btn" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a></div>
 </div>
-<div class="portrait">
-<img src="assets/ezequiel-brunner-perfil.webp" alt="Ezequiel Brunner" width="697" height="1046" fetchpriority="high">
-<div class="badge glass b1" data-intro="7"><b>15+</b><div>años en<small>gestión gastronómica</small></div></div>
-<div class="badge glass b2" data-intro="8"><span class="dot"></span><div>IA aplicada<small>con criterio</small></div></div>
-<div class="badge glass b3" data-intro="9"><div>Mar del Plata<small>Argentina</small></div></div>
+<div class="hero-visual">
+<img class="poster" src="assets/hero-poster.webp" alt="Ezequiel Brunner" width="1120" height="1120" fetchpriority="high" decoding="async">
+<ul class="hero-tags">
+<li class="tag tag-1"><b>15+</b><span>años en<small>gestión gastronómica</small></span></li>
+<li class="tag tag-2"><i class="dot" aria-hidden="true"></i><span>IA aplicada<small>con criterio</small></span></li>
+<li class="tag tag-3"><span>Mar del Plata<small>Argentina</small></span></li>
+</ul>
 </div>
+<a class="hero-latest" href="article.html?slug=sigu-inteligencia-artificial-seguridad-nacional-control-humano"><span class="hl-k"><i aria-hidden="true"></i>Última publicación · Mayo 2026</span><span class="hl-t">SIGU, inteligencia artificial y seguridad nacional: entre el avance tecnológico y la obligación de control humano</span><span class="hl-go" aria-hidden="true">→</span></a>
 </div>
-<div class="scroll-hint" aria-hidden="true" data-intro="10"><i></i>Bajá</div>
+<a class="scroll-hint" href="#publicaciones" tabindex="-1" aria-hidden="true"><i></i>Bajá</a>
 </section>
 
+<section class="pubs" id="publicaciones" data-stage="pubs" aria-labelledby="pubs-title">
+<div class="wrap">
+<header class="sec-head">
+<p class="eyebrow"><span class="num">01</span><i></i>Publicaciones</p>
+<h2 id="pubs-title">Actualidad <em>y análisis.</em></h2>
+<p class="sec-intro">Una selección de notas, intervenciones y lecturas sobre inteligencia artificial, derecho y debates regulatorios en desarrollo.</p>
+<a class="more sec-all" href="publicaciones.html">Ver todas las publicaciones <span class="arr" aria-hidden="true">→</span></a>
+</header>
+<article class="feature" data-slug="sigu-inteligencia-artificial-seguridad-nacional-control-humano">
+<a class="pub-cover" href="article.html?slug=sigu-inteligencia-artificial-seguridad-nacional-control-humano" tabindex="-1" aria-hidden="true"><svg class="ring-art" viewBox="-225 -150 450 300" style="left:-25%;top:-25%;width:150%;height:150%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g opacity="0.87"><path d="M-72 96.4A120.3 96.4 -53.3 0 0 77.2 57.7A120.3 96.4 -53.3 0 0 72 -96.4" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M105.1 -51.9L108.6 -53.6M101.7 -62.4L105.1 -64.5M97.1 -72.2L100.4 -74.6M91.5 -81.3L94.6 -84M77.3 -96.6L79.9 -99.8M-68.9 102.7L-71.3 106.1M-59.8 107.6L-61.8 111.3M-50 111.5L-51.7 115.2M-28.9 115.4L-29.8 119.2M-17.7 115.4L-18.3 119.3M-6.5 114.2L-6.7 118.1M4.9 111.8L5.1 115.5M27.4 103.3L28.3 106.7M38.2 97.3L39.5 100.5M48.6 90.2L50.2 93.2M58.5 82.2L60.5 84.9M76.2 63.5L78.8 65.6M83.9 53L86.7 54.8M90.7 42L93.7 43.4M96.4 30.5L99.6 31.6M104.7 6.7L108.2 6.9M107.1 -5.4L110.7 -5.6M108.4 -17.4L112 -18M108.5 -29.3L112.1 -30.3" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M107.4 -40.8L115.2 -43.8M84.9 -89.4L91 -95.9M-39.6 114L-42.5 122.3M16.2 108.1L17.4 116M67.7 73.2L72.7 78.5M101.1 18.7L108.5 20.1" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g opacity="0.81"><path d="M90.6 -115.9A147.1 110.1 -52 0 0 -86.7 -67.8A147.1 110.1 -52 0 0 -90.6 115.9" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="-9.9" cy="-125.8" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-9.9" cy="-125.8" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-24.8" cy="-119.3" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-24.8" cy="-119.3" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-115.9" cy="-15.2" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-115.9" cy="-15.2" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-119.4" cy="-4.5" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-119.4" cy="-4.5" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-123.1" cy="11.6" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-123.1" cy="11.6" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-124.9" cy="24.9" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-124.9" cy="24.9" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/></g><g><path d="M98.7 0A98.7 98.7 0 0 0 0 -98.7A98.7 98.7 0 0 0 -98.7 0A98.7 98.7 0 0 0 0 98.7A98.7 98.7 0 0 0 98.7 0" stroke="#5eead4" stroke-opacity="0.14" stroke-width="7"/><path d="M98.7 0A98.7 98.7 0 0 0 0 -98.7A98.7 98.7 0 0 0 -98.7 0A98.7 98.7 0 0 0 0 98.7A98.7 98.7 0 0 0 98.7 0" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="98.7" cy="0" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="91.2" cy="-37.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="69.8" cy="-69.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="37.8" cy="-91.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="0" cy="-98.7" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-37.8" cy="-91.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-69.8" cy="-69.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-91.2" cy="-37.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-98.7" cy="0" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-91.2" cy="37.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-69.8" cy="69.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-37.8" cy="91.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="0" cy="98.7" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="37.8" cy="91.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="69.8" cy="69.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="91.2" cy="37.8" r="1.3" fill="#dffff9" fill-opacity="1"/></g><g opacity="0.87"><path d="M72 -96.4A120.3 96.4 -53.3 0 0 -77.2 -57.7A120.3 96.4 -53.3 0 0 -72 96.4" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M68.9 -102.7L71.3 -106.1M59.8 -107.6L61.8 -111.3M50 -111.5L51.7 -115.2M28.9 -115.4L29.8 -119.2M17.7 -115.4L18.3 -119.3M6.5 -114.2L6.7 -118.1M-4.9 -111.8L-5.1 -115.5M-27.4 -103.3L-28.3 -106.7M-38.2 -97.3L-39.5 -100.5M-48.6 -90.2L-50.2 -93.2M-58.5 -82.2L-60.5 -84.9M-76.2 -63.5L-78.8 -65.6M-83.9 -53L-86.7 -54.8M-90.7 -42L-93.7 -43.4M-96.4 -30.5L-99.6 -31.6M-104.7 -6.7L-108.2 -6.9M-107.1 5.4L-110.7 5.6M-108.4 17.4L-112 18M-108.5 29.3L-112.1 30.3M-105.1 51.9L-108.6 53.6M-101.7 62.4L-105.1 64.5M-97.1 72.2L-100.4 74.6M-91.5 81.3L-94.6 84M-77.3 96.6L-79.9 99.8" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M39.6 -114L42.5 -122.3M-16.2 -108.1L-17.4 -116M-67.7 -73.2L-72.7 -78.5M-101.1 -18.7L-108.5 -20.1M-107.4 40.8L-115.2 43.8M-84.9 89.4L-91 95.9" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g opacity="0.81"><path d="M-90.6 115.9A147.1 110.1 -52 0 0 86.7 67.8A147.1 110.1 -52 0 0 90.6 -115.9" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="112.9" cy="-89.4" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="112.9" cy="-89.4" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="105.6" cy="-100.7" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="105.6" cy="-100.7" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="99.9" cy="-107.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="99.9" cy="-107.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-86.6" cy="118.8" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-86.6" cy="118.8" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="-72.1" cy="126.9" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-72.1" cy="126.9" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="41.5" cy="109.6" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="41.5" cy="109.6" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="53.2" cy="101.3" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="53.2" cy="101.3" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="113.9" cy="20.7" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="113.9" cy="20.7" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="118.5" cy="7.4" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="118.5" cy="7.4" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="122.6" cy="-8.7" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="122.6" cy="-8.7" r="2.7" fill="#ffdcb4" fill-opacity="1"/></g></svg><span class="cv-top"><span>Nota destacada</span><span>Mayo 2026</span></span><span class="cv-mid">Actualidad y Análisis</span><span class="cv-bot"><span>Por Ezequiel Brunner</span><span>2 min de lectura</span></span></a>
+<div class="feature-txt">
+<p class="label">Nota destacada</p>
+<h3 class="feature-title"><a href="article.html?slug=sigu-inteligencia-artificial-seguridad-nacional-control-humano">SIGU, inteligencia artificial y seguridad nacional: entre el avance tecnológico y la obligación de control humano</a></h3>
+<p class="meta"><span class="cat">Actualidad y Análisis</span><span>Mayo 2026</span><span>2 min de lectura</span></p>
+<p class="dek">Análisis jurídico y tecnológico sobre SIGU, el sistema de inteligencia artificial implementado por Prefectura Naval Argentina, sus ventajas operativas, los desafíos de la soberanía tecnológica y los riesgos vinculados a la transparencia algorítmica, la trazabilidad y el control humano en decisiones de seguridad nacional.</p>
+<div class="cta"><a class="btn p" href="article.html?slug=sigu-inteligencia-artificial-seguridad-nacional-control-humano">Leer la nota <span class="arr" aria-hidden="true">→</span></a><a class="more" href="?tema=sigu-inteligencia-artificial-seguridad-nacional-control-humano#contacto" data-tema="sigu-inteligencia-artificial-seguridad-nacional-control-humano">Conversemos sobre este tema <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+</article>
+<div class="reads">
+<div class="reads-head"><h3 class="label">Más lecturas</h3><a class="more" href="publicaciones.html#notas">Archivo de notas <span class="arr" aria-hidden="true">→</span></a></div>
+<ol class="reads-list" id="reads-list">
+<li><article class="read lamp"><a href="article.html?slug=argentina-ia-privacidad-imagenes-responsabilidad"><span class="read-n" aria-hidden="true">02</span><p class="meta"><span class="cat">Actualidad</span><span>16 de marzo de 2026</span><span>5 min</span></p><h4>Argentina empieza a mover la aguja en inteligencia artificial: privacidad, imágenes sintéticas y responsabilidad</h4><p class="read-dek">Argentina empezó a mostrar señales concretas de gobernanza en inteligencia artificial, con foco en privacidad, remoción de daños, sandbox regulatorio e incentivos a la inversión.</p><span class="read-go">Leer la nota <span class="arr" aria-hidden="true">→</span></span></a></article></li>
+<li><article class="read lamp"><a href="article.html?slug=openai-gpt-5-4"><span class="read-n" aria-hidden="true">03</span><p class="meta"><span class="cat">Actualidad</span><span>15 de marzo de 2026</span><span>2 min</span></p><h4>OpenAI lanzo GPT-5.4 y volvio a mover el centro de gravedad de la IA</h4><p class="read-dek">OpenAI presento el 5 de marzo de 2026 a GPT-5.4, su nuevo modelo principal para trabajo profesional, con despliegue en ChatGPT, API y Codex.</p><span class="read-go">Leer la nota <span class="arr" aria-hidden="true">→</span></span></a></article></li>
+<li><article class="read lamp"><a href="article.html?slug=bytedance-seedance-copyright"><span class="read-n" aria-hidden="true">04</span><p class="meta"><span class="cat">Copyright e IA</span><span>15 de marzo de 2026</span><span>2 min</span></p><h4>ByteDance freno Seedance 2.0 y la pelea entre IA y copyright volvio a estallar</h4><p class="read-dek">ByteDance suspendio el lanzamiento global de Seedance 2.0 despues de que escalaran disputas por derechos de autor con grandes estudios de Hollywood y plataformas de streaming de Estados Unidos.</p><span class="read-go">Leer la nota <span class="arr" aria-hidden="true">→</span></span></a></article></li>
+<li><article class="read lamp"><a href="article.html?slug=yann-lecun-ami"><span class="read-n" aria-hidden="true">05</span><p class="meta"><span class="cat">Industria y futuro</span><span>15 de marzo de 2026</span><span>2 min</span></p><h4>Yann LeCun reunio mas de US$ 1.000 millones para desafiar la logica dominante de la IA</h4><p class="read-dek">Yann LeCun consiguio US$ 1.03 mil millones para su startup AMI, con una apuesta que busca ir mas alla del modelo clasico de los grandes sistemas de lenguaje.</p><span class="read-go">Leer la nota <span class="arr" aria-hidden="true">→</span></span></a></article></li>
+</ol>
+</div>
+<div class="doctrina">
+<div class="doc-head">
+<p class="eyebrow">Doctrina</p>
+<h3>Doctrinas y trabajos publicados</h3>
+<p>Trabajos sobre transparencia algorítmica, responsabilidad pública y Derecho Laboral, con acceso a sus fuentes de publicación.</p>
+<a class="more" href="publicaciones.html#doctrina">Ver toda la doctrina y el dossier <span class="arr" aria-hidden="true">→</span></a>
+</div>
+<ul class="doc-list">
+<li><a href="https://www.saij.gob.ar/ezequiel-brunner-transparencia-algoritmica-como-garantia-constitucional-hacia-modelo-argentino-control-real-responsabilidad-publica-dacf250125-2025-12-17/123456789-0abc-defg5210-52fcanirtcod" target="_blank" rel="noopener noreferrer"><span class="src">Doctrina · SAIJ</span><span class="t">Transparencia algorítmica como garantía constitucional: hacia un modelo argentino de control real y responsabilidad pública</span><span class="go">Leer en SAIJ <span aria-hidden="true">↗</span></span></a></li>
+<li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5997154" target="_blank" rel="noopener noreferrer"><span class="src">Investigación · SSRN · 2026</span><span class="t">Algorithmic Transparency as a Due Process Requirement in Automated Decision-Making</span><span class="go">Leer en SSRN <span aria-hidden="true">↗</span></span></a></li>
+<li><a href="https://www.kennedy.edu.ar/wp-content/uploads/2025/04/2024.-Anuario-60-Aniversario.-Fac.-Cs.-Juri%CC%81dicas_compressed-2.pdf?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><span class="src">Congreso académico · 2024</span><span class="t">Inteligencia Artificial y Derecho: Innovación y Retos Éticos en la Legislación Tecnológica</span><span class="go">Abrir anuario oficial <span aria-hidden="true">↗</span></span></a></li>
+<li><a href="https://www.saij.gob.ar/ezequiel-brunner-cuando-explicar-alcanza-responsabilidad-algoritmica-prueba-reparacion-frente-decisiones-automatizadas-administracion-publica-argentina-dacf260043-2026-04-30/123456789-0abc-defg3400-62fcanirtcod?q=fecha-rango%3A%5B20251130%20TO%2020260530%5D&amp;o=6&amp;f=Total%7CFecha%7CEstado%20de%20Vigencia%5B5%2C1%5D%7CTema%5B5%2C1%5D%7COrganismo%5B5%2C1%5D%7CAutor%5B5%2C1%5D%7CJurisdicci%F3n%5B5%2C1%5D%7CTribunal%5B5%2C1%5D%7CPublicaci%F3n%5B5%2C1%5D%7CColecci%F3n%20tem%E1tica%5B5%2C1%5D%7CTipo%20de%20Documento/Doctrina&amp;t=65" target="_blank" rel="noopener noreferrer"><span class="src">Doctrina · SAIJ</span><span class="t">Cuando explicar no alcanza: responsabilidad algorítmica, prueba y reparación frente a decisiones automatizadas en la Administración Pública argentina</span><span class="go">Abrir publicación <span aria-hidden="true">↗</span></span></a></li>
+</ul>
+<div class="press"><p class="label">Apariciones en medios</p><ul><li>La Capital</li><li>El Retrato de Hoy</li><li>Mar del Plata Web</li><li>Diario Constitucional</li><li>El Periódico</li><li>MDP OK</li></ul><a class="more" href="publicaciones.html#medios">Medios, menciones y reconocimientos <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="services" id="servicios" data-stage="services" aria-labelledby="svc-title">
+<div class="wrap">
+<header class="sec-head">
+<p class="eyebrow"><span class="num">02</span><i></i>Servicios</p>
+<h2 id="svc-title">IA, Gastronomía <em>y Personas.</em></h2>
+</header>
+<div class="svc-index">
+<div class="svc-tabs" aria-hidden="true"><svg class="ring-art" viewBox="-372 -124 744 248" style="left:-12%;top:-12%;width:124%;height:124%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g><path d="M-247.7 49.9A69.1 63 -46.3 0 0 -154.4 43.5A69.1 63 -46.3 0 0 -152.3 -49.9" stroke="#5eead4" stroke-opacity="0.06" stroke-width="7"/><path d="M-247.7 49.9A69.1 63 -46.3 0 0 -154.4 43.5A69.1 63 -46.3 0 0 -152.3 -49.9" stroke="#5eead4" stroke-opacity="0.38" stroke-width="1.4"/><circle cx="-134" cy="-6" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="-139" cy="-30.8" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-246.7" cy="50.9" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-225.3" cy="63.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-200" cy="66" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="-174.7" cy="58.7" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-153.3" cy="42.4" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-139" cy="19.7" r="1.3" fill="#dffff9" fill-opacity="0.4"/></g><g><path d="M-69.9 -41.3A81.2 74.8 30.6 0 0 -38 64.4A81.2 74.8 30.6 0 0 69.9 41.3" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M-74.5 -37.8L-77 -39M-79.9 -22.6L-82.6 -23.4M-81.3 -14.6L-84.1 -15.1M-81.9 -6.4L-84.6 -6.6M-81.5 1.8L-84.2 1.9M-78.1 18.1L-80.7 18.7M-75.1 26L-77.6 26.9M-71.3 33.6L-73.7 34.8M-66.7 40.9L-68.9 42.3M-55.4 54L-57.2 55.8M-48.7 59.7L-50.4 61.7M-41.6 64.7L-43 66.9M-34 69L-35.1 71.3M-17.8 75.4L-18.4 77.9M-9.3 77.3L-9.6 79.9M-0.8 78.4L-0.8 81M7.8 78.7L8 81.3M24.6 76.6L25.4 79.1M32.6 74.2L33.7 76.7M40.3 71.1L41.6 73.5M47.5 67.2L49.1 69.5M60.3 57.2L62.3 59.2M65.8 51.3L68 53M70.5 44.8L72.9 46.3" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M-77.6 -30.3L-83.3 -32.6M-80.2 10L-86.1 10.7M-61.4 47.7L-65.8 51.2M-26 72.6L-27.9 77.9M16.3 78L17.4 83.7M54.2 62.6L58.1 67.1" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g><path d="M147.1 78A94.3 85.8 -55.9 0 0 271 48.1A94.3 85.8 -55.9 0 0 252.9 -78" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="288.1" cy="1.2" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="288.1" cy="1.2" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="288.5" cy="-9.8" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="288.5" cy="-9.8" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="288.1" cy="-17.1" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="288.1" cy="-17.1" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="181.3" cy="91" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="181.3" cy="91" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="190.1" cy="91.7" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="190.1" cy="91.7" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="249.1" cy="71.6" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="249.1" cy="71.6" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="256.2" cy="65.5" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="256.2" cy="65.5" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="264" cy="57.4" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="264" cy="57.4" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/></g><g><path d="M-152.3 -49.9A69.1 63 -46.3 0 0 -245.6 -43.5A69.1 63 -46.3 0 0 -247.7 49.9" stroke="#5eead4" stroke-opacity="0.14" stroke-width="7"/><path d="M-152.3 -49.9A69.1 63 -46.3 0 0 -245.6 -43.5A69.1 63 -46.3 0 0 -247.7 49.9" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="-153.3" cy="-50.9" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-174.7" cy="-63.3" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-200" cy="-66" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-225.3" cy="-58.7" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-246.7" cy="-42.4" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-261" cy="-19.7" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-266" cy="6" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-261" cy="30.8" r="1.3" fill="#dffff9" fill-opacity="1"/></g><g><path d="M69.9 41.3A81.2 74.8 30.6 0 0 38 -64.4A81.2 74.8 30.6 0 0 -69.9 -41.3" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M78.1 -18.1L80.7 -18.7M75.1 -26L77.6 -26.9M71.3 -33.6L73.7 -34.8M66.7 -40.9L68.9 -42.3M55.4 -54L57.2 -55.8M48.7 -59.7L50.4 -61.7M41.6 -64.7L43 -66.9M34 -69L35.1 -71.3M17.8 -75.4L18.4 -77.9M9.3 -77.3L9.6 -79.9M0.8 -78.4L0.8 -81M-7.8 -78.7L-8 -81.3M-24.6 -76.6L-25.4 -79.1M-32.6 -74.2L-33.7 -76.7M-40.3 -71.1L-41.6 -73.5M-47.5 -67.2L-49.1 -69.5M-60.3 -57.2L-62.3 -59.2M-65.8 -51.3L-68 -53M-70.5 -44.8L-72.9 -46.3M74.5 37.8L77 39M79.9 22.6L82.6 23.4M81.3 14.6L84.1 15.1M81.9 6.4L84.6 6.6M81.5 -1.8L84.2 -1.9" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M80.2 -10L86.1 -10.7M61.4 -47.7L65.8 -51.2M26 -72.6L27.9 -77.9M-16.3 -78L-17.4 -83.7M-54.2 -62.6L-58.1 -67.1M77.6 30.3L83.3 32.6" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g><path d="M252.9 -78A94.3 85.8 -55.9 0 0 129 -48.1A94.3 85.8 -55.9 0 0 147.1 78" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="240.2" cy="-85" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="240.2" cy="-85" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="230.4" cy="-88.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="230.4" cy="-88.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="147.9" cy="-69.1" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="147.9" cy="-69.1" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="142.3" cy="-64.1" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="142.3" cy="-64.1" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="134.7" cy="-55.8" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="134.7" cy="-55.8" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="129.1" cy="-48.3" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="129.1" cy="-48.3" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="114.4" cy="31.1" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="114.4" cy="31.1" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="118.7" cy="43.6" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="118.7" cy="43.6" r="1.9" fill="#ffdcb4" fill-opacity="1"/></g></svg></div>
+<ul class="svc-links">
+<li><a href="#servicios-ia" class="t"><span class="n">01</span><b>IA</b><span class="d">Inteligencia artificial para empresas</span></a></li>
+<li><a href="#servicios-gastronomia" class="a"><span class="n">02</span><b>Gastronomía</b><span class="d">Consultoría gastronómica</span></a></li>
+<li><a href="#servicios-personas" class="i"><span class="n">03</span><b>Personas</b><span class="d">Recursos humanos y gestión de personal</span></a></li>
+</ul>
+</div>
+</div>
 <div class="marquee" aria-hidden="true"><div class="track">
 <span>Automatización <em>✦</em></span><span>Control de costos <em>✦</em></span><span>Asistentes con IA <em>✦</em></span><span>Selección de personal <em>✦</em></span><span>Tableros y reportes <em>✦</em></span><span>Apertura de locales <em>✦</em></span><span>Auditorías operativas <em>✦</em></span><span>Capacitación de encargados <em>✦</em></span>
 <span>Automatización <em>✦</em></span><span>Control de costos <em>✦</em></span><span>Asistentes con IA <em>✦</em></span><span>Selección de personal <em>✦</em></span><span>Tableros y reportes <em>✦</em></span><span>Apertura de locales <em>✦</em></span><span>Auditorías operativas <em>✦</em></span><span>Capacitación de encargados <em>✦</em></span>
 </div></div>
+</section>
 
-<section class="manifesto" id="enfoque" data-scene="cloud" data-pos="0.5,0.5" data-size="0.8" data-intensity="0.55" data-intensity-m="0.4"><div class="wrap">
-<p class="eyebrow">Mi enfoque</p>
+<section class="svc svc-ia" id="servicios-ia" data-stage="svc-ia" aria-labelledby="ia-title">
+<div class="wrap svc-grid">
+<div class="svc-side">
+<div class="svc-visual"><svg class="ring-art" viewBox="-140 -140 280 280" style="left:-20%;top:-20%;width:140%;height:140%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g><path d="M-43.3 66.8A81.4 47.2 -52.8 0 0 43.5 30.4A81.4 47.2 -52.8 0 0 55.1 -63" stroke="#5eead4" stroke-opacity="0.06" stroke-width="7"/><path d="M-43.3 66.8A81.4 47.2 -52.8 0 0 43.5 30.4A81.4 47.2 -52.8 0 0 55.1 -63" stroke="#5eead4" stroke-opacity="0.38" stroke-width="1.4"/><circle cx="67.6" cy="-26.7" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="65" cy="-49.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-41.5" cy="68" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-22.7" cy="72.8" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="0.5" cy="66.7" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="24.5" cy="50.8" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="45.7" cy="27.5" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="60.8" cy="0.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/></g><g opacity="0.65"><path d="M-75.5 -21.8A78.3 28.3 23 0 0 -14.5 34.8A78.3 28.3 23 0 0 68.7 39.3" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M62.6 47.4L64.8 48.7M66 45.7L68.3 46.9M68.6 43.5L71 44.7M70.4 41L72.9 42.1M-78.4 -17.4L-80.9 -18.2M-77.8 -13.9L-80.3 -14.6M-76.3 -10.1L-78.8 -10.8M-74.1 -6.2L-76.4 -6.7M-67.3 2.1L-69.4 1.9M-62.8 6.4L-64.8 6.4M-57.7 10.8L-59.5 10.8M-52 15.1L-53.6 15.3M-39.1 23.4L-40.3 23.9M-32 27.4L-32.9 28M-24.6 31.1L-25.3 31.9M-16.9 34.6L-17.4 35.5M-1.3 40.8L-1.2 41.9M6.5 43.3L6.9 44.5M14.3 45.5L14.8 46.7M21.8 47.3L22.6 48.6M35.9 49.6L37.2 50.9M42.4 50L43.9 51.4M48.3 50L50.1 51.4M53.7 49.6L55.7 51" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M58.5 48.7L63 51.6M-78.2 -20.6L-83.6 -22.7M-71.1 -2.1L-76 -2.9M-45.8 19.3L-48.9 20.1M-9.1 37.9L-9.6 40M29 48.6L31.4 51.5" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g opacity="0.61"><path d="M-112.7 17.8A85.8 27.8 -27.4 0 0 -23.7 3A85.8 27.8 -27.4 0 0 39.8 -61.1" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="-85.8" cy="24.3" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-85.8" cy="24.3" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-76.4" cy="22.8" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-76.4" cy="22.8" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-5.8" cy="-7.1" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-5.8" cy="-7.1" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="1.1" cy="-11.6" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="1.1" cy="-11.6" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="35.8" cy="-43.3" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="35.8" cy="-43.3" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="38.2" cy="-47.3" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="38.2" cy="-47.3" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="40" cy="-51.7" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="40" cy="-51.7" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/></g><g><path d="M55.1 -63A81.4 47.2 -52.8 0 0 -31.7 -26.6A81.4 47.2 -52.8 0 0 -43.3 66.8" stroke="#5eead4" stroke-opacity="0.14" stroke-width="7"/><path d="M55.1 -63A81.4 47.2 -52.8 0 0 -31.7 -26.6A81.4 47.2 -52.8 0 0 -43.3 66.8" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="53.3" cy="-64.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="34.5" cy="-68.9" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="11.3" cy="-62.9" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-12.7" cy="-47" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-33.9" cy="-23.7" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-49" cy="3.6" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-55.8" cy="30.5" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-53.1" cy="53.2" r="1.3" fill="#dffff9" fill-opacity="1"/></g><g opacity="0.65"><path d="M68.7 39.3A78.3 28.3 23 0 0 7.7 -17.3A78.3 28.3 23 0 0 -75.5 -21.8" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M71.6 34.9L74.1 35.8M71 31.4L73.5 32.2M69.5 27.7L72 28.3M67.3 23.7L69.6 24.2M60.5 15.4L62.6 15.6M56 11.1L58 11.2M50.9 6.8L52.7 6.7M45.2 2.5L46.8 2.2M32.3 -5.9L33.5 -6.4M25.2 -9.9L26.1 -10.5M17.8 -13.6L18.5 -14.4M10.1 -17.1L10.6 -18M-5.5 -23.3L-5.6 -24.3M-13.3 -25.8L-13.7 -27M-21.1 -28L-21.6 -29.2M-28.6 -29.8L-29.4 -31.1M-42.7 -32L-44 -33.4M-49.2 -32.5L-50.7 -33.9M-55.1 -32.5L-56.9 -33.9M-60.5 -32.1L-62.5 -33.5M-69.4 -29.9L-71.6 -31.2M-72.8 -28.1L-75.1 -29.4M-75.4 -26L-77.8 -27.2M-77.2 -23.5L-79.7 -24.5" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M71.4 38.1L76.8 40.2M64.3 19.6L69.2 20.4M39 -1.8L42.1 -2.5M2.3 -20.4L2.8 -22.5M-35.8 -31.1L-38.2 -34M-65.3 -31.2L-69.8 -34.1" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g opacity="0.61"><path d="M39.8 -61.1A85.8 27.8 -27.4 0 0 -49.3 -46.3A85.8 27.8 -27.4 0 0 -112.7 17.8" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="30.6" cy="-67.2" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="30.6" cy="-67.2" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="25.5" cy="-68" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="25.5" cy="-68" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="21.6" cy="-68.2" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="21.6" cy="-68.2" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-48" cy="-46.9" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-48" cy="-46.9" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="-57.1" cy="-42.1" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-57.1" cy="-42.1" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-109.8" cy="1.7" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-109.8" cy="1.7" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-111.6" cy="4.8" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-111.6" cy="4.8" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="-113.2" cy="9.2" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-113.2" cy="9.2" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-113.8" cy="12.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-113.8" cy="12.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/></g></svg></div>
+<p class="svc-tagline"><span>01 / 03</span>IA</p>
+</div>
+<div class="svc-main">
+<p class="eyebrow">Inteligencia artificial para empresas</p>
+<h2 id="ia-title">Menos tareas repetitivas, <em>más control.</em></h2>
+<p class="lead">Incorporo IA con criterio: donde ahorra tiempo real y donde la información ayuda a decidir mejor. Sin promesas mágicas.</p>
+<div class="cards c2">
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div><h3>Automatización administrativa</h3><p>Tareas de oficina repetitivas resueltas de forma ordenada y verificable.</p></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v5M9.5 10.5h5"/></svg></div><h3>Herramientas y asistentes con IA</h3><p>Implementación de asistentes internos adaptados a tu operación y a tu equipo.</p></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5"/></svg></div><h3>Optimización y digitalización</h3><p>Procesos mapeados, simplificados y llevados a herramientas digitales.</p></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>Seguimiento, control y reportes</h3><p>Tableros claros para ver qué pasa en el negocio sin perseguir planillas.</p></div>
+</div>
+<figure class="svc-photo"><img src="assets/procesos-ia-v2.webp" alt="Ilustración conceptual de una estructura de procesos conectados" width="1086" height="1448" loading="lazy" decoding="async"><figcaption><b>Procesos conectados</b><span>IA para empresas</span></figcaption></figure>
+<div class="cta"><a class="btn p" href="inteligencia-artificial.html">Ver servicios de IA <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="svc svc-gas" id="servicios-gastronomia" data-stage="svc-gas" aria-labelledby="gas-title">
+<div class="wrap svc-grid">
+<div class="svc-side">
+<div class="svc-visual"><svg class="ring-art" viewBox="-140 -140 280 280" style="left:-20%;top:-20%;width:140%;height:140%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g opacity="0.65"><path d="M-61 -0.6A70.3 28.5 -16.6 0 0 14.5 6.7A70.3 28.5 -16.6 0 0 73.7 -40.7" stroke="#5eead4" stroke-opacity="0.03" stroke-width="7"/><path d="M-61 -0.6A70.3 28.5 -16.6 0 0 14.5 6.7A70.3 28.5 -16.6 0 0 73.7 -40.7" stroke="#5eead4" stroke-opacity="0.38" stroke-width="1.4"/><circle cx="-53.7" cy="7.8" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="-37.1" cy="12.7" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-13.8" cy="12.5" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="12.5" cy="7.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="37.9" cy="-2.2" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="58.5" cy="-14.5" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="71.1" cy="-27.7" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="73.9" cy="-39.9" r="1.3" fill="#dffff9" fill-opacity="0.4"/></g><g><path d="M-53.3 -63A80 51.5 53.7 0 0 -47.4 32A80 51.5 53.7 0 0 41.5 66" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M-58.9 -61.2L-60.6 -63.3M-65.5 -51.9L-67.5 -53.7M-67.8 -46.3L-69.9 -47.9M-69.5 -40.3L-71.6 -41.7M-70.4 -33.7L-72.6 -34.9M-70.2 -19.6L-72.4 -20.3M-69.1 -12.1L-71.2 -12.6M-67.2 -4.5L-69.3 -4.7M-64.7 3.2L-66.7 3.2M-57.8 18.4L-59.5 19M-53.4 25.8L-55 26.6M-48.6 32.9L-50 33.9M-43.3 39.6L-44.5 40.9M-31.4 51.8L-32.3 53.5M-25.1 57.2L-25.7 59M-18.5 61.9L-18.9 63.9M-11.8 65.9L-12 68M1.8 71.8L2 74.2M8.5 73.6L8.9 76.1M15 74.7L15.7 77.1M21.3 74.9L22.2 77.4M32.9 72.9L34.2 75.3M38.1 70.8L39.6 73.1M42.8 67.9L44.5 70.1" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M-62.5 -56.9L-66.6 -61.1M-70.7 -26.8L-75.4 -28.9M-61.6 10.8L-65.6 11.5M-37.5 46L-39.8 49.2M-5 69.2L-4.9 74.1M27.3 74.3L29.7 79.6" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g opacity="0.61"><path d="M-47.8 12.5A85.9 42.7 -2.2 0 0 39.6 51.8A85.9 42.7 -2.2 0 0 123.8 5.9" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="-43.7" cy="24.6" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-43.7" cy="24.6" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-41.4" cy="27.7" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-41.4" cy="27.7" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-36.9" cy="32.2" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-36.9" cy="32.2" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-32.4" cy="35.7" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-32.4" cy="35.7" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="32.7" cy="52" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="32.7" cy="52" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="45.6" cy="51.5" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="45.6" cy="51.5" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="111.9" cy="28.7" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="111.9" cy="28.7" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="115.9" cy="24.8" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="115.9" cy="24.8" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/></g><g opacity="0.65"><path d="M73.7 -40.7A70.3 28.5 -16.6 0 0 -1.8 -48A70.3 28.5 -16.6 0 0 -61 -0.6" stroke="#5eead4" stroke-opacity="0.06" stroke-width="7"/><path d="M73.7 -40.7A70.3 28.5 -16.6 0 0 -1.8 -48A70.3 28.5 -16.6 0 0 -61 -0.6" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="66.5" cy="-49.1" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="49.8" cy="-54" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="26.6" cy="-53.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="0.2" cy="-48.6" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-25.2" cy="-39.1" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-45.8" cy="-26.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-58.4" cy="-13.6" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-61.2" cy="-1.4" r="1.3" fill="#dffff9" fill-opacity="1"/></g><g><path d="M41.5 66A80 51.5 53.7 0 0 35.6 -29A80 51.5 53.7 0 0 -53.3 -63" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M58.4 22.6L60.6 23.3M57.3 15.2L59.4 15.6M55.4 7.6L57.5 7.8M52.9 -0.1L54.9 -0.2M46 -15.3L47.7 -15.9M41.6 -22.7L43.2 -23.5M36.8 -29.8L38.2 -30.9M31.4 -36.6L32.7 -37.9M19.6 -48.8L20.5 -50.5M13.2 -54.1L13.9 -56M6.7 -58.8L7.1 -60.8M0 -62.8L0.1 -65M-13.6 -68.8L-13.8 -71.1M-20.3 -70.6L-20.8 -73M-26.8 -71.6L-27.5 -74.1M-33.1 -71.8L-34 -74.3M-44.7 -69.9L-46 -72.3M-49.9 -67.7L-51.4 -70.1M-54.7 -64.8L-56.3 -67.1M47 64.2L48.8 66.3M53.6 54.9L55.6 56.7M56 49.4L58.1 51M57.6 43.3L59.8 44.7M58.6 36.8L60.8 38" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M58.9 29.9L63.6 31.9M49.7 -7.8L53.8 -8.5M25.7 -42.9L28 -46.2M-6.8 -66.2L-6.9 -71.1M-39.1 -71.3L-41.5 -76.6M50.7 59.9L54.8 64.2" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g opacity="0.61"><path d="M123.8 5.9A85.9 42.7 -2.2 0 0 36.3 -33.4A85.9 42.7 -2.2 0 0 -47.8 12.5" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="72.9" cy="-30.8" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="72.9" cy="-30.8" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="63.3" cy="-32.3" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="63.3" cy="-32.3" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="56.6" cy="-33" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="56.6" cy="-33" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-22.4" cy="-19.4" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-22.4" cy="-19.4" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="-29.3" cy="-15.4" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-29.3" cy="-15.4" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="120.7" cy="-4.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="120.7" cy="-4.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="118" cy="-8.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="118" cy="-8.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="113.7" cy="-13" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="113.7" cy="-13" r="2.7" fill="#ffdcb4" fill-opacity="1"/></g></svg></div>
+<p class="svc-tagline"><span>02 / 03</span>Gastronomía</p>
+</div>
+<div class="svc-main">
+<p class="eyebrow">Consultoría gastronómica</p>
+<h2 id="gas-title">Una operación <em>con números claros.</em></h2>
+<p class="lead">Experiencia en restaurantes, cafeterías, sucursales, producción y eventos, aplicada a ordenar costos, equipos y servicio.</p>
+<div class="stats"><div><b><span class="count" data-to="15">15</span><sup>+</sup></b><span>años en operaciones y gestión gastronómica</span></div><div><b><span class="count" data-to="3">3</span></b><span>frentes: apertura, costos y calidad</span></div></div>
+<div class="cards c3">
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 10l2-6h14l2 6M4 10v10h16V10M3 10h18M10 20v-5h4v5"/></svg></div><h3>Apertura y gestión</h3><ul><li>Apertura de establecimientos</li><li>Restaurantes y cafeterías</li><li>Supervisión de franquicias</li></ul></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div><h3>Costos y abastecimiento</h3><ul><li>Control de costos y CMV</li><li>Inventarios y compras</li><li>Reducción de desperdicios</li></ul></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div><h3>Calidad y estándares</h3><ul><li>Estandarización de procedimientos</li><li>Auditorías operativas</li><li>Calidad de servicio</li></ul></div>
+</div>
+<figure class="svc-photo"><img src="assets/gastronomia-editorial-v2.webp" alt="Imagen conceptual de una cafetería con barra y salón preparados para el servicio" width="1086" height="1448" loading="lazy" decoding="async"><figcaption><b>Salón listo para el servicio</b><span>Gastronomía</span></figcaption></figure>
+<div class="cta"><a class="btn warm" href="gastronomia.html">Ver servicios gastronómicos <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="svc svc-per" id="servicios-personas" data-stage="svc-per" aria-labelledby="per-title">
+<div class="wrap svc-grid">
+<div class="svc-side">
+<div class="svc-visual"><svg class="ring-art" viewBox="-140 -140 280 280" style="left:-20%;top:-20%;width:140%;height:140%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g opacity="0.61"><path d="M-61.5 9.2A70.3 13.3 -27.7 0 0 7 -11.7A70.3 13.3 -27.7 0 0 63 -56.1" stroke="#5eead4" stroke-opacity="0.03" stroke-width="7"/><path d="M-61.5 9.2A70.3 13.3 -27.7 0 0 7 -11.7A70.3 13.3 -27.7 0 0 63 -56.1" stroke="#5eead4" stroke-opacity="0.38" stroke-width="1.4"/><circle cx="63.3" cy="-54.7" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="-57.1" cy="11.2" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-43.7" cy="9.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-23.4" cy="2.4" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="0.5" cy="-8.4" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="24.4" cy="-21.5" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="44.8" cy="-34.9" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="58.5" cy="-46.6" r="1.3" fill="#dffff9" fill-opacity="0.4"/></g><g opacity="0.61"><path d="M-91 -32.1A71.3 10.7 32.1 0 0 -36.3 15A71.3 10.7 32.1 0 0 29.8 43.8" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M26.2 45.8L28.1 47.1M28.6 46L30.6 47.3M30.4 45.7L32.4 47.1M31.4 45L33.5 46.4M-92.7 -30.7L-94.8 -31.9M-91.8 -28.7L-93.8 -29.9M-90.1 -26.4L-92.1 -27.5M-87.9 -23.8L-89.8 -24.8M-81.4 -17.5L-83.1 -18.3M-77.4 -14L-78.9 -14.6M-72.8 -10.2L-74.2 -10.7M-67.7 -6.3L-69 -6.7M-56.5 1.9L-57.3 1.8M-50.4 6.1L-51.1 6.1M-44.1 10.3L-44.6 10.5M-37.7 14.5L-37.9 14.8M-24.6 22.4L-24.4 23M-18.1 26.2L-17.7 26.8M-11.8 29.7L-11.2 30.5M-5.7 32.9L-4.9 33.8M5.7 38.5L6.9 39.6M10.8 40.7L12.2 41.9M15.4 42.6L17 43.9M19.6 44.1L21.3 45.4" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M23.2 45.2L27.1 48M-93 -32.2L-97.6 -35M-84.9 -20.8L-88.9 -22.7M-62.3 -2.2L-64.6 -2.8M-31.1 18.5L-31.2 19.4M0.2 35.9L2.4 38" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g><path d="M-53.2 59.4A80.8 60.9 -44.9 0 0 47 45.4A80.8 60.9 -44.9 0 0 61.2 -54.7" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="73.1" cy="-34.5" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="73.1" cy="-34.5" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="70.4" cy="-41.6" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="70.4" cy="-41.6" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="68" cy="-46" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="68" cy="-46" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-47.4" cy="64.4" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-47.4" cy="64.4" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="14.7" cy="67.4" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="14.7" cy="67.4" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="21.7" cy="64.1" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="21.7" cy="64.1" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="62.2" cy="26.3" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="62.2" cy="26.3" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="66" cy="19.4" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="66" cy="19.4" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="69.9" cy="11" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="69.9" cy="11" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/></g><g opacity="0.61"><path d="M63 -56.1A70.3 13.3 -27.7 0 0 -5.4 -35.2A70.3 13.3 -27.7 0 0 -61.5 9.2" stroke="#5eead4" stroke-opacity="0.06" stroke-width="7"/><path d="M63 -56.1A70.3 13.3 -27.7 0 0 -5.4 -35.2A70.3 13.3 -27.7 0 0 -61.5 9.2" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="58.7" cy="-58.1" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="45.3" cy="-56.2" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="25" cy="-49.4" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="1.1" cy="-38.5" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-22.8" cy="-25.4" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-43.2" cy="-12" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-56.9" cy="-0.3" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-61.8" cy="7.8" r="2.1" fill="#dffff9" fill-opacity="1"/></g><g opacity="0.61"><path d="M29.8 43.8A71.3 10.7 32.1 0 0 -24.9 -3.2A71.3 10.7 32.1 0 0 -91 -32.1" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M31.6 42.4L33.6 43.6M30.6 40.5L32.6 41.6M29 38.2L30.9 39.2M26.7 35.5L28.6 36.5M20.2 29.2L21.9 30M16.2 25.7L17.7 26.4M11.6 21.9L13 22.5M6.5 18L7.8 18.4M-4.7 9.8L-3.8 9.9M-10.8 5.6L-10.1 5.6M-17.1 1.4L-16.6 1.2M-23.5 -2.7L-23.3 -3M-36.6 -10.7L-36.8 -11.3M-43.1 -14.4L-43.5 -15.1M-49.4 -17.9L-50 -18.7M-55.5 -21.2L-56.3 -22.1M-66.9 -26.8L-68.1 -27.8M-72 -29L-73.4 -30.2M-76.6 -30.9L-78.2 -32.1M-80.8 -32.4L-82.5 -33.7M-87.4 -34.1L-89.3 -35.4M-89.8 -34.3L-91.8 -35.6M-91.6 -34L-93.6 -35.3M-92.6 -33.3L-94.7 -34.6" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M31.8 43.9L36.4 46.7M23.7 32.5L27.7 34.4M1.1 13.9L3.4 14.5M-30.1 -6.8L-30 -7.7M-61.3 -24.1L-63.6 -26.3M-84.4 -33.4L-88.3 -36.3" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g><path d="M61.2 -54.7A80.8 60.9 -44.9 0 0 -39 -40.7A80.8 60.9 -44.9 0 0 -53.2 59.4" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="11.7" cy="-68.1" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="11.7" cy="-68.1" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="3.1" cy="-66.2" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="3.1" cy="-66.2" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-55.9" cy="-18.8" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-55.9" cy="-18.8" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-58.9" cy="-13.2" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-58.9" cy="-13.2" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="-62.5" cy="-4.8" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-62.5" cy="-4.8" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-64.8" cy="2.4" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-64.8" cy="2.4" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="-54.2" cy="58.4" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="-54.2" cy="58.4" r="2.7" fill="#ffdcb4" fill-opacity="1"/></g></svg></div>
+<p class="svc-tagline"><span>03 / 03</span>Personas</p>
+</div>
+<div class="svc-main">
+<p class="eyebrow">Recursos humanos y gestión de personal</p>
+<h2 id="per-title">Equipos <em>organizados</em>, reglas claras.</h2>
+<p class="quote">Ordeno la estructura y la documentación para que encargados y dueños sepan quién hace qué y cómo se registra.</p>
+<div class="cards c3">
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></div><h3>Selección y estructura</h3><ul><li>Reclutamiento y selección</li><li>Organigramas y puestos</li><li>Organización de turnos y jornadas</li></ul></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Desempeño y supervisión</h3><ul><li>Evaluación de desempeño</li><li>Protocolos de supervisión</li><li>Capacitación de encargados</li></ul></div>
+<div class="card lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></div><h3>Normas y trazabilidad</h3><ul><li>Reglamentos internos</li><li>Procedimientos disciplinarios</li><li>Documentación de incidencias</li></ul></div>
+</div>
+<p class="note"><strong>Alcance:</strong> se trata de consultoría operativa y administrativa. No constituye asesoramiento jurídico, que corresponde a profesionales matriculados.</p>
+<div class="cta"><a class="btn" href="gastronomia.html#recursos-humanos">Ver servicios de recursos humanos <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="metodo" id="metodo" data-stage="metodo" aria-labelledby="met-title">
+<div class="wrap metodo-grid">
+<div class="metodo-copy">
+<p class="eyebrow"><span class="num">03</span><i></i>Procesos y control empresarial</p>
+<h2 id="met-title">Cómo <em>trabajo.</em></h2>
+<p class="lead">Tres etapas, siempre con tu equipo adentro.</p>
+<ol class="steps">
+<li class="step"><span class="n" aria-hidden="true">01</span><div><h3>Diagnóstico</h3><p>Relevo la información disponible y detecto los puntos que necesitan atención.</p></div></li>
+<li class="step"><span class="n" aria-hidden="true">02</span><div><h3>Plan</h3><p>Prioridades, alcance, entregables y responsables, a partir de tu realidad.</p></div></li>
+<li class="step"><span class="n" aria-hidden="true">03</span><div><h3>Implementación</h3><p>Puesta en marcha con tu equipo: procedimientos, indicadores, tableros y controles internos.</p></div></li>
+</ol>
+</div>
+<div class="metodo-side"><div class="metodo-visual"><svg class="ring-art" viewBox="-124 -124 248 248" style="left:-12%;top:-12%;width:124%;height:124%" fill="none" stroke-linecap="round" aria-hidden="true" focusable="false"><g><path d="M-36.2 -43.3A56.4 43.6 50.1 0 0 -33.4 28A56.4 43.6 50.1 0 0 36.2 43.3" stroke="#5eead4" stroke-opacity="0.06" stroke-width="7"/><path d="M-36.2 -43.3A56.4 43.6 50.1 0 0 -33.4 28A56.4 43.6 50.1 0 0 36.2 43.3" stroke="#5eead4" stroke-opacity="0.38" stroke-width="1.4"/><circle cx="-38.8" cy="-40.9" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-47.5" cy="-25.8" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-48.9" cy="-6.8" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="-43" cy="13.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-30.4" cy="31.3" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="-13.3" cy="44.6" r="1.3" fill="#dffff9" fill-opacity="0.4"/><circle cx="5.9" cy="51.1" r="2.1" fill="#dffff9" fill-opacity="0.4"/><circle cx="24.2" cy="49.8" r="1.3" fill="#dffff9" fill-opacity="0.4"/></g><g><path d="M-47.7 -57.1A74.5 57.5 50.1 0 0 -44.1 36.9A74.5 57.5 50.1 0 0 47.7 57.1" stroke="#46535a" stroke-opacity="0.40" stroke-width="2.6"/><path d="M-50.4 -57.7L-52 -59.6M-54.7 -53.3L-56.5 -55M-58.4 -48.2L-60.4 -49.8M-63.9 -36.6L-66 -37.9M-65.6 -30.2L-67.8 -31.2M-66.6 -23.4L-68.8 -24.2M-66.9 -16.4L-69.1 -17M-65.2 -1.9L-67.4 -2M-63.3 5.4L-65.4 5.6M-60.7 12.6L-62.7 13.1M-57.4 19.8L-59.3 20.4M-49 33.3L-50.7 34.4M-44 39.5L-45.5 40.9M-38.5 45.4L-39.8 46.9M-32.6 50.7L-33.7 52.4M-19.7 59.6L-20.4 61.6M-12.9 63.1L-13.4 65.2M-6 65.9L-6.2 68.1M1 68L1 70.3M14.9 69.9L15.4 72.3M21.6 69.7L22.3 72.1M28.1 68.8L29 71.1M34.3 67.1L35.4 69.3M45.5 61.5L47 63.6" stroke="#e8b98a" stroke-opacity="0.30" stroke-width=".9"/><path d="M-61.5 -42.7L-66 -45.8M-66.4 -9.2L-71.2 -9.9M-53.5 26.7L-57.4 28.6M-26.3 55.4L-28.2 59.5M8 69.3L8.5 74.4M40.1 64.7L43 69.4" stroke="#e8b98a" stroke-opacity="0.40" stroke-width="1.5"/></g><g><path d="M-60.2 -72.1A94 72.6 50.1 0 0 -55.7 46.5A94 72.6 50.1 0 0 60.2 72.1" stroke="#efe6d8" stroke-opacity="0.36" stroke-width="2.2"/><circle cx="-66.7" cy="-65.8" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-66.7" cy="-65.8" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-70.3" cy="-61.2" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-70.3" cy="-61.2" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-74.8" cy="-53.5" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-74.8" cy="-53.5" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-77.8" cy="-46.6" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-77.8" cy="-46.6" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-68.7" cy="27.5" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-68.7" cy="27.5" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="-61.2" cy="39.3" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="-61.2" cy="39.3" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="8.8" cy="84.9" r="4.9" fill="#e8b98a" fill-opacity="0.05"/><circle cx="8.8" cy="84.9" r="1.9" fill="#ffdcb4" fill-opacity="0.4"/><circle cx="16.9" cy="85.7" r="7" fill="#e8b98a" fill-opacity="0.05"/><circle cx="16.9" cy="85.7" r="2.7" fill="#ffdcb4" fill-opacity="0.4"/></g><g><path d="M36.2 43.3A56.4 43.6 50.1 0 0 33.4 -28A56.4 43.6 50.1 0 0 -36.2 -43.3" stroke="#5eead4" stroke-opacity="0.14" stroke-width="7"/><path d="M36.2 43.3A56.4 43.6 50.1 0 0 33.4 -28A56.4 43.6 50.1 0 0 -36.2 -43.3" stroke="#5eead4" stroke-opacity="0.95" stroke-width="1.4"/><circle cx="48.9" cy="6.8" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="43" cy="-13.3" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="30.4" cy="-31.3" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="13.3" cy="-44.6" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="-5.9" cy="-51.1" r="2.1" fill="#dffff9" fill-opacity="1"/><circle cx="-24.2" cy="-49.8" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="38.8" cy="40.9" r="1.3" fill="#dffff9" fill-opacity="1"/><circle cx="47.5" cy="25.8" r="1.3" fill="#dffff9" fill-opacity="1"/></g><g><path d="M47.7 57.1A74.5 57.5 50.1 0 0 44.1 -36.9A74.5 57.5 50.1 0 0 -47.7 -57.1" stroke="#46535a" stroke-opacity="1.00" stroke-width="2.6"/><path d="M65.2 1.9L67.4 2M63.3 -5.4L65.4 -5.6M60.7 -12.6L62.7 -13.1M57.4 -19.8L59.3 -20.4M49 -33.3L50.7 -34.4M44 -39.5L45.5 -40.9M38.5 -45.4L39.8 -46.9M32.6 -50.7L33.7 -52.4M19.7 -59.6L20.4 -61.6M12.9 -63.1L13.4 -65.2M6 -65.9L6.2 -68.1M-1 -68L-1 -70.3M-14.9 -69.9L-15.4 -72.3M-21.6 -69.7L-22.3 -72.1M-28.1 -68.8L-29 -71.1M-34.3 -67.1L-35.4 -69.3M-45.5 -61.5L-47 -63.6M50.4 57.7L52 59.6M54.7 53.3L56.5 55M58.4 48.2L60.4 49.8M63.9 36.6L66 37.9M65.6 30.2L67.8 31.2M66.6 23.4L68.8 24.2M66.9 16.4L69.1 17" stroke="#e8b98a" stroke-opacity="0.75" stroke-width=".9"/><path d="M66.4 9.2L71.2 9.9M53.5 -26.7L57.4 -28.6M26.3 -55.4L28.2 -59.5M-8 -69.3L-8.5 -74.4M-40.1 -64.7L-43 -69.4M61.5 42.7L66 45.8" stroke="#e8b98a" stroke-opacity="1.00" stroke-width="1.5"/></g><g><path d="M60.2 72.1A94 72.6 50.1 0 0 55.7 -46.5A94 72.6 50.1 0 0 -60.2 -72.1" stroke="#efe6d8" stroke-opacity="0.90" stroke-width="2.2"/><circle cx="80.1" cy="2.8" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="80.1" cy="2.8" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="77.4" cy="-7.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="77.4" cy="-7.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="74.9" cy="-14.3" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="74.9" cy="-14.3" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="12.4" cy="-78.9" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="12.4" cy="-78.9" r="2.7" fill="#ffdcb4" fill-opacity="1"/><circle cx="2.6" cy="-82.4" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="2.6" cy="-82.4" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="64.6" cy="68" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="64.6" cy="68" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="69.3" cy="62.5" r="4.9" fill="#e8b98a" fill-opacity="0.13"/><circle cx="69.3" cy="62.5" r="1.9" fill="#ffdcb4" fill-opacity="1"/><circle cx="74.1" cy="55" r="7" fill="#e8b98a" fill-opacity="0.13"/><circle cx="74.1" cy="55" r="2.7" fill="#ffdcb4" fill-opacity="1"/></g></svg></div></div>
+</div>
+</section>
+
+<section class="about-sec" id="sobre-mi" data-stage="about" aria-labelledby="about-title">
+<div class="wrap">
+<div class="manifesto">
+<p class="eyebrow"><span class="num">04</span><i></i>Mi enfoque</p>
 <p class="big" id="manifesto">Vengo de la operación: salones, cocinas, sucursales y equipos. Por eso uso la <span class="hl t">tecnología</span> donde le simplifica el trabajo a las <span class="hl">personas</span>, y no donde suma complejidad. Sin promesas mágicas.</p>
 <div class="sign"><img src="assets/ezequiel-brunner-perfil.webp" alt="" width="56" height="56" loading="lazy"><div><b>Ezequiel Brunner</b>Consultor en IA, gastronomía y equipos</div></div>
-</div></section>
-
-<section id="ia" data-scene="network" data-anchor=".ia-visual" data-fit-mode="min" data-fit="0.9" data-fit-m="1.1" data-off="0,0" data-intensity="0.9" data-intensity-m="0.55"><div class="wrap split">
-<div class="media ia-visual"><figure class="photo" data-gl-image><img src="assets/procesos-ia-v2.webp" alt="Ilustración conceptual de una estructura de procesos conectados" width="1086" height="1448" loading="lazy"><figcaption><b>Procesos conectados</b><span>IA para empresas</span></figcaption></figure></div>
-<div class="txt">
-<p class="eyebrow">Inteligencia artificial para empresas</p>
-<h2>Menos tareas repetitivas, <em>más control.</em></h2>
-<p class="lead">Incorporo IA con criterio: donde ahorra tiempo real y donde la información ayuda a decidir mejor. Sin promesas mágicas.</p>
-<div class="cta"><a class="btn p" href="inteligencia-artificial.html">Ver servicios de IA <span class="arr">→</span></a></div>
-<div class="cards">
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div><div><h3>Automatización administrativa</h3><p>Tareas de oficina repetitivas resueltas de forma ordenada y verificable.</p></div></div>
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v5M9.5 10.5h5"/></svg></div><div><h3>Herramientas y asistentes con IA</h3><p>Implementación de asistentes internos adaptados a tu operación y a tu equipo.</p></div></div>
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5"/></svg></div><div><h3>Optimización y digitalización</h3><p>Procesos mapeados, simplificados y llevados a herramientas digitales.</p></div></div>
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><h3>Seguimiento, control y reportes</h3><p>Tableros claros para ver qué pasa en el negocio sin perseguir planillas.</p></div></div>
 </div>
-</div>
-</div></section>
-
-<section id="gastronomia" class="warm" data-scene="steam" data-anchor=".gas-visual" data-fit-mode="h" data-fit="0.95" data-fit-m="1.0" data-off="0,-0.05" data-intensity="1" data-intensity-m="0.7"><div class="wrap split rev-l">
-<div class="media gas-visual"><figure class="photo" data-gl-image data-warm><img src="assets/gastronomia-editorial-v2.webp" alt="Imagen conceptual de una cafetería con barra y salón preparados para el servicio" width="1086" height="1448" loading="lazy"><figcaption><b>Salón listo para el servicio</b><span>Gastronomía</span></figcaption></figure></div>
-<div class="txt">
-<p class="eyebrow">Consultoría gastronómica</p>
-<h2>Una operación <em>con números claros.</em></h2>
-<p class="lead">Experiencia en restaurantes, cafeterías, sucursales, producción y eventos, aplicada a ordenar costos, equipos y servicio.</p>
-<div class="cta"><a class="btn p warmbtn" href="gastronomia.html">Ver servicios gastronómicos <span class="arr">→</span></a></div>
-<div class="stats"><div><b><span class="count" data-to="15">15</span><sup>+</sup></b><span>años en operaciones y gestión gastronómica</span></div><div><b><span class="count" data-to="3">3</span></b><span>frentes: apertura, costos y calidad</span></div></div>
-<div class="cards">
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 10l2-6h14l2 6M4 10v10h16V10M3 10h18M10 20v-5h4v5"/></svg></div><div><h3>Apertura y gestión</h3><ul><li>Apertura de establecimientos</li><li>Restaurantes y cafeterías</li><li>Supervisión de franquicias</li></ul></div></div>
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div><div><h3>Costos y abastecimiento</h3><ul><li>Control de costos y CMV</li><li>Inventarios y compras</li><li>Reducción de desperdicios</li></ul></div></div>
-<div class="card row glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div><div><h3>Calidad y estándares</h3><ul><li>Estandarización de procedimientos</li><li>Auditorías operativas</li><li>Calidad de servicio</li></ul></div></div>
-</div>
-</div>
-</div></section>
-
-<section id="personas" class="warm" data-scene="org" data-anchor=".people-stage" data-fit-mode="min" data-fit="0.9" data-fit-m="1.1" data-off="0,-0.1" data-anchor-m="none" data-pos-m="0.5,0.3" data-size-m="0.85" data-intensity="0.55" data-intensity-m="0.45"><div class="wrap people-stage">
-<div class="people-head">
-<div><p class="eyebrow">Recursos humanos y gestión de personal</p>
-<h2>Equipos <em>organizados</em>, reglas claras.</h2></div>
-<p class="quote">Ordeno la estructura y la documentación para que encargados y dueños sepan quién hace qué y cómo se registra.</p>
-</div>
-<div class="cards g3">
-<div class="card glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></div><h3>Selección y estructura</h3><ul><li>Reclutamiento y selección</li><li>Organigramas y puestos</li><li>Organización de turnos y jornadas</li></ul></div>
-<div class="card glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Desempeño y supervisión</h3><ul><li>Evaluación de desempeño</li><li>Protocolos de supervisión</li><li>Capacitación de encargados</li></ul></div>
-<div class="card glass lamp"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></div><h3>Normas y trazabilidad</h3><ul><li>Reglamentos internos</li><li>Procedimientos disciplinarios</li><li>Documentación de incidencias</li></ul></div>
-</div>
-<p class="note glass"><strong>Alcance:</strong> se trata de consultoría operativa y administrativa. No constituye asesoramiento jurídico, que corresponde a profesionales matriculados.</p>
-<div class="cta"><a class="btn" href="gastronomia.html#recursos-humanos">Ver servicios de recursos humanos <span class="arr">→</span></a></div>
-</div></section>
-
-<section id="procesos"><div class="wrap">
-<div class="chapter c1" data-scene="cloud" data-pos="0.72,0.5" data-pos-m="0.5,0.34" data-size="0.72" data-size-m="0.9" data-intensity="0.85" data-intensity-m="0.5">
-<div class="chapter-copy">
-<p class="eyebrow">Procesos y control empresarial</p>
-<h2>Cómo <em>trabajo.</em></h2>
-<p class="lead">Tres etapas, siempre con tu equipo adentro.</p>
-<div class="step"><div class="n" aria-hidden="true">01</div><h3>Diagnóstico</h3><p>Relevo la información disponible y detecto los puntos que necesitan atención.</p></div>
-</div>
-</div>
-<div class="chapter c2" data-scene="lattice" data-pos="0.72,0.5" data-pos-m="0.5,0.34" data-size="0.5" data-size-m="0.7" data-intensity="1" data-intensity-m="0.5">
-<div class="chapter-copy">
-<div class="step"><div class="n" aria-hidden="true">02</div><h3>Plan</h3><p>Prioridades, alcance, entregables y responsables, a partir de tu realidad.</p></div>
-</div>
-</div>
-<div class="chapter c3" data-scene="flow" data-pos="0.68,0.5" data-pos-m="0.5,0.34" data-size="0.64" data-size-m="0.85" data-intensity="1" data-intensity-m="0.5">
-<div class="chapter-copy">
-<div class="step"><div class="n" aria-hidden="true">03</div><h3>Implementación</h3><p>Puesta en marcha con tu equipo: procedimientos, indicadores, tableros y controles internos.</p></div>
-</div>
-</div>
-</div></section>
-
-<section id="sobre-mi" data-scene="portrait" data-anchor=".about .photo" data-fit-mode="h" data-fit="1.0" data-off="0,0" data-intensity="0.32" data-intensity-m="0.3"><div class="wrap about">
-<figure class="photo" data-gl-image data-gray="0.85" data-zoom="1" data-par="0"><img src="assets/ezequiel-brunner-perfil.webp" alt="Retrato de Ezequiel Brunner" width="697" height="1046" loading="lazy"><figcaption><b>Ezequiel Brunner</b><span>Mar del Plata</span></figcaption></figure>
+<div class="about">
+<figure class="photo"><img src="assets/ezequiel-brunner-perfil.webp" alt="Retrato de Ezequiel Brunner" width="697" height="1046" loading="lazy" decoding="async"><figcaption><b>Ezequiel Brunner</b><span>Mar del Plata</span></figcaption></figure>
 <div class="txt">
 <p class="eyebrow">Sobre mí</p>
-<h2>Una mirada <em>construida en la operación.</em></h2>
+<h2 id="about-title">Una mirada <em>construida en la operación.</em></h2>
 <p class="lead">Trayectoria en dirección y gestión gastronómica, liderazgo de equipos, implementación de tecnología y optimización de procesos. Estudiante avanzado de Abogacía; no ejerzo como abogado matriculado.</p>
-<div class="facts">
-<div class="fact glass"><small>Experiencia</small><span>15+ años en gastronomía</span></div>
-<div class="fact glass"><small>Especialidades</small><span>IA, operaciones y equipos</span></div>
-<div class="fact glass"><small>Base</small><span>Mar del Plata, Argentina</span></div>
+<dl class="facts">
+<div class="fact"><dt>Experiencia</dt><dd>15+ años en gastronomía</dd></div>
+<div class="fact"><dt>Especialidades</dt><dd>IA, operaciones y equipos</dd></div>
+<div class="fact"><dt>Base</dt><dd>Mar del Plata, Argentina</dd></div>
+</dl>
+<div class="cta"><a class="btn" href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">Ver LinkedIn <span class="arr" aria-hidden="true">↗</span></a><a class="btn" href="publicaciones.html">Publicaciones <span class="arr" aria-hidden="true">↗</span></a><a class="btn" href="gastronomia.html#trabaja-conmigo">Trabajá conmigo <span class="arr" aria-hidden="true">↗</span></a></div>
 </div>
-<div class="cta"><a class="btn" href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">Ver LinkedIn <span class="arr">↗</span></a><a class="btn" href="/inteligencia-artificial#publicaciones">Publicaciones <span class="arr">↗</span></a><a class="btn" href="/gastronomia#trabaja-conmigo">Trabajá conmigo <span class="arr">↗</span></a></div>
 </div>
-</div></section>
+</div>
+</section>
 
-<section id="contacto" data-scene="ring" data-pos="0.58,0.5" data-pos-m="0.5,0.22" data-size="0.8" data-size-m="0.8" data-intensity="1" data-intensity-m="0.5"><div class="wrap contact">
-<div>
-<p class="eyebrow">Contacto</p>
-<h2>Conversemos sobre <em>tu próximo paso.</em></h2>
+<section class="contact-sec" id="contacto" data-stage="contact" aria-labelledby="contact-title">
+<div class="wrap contact">
+<div class="contact-copy">
+<p class="eyebrow"><span class="num">05</span><i></i>Contacto</p>
+<h2 id="contact-title">Conversemos sobre <em>tu próximo paso.</em></h2>
 <p class="lead">Contame qué necesitás ordenar, mejorar o poner en marcha.</p>
 <div class="channels">
-<div class="channel glass lamp"><div><small>Email</small><span id="mail">contacto@ezequielbrunner.com</span></div><button class="copy" type="button" data-copy="contacto@ezequielbrunner.com">Copiar</button></div>
-<a class="channel glass lamp" href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener"><div><small>LinkedIn</small><span>/in/ezequielbrunner</span></div><span aria-hidden="true">↗</span></a>
+<div class="channel lamp"><div><small>Email</small><span id="mail">contacto@ezequielbrunner.com</span></div><button class="copy" type="button" data-copy="contacto@ezequielbrunner.com">Copiar</button></div>
+<a class="channel lamp" href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener"><div><small>LinkedIn</small><span>/in/ezequielbrunner</span></div><span aria-hidden="true">↗</span></a>
 </div>
 </div>
 <form id="f" class="glass">
+<p class="form-topic" id="form-topic" hidden></p>
 <div class="row2">
 <label>Tu nombre *<input name="n" id="fn" required autocomplete="name"></label>
 <label>Tu email *<input name="e" id="fe" type="email" required autocomplete="email"></label>
@@ -200,23 +304,31 @@
 <input type="radio" name="a" id="a4" value="Un proyecto combinado"><label for="a4">Combinado</label>
 </div></fieldset>
 <label>Tu proyecto *<textarea name="m" id="fm" rows="4" required></textarea></label>
-<button class="btn p" type="submit">Preparar consulta por email <span class="arr">→</span></button>
+<button class="btn p" type="submit">Preparar consulta por email <span class="arr" aria-hidden="true">→</span></button>
 <small>Se abre tu aplicación de correo con el mensaje listo. Este formulario no guarda tus datos.</small>
 </form>
-</div></section>
+</div>
+</section>
 </main>
 
-<footer data-scene="wordmark" data-anchor=".wordmark" data-fit-mode="w" data-fit="1.0" data-intensity="1" data-intensity-m="0.9">
-<div class="wrap"><p class="wordmark" aria-hidden="true">Ezequiel <em>Brunner</em></p></div>
-<div class="wrap foot-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><span><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a> · <a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn</a></span></div>
+<footer class="ftr">
+<div class="wrap">
+<p class="ftr-word" aria-hidden="true">Ezequiel <em>Brunner</em></p>
+<div class="ftr-grid">
+<div><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
+<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="#inicio">Inicio</a></li><li><a href="#publicaciones">Publicaciones</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#metodo">Método</a></li><li><a href="#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul></nav>
+<div><h2>Contacto</h2><ul><li><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a></li><li><a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></li><li><a href="publicaciones.html">Todas las publicaciones</a></li><li><a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a></li></ul></div>
+</div>
+<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><span><a href="#top">Volver arriba ↑</a></span></div>
+</div>
 </footer>
 
+<script src="news-data.js" defer></script>
 <script src="assets/js/vendor/gsap.min.js" defer></script>
 <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/js/vendor/SplitText.min.js" defer></script>
 <script src="assets/js/vendor/lenis.min.js" defer></script>
-<script src="assets/js/scene.js?v=20261106" defer></script>
-<script src="assets/js/fx.js?v=20261106" defer></script>
-<script src="assets/js/home.js?v=20261106" defer></script>
+<script src="assets/js/fx.js?v=20261107" defer></script>
+<script src="assets/js/home.js?v=20261107" defer></script>
 </body>
 </html>

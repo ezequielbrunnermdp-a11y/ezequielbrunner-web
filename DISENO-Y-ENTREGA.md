@@ -96,59 +96,58 @@ El formulario valida los campos y prepara una consulta en la aplicación de corr
 - Si se publica un ahorro, reducción de merma o mejora de servicio: indicar cómo se midió, con qué base se compara y durante qué período.
 - Definir modalidades de trabajo, alcance geográfico, disponibilidad y canal preferido de consulta.
 
-## 5. Capa visual avanzada (6 de noviembre de 2026)
+## 5. Rediseño con escena 3D y publicaciones (7 de noviembre de 2026)
 
-Todas las páginas comparten un escenario WebGL detrás del contenido. Es un único sistema de partículas que cambia de forma a medida que se baja por la página: el retrato de Ezequiel se deshace en una nube, se ordena como una red neuronal, sube como vapor sobre el plato, se estructura en un organigrama, se reparte en una retícula, fluye, se abre como un portal en el contacto y termina escribiendo el nombre sobre el pie de página.
+### Recorrido
+
+El inicio sigue el orden **Inicio · Publicaciones · Servicios · Método · Sobre mí · Contacto**. El menú es el mismo en todas las páginas; **Servicios** despliega **IA**, **Gastronomía** y **Personas**. En el celular, el menú ocupa la pantalla completa, se cierra con Escape y mantiene el foco dentro mientras está abierto.
+
+- **Portada:** el nombre, la propuesta y los botones «Ver mis publicaciones» y «Hablemos» están en el HTML y se ven desde el primer instante. Debajo, la última nota publicada. El retrato aparece dentro de la escena 3D; las tres etiquetas quedan fuera del rostro (en el celular, debajo del retrato).
+- **Publicaciones:** nota destacada con portada propia, cuatro lecturas más, una selección de doctrina y los medios donde apareció. Desde cada nota se puede pedir una conversación sobre ese tema.
+- **Servicios:** un índice con los tres anillos y un capítulo por área (IA en turquesa, Gastronomía en ámbar, Personas en marfil).
+- **`publicaciones.html`:** archivo completo con filtros (Todo, Notas, Doctrina, Medios): las cinco notas, los ocho trabajos de doctrina, el Dossier Legislativo y las diecinueve apariciones en medios.
+- **Cada nota (`article.html?slug=…`):** lectura limpia, tiempo estimado, un cierre para conversar sobre el tema (email con el asunto listo o el formulario del inicio con el tema cargado) y otras lecturas.
+
+### La metáfora: un giroscopio de tres anillos
+
+Tres anillos que giran sobre ejes distintos y se sostienen entre sí: **datos** (vidrio turquesa con paquetes de luz que viajan), **operación** (metal grafito con marcas ámbar, como un instrumento de medición) y **personas** (cerámica marfil con nodos cálidos). En la portada orbitan alrededor del retrato, por delante del pecho y por detrás de la cabeza. Al bajar, la cámara atraviesa el anillo de datos y llega a la portada de la nota destacada; después los anillos se separan en el índice de servicios, cada uno pasa al frente en su área, se vuelven concéntricos en el método, orbitan la foto de «Sobre mí» y forman un portal detrás del formulario.
 
 ### Archivos
 
 | Archivo | Función |
 | --- | --- |
-| `assets/js/scene.js` | Motor WebGL2 propio: partículas con formas, planos de imagen con refracción y disolución. Sin dependencias |
-| `assets/js/fx.js` | Orquestador: une el scroll con las escenas, cursor, transición entre páginas, revelados, arranque |
-| `assets/js/home.js` | Comportamiento propio del inicio (menú móvil, frases que rotan, manifiesto, contadores, formulario) |
-| `assets/css/fx.css` | Capa visual compartida: lienzo, cursor, cortina, vidrio y borde de luz |
-| `assets/css/home.css` | Composición de la página de inicio |
-| `site.css` / `site.js` | Páginas interiores (la parte final de `site.css`, “Nivel 2”, adapta su aspecto) |
-| `assets/portrait-map.png` | Mapa de densidad del retrato (R = brillo, G = relieve). Genera las partículas de la cara |
-| `assets/js/vendor/` | GSAP, ScrollTrigger y SplitText 3.15 (licencia estándar sin cargo de GreenSock) y Lenis 1.3 (MIT). Se sirven desde el propio sitio |
+| `src/stage/main.js` | Fuente de la escena (Three.js r187): materiales físicos, iluminación de estudio, posproceso con brillo y los estados de cada sección |
+| `assets/js/stage.js` | La escena compilada (145 KB comprimida). Se pide recién cuando la página terminó de cargar |
+| `assets/js/fx.js` | Encabezado y menú, scroll suave, carga de la escena, cursor, cortina entre páginas y revelados |
+| `assets/js/home.js` | Inicio: frases que rotan, publicaciones al día con `news-data.js`, tema de consulta, formulario (sin cambios en su envío) |
+| `assets/js/pubs.js` · `article.js` | Filtros del archivo · lectura de cada nota y cierre para conversar |
+| `assets/css/base.css` | Base común: colores, encabezado, menú, pie, botones, escena |
+| `assets/css/home.css` · `pages.css` | Inicio · archivo de publicaciones y notas |
+| `assets/hero-poster.webp` | Imagen fija de la portada generada desde la propia escena (se ve mientras carga el 3D) |
+| `assets/ezequiel-recorte.webp` | Retrato recortado que usa la escena |
 
-### Cómo se asigna una forma a cada sección
+Para recompilar la escena: `npx esbuild src/stage/main.js --bundle --minify --format=iife --outfile=assets/js/stage.js` (con `three@0.187.0` instalado).
 
-Cada sección lleva atributos `data-scene` en el HTML:
+### Cómo se asigna un estado a cada sección
 
-- `data-scene="portrait | network | steam | org | cloud | lattice | flow | ring | wordmark"`: la forma.
-- `data-anchor=".selector"`: la forma se centra sobre ese elemento (por ejemplo, la imagen de la sección). Sin ancla, se usa `data-pos="x,y"` (fracción de la pantalla) y `data-size`.
-- `data-fit`, `data-fit-mode` (`min`, `h`, `w`) y `data-off="x,y"`: ajustan tamaño y desplazamiento.
-- `data-intensity`: brillo (0 a 1). Las variantes `-m` (`data-pos-m`, `data-size-m`, `data-intensity-m`) valen para el celular; `data-anchor-m="none"` desactiva el ancla en el celular.
-- `data-warm`: usa la paleta cálida (gastronomía).
-- `data-gl-image`: la imagen se dibuja en WebGL con refracción y disolución (`data-gray`, `data-zoom`, `data-par` ajustan el filtro).
-- `data-intro="n"`: orden de entrada de los elementos de la portada.
+Cada sección lleva `data-stage="nombre"` (por ejemplo `hero`, `pubs`, `services`, `svc-ia`, `metodo`, `about`, `contact`, `frame`, `park`). El estado define dónde se ubican los anillos (un elemento ancla de la página), su orientación, tamaño y brillo; la escena pasa de uno a otro según el scroll. `data-stage-anchor=".selector"` cambia el ancla sin tocar el código.
 
-Para cambiar una forma basta con editar el atributo de la sección. No hay que tocar el código.
+### Publicar una nota nueva
+
+Alcanza con sumarla a `news-data.js`, como hasta ahora: aparece sola como destacada en el inicio, en la portada («Última publicación») y en el archivo, con su tiempo de lectura.
 
 ### Rendimiento, accesibilidad y respaldo
 
-- **Calidad adaptativa:** 36.000 partículas en computadoras potentes, 14.000 a 22.000 en celulares y equipos medios. Si la fluidez cae, se reduce la cantidad, luego la resolución, y por último se quita el desenfoque del vidrio (clase `fx-lite`). Con “ahorro de datos” activado se usa la calidad mínima.
-- **Pausa automática** cuando la pestaña no está visible.
-- **Reducir movimiento:** con la preferencia del sistema activada no hay arranque animado, cursor propio, cortina ni scroll suave. El escenario muestra formas quietas y el contenido aparece completo.
-- **Sin WebGL o sin JavaScript:** el sitio sigue completo. En el inicio se ve la foto real con su máscara original.
-- **Accesibilidad:** el texto sigue siendo texto real (los títulos animados conservan su lectura para lectores de pantalla), los lienzos son decorativos, el cursor nativo se mantiene y la navegación por teclado y los enlaces de salto no cambian.
-- **Transición entre páginas:** una cortina circular que nace donde se hizo clic. Respeta los atajos del navegador (Ctrl/Cmd+clic, nueva pestaña) y el botón Atrás.
-
-### Detalles que se descubren
-
-- El cursor ilumina y aparta las partículas; los botones y tarjetas envían una onda al escenario.
-- Al mantener apretado el mouse (o el dedo quieto en el celular) la nube se arremolina hacia el puntero y, al soltar, sale despedida.
-- El nombre de la portada engrosa su tipografía según la cercanía del cursor.
-- En “Sobre mí” la foto real aparece en blanco y negro y recupera el color bajo el cursor.
-- Al bajar rápido, las partículas dejan estela.
+- **El contenido primero:** textos, botones e imágenes cargan sin esperar al 3D. La escena se pide cuando la página ya cargó y el navegador está libre; el póster de la portada se funde con ella sin saltos.
+- **Calidad adaptativa:** tres niveles según el equipo (vidrio con refracción en computadoras potentes; versión más liviana en celulares). Si la fluidez cae, primero se apaga el brillo y después baja la resolución. Se pausa con la pestaña oculta.
+- **Sin WebGL, con ahorro de datos o con movimiento reducido:** composición estática cuidada: el póster del retrato en la portada y los anillos dibujados (SVG) en cada sección. Sin cursor propio, cortina ni scroll suave cuando se pidió reducir el movimiento.
+- **Accesibilidad:** un solo título principal por página, sin saltos en la jerarquía, todos los enlaces y botones con nombre, foco visible, enlace para saltar al contenido y escena decorativa oculta para lectores de pantalla.
 
 ### Pruebas y herramientas
 
-Parámetros de dirección para revisar el sitio: `?fxq=high|mid|low` fija la calidad (y desactiva la adaptación), `?fxs=3.5` fija la escena. No afectan a los visitantes.
+Parámetros de revisión que no afectan a los visitantes: `?tier=0|1|2` fija la calidad, `?s=2.5` fija el estado de la escena, `?nogl` muestra la versión estática y `?poster=1` deja solo la escena (para regenerar el póster).
 
-Los textos se verificaron contra la versión anterior: no cambió ninguno. Solo se agregaron adornos ocultos para lectores de pantalla: el riel lateral con los nombres de las secciones del menú y la firma grande del pie.
+Los textos se verificaron contra la versión anterior: el contenido de IA y Gastronomía es idéntico y en el inicio están todos los textos. Lo único que cambió son los dos botones de la portada, que pasaron a ser «Ver mis publicaciones» y «Hablemos», como se pidió.
 
 ## Operación del sitio
 

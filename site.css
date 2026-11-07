@@ -387,7 +387,7 @@ h2 { font-size: clamp(38px, 6.2vw, 96px); max-width: 15ch; line-height: .98; }
 .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; font-weight: 500; }
 .section-heading { gap: 22px; margin-bottom: clamp(40px, 5vw, 66px); max-width: 880px; }
 .section-heading > p:not(.eyebrow) { font-size: clamp(17px, 1.45vw, 20px); line-height: 1.7; text-shadow: 0 0 26px rgba(7, 9, 11, .95); }
-.page-hero { padding-top: clamp(40px, 6vw, 88px); }
+.page-hero { padding-top: calc(var(--hdr, 72px) + env(safe-area-inset-top, 0px) + clamp(32px, 5vw, 80px)); }
 .page-hero h1 { font-size: clamp(46px, 8.2vw, 132px); line-height: .95; letter-spacing: -.05em; font-variation-settings: "opsz" 144; }
 .page-hero h1 .fx-split-line { padding-bottom: .14em; margin-bottom: -.14em; }
 .hero-summary { font-size: clamp(17px, 1.6vw, 21px); text-shadow: 0 0 26px rgba(7, 9, 11, .95); }
