@@ -24,20 +24,30 @@ export function sha256(input: string | Uint8Array): string {
   return crypto.createHash("sha256").update(input).digest("hex");
 }
 
+/** Error de configuración del servidor: se muestra tal cual a quien opera la plataforma. */
+export class ConfigError extends Error {}
+
 let warned = false;
 function encryptionKey(): Buffer {
   const raw = process.env.NEXO_ENCRYPTION_KEY;
   if (raw) {
     const key = Buffer.from(raw, "base64");
-    if (key.length !== 32) throw new Error("NEXO_ENCRYPTION_KEY debe ser de 32 bytes en base64");
+    if (key.length !== 32) throw new ConfigError("NEXO_ENCRYPTION_KEY debe ser una clave de 32 bytes en base64.");
     return key;
   }
-  if (process.env.NODE_ENV === "production") throw new Error("Falta NEXO_ENCRYPTION_KEY");
+  if (process.env.NODE_ENV === "production") {
+    throw new ConfigError("El servidor no tiene configurada NEXO_ENCRYPTION_KEY. Definila antes de importar datos.");
+  }
   if (!warned) {
     warned = true;
     console.warn("[nexo] NEXO_ENCRYPTION_KEY no definida: usando clave de desarrollo. No usar en producción.");
   }
   return crypto.createHash("sha256").update("nexo-dev-only-key").digest();
+}
+
+/** Lanza ConfigError si la clave de cifrado no es utilizable. */
+export function assertEncryptionReady(): void {
+  encryptionKey();
 }
 
 /** AES-256-GCM. Formato: v1.<iv>.<tag>.<ciphertext> (base64url). */
