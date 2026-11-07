@@ -78,7 +78,8 @@ export async function createPgliteDb(dataDir?: string): Promise<Db> {
 }
 
 export async function migrate(db: Db): Promise<void> {
-  const dir = path.join(process.cwd(), "src/lib/db/migrations");
+  // Misma carpeta que Netlify Database aplica automáticamente al publicar.
+  const dir = path.join(process.cwd(), "netlify/database/migrations");
   await db.exec(`create table if not exists schema_migrations (name text primary key, applied_at timestamptz not null default now())`);
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
   for (const f of files) {
@@ -95,8 +96,22 @@ const g = globalThis as unknown as { __nexoDb?: Promise<Db> };
 export function getDb(): Promise<Db> {
   if (!g.__nexoDb) {
     g.__nexoDb = (async () => {
-      const url = process.env.DATABASE_URL;
-      const db = url ? await createPgDb(url) : await createPgliteDb(path.join(process.cwd(), ".data/pglite"));
+      // 1) DATABASE_URL explícita (Postgres/Supabase): migraciones al iniciar.
+      if (process.env.DATABASE_URL) {
+        const db = await createPgDb(process.env.DATABASE_URL);
+        await migrate(db);
+        return db;
+      }
+      // 2) Netlify Database: Netlify aplica las migraciones en cada deploy.
+      if (process.env.NETLIFY_DB_URL || process.env.NETLIFY) {
+        const { getConnectionString } = await import("@netlify/database");
+        return createPgDb(process.env.NETLIFY_DB_URL || getConnectionString());
+      }
+      // 3) Desarrollo local: Postgres embebido en ./.data.
+      if (process.env.NODE_ENV === "production" && !process.env.NEXO_ALLOW_EMBEDDED_DB) {
+        throw new Error("Falta DATABASE_URL: en producción se requiere una base Postgres persistente.");
+      }
+      const db = await createPgliteDb(path.join(process.cwd(), ".data/pglite"));
       await migrate(db);
       return db;
     })();

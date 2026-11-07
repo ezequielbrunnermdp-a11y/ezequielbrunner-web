@@ -3,7 +3,7 @@
 -- Este script habilita RLS y no crea políticas para los roles anon/authenticated,
 -- de modo que la API pública de Supabase (PostgREST) NO puede leer ni escribir
 -- ninguna tabla aunque alguien obtenga la anon key.
--- Ejecutar manualmente en el SQL Editor de Supabase luego de 001_init.sql.
+-- Ejecutar manualmente en el SQL Editor de Supabase luego de aplicar netlify/database/migrations/*.sql.
 
 do $$
 declare t text;

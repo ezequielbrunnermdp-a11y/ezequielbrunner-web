@@ -1,0 +1,9 @@
+# Configuración de Netlify para NEXO AI (directorio base del proyecto: nexo-ai).
+# Las variables secretas (NEXO_ENCRYPTION_KEY, ANTHROPIC_API_KEY) se cargan en el panel de Netlify, no acá.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

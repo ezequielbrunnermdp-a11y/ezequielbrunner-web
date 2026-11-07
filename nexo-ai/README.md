@@ -62,7 +62,7 @@ Navegador ──► Next.js 16 (App Router, React 19, Tailwind 4)
 
 **Aislamiento entre empresas.** Cada fila de negocio tiene `company_id`. Toda operación pasa por `authorize(db, userId, companyId, permiso)`, que verifica en la base la membresía y el rol; cada servicio vuelve a comprobar el permiso y filtra por `company_id`. Ser administrador de plataforma **no** da acceso a datos de empresas.
 
-### Esquema de datos (`src/lib/db/migrations/001_init.sql`)
+### Esquema de datos (`netlify/database/migrations/`)
 
 | Tabla | Contenido |
 |---|---|
