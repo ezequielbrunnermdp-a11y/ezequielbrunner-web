@@ -104,13 +104,13 @@ El inicio sigue el orden **Inicio · Publicaciones · Servicios · Método · So
 
 - **Portada:** el nombre, la propuesta y los botones «Ver mis publicaciones» y «Hablemos» están en el HTML y se ven desde el primer instante. Debajo, la última nota publicada. El retrato aparece dentro de la escena 3D; las tres etiquetas quedan fuera del rostro (en el celular, debajo del retrato).
 - **Publicaciones:** nota destacada con portada propia, cuatro lecturas más, una selección de doctrina y los medios donde apareció. Desde cada nota se puede pedir una conversación sobre ese tema.
-- **Servicios:** un índice con los tres anillos y un capítulo por área (IA en turquesa, Gastronomía en ámbar, Personas en marfil).
+- **Servicios:** un índice con un trazo propio para cada área y un capítulo por área (IA en turquesa, Gastronomía en ámbar, Personas en marfil).
 - **`publicaciones.html`:** archivo completo con filtros (Todo, Notas, Doctrina, Medios): las cinco notas, los ocho trabajos de doctrina, el Dossier Legislativo y las diecinueve apariciones en medios.
 - **Cada nota (`article.html?slug=…`):** lectura limpia, tiempo estimado, un cierre para conversar sobre el tema (email con el asunto listo o el formulario del inicio con el tema cargado) y otras lecturas.
 
-### La metáfora: un giroscopio de tres anillos
+### La metáfora: la señal
 
-Tres anillos que giran sobre ejes distintos y se sostienen entre sí: **datos** (vidrio turquesa con paquetes de luz que viajan), **operación** (metal grafito con marcas ámbar, como un instrumento de medición) y **personas** (cerámica marfil con nodos cálidos). En la portada orbitan alrededor del retrato, por delante del pecho y por detrás de la cabeza. Al bajar, la cámara atraviesa el anillo de datos y llega a la portada de la nota destacada; después los anillos se separan en el índice de servicios, cada uno pasa al frente en su área, se vuelven concéntricos en el método, orbitan la foto de «Sobre mí» y forman un portal detrás del formulario.
+Cientos de líneas finas, como una señal de datos, dibujan el retrato: el grosor y el brillo de cada línea siguen el tono de la cara (como un grabado) y el relieve le da profundidad; una luz turquesa marca un lado del rostro y una ámbar, el otro. Las líneas son los **datos**, su orden es la **operación** y lo que dibujan son **personas**. Al bajar, el retrato se disuelve en ondas que enmarcan la nota destacada; en Servicios las líneas se reparten en tres trazos (escalones de datos para IA, curvas suaves para Gastronomía, líneas que se entrelazan para Personas); cada área tiene su paisaje de líneas; en el método pasan del ruido al orden (diagnóstico, plan, implementación) y en el contacto convergen detrás del formulario. El cursor abre una lente sutil sobre las líneas.
 
 ### Archivos
 
@@ -124,13 +124,14 @@ Tres anillos que giran sobre ejes distintos y se sostienen entre sí: **datos** 
 | `assets/css/base.css` | Base común: colores, encabezado, menú, pie, botones, escena |
 | `assets/css/home.css` · `pages.css` | Inicio · archivo de publicaciones y notas |
 | `assets/hero-poster.webp` | Imagen fija de la portada generada desde la propia escena (se ve mientras carga el 3D) |
-| `assets/ezequiel-recorte.webp` | Retrato recortado que usa la escena |
+| `assets/retrato-lineas.png` | Mapa del retrato para las líneas (rojo: tono, verde: relieve, azul: silueta), generado desde `assets/ezequiel-recorte.webp` |
+| `assets/lineas-*.webp` | Imágenes fijas de las líneas de cada sección, generadas desde la escena |
 
 Para recompilar la escena: `npx esbuild src/stage/main.js --bundle --minify --format=iife --outfile=assets/js/stage.js` (con `three@0.187.0` instalado).
 
 ### Cómo se asigna un estado a cada sección
 
-Cada sección lleva `data-stage="nombre"` (por ejemplo `hero`, `pubs`, `services`, `svc-ia`, `metodo`, `about`, `contact`, `frame`, `park`). El estado define dónde se ubican los anillos (un elemento ancla de la página), su orientación, tamaño y brillo; la escena pasa de uno a otro según el scroll. `data-stage-anchor=".selector"` cambia el ancla sin tocar el código.
+Cada sección lleva `data-stage="nombre"` (por ejemplo `hero`, `pubs`, `services`, `svc-ia`, `metodo`, `about`, `contact`, `frame`, `park`). El estado define qué forma toman las líneas, sobre qué elemento de la página se ubican (el ancla), su densidad y su brillo; la escena pasa de una forma a otra según el scroll. `data-stage-anchor=".selector"` cambia el ancla sin tocar el código.
 
 ### Publicar una nota nueva
 
@@ -140,7 +141,7 @@ Alcanza con sumarla a `news-data.js`, como hasta ahora: aparece sola como destac
 
 - **El contenido primero:** textos, botones e imágenes cargan sin esperar al 3D. La escena se pide cuando la página ya cargó y el navegador está libre; el póster de la portada se funde con ella sin saltos.
 - **Calidad adaptativa:** tres niveles según el equipo (vidrio con refracción en computadoras potentes; versión más liviana en celulares). Si la fluidez cae, primero se apaga el brillo y después baja la resolución. Se pausa con la pestaña oculta.
-- **Sin WebGL, con ahorro de datos o con movimiento reducido:** composición estática cuidada: el póster del retrato en la portada y los anillos dibujados (SVG) en cada sección. Sin cursor propio, cortina ni scroll suave cuando se pidió reducir el movimiento.
+- **Sin WebGL, con ahorro de datos o con movimiento reducido:** composición estática cuidada: el retrato en líneas en la portada y una imagen fija de las líneas en cada sección, generadas desde la propia escena. Sin cursor propio, cortina ni scroll suave cuando se pidió reducir el movimiento.
 - **Accesibilidad:** un solo título principal por página, sin saltos en la jerarquía, todos los enlaces y botones con nombre, foco visible, enlace para saltar al contenido y escena decorativa oculta para lectores de pantalla.
 
 ### Pruebas y herramientas

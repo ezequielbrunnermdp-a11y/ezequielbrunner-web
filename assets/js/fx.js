@@ -199,7 +199,7 @@
     var canvas = D.createElement('canvas');
     canvas.id = 'stage'; canvas.setAttribute('aria-hidden', 'true');
     D.body.insertBefore(canvas, D.body.firstChild);
-    var portrait = $('[data-stage="hero"]') ? 'assets/ezequiel-recorte.webp' : null;
+    var portrait = $('[data-stage="hero"]') ? 'assets/retrato-lineas.png' : null;
     stage = W.EBStage.boot({ canvas: canvas, tier: pickTier(), adaptive: !qs.get('tier') && !posterMode, reduced: posterMode, portrait: portrait, preserve: posterMode });
     if (!stage) { canvas.remove(); R.classList.add('stage-off'); return; }
     EB.stage = stage;
@@ -217,6 +217,7 @@
     stage.onReady = function () {
       R.classList.add('stage-on');
       EB.stageReady = true;
+      setTimeout(function () { R.classList.add('stage-settled'); }, 1400);   // las imágenes fijas que no se vieron ya no se descargan
       if (!posterMode) setTimeout(function () { stage.sweep(); }, 500);
     };
     canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); R.classList.remove('stage-on'); R.classList.add('stage-off'); stage.stop(); });
@@ -224,8 +225,9 @@
       W.addEventListener('pointermove', function (e) {
         stage.pointer.tx = e.clientX / W.innerWidth * 2 - 1;
         stage.pointer.ty = e.clientY / W.innerHeight * 2 - 1;
+        stage.pointer.px = e.clientX; stage.pointer.py = e.clientY;
       }, { passive: true });
-      R.addEventListener('pointerleave', function () { stage.pointer.tx = stage.pointer.ty = 0; });
+      R.addEventListener('pointerleave', function () { stage.pointer.tx = stage.pointer.ty = 0; stage.pointer.px = -1; });
     }
     var rt;
     W.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { stage.resize(); measure(); }, 120); });

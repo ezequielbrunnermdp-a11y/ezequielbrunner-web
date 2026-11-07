@@ -20,7 +20,7 @@ h2 em { font-style: italic; color: var(--turq); }
 .p-counts dt { order: 2; font: 500 10.5px/1.3 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
 .p-counts dd { font: 300 clamp(36px, 3.4vw, 54px)/1 var(--serif); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .p-visual { position: relative; width: 100%; max-width: 440px; aspect-ratio: 1; justify-self: end; }
-.ring-art { position: absolute; pointer-events: none; overflow: visible; }
+.ring-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 .filters { position: sticky; top: calc(var(--hdr) + 10px); z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; width: fit-content; max-width: 100%; margin-top: clamp(36px, 5vw, 64px); padding: 6px; border-radius: 99px; border: 1px solid var(--line-2); background: rgba(12, 16, 19, .82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 html.js .filters[hidden] { display: flex !important; }
 .filters button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border: 0; border-radius: 99px; background: transparent; color: var(--ink-2); font-size: 14px; transition: background .3s, color .3s; }

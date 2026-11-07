@@ -61,7 +61,7 @@ html:not(.js) .rotator .word span:not(.on) { display: none; }
 .feature { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); gap: clamp(32px, 5vw, 80px); align-items: center; margin-top: clamp(48px, 6vw, 80px); }
 .pub-cover { position: relative; display: block; aspect-ratio: 3 / 2; border-radius: 30px; border: 1px solid var(--line); background: radial-gradient(closest-side, rgba(94, 234, 212, .045), transparent); transition: border-color .4s; }
 .pub-cover:hover { border-color: rgba(94, 234, 212, .35); }
-.ring-art { position: absolute; pointer-events: none; overflow: visible; }
+.ring-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 .pub-cover .ring-art { z-index: 0; }
 .cv-top, .cv-bot { position: absolute; left: 24px; right: 24px; z-index: 1; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px/1.3 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
 .cv-top { top: 22px; }
