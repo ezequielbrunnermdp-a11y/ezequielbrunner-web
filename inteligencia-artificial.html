@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0e1214">
+    <meta name="theme-color" content="#0a0a0a">
     <title>IA para empresas y procesos | Ezequiel Brunner</title>
     <meta name="description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
     <link rel="canonical" href="https://ezequielbrunner.com/inteligencia-artificial">
@@ -19,58 +19,49 @@
     <meta name="twitter:description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <script>
-/* Mejora progresiva: sin JavaScript, sin WebGL o con movimiento reducido el sitio se ve completo. */
+/* Mejora progresiva: sin JavaScript o con movimiento reducido, todo el contenido se ve igual. */
 (function () {
-  var d = document.documentElement, rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var d = document.documentElement, done = false;
   d.classList.add('js');
-  if (rm) d.classList.add('reduced');
-  try {
-    var c = sessionStorage.getItem('eb-curtain');
-    if (c && !rm) { var p = c.split(','); d.style.setProperty('--cx', p[0] + 'px'); d.style.setProperty('--cy', p[1] + 'px'); d.classList.add('curtain-on'); setTimeout(function () { d.classList.remove('curtain-on'); }, 2500); }
-  } catch (e) { }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
+  function go() { if (done) return; done = true; requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('ready'); }); }); }
+  document.addEventListener('DOMContentLoaded', function () {
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); setTimeout(go, 900); } else go();
+  });
+  setTimeout(go, 2200);
 })();
 </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Inter:wght@400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/base.css?v=20261107">
-    <link rel="stylesheet" href="site.css?v=20261107">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400..600&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/base.css?v=20261108">
+    <link rel="stylesheet" href="site.css?v=20261108">
     <link rel="preload" as="image" href="assets/procesos-ia-v2.webp">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/inteligencia-artificial#page", "url": "https://ezequielbrunner.com/inteligencia-artificial", "name": "IA para empresas y procesos | Ezequiel Brunner", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}, {"@type": "Service", "name": "IA y optimización de procesos para empresas", "url": "https://ezequielbrunner.com/inteligencia-artificial", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "provider": {"@id": "https://ezequielbrunner.com/#ezequiel"}}]}</script>
     <script src="news-data.js" defer></script>
-    <script src="site.js?v=20261107" defer></script>
+    <script src="site.js?v=20261108" defer></script>
       <script src="assets/js/vendor/gsap.min.js" defer></script>
     <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/js/vendor/SplitText.min.js" defer></script>
     <script src="assets/js/vendor/lenis.min.js" defer></script>
-    <script src="assets/js/fx.js?v=20261107" defer></script>
+    <script src="assets/js/fx.js?v=20261108" defer></script>
   </head>
   <body data-page="ai">
     <a class="skip" href="#contenido">Ir al contenido</a>
-<div class="grain" aria-hidden="true"></div>
 <header class="hdr" id="top">
 <div class="wrap hdr-in">
-<a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">
-<svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path class="m1" d="M5 12.5h7.5v-3.5h8v3.5h7v-2.5h7.5"/><path class="m2" d="M5 20.5c4.2-5.2 7.8 5.2 12.2 0s8 5.2 12.2 0c2-2.4 3.6-1.6 5.6 0"/><path class="m3" d="M5 28.5c5-3.6 9.6 3.6 15 0s10 3.6 15 0"/></svg>
-<span class="brand-name">Ezequiel <em>Brunner</em></span>
-</a>
+<a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">Ezequiel <em>Brunner</em></a>
 <nav class="nav" aria-label="Principal">
 <ul>
 <li><a href="index.html">Inicio</a></li>
 <li><a href="publicaciones.html">Publicaciones</a></li>
-<li class="has-sub"><div class="sub-row"><a href="index.html#servicios">Servicios</a><button class="sub-btn" type="button" aria-expanded="false" aria-controls="sub-servicios"><span class="sr">Mostrar áreas de servicio</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.6 5 6.6 8 3.6"/></svg></button></div>
-<ul class="sub" id="sub-servicios">
-<li><a href="inteligencia-artificial.html" aria-current="page"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="t" d="M4 24h8v-8h8v5h7v-9h9"/></svg>IA<small>Inteligencia artificial para empresas</small></a></li>
-<li><a href="gastronomia.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="a" d="M4 20c5.3-8 10.7 8 16 0s10.7-8 16 0"/></svg>Gastronomía<small>Consultoría gastronómica</small></a></li>
-<li><a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="i" d="M4 16c6 8 10 8 16 0s10-8 16 0"/><path class="i" d="M4 24c6-8 10-8 16 0s10 8 16 0"/></svg>Personas<small>Recursos humanos y gestión de personal</small></a></li>
-</ul>
-</li>
-<li><a href="index.html#metodo">Método</a></li>
+<li><a href="inteligencia-artificial.html" aria-current="page">IA</a></li>
+<li><a href="gastronomia.html">Gastronomía</a></li>
+<li><a href="gastronomia.html#recursos-humanos">Personas</a></li>
 <li><a href="index.html#sobre-mi">Sobre mí</a></li>
 <li><a href="#contacto">Contacto</a></li>
 </ul>
 </nav>
-<a class="btn p hdr-cta" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav"><span class="menu-label">Menú</span><i aria-hidden="true"></i></button>
 </div>
 </header>
@@ -79,14 +70,9 @@
 <ol>
 <li><a href="index.html">Inicio</a></li>
 <li><a href="publicaciones.html">Publicaciones</a></li>
-<li><a href="index.html#servicios">Servicios</a>
-<div class="mnav-sub">
-<a href="inteligencia-artificial.html" aria-current="page"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="t" d="M4 24h8v-8h8v5h7v-9h9"/></svg>IA</a>
-<a href="gastronomia.html"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="a" d="M4 20c5.3-8 10.7 8 16 0s10.7-8 16 0"/></svg>Gastronomía</a>
-<a href="gastronomia.html#recursos-humanos"><svg class="ring-ic" viewBox="0 0 40 40" aria-hidden="true"><path class="ghost" d="M4 27h32"/><path class="i" d="M4 16c6 8 10 8 16 0s10-8 16 0"/><path class="i" d="M4 24c6-8 10-8 16 0s10 8 16 0"/></svg>Personas</a>
-</div>
-</li>
-<li><a href="index.html#metodo">Método</a></li>
+<li><a href="inteligencia-artificial.html" aria-current="page">Inteligencia artificial</a></li>
+<li><a href="gastronomia.html">Gastronomía</a></li>
+<li><a href="gastronomia.html#recursos-humanos">Personas</a></li>
 <li><a href="index.html#sobre-mi">Sobre mí</a></li>
 <li><a href="#contacto">Contacto</a></li>
 </ol>
@@ -97,7 +83,7 @@
 </div>
 </div>
     <main class="container" id="contenido">
-      <section class="page-hero" data-stage="frame" id="inicio" aria-labelledby="ai-title">
+      <section class="page-hero" id="inicio" aria-labelledby="ai-title">
         <div class="hero-copy">
           <p class="eyebrow">
             <span class="dot" aria-hidden="true"></span>IA y optimización de procesos para empresas</p>
@@ -121,7 +107,7 @@
           </figcaption>
         </figure>
       </section>
-      <div data-stage="park" class="sector-strip">
+      <div class="sector-strip">
         <span>Tecnología con un propósito</span>
         <span>Administración</span>
         <span>Operaciones</span>
@@ -805,13 +791,12 @@
     </main>
     <footer class="ftr">
 <div class="wrap">
-<p class="ftr-word" aria-hidden="true">Ezequiel <em>Brunner</em></p>
-<div class="ftr-grid">
-<div><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
-<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="index.html">Inicio</a></li><li><a href="publicaciones.html">Publicaciones</a></li><li><a href="index.html#servicios">Servicios</a></li><li><a href="index.html#metodo">Método</a></li><li><a href="index.html#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul></nav>
+<div class="ftr-top">
+<div><p class="ftr-name">Ezequiel <em>Brunner</em></p><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
+<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="index.html">Inicio</a></li><li><a href="publicaciones.html">Publicaciones</a></li><li><a href="inteligencia-artificial.html">Inteligencia artificial</a></li><li><a href="gastronomia.html">Gastronomía</a></li><li><a href="gastronomia.html#recursos-humanos">Personas</a></li><li><a href="index.html#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul></nav>
 <div><h2>Contacto</h2><ul><li><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a></li><li><a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></li><li><a href="publicaciones.html">Todas las publicaciones</a></li><li><a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a></li></ul></div>
 </div>
-<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><span><a href="#top">Volver arriba ↑</a></span></div>
+<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><a href="#top">Volver arriba ↑</a></div>
 </div>
 </footer>
   </body>

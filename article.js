@@ -52,7 +52,7 @@
   var rest = items.filter(function (n) { return n.slug !== item.slug; }).slice(0, 3);
   if (more && ol && rest.length) {
     ol.innerHTML = rest.map(function (n) {
-      return '<li class="read"><a href="article.html?slug=' + encodeURIComponent(n.slug) + '"><p class="meta"><span class="cat">' + esc(n.category) + '</span><span>' + esc(fdate(n)) + '</span><span>' + mins(n) + ' min</span></p><h3>' + esc(n.title) + '</h3><p>' + esc(n.summary) + '</p><span class="read-go">Leer la nota →</span></a></li>';
+      return '<li class="read"><a href="article.html?slug=' + encodeURIComponent(n.slug) + '"><span class="label">' + esc(n.category) + '</span><h3><span>' + esc(n.title) + '</span></h3><p>' + esc(n.summary) + '</p><span class="meta"><span>' + esc(fdate(n)) + '</span><span>' + mins(n) + ' min</span></span></a></li>';
     }).join('');
     more.hidden = false;
   }

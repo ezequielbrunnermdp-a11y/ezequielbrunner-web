@@ -8,8 +8,8 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   var G = W.gsap, ST = W.ScrollTrigger;
 
-  /* ---- enlaces viejos a secciones que cambiaron de lugar ---- */
-  var OLD = { '#ia': '#servicios-ia', '#gastronomia': '#servicios-gastronomia', '#personas': '#servicios-personas', '#procesos': '#metodo', '#enfoque': '#sobre-mi' };
+  /* ---- enlaces viejos a secciones que cambiaron de nombre o de lugar ---- */
+  var OLD = { '#servicios-ia': '#ia', '#servicios-gastronomia': '#gastronomia', '#servicios-personas': '#personas', '#procesos': '#metodo', '#enfoque': '#sobre-mi' };
   var MOVED = { '#dossier': 'publicaciones.html#dossier', '#medios': 'publicaciones.html#medios', '#novedades': 'publicaciones.html#notas', '#trabaja-conmigo': 'gastronomia.html#trabaja-conmigo' };
   if (MOVED[location.hash]) location.replace(MOVED[location.hash]);
   else if (OLD[location.hash]) { try { history.replaceState(null, '', OLD[location.hash]); } catch (_) { } }
@@ -26,8 +26,8 @@
       var a = words[wi]; a.classList.remove('on'); a.classList.add('out');
       wi = (wi + 1) % words.length;
       var b = words[wi]; b.classList.remove('out'); b.classList.add('on'); fit();
-      setTimeout(function () { a.classList.remove('out'); }, 900);
-    }, 2800);
+      setTimeout(function () { a.classList.remove('out'); }, 1000);
+    }, 3200);
   }
 
   /* ---- publicaciones: se toman de news-data.js (si se suma una nota, aparece sola) ---- */
@@ -45,9 +45,6 @@
     it.sort(function (a, b) { return a.date === b.date ? a._i - b._i : (a.date < b.date ? 1 : -1); });
     return it;
   }
-  function metaHTML(n, short) {
-    return '<span class="cat">' + esc(n.category) + '</span><span>' + esc(n._date) + '</span><span>' + n._min + ' min' + (short ? '' : ' de lectura') + '</span>';
-  }
   var list = notes();
   (function hydrate() {
     var feat = $('.feature');
@@ -58,18 +55,17 @@
     var f = list[0];
     feat.setAttribute('data-slug', f.slug);
     $$('a[href^="article.html"]', feat).forEach(function (a) { a.href = f._url; });
-    var title = $('.feature-title a', feat); if (title) title.textContent = f.title;
-    var m = $('.meta', feat); if (m) m.innerHTML = metaHTML(f);
+    var title = $('.f-title a', feat); if (title) title.textContent = f.title;
+    var labels = $$('.f-meta .label', feat); if (labels[1]) labels[1].textContent = f.category;
+    var m = $('.f-side .meta', feat); if (m) m.innerHTML = '<span>' + esc(f.author || 'Por Ezequiel Brunner') + '</span><span>' + esc(f._date) + '</span><span>' + f._min + ' min de lectura</span>';
     var dk = $('.dek', feat); if (dk) dk.textContent = f.summary;
-    var cv = $('.cv-mid', feat); if (cv) cv.textContent = f.category;
-    var ct = $('.cv-top span:last-child', feat); if (ct) ct.textContent = f._date;
-    var cb = $('.cv-bot span:last-child', feat); if (cb) cb.textContent = f._min + ' min de lectura';
     var tm = $('[data-tema]', feat); if (tm) { tm.setAttribute('data-tema', f.slug); tm.href = '?tema=' + encodeURIComponent(f.slug) + '#contacto'; }
     var hl = $('.hero-latest');
-    if (hl) { hl.href = f._url; $('.hl-k', hl).innerHTML = '<i aria-hidden="true"></i>Última publicación · ' + esc(f._date); $('.hl-t', hl).textContent = f.title; }
+    if (hl) { hl.href = f._url; $('.label', hl).textContent = 'Última publicación · ' + f._date; $('.hl-t', hl).textContent = f.title; }
     var ol = $('#reads-list');
     if (ol) ol.innerHTML = list.slice(1, 5).map(function (n, i) {
-      return '<li><article class="read lamp"><a href="' + esc(n._url) + '"><span class="read-n" aria-hidden="true">' + ('0' + (i + 2)).slice(-2) + '</span><p class="meta">' + metaHTML(n, true) + '</p><h4>' + esc(n.title) + '</h4><p class="read-dek">' + esc(n.summary) + '</p><span class="read-go">Leer la nota <span class="arr" aria-hidden="true">→</span></span></a></article></li>';
+      var img = n.image ? '<figure class="r-img"><img class="bw" src="' + esc(n.image) + '" alt="" loading="lazy" decoding="async"></figure>' : '';
+      return '<li class="read"><a href="' + esc(n._url) + '">' + img + '<span class="r-top"><span class="r-n" aria-hidden="true">' + ('0' + (i + 2)).slice(-2) + '</span><span class="label">' + esc(n.category) + '</span></span><h4 class="r-title"><span>' + esc(n.title) + '</span></h4><p class="r-dek">' + esc(n.summary) + '</p><span class="meta"><span>' + esc(n._date) + '</span><span>' + n._min + ' min</span></span></a></li>';
     }).join('');
   })();
 
@@ -84,11 +80,9 @@
   }
   var tema = new URLSearchParams(location.search).get('tema');
   if (tema) setTopic(tema);
-  $$('[data-tema]').forEach(function (a) {
-    a.addEventListener('click', function () { setTopic(a.getAttribute('data-tema')); });
-  });
+  $$('[data-tema]').forEach(function (a) { a.addEventListener('click', function () { setTopic(a.getAttribute('data-tema')); }); });
 
-  /* ---- manifiesto: las palabras se encienden al bajar ---- */
+  /* ---- enfoque: las palabras se encienden al leer ---- */
   var man = $('#manifesto');
   if (man && G && ST && !reduce) {
     Array.prototype.slice.call(man.childNodes).forEach(function (n) {
@@ -103,13 +97,14 @@
       } else if (n.nodeType === 1) n.classList.add('wd');
     });
     D.documentElement.classList.add('fx');
-    G.to($$('.wd', man), { opacity: 1, stagger: .12, ease: 'none', scrollTrigger: { trigger: man, start: 'top 82%', end: 'bottom 58%', scrub: .6 } });
+    $$('.wd', man).forEach(function (w) { w.dataset.c = getComputedStyle(w).color; });
+    G.to($$('.wd', man), { color: function (i, el) { return el.tagName === 'EM' ? '#e7e0d4' : '#f2efe9'; }, stagger: .1, ease: 'none', scrollTrigger: { trigger: man, start: 'top 80%', end: 'bottom 52%', scrub: .5 } });
   }
 
-  /* ---- contadores ---- */
+  /* ---- cifras ---- */
   if (G && ST && !reduce) $$('.count').forEach(function (el) {
     var to = +el.getAttribute('data-to'), o = { v: 0 };
-    ST.create({ trigger: el, start: 'top 88%', once: true, onEnter: function () { el.textContent = '0'; G.to(o, { v: to, duration: 1.8, ease: 'power3.out', onUpdate: function () { el.textContent = Math.round(o.v); } }); } });
+    ST.create({ trigger: el, start: 'top 88%', once: true, onEnter: function () { el.textContent = '0'; G.to(o, { v: to, duration: 1.6, ease: 'power3.out', onUpdate: function () { el.textContent = Math.round(o.v); } }); } });
   });
 
   /* ---- copiar el email ---- */
@@ -117,7 +112,7 @@
     b.addEventListener('click', function () {
       var done = function (t) { b.textContent = t; setTimeout(function () { b.textContent = 'Copiar'; }, 2000); };
       function sel() { var s = getSelection(), r = D.createRange(); r.selectNodeContents($('#mail')); s.removeAllRanges(); s.addRange(r); done('Seleccionado'); }
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { done('Copiado ✓'); }, sel);
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { done('Copiado'); }, sel);
       else sel();
     });
   });

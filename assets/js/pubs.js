@@ -16,7 +16,7 @@
       list.innerHTML = items.map(function (n, i) {
         var w = (n.content || []).join(' ').split(/\s+/).length + String(n.summary || '').split(/\s+/).length, p = String(n.date || '').split('-');
         var date = n.displayDate || (p.length === 3 ? (+p[2]) + ' de ' + MESES[+p[1] - 1] + ' de ' + p[0] : '');
-        return '<li class="item" data-group="notas"><a class="toc-row" href="article.html?slug=' + encodeURIComponent(n.slug) + '"><span class="toc-n" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span><span class="toc-main"><span class="meta"><span class="cat">' + esc(n.category) + '</span><span>' + esc(date) + '</span><span>' + Math.max(1, Math.ceil(w / 200)) + ' min de lectura</span></span><span class="toc-t">' + esc(n.title) + '</span><span class="toc-d">' + esc(n.summary) + '</span></span><span class="toc-go" aria-hidden="true">→</span></a></li>';
+        return '<li class="item" data-group="notas"><a class="toc-row" href="article.html?slug=' + encodeURIComponent(n.slug) + '"><span class="toc-n" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span><span class="toc-main"><span class="toc-cat">' + esc(n.category) + '</span><span class="toc-t">' + esc(n.title) + '</span><span class="toc-d">' + esc(n.summary) + '</span></span><span class="toc-side"><span>' + esc(date) + '</span><span>' + Math.max(1, Math.ceil(w / 200)) + ' min de lectura</span><span class="toc-go" aria-hidden="true">Leer →</span></span></a></li>';
       }).join('');
     }
   }

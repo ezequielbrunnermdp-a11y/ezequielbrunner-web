@@ -96,59 +96,58 @@ El formulario valida los campos y prepara una consulta en la aplicación de corr
 - Si se publica un ahorro, reducción de merma o mejora de servicio: indicar cómo se midió, con qué base se compara y durante qué período.
 - Definir modalidades de trabajo, alcance geográfico, disponibilidad y canal preferido de consulta.
 
-## 5. Rediseño con escena 3D y publicaciones (7 de noviembre de 2026)
+## 5. Rediseño editorial en negro (noviembre de 2026)
+
+El sitio abandona la estética futurista: no hay escenas 3D, partículas, brillos ni degradados. El impacto está en la tipografía, la composición, el espacio y transiciones discretas. Referencia: el lujo no necesita llamar la atención para demostrar su calidad.
+
+### Identidad
+
+| Uso | Valor |
+| --- | --- |
+| Fondo · negro profundo | `#0A0A0A` |
+| Superficies · carbón y grafito | `#101010`, `#161616` |
+| Texto principal · blanco cálido | `#F2EFE9` |
+| Texto de lectura · gris marfil | `#B6B1A8` |
+| Datos y rótulos · gris suave | `#87837C` |
+| Itálicas y botón principal · marfil | `#E7E0D4` |
+| Detalle puntual · champaña | `#CDBB98` (solo en categorías y rótulos destacados) |
+| Líneas | blanco al 9 % y al 17 % |
+
+**Títulos:** Instrument Serif, regular e itálica, a gran escala. **Lectura e interfaz:** Inter; los rótulos van en mayúsculas pequeñas con interletrado amplio. Las fotografías se muestran en blanco y negro. Los botones son rectangulares: el principal en marfil, el secundario con borde fino. El texto de lectura supera 9:1 de contraste sobre el fondo y los datos auxiliares, 5:1.
 
 ### Recorrido
 
-El inicio sigue el orden **Inicio · Publicaciones · Servicios · Método · Sobre mí · Contacto**. El menú es el mismo en todas las páginas; **Servicios** despliega **IA**, **Gastronomía** y **Personas**. En el celular, el menú ocupa la pantalla completa, se cierra con Escape y mantiene el foco dentro mientras está abierto.
+- **Inicio:** el nombre ocupa todo el ancho al pie de la portada; arriba, la frase de presentación, los botones «Ver mis publicaciones» y «Hablemos», tres datos breves, el retrato y la última publicación.
+- **Publicaciones** (01): nota destacada con título protagonista, cuatro lecturas en columnas separadas por líneas, doctrina y medios. Archivo completo en `publicaciones.html`, con filtros (Todo, Notas, Doctrina, Medios). Cada nota (`article.html?slug=…`) termina con una forma directa de conversar sobre ese tema.
+- **Inteligencia artificial** (02), **Gastronomía** (03) y **Personas** (04): un capítulo por área con el mismo lenguaje y una composición propia.
+- **Método** (05), **Sobre mí** (06) y **Contacto** (07).
 
-- **Portada:** el nombre, la propuesta y los botones «Ver mis publicaciones» y «Hablemos» están en el HTML y se ven desde el primer instante. Debajo, la última nota publicada. El retrato aparece dentro de la escena 3D; las tres etiquetas quedan fuera del rostro (en el celular, debajo del retrato).
-- **Publicaciones:** nota destacada con portada propia, cuatro lecturas más, una selección de doctrina y los medios donde apareció. Desde cada nota se puede pedir una conversación sobre ese tema.
-- **Servicios:** un índice con un trazo propio para cada área y un capítulo por área (IA en turquesa, Gastronomía en ámbar, Personas en marfil).
-- **`publicaciones.html`:** archivo completo con filtros (Todo, Notas, Doctrina, Medios): las cinco notas, los ocho trabajos de doctrina, el Dossier Legislativo y las diecinueve apariciones en medios.
-- **Cada nota (`article.html?slug=…`):** lectura limpia, tiempo estimado, un cierre para conversar sobre el tema (email con el asunto listo o el formulario del inicio con el tema cargado) y otras lecturas.
+El menú es el mismo en todas las páginas: Inicio, Publicaciones, IA, Gastronomía, Personas, Sobre mí y Contacto. En el celular se abre a pantalla completa. Los enlaces viejos del inicio (`#servicios-ia`, `#procesos`, `#medios`, etc.) llevan a su nuevo lugar.
 
-### La metáfora: la señal
+### Movimiento
 
-Cientos de líneas finas, como una señal de datos, dibujan el retrato: el grosor y el brillo de cada línea siguen el tono de la cara (como un grabado) y el relieve le da profundidad; una luz turquesa marca un lado del rostro y una ámbar, el otro. Las líneas son los **datos**, su orden es la **operación** y lo que dibujan son **personas**. Al bajar, el retrato se disuelve en ondas que enmarcan la nota destacada; en Servicios las líneas se reparten en tres trazos (escalones de datos para IA, curvas suaves para Gastronomía, líneas que se entrelazan para Personas); cada área tiene su paisaje de líneas; en el método pasan del ruido al orden (diagnóstico, plan, implementación) y en el contacto convergen detrás del formulario. El cursor abre una lente sutil sobre las líneas.
+Todo es breve y casi imperceptible: el nombre sube desde su renglón al cargar; los títulos aparecen línea por línea al bajar; los textos, con un desplazamiento mínimo; las fotos se descubren de abajo hacia arriba; en «Mi enfoque» las palabras se encienden al leer. Subrayados que se dibujan al pasar el mouse, desplazamiento suave (Lenis), un encabezado que se aparta al bajar y vuelve al subir, y un fundido corto entre páginas. Con movimiento reducido no hay animaciones y el contenido se ve completo; sin JavaScript también.
 
 ### Archivos
 
 | Archivo | Función |
 | --- | --- |
-| `src/stage/main.js` | Fuente de la escena (Three.js r187): materiales físicos, iluminación de estudio, posproceso con brillo y los estados de cada sección |
-| `assets/js/stage.js` | La escena compilada (145 KB comprimida). Se pide recién cuando la página terminó de cargar |
-| `assets/js/fx.js` | Encabezado y menú, scroll suave, carga de la escena, cursor, cortina entre páginas y revelados |
+| `assets/css/base.css` | Base común: colores, tipografía, encabezado, menú, pie, botones y enlaces |
+| `assets/css/home.css` | Página de inicio |
+| `assets/css/pages.css` | Archivo de publicaciones y lectura de notas |
+| `site.css` | Páginas de IA y Gastronomía (la capa final, «Capa editorial», las alinea con el resto) |
+| `assets/js/fx.js` | Encabezado y menú, desplazamiento suave, apariciones al bajar, fundido entre páginas, nombre a todo el ancho |
 | `assets/js/home.js` | Inicio: frases que rotan, publicaciones al día con `news-data.js`, tema de consulta, formulario (sin cambios en su envío) |
-| `assets/js/pubs.js` · `article.js` | Filtros del archivo · lectura de cada nota y cierre para conversar |
-| `assets/css/base.css` | Base común: colores, encabezado, menú, pie, botones, escena |
-| `assets/css/home.css` · `pages.css` | Inicio · archivo de publicaciones y notas |
-| `assets/hero-poster.webp` | Imagen fija de la portada generada desde la propia escena (se ve mientras carga el 3D) |
-| `assets/retrato-lineas.png` | Mapa del retrato para las líneas (rojo: tono, verde: relieve, azul: silueta), generado desde `assets/ezequiel-recorte.webp` |
-| `assets/lineas-*.webp` | Imágenes fijas de las líneas de cada sección, generadas desde la escena |
-
-Para recompilar la escena: `npx esbuild src/stage/main.js --bundle --minify --format=iife --outfile=assets/js/stage.js` (con `three@0.187.0` instalado).
-
-### Cómo se asigna un estado a cada sección
-
-Cada sección lleva `data-stage="nombre"` (por ejemplo `hero`, `pubs`, `services`, `svc-ia`, `metodo`, `about`, `contact`, `frame`, `park`). El estado define qué forma toman las líneas, sobre qué elemento de la página se ubican (el ancla), su densidad y su brillo; la escena pasa de una forma a otra según el scroll. `data-stage-anchor=".selector"` cambia el ancla sin tocar el código.
+| `assets/js/pubs.js` · `article.js` | Filtros del archivo · lectura de cada nota |
+| `assets/js/vendor/` | GSAP, ScrollTrigger y SplitText 3.15 y Lenis 1.3, servidos desde el propio sitio |
 
 ### Publicar una nota nueva
 
-Alcanza con sumarla a `news-data.js`, como hasta ahora: aparece sola como destacada en el inicio, en la portada («Última publicación») y en el archivo, con su tiempo de lectura.
+Alcanza con sumarla a `news-data.js`, como hasta ahora: aparece sola como destacada en el inicio, en «Última publicación» y en el archivo, con su tiempo de lectura. Si la nota tiene imagen (`image`), se muestra integrada en blanco y negro.
 
-### Rendimiento, accesibilidad y respaldo
+### Verificación
 
-- **El contenido primero:** textos, botones e imágenes cargan sin esperar al 3D. La escena se pide cuando la página ya cargó y el navegador está libre; el póster de la portada se funde con ella sin saltos.
-- **Calidad adaptativa:** tres niveles según el equipo (vidrio con refracción en computadoras potentes; versión más liviana en celulares). Si la fluidez cae, primero se apaga el brillo y después baja la resolución. Se pausa con la pestaña oculta.
-- **Sin WebGL, con ahorro de datos o con movimiento reducido:** composición estática cuidada: el retrato en líneas en la portada y una imagen fija de las líneas en cada sección, generadas desde la propia escena. Sin cursor propio, cortina ni scroll suave cuando se pidió reducir el movimiento.
-- **Accesibilidad:** un solo título principal por página, sin saltos en la jerarquía, todos los enlaces y botones con nombre, foco visible, enlace para saltar al contenido y escena decorativa oculta para lectores de pantalla.
-
-### Pruebas y herramientas
-
-Parámetros de revisión que no afectan a los visitantes: `?tier=0|1|2` fija la calidad, `?s=2.5` fija el estado de la escena, `?nogl` muestra la versión estática y `?poster=1` deja solo la escena (para regenerar el póster).
-
-Los textos se verificaron contra la versión anterior: el contenido de IA y Gastronomía es idéntico y en el inicio están todos los textos. Lo único que cambió son los dos botones de la portada, que pasaron a ser «Ver mis publicaciones» y «Hablemos», como se pidió.
+Revisado en escritorio (1440 px) y en celular (390 y 449 px): sin desplazamiento horizontal, sin elementos superpuestos en la portada, un solo título principal por página, sin saltos en la jerarquía y todos los enlaces con nombre. El contenido de IA y Gastronomía es idéntico al de la versión publicada y en el inicio están todos los textos; solo cambiaron los dos botones de la portada («Ver mis publicaciones» y «Hablemos»), como se pidió antes.
 
 ## Operación del sitio
 
