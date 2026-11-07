@@ -112,10 +112,61 @@ html.js.ready:not(.reduced) .hero-photo img { transform: none; transition: trans
 .press li { font: italic 400 clamp(20px, 1.7vw, 26px)/1.3 var(--serif); color: var(--ink-2); }
 .press li + li::before { content: "/"; margin: 0 16px; font-style: normal; color: var(--ink-3); }
 
-/* Franja de capacidades */
-.caps { padding-block: clamp(44px, 5vw, 64px); border-top: 1px solid var(--line); }
-.caps p { max-width: 62ch; margin-inline: auto; text-align: center; font: italic 400 clamp(22px, 2.1vw, 32px)/1.55 var(--serif); color: var(--ink-2); text-wrap: balance; }
-.caps i { margin: 0 .5em; font-style: normal; color: var(--ink-3); }
+/* Por capas: la pieza (mármol, latón, vidrio y nogal) se arma al bajar */
+.capas { border-top: 1px solid var(--line); background: var(--bg); }
+.capas-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 28px); row-gap: 48px; align-items: center; }
+.capas-copy { grid-column: 1 / span 5; }
+.capas-stage { grid-column: 7 / -1; }
+.cs-box { position: relative; width: 100%; aspect-ratio: 1; }
+.cp { position: absolute; height: auto; max-width: none; pointer-events: none; user-select: none; }
+.capas-lead { margin: 0 0 26px; font: italic 400 clamp(24px, 2.2vw, 34px)/1.2 var(--serif); letter-spacing: 0; color: var(--ink-3); }
+.cs-n { font: 500 11px/1.4 var(--sans); letter-spacing: .18em; color: var(--ink-3); }
+.cs-n span { color: var(--ivory); }
+.cs-t { margin-top: 14px; font: 400 clamp(46px, 5.6vw, 96px)/.96 var(--serif); letter-spacing: -.025em; color: var(--ink); }
+.cs-t em { font-style: italic; color: var(--ivory); }
+.cs-d { margin-top: 22px; max-width: 40ch; color: var(--ink-2); font-size: clamp(16px, 1.2vw, 18px); line-height: 1.65; }
+.cs-tags { margin-top: 18px; font: 500 11px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--champagne); }
+.cstep .link { margin-top: 26px; }
+.cs-final .cta { margin-top: 30px; }
+.capas-bar { display: none; }
+
+/* sin animación (o sin JavaScript): la pieza completa y las cuatro capas en lista */
+.capas:not(.live) { padding-block: clamp(104px, 12vw, 176px); }
+.capas:not(.live) .cp:not(.cp-p4) { display: none; }
+.capas:not(.live) .capas-steps { border-top: 1px solid var(--line-2); }
+.capas:not(.live) .cstep { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.capas:not(.live) .cs-t { font-size: clamp(38px, 3.6vw, 56px); }
+.capas:not(.live) .capas-stage { position: sticky; top: calc(var(--hdr) + 40px); align-self: start; }
+
+/* con animación: la sección queda fija y las capas caen una por una */
+.capas.live .capas-pin { display: flex; align-items: center; height: 100vh; height: 100svh; padding: calc(var(--hdr) + 10px) 0 24px; }
+.capas.live .capas-grid { width: min(100% - 2 * var(--gut), var(--max)); }
+.capas.live .capas-steps { position: relative; height: clamp(330px, 48vh, 460px); }
+.capas.live .cstep { position: absolute; inset: 0 0 auto; }
+.capas.live .capas-bar { display: flex; gap: 8px; max-width: 320px; margin-top: 28px; }
+.capas.live .capas-bar i { flex: 1; height: 1px; background: linear-gradient(var(--ivory), var(--ivory)) 0 0 / 0% 100% no-repeat, var(--line-2); }
+.capas.live .cs-box { will-change: transform; }
+.capas.live .cp { will-change: transform, opacity; }
+
+@media (max-width: 900px) {
+  .capas-grid { row-gap: 20px; }
+  .capas-copy, .capas-stage { grid-column: 1 / -1; }
+  .capas-stage { order: -1; justify-self: center; width: min(100%, 520px); }
+  .capas:not(.live) .capas-stage { position: relative; top: 0; }
+  .capas.live .capas-pin { align-items: stretch; padding-top: calc(var(--hdr) + 4px); }
+  .capas.live .capas-grid { align-content: start; }
+  .capas.live .capas-stage { width: min(92%, 46svh, 520px); }
+  .capas.live .capas-steps { height: min(40svh, 330px); }
+  .capas-lead { margin-bottom: 14px; font-size: 22px; }
+  .cs-t { font-size: clamp(42px, 12vw, 64px); }
+  .capas.live .cs-d { margin-top: 14px; font-size: 16px; }
+  .capas.live .cs-tags { margin-top: 12px; }
+  .capas.live .cstep .link { margin-top: 16px; }
+  .capas.live .capas-bar { margin-top: 10px; }
+}
+@media (max-width: 900px) and (max-height: 700px) {
+  .capas.live .cs-d { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+}
 
 /* ------------------------------------------------- IA · Gastronomía · Personas */
 .area { border-top: 1px solid var(--line); }

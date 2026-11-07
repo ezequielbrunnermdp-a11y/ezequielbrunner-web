@@ -124,6 +124,12 @@ El sitio abandona la estética futurista: no hay escenas 3D, partículas, brillo
 
 El menú es el mismo en todas las páginas: Inicio, Publicaciones, IA, Gastronomía, Personas, Sobre mí y Contacto. En el celular se abre a pantalla completa. Los enlaces viejos del inicio (`#servicios-ia`, `#procesos`, `#medios`, etc.) llevan a su nuevo lugar.
 
+### Por capas
+
+Entre Publicaciones y las áreas de servicio, una sección queda fija mientras se baja y una pieza escultórica se arma capa por capa, al ritmo de tu frase «Hago que la tecnología, los números, los equipos y los procesos trabajen a tu favor»: mármol (los procesos), latón (los números), vidrio (la tecnología) y nogal (los equipos). Cada capa cae desde arriba y se asienta; cambian el título, el texto y el tono del fondo, y una barra fina marca el avance. Al final la pieza queda completa con el botón «Hablemos». Las palabras de cada capa (Automatización, Control de costos, Asistentes con IA, etc.) son las que antes estaban en la franja de capacidades.
+
+Las imágenes están en `assets/capas/` (115 KB en total): son renders con transparencia generados con Three.js fuera del sitio, así que la página no carga 3D. Sin animación (movimiento reducido o sin JavaScript) se ve la pieza completa junto a las cuatro capas en lista.
+
 ### Movimiento
 
 Todo es breve y casi imperceptible: el nombre sube desde su renglón al cargar; los títulos aparecen línea por línea al bajar; los textos, con un desplazamiento mínimo; las fotos se descubren de abajo hacia arriba; en «Mi enfoque» las palabras se encienden al leer. Subrayados que se dibujan al pasar el mouse, desplazamiento suave (Lenis), un encabezado que se aparta al bajar y vuelve al subir, y un fundido corto entre páginas. Con movimiento reducido no hay animaciones y el contenido se ve completo; sin JavaScript también.

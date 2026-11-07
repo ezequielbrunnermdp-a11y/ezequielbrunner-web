@@ -178,10 +178,10 @@
   function initReveals() {
     if (!G || !ST || reduced) return;
     R.classList.add('fx');
-    var skip = function (el) { return el.closest('.hero, .page-hero, .p-hero, .hdr, .mnav, .ftr'); };
+    var skip = function (el) { return el.closest('.hero, .page-hero, .p-hero, .hdr, .mnav, .ftr, .capas'); };
     // títulos: cada línea sube desde su propio renglón
     if (Split) $$('main h2, .f-title, .doc-head h3, .art-head h1, .page-hero h1, .p-title').forEach(function (h) {
-      if (h.closest('.hdr, .mnav')) return;
+      if (h.closest('.hdr, .mnav, .capas')) return;
       glue(h);
       try {
         Split.create(h, {

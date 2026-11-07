@@ -101,6 +101,43 @@
     G.to($$('.wd', man), { color: function (i, el) { return el.tagName === 'EM' ? '#e7e0d4' : '#f2efe9'; }, stagger: .1, ease: 'none', scrollTrigger: { trigger: man, start: 'top 80%', end: 'bottom 52%', scrub: .5 } });
   }
 
+  /* ---- por capas: la sección queda fija y la pieza se arma al bajar ---- */
+  (function capas() {
+    var sec = $('#capas');
+    if (!sec || !G || !ST || reduce) return;
+    sec.classList.add('live');
+    var steps = $$('.cstep', sec), bars = $$('.capas-bar i', sec), box = $('.cs-box', sec);
+    var P = function (n) { return $('.cp-p' + n, sec); }, C = function (n) { return $('.cp-c' + n, sec); };
+    var tones = ['#0b0b0a', '#12100c', '#0b0e10', '#110d0a', '#0a0a0a'];
+    var fall = function () { return -Math.min(W.innerHeight * .6, 540); };
+    G.set(steps.slice(1), { autoAlpha: 0, y: 26 });
+    G.set([P(2), P(3), P(4), C(2), C(3), C(4)], { autoAlpha: 0 });
+    G.set(bars[0], { backgroundSize: '100% 100%' });
+    // la base aparece una vez, al llegar
+    G.from(P(1), { y: -50, autoAlpha: 0, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: sec, start: 'top 75%', once: true } });
+    var tl = G.timeline({ defaults: { ease: 'none' } });
+    for (var k = 2; k <= 5; k++) {
+      var at = (k - 2) * 1.4 + .3;
+      tl.to(steps[k - 2], { autoAlpha: 0, y: -26, duration: .35, ease: 'power2.in' }, at);
+      tl.fromTo(steps[k - 1], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, at + .32);
+      tl.to(sec, { backgroundColor: tones[k - 1], duration: .8 }, at);
+      tl.to(bars[k - 1], { backgroundSize: '100% 100%', duration: .5 }, at + .2);
+      if (k <= 4) {
+        // la capa cae desde arriba y se asienta; al tocar, aparece la pila completa con sus sombras
+        tl.fromTo(C(k), { autoAlpha: 0, y: fall, rotation: k % 2 ? 3 : -4, scale: 1.03 }, { autoAlpha: 1, y: 0, rotation: 0, scale: 1, duration: .9, ease: 'power3.out' }, at);
+        tl.to(P(k), { autoAlpha: 1, duration: .12 }, at + .86);
+        tl.to([C(k), P(k - 1)], { autoAlpha: 0, duration: .1 }, at + .96);
+      } else {
+        tl.to(box, { scale: 1.05, duration: .9, ease: 'power2.inOut' }, at);
+      }
+    }
+    tl.to({}, { duration: .5 });
+    ST.create({
+      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 3.4); },
+      pin: $('.capas-pin', sec), scrub: .7, animation: tl, invalidateOnRefresh: true, anticipatePin: 1
+    });
+  })();
+
   /* ---- cifras ---- */
   if (G && ST && !reduce) $$('.count').forEach(function (el) {
     var to = +el.getAttribute('data-to'), o = { v: 0 };
