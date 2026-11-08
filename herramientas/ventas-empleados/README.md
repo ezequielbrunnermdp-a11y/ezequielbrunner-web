@@ -28,3 +28,16 @@ la base de la página, documento `config/ranking-ppalos`).
 - Mínimo para el ranking principal: 20 cubiertos por semana (proporcional al período). Configurable.
 - Turnos por hora del ticket: mediodía 6–18 h, noche 19–5 h. Configurables.
 - Fuera hasta definirlos: 215 PARRILLADA PROMO (no dice si es de pescados o carnes), Take Away 2010 y 2005.
+
+## Asignación de plazas — Puerto de Palos
+
+- En la página: Ranking → **Asignación de plazas**. Ranking acumulado de los últimos 7 días trabajados
+  (configurable) hasta ayer. 1º Galería, 2º Español, 3º Argentino, 4º VIP, 5º Lateral; del 6º al 10º,
+  segundo camarero de cada plaza; más de 10 quedan pendientes.
+- Morphi no expone horarios, francos ni vacaciones (están solo en Gestión Win32). Por eso la propuesta usa a
+  quienes atendieron cada turno en la ventana y queda "condicionada a disponibilidad" hasta que el encargado
+  marca quién trabaja y confirma. Lo confirmado se guarda en la base de la página (`plazas/<fecha>-<turno>`)
+  y no modifica el ranking.
+- Correo diario: tarea programada "Puerto de Palos – asignación de plazas diaria" (7:40, hora de Argentina),
+  que consulta Morphi, corre `plazas.py` y manda el correo con Gmail. `plazas.py` es el mismo motor que lleva
+  la tarea (sha256 en el texto de la tarea); si se cambia, hay que actualizar también la tarea.

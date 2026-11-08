@@ -599,8 +599,10 @@ const RK = (() => {
     postresRubros: ["011","588"],          // POSTRES y VOLCAN DE CHOCOLATE
     postresExcluir: [],                    // códigos de postres que no cuentan
     productos: {parri:["248"], degus:["214"], frit:["019"]}, // PARRI PESCADOS Y MARISCOS · DEGUS PESC Y SAL · FRITURA MIXTA
-    turnos: {mediodia:[6,18], noche:[19,5]} // hora del ticket
+    turnos: {mediodia:[6,18], noche:[19,5]}, // hora del ticket
+    diasVentana: 7                          // asignación de plazas: últimos N días trabajados
   };
+  const PLAZAS = ["Galería","Español","Argentino","VIP","Lateral"];
   const IND = [
     {k:"ppc",     n:"Facturación por cubierto", s:"$/cub.",       money:true},
     {k:"tp",      n:"Ticket promedio",          s:"Ticket prom.", money:true},
@@ -639,6 +641,7 @@ const RK = (() => {
     if (codes(o.postresExcluir)) d.postresExcluir = codes(o.postresExcluir);
     STRAT.forEach(k => { const a = codes(o.productos && o.productos[k]); if (a) d.productos[k] = a; });
     ["mediodia","noche"].forEach(t => { const a = o.turnos && o.turnos[t]; if (Array.isArray(a) && a.length===2 && a.every(h=>Number.isInteger(h)&&h>=0&&h<=23)) d.turnos[t] = a; });
+    const dv = Number(o.diasVentana); if (Number.isInteger(dv) && dv>=1 && dv<=60) d.diasVentana = dv;
     return d;
   }
   async function saveCfg(c){
@@ -660,10 +663,11 @@ const RK = (() => {
     const [a,b] = R.cfg.turnos[R.turno];
     return a <= b ? [[a,b]] : [[a,23],[0,b]];
   }
-  async function q(base){
+  async function q(base, o = {}){
     const out = {rows:[], truncated:false};
-    const parts = await Promise.all(ranges().map(r => slot(() => call("ventas", Object.assign(
-      {sucursal:S.gInfo.servidor, desde:dmy(S.from), hasta:dmy(S.to), limite:1000}, base,
+    const rg = o.rangos !== undefined ? o.rangos : ranges();
+    const parts = await Promise.all(rg.map(r => slot(() => call("ventas", Object.assign(
+      {sucursal:S.gInfo.servidor, desde:dmy(o.desde||S.from), hasta:dmy(o.hasta||S.to), limite:1000}, base,
       r ? {hora_desde:r[0], hora_hasta:r[1]} : {})))));
     parts.forEach(p => { (p.filas||[]).forEach(f => out.rows.push(f)); if ((p.grupos||0) > (p.se_muestran||0)) out.truncated = true; });
     return out;
@@ -824,6 +828,10 @@ const RK = (() => {
     return `${num(m.u[k])}<small>${dec1(v)} c/100</small>`;
   }
   function html(){
+    const sub = `<div class="role-switch" role="tablist"><button type="button" class="btn" data-sub="rank" aria-pressed="${R.sub!=="plazas"}">Ranking</button><button type="button" class="btn" data-sub="plazas" aria-pressed="${R.sub==="plazas"}">Asignación de plazas</button></div>`;
+    return sub + (R.sub === "plazas" ? plHTML() : rankingHTML());
+  }
+  function rankingHTML(){
     if (R.key !== [S.from,S.to,R.turno,JSON.stringify(R.cfg)].join("|") && !R.loading) setTimeout(load, 0);
     let h = turnoChips();
     if (R.showCfg) h += cfgHTML();
@@ -885,6 +893,7 @@ const RK = (() => {
       </fieldset>
       <fieldset><legend>Ranking principal</legend>
         <label class="f" for="minCub">Cubiertos mínimos por semana<input id="minCub" type="number" min="0" max="1000" step="1" value="${c.minCubSemana}" ${ro}></label>
+        <label class="f" for="diasV">Asignación de plazas: días trabajados a considerar<input id="diasV" type="number" min="1" max="60" step="1" value="${c.diasVentana}" ${ro}></label>
         <div class="lbl">Para el período elegido: ${num(minCubFor(daysBetween(S.from,S.to)))} cubiertos</div>
       </fieldset>
       <fieldset><legend>Turnos (hora del ticket)</legend>
@@ -904,6 +913,7 @@ const RK = (() => {
     const c = clone(R.cfg), v = id => document.getElementById(id);
     IND.forEach(i => c.pesos[i.k] = Math.max(0, Math.min(100, Number(v("w_"+i.k).value)||0)));
     c.minCubSemana = Math.max(0, Number(v("minCub").value)||0);
+    c.diasVentana = Math.max(1, Math.min(60, parseInt(v("diasV").value,10)||7));
     const hr = id => Math.max(0, Math.min(23, parseInt(v(id).value,10)||0));
     c.turnos = {mediodia:[hr("tmA"),hr("tmB")], noche:[hr("tnA"),hr("tnB")]};
     const codes = id => v(id).value.split(/[\s,;]+/).map(s=>s.trim()).filter(Boolean);
@@ -914,6 +924,8 @@ const RK = (() => {
     return c;
   }
   function bind(){
+    document.querySelectorAll("[data-sub]").forEach(b => b.onclick = () => { R.sub = b.dataset.sub; render(); });
+    if (R.sub === "plazas") { plBind(); return; }
     document.querySelectorAll("[data-turno]").forEach(b => b.onclick = () => { R.turno = b.dataset.turno; render(); });
     const cb = document.getElementById("rkCfg"); if (cb) cb.onclick = () => { R.showCfg = !R.showCfg; R.saveMsg = null; render(); };
     document.querySelectorAll("[data-rk]").forEach(el => el.onclick = () => { R.sel = el.dataset.rk; S.view = "rk"; render(); window.scrollTo({top:0}); });
@@ -998,7 +1010,158 @@ const RK = (() => {
     document.getElementById("rkBack").onclick = () => { S.view = "list"; S.tab = "rank"; render(); };
     const sb = document.getElementById("rkSales"); if (sb) sb.onclick = () => openEmp(R.sel, "mozo");
   }
-  const reset = () => { R.key = null; R.evo = {}; };
+  // =================== Asignación de plazas ===================
+  // Ranking acumulado de los últimos N días trabajados (hasta ayer). Mejor puntaje → Galería, 2º → Español, …
+  // 6º a 10º: segundo camarero de cada plaza. Más de 10: pendientes. Lo manual no toca el ranking.
+  const PL = {fecha:"hoy", turno:"mediodia", key:null, loading:false, err:null, data:null, docs:{}, draft:null, msg:null};
+  const plDate = () => PL.fecha === "hoy" ? todayISO() : addDays(todayISO(), 1);
+  const plDocId = () => `${plDate()}-${PL.turno}`;
+  const hourRanges = t => { const [a,b] = R.cfg.turnos[t]; return a <= b ? [[a,b]] : [[a,23],[0,b]]; };
+
+  async function fetchWindow(desde, hasta, dias, posCodes){
+    const o = {desde, hasta, rangos:[null]}, C = {items_de_combos:"sueltas"}, sc = stratCodes();
+    const [b, p, ps, s, ss] = await Promise.all([
+      q({agrupar:["mozo"]}, o),
+      posCodes.length ? q(Object.assign({agrupar:["mozo"], filtros:{producto:posCodes}}, C), o) : {rows:[]},
+      posCodes.length ? q(Object.assign({agrupar:["mozo"], filtros:{producto:posCodes}, renglones:"sin_cargo"}, C), o) : {rows:[]},
+      sc.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:{producto:sc}}, C), o) : {rows:[]},
+      sc.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:{producto:sc}, renglones:"sin_cargo"}, C), o) : {rows:[]},
+    ]);
+    const M = new Map();
+    const ens = (code, name) => { if (!M.has(code)) M.set(code,{code,name:title(name)||code,importe:0,tickets:0,cubiertos:0,descuentos:0,u:{postres:0,parri:0,degus:0,frit:0}}); return M.get(code); };
+    sumBy(b.rows, r => r.mozo||null).forEach((a,code) => { const m = ens(code, a.row.mozo_nombre); m.importe=a.importe; m.tickets=a.tickets; m.cubiertos=a.cubiertos; });
+    const free = sumBy(ps.rows, r => r.mozo||null);
+    sumBy(p.rows, r => r.mozo||null).forEach((a,code) => { ens(code, a.row.mozo_nombre).u.postres += Math.max(0, a.unidades - ((free.get(code)||{}).unidades||0)); });
+    paidUnits(s.rows, ss.rows, r => r.mozo ? r.mozo+"|"+r.producto : null).forEach((x,k) => { const [code,prod] = k.split("|"); const cat = catOf(prod); if (cat) ens(code, x.row.mozo_nombre).u[cat] += x.u; });
+    return score([...M.values()], minCubFor(dias), {postres:true, strat:true});
+  }
+
+  async function plLoad(){
+    await loadCfg();
+    const key = todayISO() + "|" + JSON.stringify(R.cfg);
+    if (PL.key === key || PL.loading === key) return;
+    PL.loading = key; PL.err = null; PL.data = null; render();
+    try {
+      const yday = addDays(todayISO(), -1), N = R.cfg.diasVentana;
+      const dd = await slot(() => call("ventas", {sucursal:S.gInfo.servidor, desde:dmy(addDays(yday, -Math.max(60, N*4))), hasta:dmy(yday), agrupar:["dia"], limite:1000}));
+      const worked = (dd.filas||[]).filter(f => (+f.tickets||0) > 0 && (+f.importe||0) > 0).map(f => f.dia).sort();
+      if (!worked.length) throw {code:"tool_error", message:"Morphi no tiene días con ventas en los últimos 60 días."};
+      const act = worked.slice(-N), ant = worked.length > N ? worked.slice(-N-1, -1) : null, ayer = worked[worked.length-1];
+      const span0 = ant ? ant[0] : act[0];
+      const pr = await q(Object.assign({agrupar:["producto"], filtros:{rubro:R.cfg.postresRubros}, items_de_combos:"sueltas"}), {desde:span0, hasta:yday, rangos:[null]});
+      const posCodes = [...sumBy(pr.rows, r => r.producto).entries()].filter(([c,a]) => a.importe > 0 && !R.cfg.postresExcluir.includes(c)).map(([c]) => c);
+      const [wa, wb, wy, tm, tn] = await Promise.all([
+        fetchWindow(act[0], act[act.length-1], act.length, posCodes),
+        ant ? fetchWindow(ant[0], ant[ant.length-1], ant.length, posCodes) : null,
+        fetchWindow(ayer, ayer, 1, posCodes),
+        q({agrupar:["mozo"]}, {desde:act[0], hasta:act[act.length-1], rangos:hourRanges("mediodia")}),
+        q({agrupar:["mozo"]}, {desde:act[0], hasta:act[act.length-1], rangos:hourRanges("noche")}),
+      ]);
+      const pres = rows => { const m = {}; rows.forEach(r => { if (r.mozo) m[r.mozo] = (m[r.mozo]||0) + (+r.cubiertos||0); }); return m; };
+      PL.data = {act, ant, ayer, wa, wb, wy, pres:{mediodia:pres(tm.rows), noche:pres(tn.rows)}};
+      PL.key = key;
+    } catch(e){ PL.err = errText(e); PL.key = key; }
+    PL.loading = false;
+    await plLoadDoc();
+    render();
+  }
+  async function plLoadDoc(){
+    const id = plDocId(); PL.draft = null; PL.msg = null;
+    if (PL.docs[id] === undefined){
+      PL.docs[id] = null;
+      if (R.db){ try { const s = await R.db.doc("plazas/"+id).get(); if (s.exists) PL.docs[id] = s.data(); } catch(e){} }
+    }
+    const d = PL.docs[id];
+    PL.draft = {disponibles: d && Array.isArray(d.disponibles) ? new Set(d.disponibles) : null, manual: d && d.manual ? JSON.parse(JSON.stringify(d.manual)) : null};
+  }
+  function plCompute(){
+    const D = PL.data, pres = D.pres[PL.turno];
+    const enTurno = D.wa.elig.filter(m => (pres[m.code]||0) > 0);
+    const disp = PL.draft.disponibles;
+    const cand = disp ? D.wa.elig.filter(m => disp.has(m.code)) : enTurno;
+    const filas = PLAZAS.map(p => ({plaza:p, principal:null, segundo:null})), pend = [];
+    cand.forEach((m,i) => { if (i < 5) filas[i].principal = m; else if (i < 10) filas[i-5].segundo = m; else pend.push(m); });
+    const sinDatos = Object.keys(pres).filter(c => pres[c] > 0 && !D.wa.elig.some(m => m.code===c)).map(c => (D.wa.out.find(m=>m.code===c)||{name:c}).name);
+    return {filas, pend, cand, enTurno, sinDatos, condicionada: !disp};
+  }
+  function plShown(rec){
+    const man = PL.draft.manual; if (!man) return rec.filas.map(f => ({plaza:f.plaza, p:f.principal?f.principal.code:"", s:f.segundo?f.segundo.code:""}));
+    return PLAZAS.map(p => ({plaza:p, p:(man[p]||[])[0]||"", s:(man[p]||[])[1]||""}));
+  }
+  function plHTML(){
+    setTimeout(plLoad, 0);
+    const fH = plDate(), fM = addDays(todayISO(),1);
+    let h = `<div class="chips" role="group" aria-label="Día"><button type="button" data-plf="hoy" aria-pressed="${PL.fecha==="hoy"}">Hoy ${dow(todayISO())} ${short(todayISO())}</button><button type="button" data-plf="manana" aria-pressed="${PL.fecha==="manana"}">Mañana ${dow(fM)} ${short(fM)}</button></div>
+      <div class="chips" role="group" aria-label="Turno"><button type="button" data-plt="mediodia" aria-pressed="${PL.turno==="mediodia"}">Mediodía</button><button type="button" data-plt="noche" aria-pressed="${PL.turno==="noche"}">Noche</button></div>`;
+    if (PL.err) return h + `<div class="notice bad"><b>No se pudo calcular la asignación</b>${esc(PL.err)}</div>`;
+    const D = PL.data;
+    if (!D || !PL.draft) return h + `<div class="loading">Calculando el ranking de los últimos ${num(R.cfg.diasVentana)} días trabajados…</div>`;
+    const rec = plCompute(), shown = plShown(rec), byCode = new Map(D.wa.elig.map(m=>[m.code,m]));
+    const saved = PL.docs[plDocId()];
+    h += `<div class="source">Ranking acumulado de los últimos <b>${D.act.length} días trabajados</b> (${short(D.act[0])} al ${short(D.act[D.act.length-1])}, día operativo). El período de arriba no cambia esta ventana. Asignación para el <b>${dow(fH)} ${dmy(fH)}</b>, turno <b>${PL.turno==="noche"?"noche":"mediodía"}</b>.</div>`;
+    if (rec.condicionada) h += `<div class="notice"><b>Propuesta condicionada a disponibilidad</b>Morphi no informa francos, vacaciones ni horarios. Se proponen quienes atendieron este turno en la ventana. Marcá abajo quién trabaja para ajustar la propuesta.</div>`;
+    if (saved && saved.confirmada) h += `<div class="notice info"><b>Asignación confirmada</b>${saved.manual ? "Con cambios manuales." : "Igual a la recomendación."} Guardada el ${esc(new Date(saved.guardado).toLocaleString("es-AR",{timeZone:TZ,day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))}.</div>`;
+    const opts = sel => `<option value="">— sin asignar —</option>` + D.wa.elig.map(m => `<option value="${esc(m.code)}" ${m.code===sel?"selected":""}>${m.pos}º ${esc(m.name)} (${dec1(m.score)})</option>`).join("");
+    h += `<section class="cmp" aria-label="Plazas">` + shown.map((f,i) => {
+      const r = rec.filas[i], changed = PL.draft.manual && ((r.principal?r.principal.code:"") !== f.p || (r.segundo?r.segundo.code:"") !== f.s);
+      const m = byCode.get(f.p);
+      return `<div class="card"><div class="rank"><span class="big" style="font-size:1.6rem">${["🥇","🥈","🥉","4","5"][i]}</span><span><b style="font-size:1.1rem">${esc(f.plaza)}</b>${changed?` <span class="badge cajero">Cambio manual</span>`:""}<br><span class="hint">${m ? `${m.pos}º del ranking · ${dec1(m.score)} pts · ${num(m.cubiertos)} cub.` : "Sin cubrir"}</span></span></div>
+        <label class="dates" style="grid-template-columns:1fr"><span class="lbl">Camarero principal</span><select id="pl_p_${i}" data-pl="${i}" data-k="p" class="search" style="min-height:48px">${opts(f.p)}</select></label>
+        <label class="dates" style="grid-template-columns:1fr"><span class="lbl">Segundo camarero</span><select id="pl_s_${i}" data-pl="${i}" data-k="s" class="search" style="min-height:48px">${opts(f.s)}</select></label></div>`;
+    }).join("") + `</section>`;
+    const al = [];
+    rec.filas.filter(f => !f.principal).forEach(f => al.push(`${f.plaza}: sin camarero disponible.`));
+    if (rec.pend.length) al.push(`Quedan sin asignar (máximo 2 por plaza): ${rec.pend.map(m=>m.name).join(", ")}.`);
+    if (rec.sinDatos.length) al.push(`Trabajaron en este turno pero sin datos suficientes (menos de ${num(D.wa.minCub)} cubiertos): ${rec.sinDatos.join(", ")}.`);
+    if (al.length) h += `<div class="notice"><b>Alertas</b>${al.map(esc).join("<br>")}</div>`;
+    if (PL.msg) h += `<div class="notice ${PL.msg.bad?"bad":"info"}">${esc(PL.msg.t)}</div>`;
+    h += `<div class="actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button type="button" class="btn" id="plReset">Volver a la recomendación</button><button type="button" class="btn primary" id="plSave" ${R.canEdit?"":"disabled"}>Confirmar asignación</button></div>`;
+    // disponibilidad
+    const disp = PL.draft.disponibles;
+    h += `<details class="how" ${disp?"open":""}><summary>¿Quién trabaja ${PL.fecha==="hoy"?"hoy":"mañana"} (${PL.turno==="noche"?"noche":"mediodía"})?</summary><div class="cfg" style="padding-bottom:12px">${D.wa.elig.map(m => `<label class="chk"><input type="checkbox" data-disp="${esc(m.code)}" ${(disp ? disp.has(m.code) : rec.enTurno.includes(m)) ? "checked" : ""}>${esc(m.name)} <span class="lbl">${m.pos}º · ${num(D.pres[PL.turno][m.code]||0)} cub. en este turno</span></label>`).join("")}<div class="hint">Por defecto se marcan quienes atendieron este turno en la ventana. Lo que marques se guarda al confirmar y lo usa el correo de las 7:40.</div></div></details>`;
+    // ranking compacto
+    const posAnt = new Map((D.wb ? D.wb.elig : []).map(m=>[m.code,m.pos])), posAy = new Map(D.wy.elig.map(m=>[m.code,m]));
+    h += `<div class="lbl">Ranking de la ventana · cambio contra la ventana anterior · puesto de ayer (${short(D.ayer)})</div><div class="tbl-wrap"><table class="rk" style="min-width:560px"><thead><tr><th>#</th><th>Camarero</th><th>Puntaje</th><th>Cambio</th><th>Ayer</th><th>Cubiertos</th><th>Ticket prom.</th><th>$/cub.</th></tr></thead><tbody>` +
+      D.wa.elig.map(m => { const pa = posAnt.get(m.code), ch = pa==null ? "nuevo" : pa===m.pos ? "=" : (pa>m.pos?"▲ ":"▼ ")+Math.abs(pa-m.pos); const ay = posAy.get(m.code);
+        return `<tr><td>${m.pos}</td><td>${esc(m.name)}</td><td><span class="score-pill">${dec1(m.score)}</span></td><td class="${ch.startsWith("▲")?"up":ch.startsWith("▼")?"down":""}">${ch}</td><td>${ay?ay.pos+"º":"—"}</td><td>${num(m.cubiertos)}</td><td>${money(m.v.tp)}</td><td>${money(m.v.ppc)}</td></tr>`; }).join("") + `</tbody></table></div>`;
+    if (D.wa.out.length) h += `<div class="lbl">Sin datos suficientes en la ventana: ${esc(D.wa.out.map(m=>`${m.name} (${num(m.cubiertos)} cub.)`).join(", "))}</div>`;
+    return h;
+  }
+  function plBind(){
+    document.querySelectorAll("[data-plf]").forEach(b => b.onclick = async () => { PL.fecha = b.dataset.plf; await plLoadDoc(); render(); });
+    document.querySelectorAll("[data-plt]").forEach(b => b.onclick = async () => { PL.turno = b.dataset.plt; await plLoadDoc(); render(); });
+    document.querySelectorAll("[data-pl]").forEach(s => s.onchange = () => {
+      const rec = plCompute(), cur = plShown(rec), man = {};
+      cur.forEach(f => man[f.plaza] = [f.p, f.s]);
+      const i = +s.dataset.pl, k = s.dataset.k === "p" ? 0 : 1, v = s.value;
+      if (v) PLAZAS.forEach(p => man[p] = man[p].map(x => x===v ? "" : x)); // un camarero en una sola plaza
+      man[PLAZAS[i]][k] = v;
+      PL.draft.manual = man; PL.msg = null; render();
+    });
+    document.querySelectorAll("[data-disp]").forEach(c => c.onchange = () => {
+      const rec = plCompute(); const set = PL.draft.disponibles ? new Set(PL.draft.disponibles) : new Set(rec.enTurno.map(m=>m.code));
+      if (c.checked) set.add(c.dataset.disp); else set.delete(c.dataset.disp);
+      PL.draft.disponibles = set; PL.msg = null; render();
+    });
+    const r = document.getElementById("plReset"); if (r) r.onclick = () => { PL.draft.manual = null; PL.msg = null; render(); };
+    const sv = document.getElementById("plSave"); if (sv) sv.onclick = async () => {
+      const rec = plCompute(), cur = plShown(rec);
+      const man = {}; cur.forEach(f => man[f.plaza] = [f.p, f.s].filter(Boolean));
+      const differs = cur.some((f,i) => (rec.filas[i].principal?rec.filas[i].principal.code:"") !== f.p || (rec.filas[i].segundo?rec.filas[i].segundo.code:"") !== f.s);
+      const doc = {fecha:plDate(), turno:PL.turno, disponibles: PL.draft.disponibles ? [...PL.draft.disponibles] : rec.enTurno.map(m=>m.code),
+                   manual: differs ? man : null, recomendada: rec.filas.map(f => ({plaza:f.plaza, principal:f.principal?f.principal.code:null, segundo:f.segundo?f.segundo.code:null})),
+                   confirmada:true, guardado:new Date().toISOString()};
+      try {
+        if (!R.db) throw {message:"esta vista no tiene base compartida"};
+        await R.db.doc("plazas/"+plDocId()).set(doc); PL.docs[plDocId()] = doc;
+        PL.draft = {disponibles:new Set(doc.disponibles), manual:doc.manual};
+        PL.msg = {t: doc.manual ? "Asignación confirmada con cambios manuales. El ranking no cambia." : "Asignación confirmada."};
+      } catch(e){ PL.msg = {t:"No se pudo guardar: " + (e && e.message || "error"), bad:true}; }
+      render();
+    };
+  }
+
+  const reset = () => { R.key = null; R.evo = {}; PL.key = null; };
   return {on, html, bind, detailHTML, bindDetail, reset};
 })();
 
