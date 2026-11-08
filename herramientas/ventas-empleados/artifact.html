@@ -1,0 +1,1048 @@
+<title>Ventas por Empleado</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: una columna para el celular; cabecera fija con negocio/sucursal, período abajo, lista o detalle debajo. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --surface-2:#e9edf1; --fg:#14202b; --muted:#5b6a78; --line:#d5dce3;
+  --accent:#0f5c8c; --accent-fg:#ffffff; --accent-soft:#dcebf5;
+  --mozo:#7a3fb0; --mozo-soft:#efe4f8; --cajero:#0f7a5a; --cajero-soft:#dcf2ea;
+  --warn:#9a5a00; --warn-soft:#fdf0d9; --bad:#b3261e; --bad-soft:#fbe3e1; --good:#1d7a3a;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f151b; --surface:#17202a; --surface-2:#1f2a35; --fg:#e8eef3; --muted:#9aa9b6; --line:#2c3a47;
+  --accent:#5fb0e6; --accent-fg:#06202f; --accent-soft:#18344a;
+  --mozo:#c9a2ee; --mozo-soft:#33224a; --cajero:#6fd4ae; --cajero-soft:#173a2f;
+  --warn:#f2bd63; --warn-soft:#3a2a10; --bad:#f2958e; --bad-soft:#3e1c1a; --good:#7fd69a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151b; --surface:#17202a; --surface-2:#1f2a35; --fg:#e8eef3; --muted:#9aa9b6; --line:#2c3a47;
+  --accent:#5fb0e6; --accent-fg:#06202f; --accent-soft:#18344a;
+  --mozo:#c9a2ee; --mozo-soft:#33224a; --cajero:#6fd4ae; --cajero-soft:#173a2f;
+  --warn:#f2bd63; --warn-soft:#3a2a10; --bad:#f2958e; --bad-soft:#3e1c1a; --good:#7fd69a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.4;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-block:12px 10px;display:grid;gap:10px}
+h1{font-family:var(--f-display);font-size:1.25rem;margin:0;letter-spacing:-.01em}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.brand small{color:var(--muted);font-size:.8rem}
+.lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button,.chips button,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:12px;min-height:48px;padding:8px 10px;font-weight:600}
+.seg button{font-size:.9rem;line-height:1.15}
+.seg button[aria-pressed="true"],.chips button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chips button{white-space:nowrap;min-height:44px;font-size:.9rem;display:inline-flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:none}
+.dot.off{background:var(--bad)} .dot.none{background:var(--muted)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+main .wrap{padding-block:14px 40px;display:grid;gap:14px}
+.source{font-size:.82rem;color:var(--muted);background:var(--surface-2);border-radius:10px;padding:8px 12px}
+.source b{color:var(--fg)}
+.period{display:grid;gap:8px}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dates label{display:grid;gap:4px;font-size:.78rem;color:var(--muted);font-weight:600}
+.dates input{font:inherit;font-size:1rem;min-height:48px;border:1px solid var(--line);border-radius:12px;padding:6px 10px;background:var(--surface);color:var(--fg);width:100%}
+.notice{border-radius:12px;padding:12px 14px;font-size:.92rem;background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent)}
+.notice.bad{background:var(--bad-soft);color:var(--bad);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.notice.info{background:var(--accent-soft);color:var(--fg);border-color:transparent}
+.notice b{display:block;margin-bottom:2px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--surface-2);padding:4px;border-radius:14px}
+.tabs button{font:inherit;font-weight:700;border:0;background:transparent;color:var(--muted);min-height:44px;border-radius:10px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.search{font:inherit;font-size:1rem;width:100%;min-height:50px;border:1px solid var(--line);border-radius:14px;padding:8px 14px;background:var(--surface);color:var(--fg)}
+.list{display:grid;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:12px 14px;min-height:64px;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;text-align:left;width:100%;cursor:pointer}
+.row:first-child{border-top:0}
+.row:active{background:var(--surface-2)}
+.row .pos{font-family:var(--f-display);font-weight:700;color:var(--muted);min-width:1.6em;text-align:right}
+.row .name{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.row .sub{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px;align-items:center;font-size:.8rem;color:var(--muted)}
+.row .amt{font-weight:700;text-align:right;white-space:nowrap}
+.row .amt small{display:block;font-weight:500;color:var(--muted);font-size:.75rem}
+.bar{height:4px;border-radius:2px;background:var(--accent);opacity:.75;margin-top:6px}
+.badge{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+.badge.mozo{background:var(--mozo-soft);color:var(--mozo)} .badge.cajero{background:var(--cajero-soft);color:var(--cajero)}
+.empty{padding:22px 14px;color:var(--muted);text-align:center}
+.loading{padding:22px 14px;color:var(--muted);text-align:center}
+.loading::before{content:"";display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;margin-right:8px;vertical-align:-2px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.loading::before{animation:none}}
+.detail-head{display:flex;gap:10px;align-items:center}
+.back{font:inherit;font-weight:700;min-height:48px;min-width:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;padding:0 14px}
+.detail-head h2{font-family:var(--f-display);font-size:1.35rem;margin:0;line-height:1.15;text-wrap:balance;overflow-wrap:anywhere}
+.detail-head .meta{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;align-items:center;font-size:.8rem;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .k{font-size:.75rem;color:var(--muted);font-weight:600}
+.kpi .v{font-family:var(--f-display);font-weight:700;font-size:1.3rem;margin-top:2px;overflow-wrap:anywhere}
+.kpi.main{grid-column:1/-1;background:var(--accent-soft);border-color:transparent}
+.kpi.main .v{font-size:1.9rem}
+.kpi .d{font-size:.8rem;margin-top:2px;color:var(--muted)}
+.up{color:var(--good)!important} .down{color:var(--bad)!important}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px;min-width:0}
+.card h3{margin:0;font-size:1rem;font-weight:700}
+.card .hint{font-size:.8rem;color:var(--muted)}
+.rank{display:flex;align-items:baseline;gap:10px}
+.rank .big{font-family:var(--f-display);font-size:2.4rem;font-weight:700;line-height:1}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto}
+.chart-tip{font-size:.88rem;min-height:1.3em;color:var(--fg)}
+.prods{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.prods li{display:grid;grid-template-columns:1.6em 1fr auto;gap:8px;align-items:start;font-size:.92rem}
+.prods .n{color:var(--muted);font-weight:700;text-align:right}
+.prods .p{min-width:0;overflow-wrap:anywhere}
+.prods .p small{display:block;color:var(--muted);font-size:.78rem}
+.prods .i{font-weight:700;white-space:nowrap}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);width:100%;min-height:54px;font-size:1rem}
+.btn.primary[disabled]{opacity:.6}
+.ai-text{font-size:1rem;line-height:1.5;white-space:pre-wrap}
+.role-switch{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.foot{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.link{font:inherit;color:var(--accent);background:none;border:0;padding:8px 0;cursor:pointer;font-weight:600;min-height:40px}
+/* Ranking inteligente (Puerto de Palos) */
+:root{--gold:#b8860b;--silver:#7d8791;--bronze:#a0592b}
+.rk-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.rk-bar .chips{flex:1 1 100%;min-width:0}
+.rk-bar #rkCfg{min-height:44px}
+.podium{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end}
+.pod{border:0;font:inherit;color:inherit;cursor:pointer;background:var(--surface);border-radius:14px;padding:12px 8px;text-align:center;display:grid;gap:4px;min-width:0;border-top:4px solid var(--line)}
+.pod.p1{order:2;padding-block:18px 14px;border-top-color:var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--surface))}
+.pod.p2{order:1;border-top-color:var(--silver)} .pod.p3{order:3;border-top-color:var(--bronze)}
+.pod .medal{font-size:1.7rem;line-height:1}
+.pod .nm{font-weight:700;font-size:.9rem;overflow-wrap:anywhere;line-height:1.2}
+.pod .sc{font-family:var(--f-display);font-weight:700;font-size:1.5rem}
+.pod.p1 .sc{font-size:2rem}
+.pod .sm{font-size:.72rem;color:var(--muted)}
+.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+table.rk{border-collapse:collapse;width:100%;font-size:.85rem;min-width:780px}
+table.rk th,table.rk td{padding:9px 8px;text-align:right;border-top:1px solid var(--line);white-space:nowrap}
+table.rk th{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-top:0;vertical-align:bottom;white-space:normal}
+table.rk td:nth-child(2),table.rk th:nth-child(2){text-align:left;position:sticky;left:0;background:var(--surface);z-index:1}
+table.rk tbody tr{cursor:pointer}
+table.rk tbody tr:active td{background:var(--surface-2)}
+table.rk td small{display:block;color:var(--muted);font-size:.72rem}
+table.rk tr.avg td{background:var(--surface-2);font-weight:600;cursor:default}
+.score-pill{display:inline-block;min-width:3.2em;padding:3px 8px;border-radius:999px;background:var(--accent-soft);font-weight:700;color:var(--fg)}
+.cmp{display:grid;gap:12px}
+.cmp-row{display:grid;gap:4px}
+.cmp-row .top{display:flex;justify-content:space-between;gap:8px;font-size:.88rem}
+.cmp-row .top b{white-space:nowrap}
+.track{position:relative;height:10px;background:var(--surface-2);border-radius:5px}
+.track .fill{position:absolute;inset:0 auto 0 0;border-radius:5px;background:var(--accent)}
+.track .avgm{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg);opacity:.7}
+.cmp-row .sub{font-size:.76rem;color:var(--muted)}
+.tags{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.tags li{font-size:.9rem;padding:8px 10px;border-radius:10px}
+.tags.good li{background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+.tags.bad li{background:var(--warn-soft)}
+details.how{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:4px 14px}
+details.how summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+details.how ul{margin:0 0 12px;padding-left:18px;display:grid;gap:6px;font-size:.88rem}
+.cfg{display:grid;gap:14px}
+.cfg fieldset{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:8px;margin:0;min-width:0}
+.cfg legend{font-weight:700;padding:0 4px}
+.cfg .f{display:grid;grid-template-columns:1fr 88px;gap:8px;align-items:center;font-size:.9rem}
+.cfg .f.wide{grid-template-columns:1fr}
+.cfg input[type=number],.cfg input[type=text]{font:inherit;font-size:1rem;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--surface);color:var(--fg);width:100%}
+.cfg .chk{display:flex;gap:10px;align-items:center;font-size:.88rem;min-height:36px}
+.cfg .chk input{width:20px;height:20px;flex:none}
+.cfg .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cfg .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.evo svg{display:block;width:100%;height:auto}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><h1>Ventas por empleado</h1><small>Morphi en vivo</small></div>
+    <div class="seg" id="groups" role="group" aria-label="Negocio"></div>
+    <div class="chips" id="branches" role="group" aria-label="Sucursal"></div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="app">
+    <div class="loading">Conectando con Morphi…</div>
+  </div>
+</main>
+
+<script>
+(() => {
+'use strict';
+const SERVER = "Morphi";
+const TZ = "America/Argentina/Buenos_Aires";
+const NICE = {CONDOR:"El Cóndor", CASPDP:"Casino Bristol PDP", PPALOS:"Puerto de Palos"};
+const ORDER = ["CONDOR","CASPDP","PPALOS"];
+const ROSTER_DAYS = 90;
+
+const fmt$ = new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0});
+const fmtN = new Intl.NumberFormat("es-AR",{maximumFractionDigits:0});
+const money = v => fmt$.format(Math.round(v||0));
+const num = v => fmtN.format(v||0);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const title = s => String(s||"").toLowerCase().replace(/(^|[\s(\-\/])([a-záéíóúñü])/g,(m,a,b)=>a+b.toUpperCase());
+
+// ---------- fechas ----------
+function todayISO(){
+  const p = new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+  return p; // aaaa-mm-dd
+}
+const toD = iso => { const [y,m,d] = iso.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)); };
+const toISO = d => d.toISOString().slice(0,10);
+const addDays = (iso,n) => { const d = toD(iso); d.setUTCDate(d.getUTCDate()+n); return toISO(d); };
+const dmy = iso => { const [y,m,d] = iso.split("-"); return `${d}/${m}/${y}`; };
+const short = iso => { const [y,m,d] = iso.split("-"); return `${d}/${m}`; };
+const daysBetween = (a,b) => Math.round((toD(b)-toD(a))/864e5)+1;
+const DOW = ["dom","lun","mar","mié","jue","vie","sáb"];
+const dow = iso => DOW[toD(iso).getUTCDay()];
+
+const PRESETS = [
+  ["hoy","Hoy", t => [t,t]],
+  ["ayer","Ayer", t => { const y = addDays(t,-1); return [y,y]; }],
+  ["7","7 días", t => [addDays(t,-6),t]],
+  ["15","15 días", t => [addDays(t,-14),t]],
+  ["mes","Este mes", t => [t.slice(0,8)+"01",t]],
+  ["mesant","Mes pasado", t => { const first = t.slice(0,8)+"01"; const last = addDays(first,-1); return [last.slice(0,8)+"01", last]; }],
+];
+
+// ---------- estado ----------
+const S = {
+  groups:[], g:null, gInfo:null, branches:[], b:null, branchTotals:null, branchErr:null,
+  from:null, to:null, preset:"15",
+  tab:"emp", rankRole:"mozo", q:"",
+  roster:null, per:{mozo:null,cajero:null}, rosterErr:null, loadingBranch:false,
+  view:"list", emp:null, role:null, det:null, ai:{text:"",busy:false,err:null},
+  fresh:false, updatedAt:null
+};
+let mcp = null, sample = null, seq = 0;
+
+// ---------- Morphi ----------
+function parsePayload(r){
+  let p = r && r.payload;
+  if (typeof p === "string"){
+    const i = p.indexOf("{"), j = p.indexOf("[");
+    const k = i < 0 ? j : (j < 0 ? i : Math.min(i,j));
+    if (k >= 0){ try { p = JSON.parse(p.slice(k)); } catch(e){} }
+  }
+  if (typeof p === "string" || p == null) throw {code:"tool_error", message: typeof p === "string" ? p : "Morphi no devolvió datos."};
+  return p;
+}
+async function call(tool, input){
+  const opts = {cache: S.fresh ? {staleTime:300000,gcTime:900000,refresh:true} : {staleTime:300000,gcTime:900000}};
+  let r;
+  try { r = await mcp.callTool(SERVER, tool, input, opts); }
+  catch(e){
+    // Todas son lecturas: un reintento, salvo cuando falta conexión o permiso.
+    const noRetry = ["needs_reauth","server_not_connected","selection_required","not_in_manifest","blocked_by_policy","approval_required","consent_required","not_granted","capability_disabled","capability_removed","bad_request","user_changed","self_only"];
+    if (!e || noRetry.includes(e.code)) throw e;
+    let last = e;
+    for (let i = 0; i < 2 && !r; i++){
+      await new Promise(res=>setTimeout(res,(last.retryAfterMs||900*(i+1))+Math.random()*700));
+      try { r = await mcp.callTool(SERVER, tool, input, opts); } catch(e2){ last = e2; if (noRetry.includes(e2 && e2.code)) throw e2; }
+    }
+    if (!r) throw last;
+  }
+  if (r && r.cache && r.cache.storedAt) S.updatedAt = Math.min(S.updatedAt||Infinity, r.cache.storedAt);
+  else if (!S.updatedAt) S.updatedAt = Date.now();
+  return parsePayload(r);
+}
+function errText(e){
+  const c = e && e.code;
+  if (c === "needs_reauth") return "La conexión con Morphi venció. Volvé a conectar Morphi en claude.ai → Configuración → Conectores.";
+  if (c === "server_not_connected" || c === "selection_required") return "Morphi no está conectado en tu cuenta de Claude. Agregalo en claude.ai → Configuración → Conectores.";
+  if (c === "not_in_manifest" || c === "approval_required" || c === "consent_required") return "Falta permitir que esta página use Morphi. Abrí el menú Permisos de la página y habilitalo.";
+  if (c === "blocked_by_policy") return "Tu organización bloquea esta consulta de Morphi.";
+  if (c === "server_unavailable") return "Morphi no respondió a tiempo. Probá Actualizar en un rato.";
+  if (c === "tool_error") return "Morphi respondió con un error: " + String(e.message||"").slice(0,300);
+  if (c === "not_granted" || c === "capability_disabled" || c === "capability_removed") return "Esta vista no puede conectarse con Morphi. Abrí la página en claude.ai.";
+  return "No se pudo consultar Morphi" + (e && e.message ? ": " + String(e.message).slice(0,200) : ".");
+}
+const ventas = (filtros, agrupar, extra={}) => call("ventas", Object.assign({sucursal:S.gInfo.servidor, desde:dmy(S.from), hasta:dmy(S.to), filtros, agrupar}, extra));
+
+// ---------- carga ----------
+async function boot(){
+  const t = todayISO(); [S.from,S.to] = PRESETS.find(p=>p[0]==="15")[2](t);
+  try { mcp = await window.claude?.use?.("mcp"); } catch(e){ mcp = null; }
+  if (!mcp){ renderFatal("Esta página necesita abrirse en claude.ai con el conector Morphi para mostrar datos reales."); return; }
+  claude.use("sample").then(s => { sample = s; if (S.view==="detail") render(); }).catch(()=>{});
+  try {
+    const r = await call("sucursales", {});
+    let gs = (r.grupos||[]).map(g => ({alias:g.alias, nombre: NICE[g.alias] || title(g.nombre)}));
+    gs.sort((a,b) => (ORDER.indexOf(a.alias)+99)%99 - (ORDER.indexOf(b.alias)+99)%99);
+    if (!gs.length){ renderFatal("Morphi no devolvió negocios para tu usuario."); return; }
+    S.groups = gs;
+    let saved = null; try { saved = localStorage.getItem("ve_g"); } catch(e){}
+    selectGroup((gs.find(g=>g.alias===saved)||gs[0]).alias);
+  } catch(e){ renderFatal(errText(e)); }
+}
+
+async function selectGroup(alias){
+  const my = ++seq;
+  S.g = S.groups.find(g=>g.alias===alias); S.gInfo=null; S.branches=[]; S.b=null; S.branchTotals=null; S.branchErr=null;
+  S.roster=null; S.view="list"; S.emp=null;
+  try { localStorage.setItem("ve_g", alias); } catch(e){}
+  renderHeader(); renderBody();
+  try {
+    const info = await call("sucursales", {grupo:alias});
+    if (my!==seq) return;
+    const okCodes = new Set((info.bases||[]).filter(b=>String(b.estado).toUpperCase()==="OK").map(b=>String(b.codigo)));
+    const unica = (info.bases||[]).length === 1;
+    S.gInfo = {servidor: info.servidor, unica};
+    const refs = await call("referencias_de_ventas", {sucursal: info.servidor, tipo:"sucursales"});
+    if (my!==seq) return;
+    S.branches = (Array.isArray(refs)?refs:[]).filter(s => String(s.codigo)!=="999" && !/CONCENTRADOR/i.test(s.nombre))
+      .map(s => ({codigo:String(s.codigo), nombre:title(s.nombre), online: unica ? okCodes.size>0 : okCodes.has(String(s.codigo))}));
+    await loadBranchTotals(my);
+  } catch(e){ if (my===seq){ S.branchErr = errText(e); renderHeader(); renderBody(); } }
+}
+
+async function loadBranchTotals(my){
+  try {
+    const r = await ventas({}, ["sucursal"], {limite:1000});
+    if (my!==seq) return;
+    S.branchTotals = {};
+    (r.filas||[]).forEach(f => S.branchTotals[String(f.sucursal)] = f);
+    S.branches.sort((a,b) => ((S.branchTotals[b.codigo]?.importe)||0) - ((S.branchTotals[a.codigo]?.importe)||0));
+  } catch(e){ S.branchTotals = null; S.branchErr = errText(e); }
+  let saved=null; try { saved = localStorage.getItem("ve_b_"+S.g.alias); } catch(e){}
+  if (!S.b){
+    const pick = S.branches.find(b=>b.codigo===saved) || S.branches.find(b=>S.branchTotals && S.branchTotals[b.codigo]) || S.branches[0];
+    if (pick){ selectBranch(pick.codigo); return; }
+  }
+  renderHeader(); renderBody();
+}
+
+async function selectBranch(code){
+  const my = ++seq;
+  S.b = S.branches.find(b=>b.codigo===code); S.view="list"; S.emp=null;
+  try { localStorage.setItem("ve_b_"+S.g.alias, code); } catch(e){}
+  renderHeader();
+  await loadBranchData(my);
+}
+
+async function loadBranchData(my){
+  S.roster=null; S.rosterErr=null; S.per={mozo:null,cajero:null}; S.loadingBranch=true; renderBody();
+  const f = {sucursal:[S.b.codigo]};
+  const rFrom = addDays(todayISO(), -(ROSTER_DAYS-1));
+  try {
+    const rDesde = dmy(rFrom < S.from ? rFrom : S.from);
+    const [pm, pc, rs] = await Promise.all([
+      ventas(f, ["mozo"], {limite:1000}),
+      ventas(f, ["cajero"], {limite:1000}),
+      Promise.allSettled([
+        call("ventas", {sucursal:S.gInfo.servidor, desde:rDesde, hasta:dmy(todayISO()), filtros:f, agrupar:["mozo"], limite:1000}),
+        call("ventas", {sucursal:S.gInfo.servidor, desde:rDesde, hasta:dmy(todayISO()), filtros:f, agrupar:["cajero"], limite:1000}),
+      ]),
+    ]);
+    if (my!==seq) return;
+    const rm = rs[0].status==="fulfilled" ? rs[0].value : {filas:[]};
+    const rc = rs[1].status==="fulfilled" ? rs[1].value : {filas:[]};
+    S.rosterPartial = rs.some(x=>x.status!=="fulfilled");
+    const map = new Map();
+    const add = (code,name,role) => { if (!code) return; let e = map.get(code); if (!e){ e={code,name:title(name)||("Legajo "+code),roles:new Set()}; map.set(code,e); } if (name && e.name.startsWith("Legajo")) e.name = title(name); e.roles.add(role); };
+    (rm.filas||[]).forEach(x=>add(x.mozo,x.mozo_nombre,"mozo"));
+    (rc.filas||[]).forEach(x=>add(x.cajero,x.cajero_nombre,"cajero"));
+    (pm.filas||[]).forEach(x=>add(x.mozo,x.mozo_nombre,"mozo"));
+    (pc.filas||[]).forEach(x=>add(x.cajero,x.cajero_nombre,"cajero"));
+    S.per.mozo = new Map((pm.filas||[]).map(x=>[x.mozo,x]));
+    S.per.cajero = new Map((pc.filas||[]).map(x=>[x.cajero,x]));
+    S.per.mozoTot = pm.totales; S.per.cajeroTot = pc.totales;
+    S.roster = [...map.values()];
+  } catch(e){ if (my===seq) S.rosterErr = errText(e); }
+  if (my!==seq) return;
+  S.loadingBranch=false; S.fresh=false;
+  if (S.view==="detail" && S.emp) openEmp(S.emp.code, S.role, true); else renderBody();
+}
+
+function primaryRole(e){
+  if (e.roles.has("mozo") && e.roles.has("cajero")){
+    const m = S.per.mozo?.get(e.code)?.importe||0, c = S.per.cajero?.get(e.code)?.importe||0;
+    return c > m ? "cajero" : "mozo";
+  }
+  return e.roles.has("mozo") ? "mozo" : "cajero";
+}
+function ranking(role){
+  const m = S.per[role]; if (!m) return [];
+  return [...m.values()].filter(x=>(x.importe||0)!==0).sort((a,b)=>b.importe-a.importe);
+}
+
+async function openEmp(code, role, keep){
+  const e = S.roster && S.roster.find(x=>x.code===code); if (!e) return;
+  S.emp = e; S.role = role || primaryRole(e); S.view = "detail";
+  if (!keep) S.ai = {text:"",busy:false,err:null};
+  S.det = {loading:true}; render(); window.scrollTo({top:0});
+  const my = seq;
+  const row = S.per[S.role]?.get(code) || null;
+  if (!row){ S.det = {row:null}; render(); return; }
+  const f = {sucursal:[S.b.codigo], [S.role]:[code]};
+  const n = daysBetween(S.from,S.to);
+  const pTo = addDays(S.from,-1), pFrom = addDays(S.from,-n);
+  const out = {row, daysErr:null, prodErr:null, prevErr:null};
+  const [d, p, prev] = await Promise.allSettled([
+    ventas(f, ["dia"], {limite:400}),
+    ventas(f, ["producto"], {items_de_combos:"sueltas", limite:10, orden:"importe"}),
+    call("ventas", {sucursal:S.gInfo.servidor, desde:dmy(pFrom), hasta:dmy(pTo), filtros:f, agrupar:[]}),
+  ]);
+  if (my!==seq || S.emp?.code!==code) return;
+  if (d.status==="fulfilled") out.days = d.value.filas||[]; else out.daysErr = errText(d.reason);
+  if (p.status==="fulfilled") out.prods = p.value.filas||[]; else out.prodErr = errText(p.reason);
+  if (prev.status==="fulfilled") out.prev = {tot: prev.value.totales || (prev.value.filas||[])[0] || null, from:pFrom, to:pTo}; else out.prevErr = errText(prev.reason);
+  S.det = out; render();
+}
+
+// ---------- IA ----------
+async function analyze(){
+  if (!sample || S.ai.busy || !S.det || !S.det.row) return;
+  const e = S.emp, r = S.det.row, role = S.role;
+  const rk = ranking(role); const pos = rk.findIndex(x=>x[role]===e.code)+1;
+  const tot = S.per[role+"Tot"]||{};
+  const data = {
+    negocio: S.g.nombre, sucursal: S.b.nombre, empleado: e.name, rol: role,
+    periodo: {desde: dmy(S.from), hasta: dmy(S.to), dias: daysBetween(S.from,S.to)},
+    ventas: {importe: r.importe, tickets: r.tickets, ticket_promedio: r.ticket_promedio, cubiertos: r.cubiertos, promedio_por_cubierto: r.promedio_por_cubierto||null, descuentos: r.descuentos,
+      descuentos_pct_sobre_venta: r.importe ? +(100*r.descuentos/(r.importe+r.descuentos)).toFixed(1) : null},
+    periodo_anterior: S.det.prev && S.det.prev.tot ? {desde: dmy(S.det.prev.from), hasta: dmy(S.det.prev.to), importe: S.det.prev.tot.importe||0, tickets: S.det.prev.tot.tickets||0, ticket_promedio: S.det.prev.tot.ticket_promedio||null} : "sin datos",
+    sucursal_misma_funcion: {empleados_con_ventas: rk.length, puesto: pos||null, descuentos_pct_promedio: tot.importe ? +(100*tot.descuentos/(tot.importe+tot.descuentos)).toFixed(1) : null, ticket_promedio: tot.ticket_promedio||null},
+    top_productos: (S.det.prods||[]).slice(0,5).map(p=>({producto:p.producto_nombre, unidades:p.unidades, importe:p.importe})),
+    ventas_por_dia: (S.det.days||[]).map(x=>({dia:x.dia, importe:x.importe}))
+  };
+  const prompt = `Sos un encargado de un local gastronómico en Argentina. Con estos datos reales de Morphi, escribí 2 o 3 frases en castellano rioplatense (voseo, tono directo y amable) sobre cómo viene este empleado: si subió o bajó contra el período anterior, qué es lo que más vende y si da muchos descuentos comparado con sus compañeros. Usá solo los números que están acá; no inventes ni estimes. Importes en pesos con punto de miles (ej. $ 1.250.000). Si falta un dato, no lo menciones. Sin títulos ni viñetas.\n\nDatos:\n${JSON.stringify(data)}`;
+  S.ai = {text:"",busy:true,err:null}; render();
+  try {
+    const res = await sample(prompt, {onText: ({text}) => { S.ai.text = text; const el = document.getElementById("aitext"); if (el) el.textContent = text; }});
+    S.ai = {text: res.text, busy:false, err:null};
+  } catch(err){
+    S.ai = {text:"", busy:false, err: err && err.code === "not_granted" ? "Falta permitir el análisis con IA en esta página." : err && err.code === "rate_limited" ? "Demasiados pedidos seguidos. Probá en un minuto." : "No se pudo hacer el análisis."};
+  }
+  render();
+}
+
+// ---------- render ----------
+function renderFatal(msg){ document.getElementById("app").innerHTML = `<div class="notice bad"><b>No hay datos para mostrar</b>${esc(msg)}</div>`; }
+
+function renderHeader(){
+  const g = document.getElementById("groups");
+  g.innerHTML = S.groups.map(x => `<button type="button" data-g="${esc(x.alias)}" aria-pressed="${S.g&&S.g.alias===x.alias}">${esc(x.nombre)}</button>`).join("");
+  const b = document.getElementById("branches");
+  if (!S.branches.length){ b.innerHTML = S.branchErr ? "" : `<span class="lbl" style="padding:12px 2px">Cargando sucursales…</span>`; return; }
+  b.innerHTML = S.branches.map(x => {
+    const has = S.branchTotals && S.branchTotals[x.codigo];
+    const cls = !x.online ? "off" : (S.branchTotals && !has ? "none" : "");
+    const tip = !x.online ? "Local sin conexión" : (S.branchTotals && !has ? "Sin ventas en el período" : "Conectada");
+    return `<button type="button" data-b="${esc(x.codigo)}" aria-pressed="${S.b&&S.b.codigo===x.codigo}" title="${tip}"><span class="dot ${cls}" aria-hidden="true"></span>${esc(x.nombre)}</button>`;
+  }).join("");
+  const on = b.querySelector('[aria-pressed="true"]'); if (on) on.scrollIntoView({block:"nearest",inline:"center"});
+}
+
+function sourceLine(){
+  const where = S.g ? `<b>${esc(S.g.nombre)}</b>${S.b && !(S.gInfo&&S.gInfo.unica) ? " › <b>"+esc(S.b.nombre)+"</b>" : ""}` : "";
+  const base = S.gInfo ? ` · base ${esc(title(S.gInfo.servidor))}` : "";
+  return `<div class="source">Datos de Morphi: ${where}${base}. Del <b>${short(S.from)}</b> al <b>${short(S.to)}</b>. Cada venta cuenta para el <b>día operativo</b>, que es el día en que se abrió la caja. Importes con IVA.</div>`;
+}
+
+function periodBlock(){
+  return `<section class="period" aria-label="Período">
+    <div class="chips" id="presets">${PRESETS.map(p=>`<button type="button" data-p="${p[0]}" aria-pressed="${S.preset===p[0]}">${p[1]}</button>`).join("")}</div>
+    <div class="dates"><label for="dFrom">Desde<input id="dFrom" type="date" value="${S.from}" max="${todayISO()}"></label><label for="dTo">Hasta<input id="dTo" type="date" value="${S.to}" max="${todayISO()}"></label></div>
+  </section>`;
+}
+
+function branchNotice(){
+  if (!S.b) return "";
+  const has = S.branchTotals && S.branchTotals[S.b.codigo];
+  let out = "";
+  if (!S.b.online && !(S.gInfo&&S.gInfo.unica)) out += `<div class="notice bad"><b>${esc(S.b.nombre)}: local sin conexión</b>Morphi no se pudo conectar con esta sucursal. Lo que se ve viene del servidor del grupo y puede faltar lo último que vendió el local.</div>`;
+  if (!S.b.online && S.gInfo&&S.gInfo.unica) out += `<div class="notice bad"><b>Base sin conexión</b>Morphi no se pudo conectar con la base de este negocio.</div>`;
+  if (S.branchTotals && !has) out += `<div class="notice"><b>Sin ventas en este período</b>Morphi no tiene ventas de ${esc(S.b.nombre)} entre el ${dmy(S.from)} y el ${dmy(S.to)}. Puede estar cerrada o sin datos cargados.</div>`;
+  return out;
+}
+
+function renderBody(){ render(); }
+
+function render(){
+  const app = document.getElementById("app");
+  if (!S.g){ return; }
+  if (S.branchErr && !S.branches.length){ app.innerHTML = `<div class="notice bad"><b>No se pudieron leer las sucursales</b>${esc(S.branchErr)}</div>`; return; }
+  if (!S.b){ app.innerHTML = `<div class="loading">Buscando sucursales de ${esc(S.g.nombre)}…</div>`; return; }
+  if (S.view === "detail") { app.innerHTML = detailHTML(); bindDetail(); return; }
+  if (S.view === "rk" && RK.on()) { app.innerHTML = RK.detailHTML(); RK.bindDetail(); return; }
+  let h = sourceLine() + periodBlock() + branchNotice();
+  h += `<div class="tabs" role="tablist"><button role="tab" type="button" data-tab="emp" aria-selected="${S.tab==="emp"}">Empleados</button><button role="tab" type="button" data-tab="rank" aria-selected="${S.tab==="rank"}">Ranking</button></div>`;
+  if (S.rosterErr) h += `<div class="notice bad"><b>No se pudieron leer las ventas</b>${esc(S.rosterErr)}</div>`;
+  else if (!S.roster) h += `<div class="loading">Leyendo ventas de ${esc(S.b.nombre)}…</div>`;
+  else if (S.tab==="emp") h += listHTML();
+  else if (RK.on()) h += RK.html();
+  else h += rankHTML();
+  h += footHTML();
+  app.innerHTML = h; bindList();
+  if (S.tab==="rank" && RK.on()) RK.bind();
+}
+
+function footHTML(){
+  const t = S.updatedAt ? new Date(S.updatedAt).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit",timeZone:TZ}) : "–";
+  return `<div class="foot"><span>Consultado a las ${t} (hora de Argentina)</span><button type="button" class="link" id="refresh">Actualizar</button></div>`;
+}
+
+function listHTML(){
+  const q = S.q.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  let rows = S.roster.slice().map(e => { const r = primaryRole(e); const x = S.per[r]?.get(e.code); return {e, r, x}; });
+  rows.sort((a,b) => (b.x?.importe||0)-(a.x?.importe||0) || a.e.name.localeCompare(b.e.name));
+  const total = rows.length;
+  if (q) rows = rows.filter(o => norm(o.e.name).includes(q) || o.e.code.includes(q));
+  let h = `<input class="search" id="q" type="search" placeholder="Buscar por nombre" aria-label="Buscar empleado por nombre" value="${esc(S.q)}" autocomplete="off">`;
+  if (S.rosterPartial) h += `<div class="notice"><b>Lista incompleta</b>Morphi no devolvió el personal de los últimos ${ROSTER_DAYS} días; se ven solo quienes vendieron en el período elegido. Tocá Actualizar para reintentar.</div>`;
+  h += `<div class="lbl">${total} empleados con ventas en los últimos ${ROSTER_DAYS} días · tocá un nombre</div>`;
+  if (!total){ return h + `<div class="notice"><b>Sin empleados para mostrar</b>Morphi no registra mozos ni cajeros con ventas en ${esc(S.b.nombre)} en los últimos ${ROSTER_DAYS} días.</div>`; }
+  if (!rows.length) return h + `<div class="list"><div class="empty">Nadie se llama así en esta sucursal.</div></div>`;
+  h += `<div class="list">` + rows.map(o => `<button type="button" class="row" data-emp="${esc(o.e.code)}">
+      <span class="pos" aria-hidden="true"></span>
+      <span style="min-width:0"><span class="name">${esc(o.e.name)}</span><span class="sub">${badges(o.e)}<span>Legajo ${esc(o.e.code)}</span></span></span>
+      <span class="amt">${o.x ? money(o.x.importe) + `<small>${num(o.x.tickets)} tickets · ${o.r}</small>` : `<small>Sin ventas en el período</small>`}</span>
+    </button>`).join("") + `</div>`;
+  return h;
+}
+const badges = e => (e.roles.has("mozo")?`<span class="badge mozo">Mozo</span>`:"") + (e.roles.has("cajero")?`<span class="badge cajero">Cajero</span>`:"");
+
+function rankHTML(){
+  const role = S.rankRole; const rk = ranking(role);
+  let h = `<div class="role-switch"><button type="button" class="btn" data-rr="mozo" aria-pressed="${role==="mozo"}">Como mozo</button><button type="button" class="btn" data-rr="cajero" aria-pressed="${role==="cajero"}">Como cajero</button></div>`;
+  h += `<div class="lbl">${role==="mozo"?"Lo que vendió cada mozo (mesas y pedidos que atendió)":"Lo que cobró cada cajero en su caja"}</div>`;
+  if (!rk.length) return h + `<div class="notice"><b>Sin ventas ${role==="mozo"?"de mozos":"de cajeros"} en este período</b>Morphi no tiene ventas en ${esc(S.b.nombre)} entre el ${dmy(S.from)} y el ${dmy(S.to)}.</div>`;
+  const max = rk[0].importe || 1;
+  return h + `<div class="list">` + rk.map((x,i) => `<button type="button" class="row" data-emp="${esc(x[role])}" data-role="${role}">
+    <span class="pos">${i+1}</span>
+    <span style="min-width:0"><span class="name">${esc(title(x[role+"_nombre"])||x[role])}</span><span class="sub">${num(x.tickets)} tickets · prom. ${money(x.ticket_promedio)}</span><div class="bar" style="width:${Math.max(2,100*x.importe/max).toFixed(1)}%"></div></span>
+    <span class="amt">${money(x.importe)}</span></button>`).join("") + `</div>`;
+}
+
+function detailHTML(){
+  const e = S.emp, role = S.role, D = S.det || {};
+  let h = `<div class="detail-head"><button type="button" class="back" id="back" aria-label="Volver a la lista">←</button><div style="min-width:0"><h2>${esc(e.name)}</h2><div class="meta">${badges(e)}<span>Legajo ${esc(e.code)}</span></div></div></div>`;
+  h += sourceLine() + periodBlock() + branchNotice();
+  if (e.roles.has("mozo") && e.roles.has("cajero")) h += `<div class="role-switch"><button type="button" class="btn" data-role-sw="mozo" aria-pressed="${role==="mozo"}">Ventas como mozo</button><button type="button" class="btn" data-role-sw="cajero" aria-pressed="${role==="cajero"}">Cobros como cajero</button></div>`;
+  if (D.loading) return h + `<div class="loading">Leyendo las ventas de ${esc(e.name)}…</div>`;
+  if (!D.row) return h + `<div class="notice"><b>Sin ventas en este período</b>${esc(e.name)} no registró ventas como ${role} entre el ${dmy(S.from)} y el ${dmy(S.to)}. Probá con otro período.</div>`;
+  const r = D.row;
+  let delta = "";
+  if (D.prev && D.prev.tot && D.prev.tot.importe){
+    const pct = 100*(r.importe - D.prev.tot.importe)/Math.abs(D.prev.tot.importe);
+    delta = `<div class="d ${pct>=0?"up":"down"}">${pct>=0?"▲":"▼"} ${Math.abs(pct).toFixed(1).replace(".",",")} % contra ${short(D.prev.from)}–${short(D.prev.to)} (${money(D.prev.tot.importe)})</div>`;
+  } else if (D.prev) delta = `<div class="d">Sin ventas en el período anterior (${short(D.prev.from)}–${short(D.prev.to)})</div>`;
+  const dpct = r.importe ? (100*r.descuentos/(r.importe+r.descuentos)) : 0;
+  h += `<div class="kpis">
+    <div class="kpi main"><div class="k">${role==="mozo"?"Importe vendido":"Importe cobrado"}</div><div class="v">${money(r.importe)}</div>${delta}</div>
+    <div class="kpi"><div class="k">Tickets</div><div class="v">${num(r.tickets)}</div></div>
+    <div class="kpi"><div class="k">Ticket promedio</div><div class="v">${money(r.ticket_promedio)}</div></div>
+    <div class="kpi"><div class="k">Cubiertos</div><div class="v">${r.cubiertos ? num(r.cubiertos) : "—"}</div>${r.cubiertos?"":`<div class="d">No se cargaron cubiertos</div>`}</div>
+    <div class="kpi"><div class="k">Promedio por cubierto</div><div class="v">${r.promedio_por_cubierto ? money(r.promedio_por_cubierto) : "—"}</div></div>
+    <div class="kpi" style="grid-column:1/-1"><div class="k">Descuentos</div><div class="v">${money(r.descuentos)}</div><div class="d">${dpct.toFixed(1).replace(".",",")} % de lo que valían los tickets</div></div>
+  </div>`;
+  // puesto
+  const rk = ranking(role); const pos = rk.findIndex(x=>x[role]===e.code)+1;
+  h += `<section class="card"><h3>Puesto en ${esc(S.b.nombre)}</h3>${pos ? `<div class="rank"><span class="big">${pos}º</span><span>de ${rk.length} ${role==="mozo"?"mozos":"cajeros"} con ventas en el período</span></div>${pos>1?`<div class="hint">Le faltaron ${money(rk[pos-2].importe - r.importe)} para alcanzar a ${esc(title(rk[pos-2][role+"_nombre"]))} (${pos-1}º).</div>`:`<div class="hint">Es quien más ${role==="mozo"?"vendió":"cobró"} en la sucursal.</div>`}` : `<div class="hint">Sin puesto en este período.</div>`}<button type="button" class="link" id="toRank" style="justify-self:start">Ver el ranking completo</button></section>`;
+  // gráfico
+  h += `<section class="card"><h3>Ventas día por día</h3>${D.daysErr ? `<div class="notice bad">${esc(D.daysErr)}</div>` : chartSVG(D.days||[])}</section>`;
+  // productos
+  h += `<section class="card"><h3>Los 10 productos que más vendió</h3><div class="hint">Por importe. Los combos cuentan como una unidad.</div>${D.prodErr ? `<div class="notice bad">${esc(D.prodErr)}</div>` : (D.prods&&D.prods.length ? `<ol class="prods">${D.prods.map((p,i)=>`<li><span class="n">${i+1}</span><span class="p">${esc(title(p.producto_nombre))}<small>${num(p.unidades)} u. · en ${num(p.tickets)} tickets</small></span><span class="i">${money(p.importe)}</span></li>`).join("")}</ol>` : `<div class="hint">Morphi no tiene productos para este período.</div>`)}</section>`;
+  // IA
+  if (sample) h += `<section class="card"><h3>Análisis con IA</h3>${S.ai.text||S.ai.busy ? `<div class="ai-text" id="aitext">${esc(S.ai.text|| "Pensando…")}</div>` : `<div class="hint">Un resumen corto de cómo viene, armado solo con estos datos de Morphi.</div>`}${S.ai.err?`<div class="notice bad">${esc(S.ai.err)}</div>`:""}<button type="button" class="btn primary" id="ai" ${S.ai.busy?"disabled":""}>${S.ai.busy?"Analizando…":(S.ai.text?"Analizar de nuevo":"Analizar con IA")}</button></section>`;
+  return h + footHTML();
+}
+
+function chartSVG(rows){
+  const days = []; const n = daysBetween(S.from,S.to);
+  if (n > 120) return `<div class="hint">El período es muy largo para el gráfico diario (más de 120 días).</div>`;
+  const by = new Map(rows.map(r=>[r.dia,r]));
+  for (let i=0;i<n;i++){ const d = addDays(S.from,i); days.push({d, r:by.get(d)||null}); }
+  const max = Math.max(1, ...days.map(x=>x.r?Math.max(0,x.r.importe):0));
+  const W = 340, H = 170, L = 6, R = 6, T = 22, B = 26, cw = (W-L-R)/n, bw = Math.max(2, cw*0.7);
+  const nice = niceMax(max);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ventas por día">`;
+  [0.5,1].forEach(f => { const y = T + (H-T-B)*(1-f); s += `<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${L}" y="${y-4}" font-size="10" fill="var(--muted)">${esc(compact(nice*f))}</text>`; });
+  s += `<line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="var(--line)" stroke-width="1"/>`;
+  days.forEach((x,i) => {
+    const cx = L + cw*i + cw/2; const v = x.r ? Math.max(0,x.r.importe) : 0; const h = (H-T-B)*v/nice;
+    const label = `${dow(x.d)} ${short(x.d)}: ${x.r ? money(x.r.importe)+" · "+num(x.r.tickets)+" tickets" : "sin ventas"}`;
+    s += `<g class="bar-g" data-tip="${esc(label)}" style="cursor:pointer"><rect x="${cx-cw/2}" y="${T}" width="${cw}" height="${H-T-B}" fill="transparent"/>`;
+    s += x.r ? `<rect x="${cx-bw/2}" y="${H-B-h}" width="${bw}" height="${Math.max(1,h)}" rx="2" fill="var(--accent)"/>` : `<rect x="${cx-bw/2}" y="${H-B-1.5}" width="${bw}" height="1.5" fill="var(--muted)" opacity=".5"/>`;
+    s += `<title>${esc(label)}</title></g>`;
+    const every = Math.ceil(n/7);
+    if (i % every === 0 || i === n-1) s += `<text x="${cx}" y="${H-B+15}" font-size="10" text-anchor="middle" fill="var(--muted)">${short(x.d)}</text>`;
+  });
+  s += `</svg>`;
+  const best = days.filter(x=>x.r).sort((a,b)=>b.r.importe-a.r.importe)[0];
+  const sinv = days.filter(x=>!x.r).length;
+  return `<div class="chart">${s}</div><div class="chart-tip" id="tip">${best ? `Mejor día: ${dow(best.d)} ${short(best.d)}, ${money(best.r.importe)}.` : ""}${sinv ? ` ${sinv} ${sinv===1?"día":"días"} sin ventas.` : ""} Tocá una barra para ver el día.</div>`;
+}
+function niceMax(v){ const p = Math.pow(10, Math.floor(Math.log10(v))); const m = v/p; return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p; }
+function compact(v){ if (v>=1e6) return "$ "+(v/1e6).toLocaleString("es-AR",{maximumFractionDigits:1})+" M"; if (v>=1e3) return "$ "+Math.round(v/1e3).toLocaleString("es-AR")+" mil"; return "$ "+Math.round(v); }
+
+// =====================================================================
+// Ranking inteligente de camareros — solo Puerto de Palos (grupo PPALOS)
+// Datos: Morphi (ventas por mozo, cubiertos y productos). Puntaje 0–100.
+// =====================================================================
+const RK = (() => {
+  const GROUP = "PPALOS";
+  const CFG_DOC = "config/ranking-ppalos";
+  // Valores sugeridos. Se cambian desde el panel "Configurar" (no hace falta tocar código).
+  const DEFAULT = {
+    pesos: {ppc:25, tp:15, postres:20, parri:15, degus:15, frit:10},
+    minCubSemana: 20,
+    postresRubros: ["011","588"],          // POSTRES y VOLCAN DE CHOCOLATE
+    postresExcluir: [],                    // códigos de postres que no cuentan
+    productos: {parri:["248"], degus:["214"], frit:["019"]}, // PARRI PESCADOS Y MARISCOS · DEGUS PESC Y SAL · FRITURA MIXTA
+    turnos: {mediodia:[6,18], noche:[19,5]} // hora del ticket
+  };
+  const IND = [
+    {k:"ppc",     n:"Facturación por cubierto", s:"$/cub.",       money:true},
+    {k:"tp",      n:"Ticket promedio",          s:"Ticket prom.", money:true},
+    {k:"postres", n:"Postres",                  s:"Postres",      per100:true},
+    {k:"parri",   n:"Parrilladas de mariscos",  s:"Parrilladas",  per100:true},
+    {k:"degus",   n:"Degustaciones de pescados",s:"Degustaciones",per100:true},
+    {k:"frit",    n:"Frituras mixtas",          s:"Frituras",     per100:true},
+  ];
+  const STRAT = ["parri","degus","frit"];
+  const R = {cfg: clone(DEFAULT), cfgSrc:"default", cfgLoaded:false, canEdit:false, db:null,
+             turno:"todos", key:null, loading:false, err:null, data:null,
+             evo:{}, evoLoading:null, showCfg:false, sel:null, saveMsg:null};
+
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  const dec1 = v => (v==null||!isFinite(v)) ? "—" : v.toLocaleString("es-AR",{minimumFractionDigits:1,maximumFractionDigits:1});
+  const pctTxt = v => (v>=0?"+":"−") + Math.abs(v).toLocaleString("es-AR",{maximumFractionDigits:0}) + " %";
+  const on = () => !!(S.g && S.g.alias===GROUP);
+
+  // ---------- configuración (guardada en la base compartida de la página) ----------
+  async function loadCfg(){
+    if (R.cfgLoaded) return; R.cfgLoaded = true;
+    try { R.db = await claude.use("db"); } catch(e){ R.db = null; }
+    try { const u = await claude.use("user"); R.canEdit = u ? await u.canEdit() : false; } catch(e){ R.canEdit = false; }
+    let saved = null;
+    if (R.db){ try { const s = await R.db.doc(CFG_DOC).get(); if (s.exists) { saved = s.data(); R.cfgSrc = "db"; } } catch(e){} }
+    if (!saved){ try { const t = localStorage.getItem("rk_cfg"); if (t){ saved = JSON.parse(t); R.cfgSrc = "local"; } } catch(e){} }
+    if (saved) R.cfg = sanitize(saved);
+    if (!R.db) R.canEdit = true; // sin base compartida: se guarda solo en este dispositivo
+  }
+  function sanitize(c){
+    const d = clone(DEFAULT), o = c||{};
+    IND.forEach(i => { const v = Number(o.pesos && o.pesos[i.k]); if (isFinite(v) && v>=0 && v<=100) d.pesos[i.k] = v; });
+    const m = Number(o.minCubSemana); if (isFinite(m) && m>=0 && m<=1000) d.minCubSemana = m;
+    const codes = a => Array.isArray(a) ? a.map(String).map(s=>s.trim()).filter(Boolean).slice(0,200) : null;
+    if (codes(o.postresRubros)) d.postresRubros = codes(o.postresRubros);
+    if (codes(o.postresExcluir)) d.postresExcluir = codes(o.postresExcluir);
+    STRAT.forEach(k => { const a = codes(o.productos && o.productos[k]); if (a) d.productos[k] = a; });
+    ["mediodia","noche"].forEach(t => { const a = o.turnos && o.turnos[t]; if (Array.isArray(a) && a.length===2 && a.every(h=>Number.isInteger(h)&&h>=0&&h<=23)) d.turnos[t] = a; });
+    return d;
+  }
+  async function saveCfg(c){
+    const clean = sanitize(c);
+    if (R.db){ await R.db.doc(CFG_DOC).set(clean); R.cfgSrc = "db"; }
+    else { try { localStorage.setItem("rk_cfg", JSON.stringify(clean)); R.cfgSrc = "local"; } catch(e){} }
+    R.cfg = clean; R.key = null; R.evo = {};
+  }
+
+  // ---------- consultas a Morphi ----------
+  let active = 0; const waiters = [];
+  async function slot(fn){ // máximo 3 consultas a la vez: Morphi falla más con muchas juntas
+    if (active >= 3) await new Promise(r => waiters.push(r));
+    active++;
+    try { return await fn(); } finally { active--; const n = waiters.shift(); if (n) n(); }
+  }
+  function ranges(){
+    if (R.turno === "todos") return [null];
+    const [a,b] = R.cfg.turnos[R.turno];
+    return a <= b ? [[a,b]] : [[a,23],[0,b]];
+  }
+  async function q(base){
+    const out = {rows:[], truncated:false};
+    const parts = await Promise.all(ranges().map(r => slot(() => call("ventas", Object.assign(
+      {sucursal:S.gInfo.servidor, desde:dmy(S.from), hasta:dmy(S.to), limite:1000}, base,
+      r ? {hora_desde:r[0], hora_hasta:r[1]} : {})))));
+    parts.forEach(p => { (p.filas||[]).forEach(f => out.rows.push(f)); if ((p.grupos||0) > (p.se_muestran||0)) out.truncated = true; });
+    return out;
+  }
+  const sumBy = (rows, keyFn) => { const m = new Map(); rows.forEach(r => { const k = keyFn(r); if (k==null) return; const a = m.get(k) || {unidades:0, importe:0, tickets:0, cubiertos:0, descuentos:0, row:r}; a.unidades += +r.unidades||0; a.importe += +r.importe||0; a.tickets += +r.tickets||0; a.cubiertos += +r.cubiertos||0; a.descuentos += +r.descuentos||0; m.set(k,a); }); return m; };
+  const stratCodes = () => STRAT.flatMap(k => R.cfg.productos[k]);
+  const catOf = code => STRAT.find(k => R.cfg.productos[k].includes(String(code)));
+
+  // Unidades cobradas: lo vendido menos los renglones sin cargo (regalos, invitaciones, 100 % de descuento).
+  function paidUnits(all, free, keyFn){
+    const A = sumBy(all, keyFn), F = sumBy(free, keyFn), out = new Map();
+    A.forEach((a,k) => { const f = F.get(k); out.set(k, {u: a.importe > 0 ? Math.max(0, a.unidades - (f ? f.unidades : 0)) : 0, free: f ? f.unidades : 0, row:a.row, importe:a.importe}); });
+    return out;
+  }
+
+  async function load(){
+    const key = [S.from,S.to,R.turno,JSON.stringify(R.cfg)].join("|");
+    if (R.key === key || R.loading === key) return;
+    R.loading = key; R.err = null; R.data = null; R.evo = {}; render();
+    await loadCfg();
+    const nkey = [S.from,S.to,R.turno,JSON.stringify(R.cfg)].join("|");
+    const isCombo = {items_de_combos:"sueltas"};
+    const prodF = {producto: stratCodes()};
+    const posF = {rubro: R.cfg.postresRubros};
+    const [b, p, ps, s, ss] = await Promise.allSettled([
+      q({agrupar:["mozo"]}),
+      R.cfg.postresRubros.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:posF}, isCombo)) : Promise.reject({code:"sin_config"}),
+      R.cfg.postresRubros.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:posF, renglones:"sin_cargo"}, isCombo)) : Promise.reject({code:"sin_config"}),
+      prodF.producto.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:prodF}, isCombo)) : Promise.reject({code:"sin_config"}),
+      prodF.producto.length ? q(Object.assign({agrupar:["mozo","producto"], filtros:prodF, renglones:"sin_cargo"}, isCombo)) : Promise.reject({code:"sin_config"}),
+    ]);
+    if (R.loading !== key) return;
+    R.loading = false; R.key = nkey;
+    if (b.status !== "fulfilled"){ R.err = errText(b.reason); render(); return; }
+    const d = {mozos:new Map(), notes:[], avail:{postres:true, strat:true}, postresProds:new Map(), stratProds:new Map(), unattributed:0, freeUnits:{postres:0,parri:0,degus:0,frit:0}};
+    // 1) Ventas por mozo: importe, tickets válidos (NC restadas), cubiertos.
+    const base = sumBy(b.value.rows, r => r.mozo || "");
+    base.forEach((a,code) => {
+      if (!code){ d.unattributed += a.importe; return; }
+      d.mozos.set(code, {code, name:title(a.row.mozo_nombre)||("Legajo "+code), importe:a.importe, tickets:a.tickets, cubiertos:a.cubiertos, descuentos:a.descuentos, u:{postres:0,parri:0,degus:0,frit:0}});
+    });
+    if (b.value.truncated) d.notes.push("Morphi devolvió la lista de mozos incompleta.");
+    const ensure = (code, name) => { if (!d.mozos.has(code)) d.mozos.set(code,{code,name:title(name)||("Legajo "+code),importe:0,tickets:0,cubiertos:0,descuentos:0,u:{postres:0,parri:0,degus:0,frit:0}}); return d.mozos.get(code); };
+    // 2) Postres
+    if (p.status==="fulfilled" && ps.status==="fulfilled"){
+      const pu = paidUnits(p.value.rows, ps.value.rows, r => r.mozo ? r.mozo+"|"+r.producto : null);
+      pu.forEach((x,k) => {
+        const [code, prod] = k.split("|");
+        const pr = d.postresProds.get(prod) || {code:prod, name:title(x.row.producto_nombre), u:0, free:0, importe:0};
+        pr.u += x.u; pr.free += x.free; pr.importe += x.importe; d.postresProds.set(prod, pr);
+        if (R.cfg.postresExcluir.includes(prod)) return;
+        ensure(code, x.row.mozo_nombre).u.postres += x.u; d.freeUnits.postres += x.free;
+      });
+      if (p.value.truncated) d.notes.push("La consulta de postres vino incompleta: el dato puede quedar corto.");
+    } else { d.avail.postres = false; d.notes.push("Postres: Morphi no respondió (" + errText(p.status==="rejected"?p.reason:ps.reason) + "). Se excluyó del puntaje."); }
+    // 3) Parrilladas, degustaciones, frituras
+    if (s.status==="fulfilled" && ss.status==="fulfilled"){
+      const su = paidUnits(s.value.rows, ss.value.rows, r => r.mozo ? r.mozo+"|"+r.producto : null);
+      su.forEach((x,k) => {
+        const [code, prod] = k.split("|"); const cat = catOf(prod); if (!cat) return;
+        const pr = d.stratProds.get(prod) || {code:prod, cat, name:title(x.row.producto_nombre), u:0, free:0}; pr.u += x.u; pr.free += x.free; d.stratProds.set(prod, pr);
+        ensure(code, x.row.mozo_nombre).u[cat] += x.u; d.freeUnits[cat] += x.free;
+      });
+    } else { d.avail.strat = false; d.notes.push("Parrilladas, degustaciones y frituras: Morphi no respondió (" + errText(s.status==="rejected"?s.reason:ss.reason) + "). Se excluyeron del puntaje."); }
+    if (d.unattributed) d.notes.push(`Hay ${money(d.unattributed)} vendidos sin mozo asignado: no se atribuyen a nadie.`);
+    R.data = Object.assign(d, score([...d.mozos.values()], minCubFor(daysBetween(S.from,S.to)), d.avail));
+    render();
+  }
+
+  const minCubFor = days => Math.max(1, Math.round(R.cfg.minCubSemana * days / 7));
+  function metrics(m){
+    const c = m.cubiertos;
+    return {ppc: c>0 ? m.importe/c : null, tp: m.tickets>0 ? m.importe/m.tickets : null,
+            postres: c>0 ? 100*m.u.postres/c : null, parri: c>0 ? 100*m.u.parri/c : null,
+            degus: c>0 ? 100*m.u.degus/c : null, frit: c>0 ? 100*m.u.frit/c : null};
+  }
+  // Puntaje: cada indicador se compara con el mejor del período (mejor = 100 puntos, el resto en proporción).
+  // El total es el promedio ponderado; si un indicador no tiene datos, sale del cálculo y los pesos se reparten.
+  function score(list, minCub, avail){
+    const all = list.map(m => Object.assign({}, m, {v:metrics(m)}));
+    const elig = all.filter(m => m.cubiertos >= minCub && m.importe > 0 && m.tickets > 0);
+    const out = all.filter(m => !elig.includes(m) && m.importe > 0 && m.cubiertos > 0);
+    const hidden = all.filter(m => !elig.includes(m) && !out.includes(m));
+    const usable = {};
+    IND.forEach(i => {
+      const okData = i.k==="postres" ? avail.postres : STRAT.includes(i.k) ? avail.strat : true;
+      const max = Math.max(0, ...elig.map(m => m.v[i.k]||0));
+      usable[i.k] = {ok: okData && max > 0 && (R.cfg.pesos[i.k]||0) > 0, max, sinVentas: okData && max <= 0};
+    });
+    const wSum = IND.reduce((t,i) => t + (usable[i.k].ok ? R.cfg.pesos[i.k] : 0), 0);
+    elig.forEach(m => {
+      m.s = {}; let tot = 0;
+      IND.forEach(i => { const u = usable[i.k]; m.s[i.k] = u.max > 0 ? 100*(m.v[i.k]||0)/u.max : null; if (u.ok) tot += R.cfg.pesos[i.k] * m.s[i.k]; });
+      m.score = wSum > 0 ? tot / wSum : 0;
+    });
+    elig.sort((a,b) => b.score - a.score || b.importe - a.importe);
+    elig.forEach((m,i) => m.pos = i+1);
+    out.sort((a,b) => b.cubiertos - a.cubiertos);
+    const T = elig.reduce((t,m) => { t.importe+=m.importe; t.tickets+=m.tickets; t.cubiertos+=m.cubiertos; IND.forEach(i=>{ if (m.u[i.k]!=null) t.u[i.k]=(t.u[i.k]||0)+m.u[i.k]; }); return t; }, {importe:0,tickets:0,cubiertos:0,u:{postres:0,parri:0,degus:0,frit:0}});
+    const team = {v: metrics(T), u:T.u, cubiertos:T.cubiertos, importe:T.importe, tickets:T.tickets};
+    return {elig, out, hidden, usable, wSum, minCub, team};
+  }
+
+  // ---------- evolución del puesto ----------
+  function bucketKind(){ const n = daysBetween(S.from,S.to); return n <= 10 ? "dia" : n <= 92 ? "semana" : "mes"; }
+  function bucketRange(kind, k){
+    let a, b;
+    if (kind==="dia"){ a = b = k; }
+    else if (kind==="semana"){ a = k; b = addDays(k,6); }
+    else { a = k+"-01"; const d = toD(a); d.setUTCMonth(d.getUTCMonth()+1); d.setUTCDate(0); b = toISO(d); }
+    if (a < S.from) a = S.from; if (b > S.to) b = S.to;
+    return [a,b];
+  }
+  async function loadEvo(){
+    const key = R.key; if (!R.data || R.evo[key] || R.evoLoading===key) return;
+    R.evoLoading = key; render();
+    const kind = bucketKind(), C = {items_de_combos:"sueltas"};
+    const posCodes = [...R.data.postresProds.values()].filter(p => p.importe > 0 && !R.cfg.postresExcluir.includes(p.code)).map(p=>p.code);
+    const sc = stratCodes();
+    const res = await Promise.allSettled([
+      q({agrupar:[kind,"mozo"]}),
+      posCodes.length ? q(Object.assign({agrupar:[kind,"mozo"], filtros:{producto:posCodes}}, C)) : Promise.resolve({rows:[]}),
+      posCodes.length ? q(Object.assign({agrupar:[kind,"mozo"], filtros:{producto:posCodes}, renglones:"sin_cargo"}, C)) : Promise.resolve({rows:[]}),
+      sc.length ? q(Object.assign({agrupar:[kind,"mozo","producto"], filtros:{producto:sc}}, C)) : Promise.resolve({rows:[]}),
+      sc.length ? q(Object.assign({agrupar:[kind,"mozo","producto"], filtros:{producto:sc}, renglones:"sin_cargo"}, C)) : Promise.resolve({rows:[]}),
+    ]);
+    if (R.evoLoading !== key) return;
+    R.evoLoading = null;
+    if (res[0].status !== "fulfilled"){ R.evo[key] = {err: errText(res[0].reason)}; render(); return; }
+    const avail = {postres: res[1].status==="fulfilled" && res[2].status==="fulfilled" && R.data.avail.postres,
+                   strat: res[3].status==="fulfilled" && res[4].status==="fulfilled" && R.data.avail.strat};
+    const B = new Map(); // bucket -> Map(mozo -> m)
+    const get = (bk, code, name) => { if (!B.has(bk)) B.set(bk, new Map()); const mm = B.get(bk); if (!mm.has(code)) mm.set(code,{code,name,importe:0,tickets:0,cubiertos:0,u:{postres:0,parri:0,degus:0,frit:0}}); return mm.get(code); };
+    sumBy(res[0].value.rows, r => r.mozo ? r[kind]+"|"+r.mozo : null).forEach((a,k) => { const [bk,code] = k.split("|"); const m = get(bk,code,a.row.mozo_nombre); m.importe=a.importe; m.tickets=a.tickets; m.cubiertos=a.cubiertos; });
+    if (avail.postres) paidUnits(res[1].value.rows, res[2].value.rows, r => r.mozo ? r[kind]+"|"+r.mozo : null).forEach((x,k) => { const [bk,code] = k.split("|"); get(bk,code,x.row.mozo_nombre).u.postres += x.u; });
+    if (avail.strat) paidUnits(res[3].value.rows, res[4].value.rows, r => r.mozo ? r[kind]+"|"+r.mozo+"|"+r.producto : null).forEach((x,k) => { const [bk,code,prod] = k.split("|"); const cat = catOf(prod); if (cat) get(bk,code,x.row.mozo_nombre).u[cat] += x.u; });
+    const buckets = [...B.keys()].sort().map(bk => {
+      const [a,b] = bucketRange(kind, bk); const days = daysBetween(a,b);
+      const sres = score([...B.get(bk).values()], minCubFor(days), avail);
+      const pos = {}; sres.elig.forEach(m => pos[m.code] = {pos:m.pos, of:sres.elig.length, score:m.score});
+      return {bk, a, b, days, pos};
+    });
+    R.evo[key] = {kind, buckets, partial: !avail.postres || !avail.strat};
+    render();
+  }
+
+  // ---------- vistas ----------
+  function turnoChips(){
+    const t = R.cfg.turnos, f = ([a,b]) => `${a} a ${b} h`;
+    return `<div class="rk-bar"><div class="chips" role="group" aria-label="Turno">
+      ${[["todos","Todo el día"],["mediodia","Mediodía"],["noche","Noche"]].map(([k,l]) => `<button type="button" data-turno="${k}" aria-pressed="${R.turno===k}">${l}</button>`).join("")}
+      </div><button type="button" class="btn" id="rkCfg" aria-expanded="${R.showCfg}">⚙ Configurar</button></div>
+      ${R.turno!=="todos" ? `<div class="lbl">Turno por hora del ticket: mediodía ${f(t.mediodia)}, noche ${f(t.noche)}</div>` : ""}`;
+  }
+  function cell(m, k){
+    const v = m.v[k];
+    if (k==="ppc"||k==="tp") return money(v);
+    return `${num(m.u[k])}<small>${dec1(v)} c/100</small>`;
+  }
+  function html(){
+    if (R.key !== [S.from,S.to,R.turno,JSON.stringify(R.cfg)].join("|") && !R.loading) setTimeout(load, 0);
+    let h = turnoChips();
+    if (R.showCfg) h += cfgHTML();
+    if (R.err) return h + `<div class="notice bad"><b>No se pudo armar el ranking</b>${esc(R.err)}</div>`;
+    if (!R.data) return h + `<div class="loading">Calculando el ranking de Puerto de Palos…</div>`;
+    const D = R.data;
+    if (!D.elig.length){
+      return h + (D.mozos.size ? `<div class="notice"><b>Nadie llegó al mínimo de cubiertos</b>Para este período el mínimo es ${num(D.minCub)} cubiertos (${num(R.cfg.minCubSemana)} por semana). Elegí un período más largo o bajá el mínimo en Configurar.</div>` : `<div class="notice"><b>Sin ventas en este período</b>Morphi no tiene ventas de Puerto de Palos entre el ${dmy(S.from)} y el ${dmy(S.to)}${R.turno!=="todos"?" en este turno":""}.</div>`) + outHTML(D) + howHTML(D);
+    }
+    const medal = ["🥇","🥈","🥉"];
+    h += `<section class="podium" aria-label="Podio">${D.elig.slice(0,3).map((m,i) => `<button type="button" class="pod p${i+1}" data-rk="${esc(m.code)}"><span class="medal" aria-hidden="true">${medal[i]}</span><span class="sm">${i+1}º puesto</span><span class="nm">${esc(m.name)}</span><span class="sc">${dec1(m.score)}</span><span class="sm">${money(m.v.ppc)} por cubierto</span></button>`).join("")}</section>`;
+    D.notes.forEach(n => h += `<div class="notice">${esc(n)}</div>`);
+    const off = IND.filter(i => !D.usable[i.k].ok);
+    if (off.length) h += `<div class="notice"><b>Fuera del puntaje en este período</b>${off.map(i => esc(i.n) + (D.usable[i.k].sinVentas ? " (nadie vendió)" : (R.cfg.pesos[i.k]||0)===0 ? " (peso 0)" : " (sin datos)")).join(", ")}. Los demás pesos se reparten en proporción.</div>`;
+    h += `<div class="lbl">Ranking principal · ${D.elig.length} camareros con ${num(D.minCub)} cubiertos o más · tocá un nombre · deslizá la tabla → para ver todos los indicadores</div>`;
+    h += `<div class="tbl-wrap"><table class="rk"><thead><tr><th>#</th><th>Camarero</th><th>Puntaje</th><th>Cubiertos</th>${IND.map(i=>`<th>${i.s}</th>`).join("")}<th>Facturación</th></tr></thead><tbody>`;
+    h += D.elig.map(m => `<tr data-rk="${esc(m.code)}"><td>${m.pos}</td><td>${esc(m.name)}</td><td><span class="score-pill">${dec1(m.score)}</span></td><td>${num(m.cubiertos)}</td>${IND.map(i=>`<td>${cell(m,i.k)}</td>`).join("")}<td>${money(m.importe)}<small>${num(m.tickets)} tickets</small></td></tr>`).join("");
+    const T = D.team;
+    h += `<tr class="avg"><td></td><td>Promedio del equipo</td><td></td><td>${num(T.cubiertos)}</td>${IND.map(i => `<td>${i.money ? money(T.v[i.k]) : `${num(T.u[i.k])}<small>${dec1(T.v[i.k])} c/100</small>`}</td>`).join("")}<td>${money(T.importe)}</td></tr>`;
+    h += `</tbody></table></div>`;
+    return h + outHTML(D) + howHTML(D);
+  }
+  function outHTML(D){
+    if (!D.out.length && !D.hidden.length) return "";
+    let h = "";
+    if (D.out.length){
+      h += `<div class="lbl">Fuera del ranking principal · menos de ${num(D.minCub)} cubiertos (sin puntaje)</div>`;
+      h += `<div class="tbl-wrap"><table class="rk"><thead><tr><th></th><th>Camarero</th><th>Cubiertos</th>${IND.map(i=>`<th>${i.s}</th>`).join("")}<th>Facturación</th></tr></thead><tbody>`;
+      h += D.out.map(m => `<tr data-rk="${esc(m.code)}"><td></td><td>${esc(m.name)}</td><td>${num(m.cubiertos)}</td>${IND.map(i=>`<td>${cell(m,i.k)}</td>`).join("")}<td>${money(m.importe)}</td></tr>`).join("");
+      h += `</tbody></table></div>`;
+    }
+    if (D.hidden.length) h += `<div class="lbl">No se muestran ${D.hidden.length} usuarios sin cubiertos o sin facturación (caja, encargados, invitaciones): ${esc(D.hidden.map(m=>m.name).join(", "))}.</div>`;
+    return h;
+  }
+  function howHTML(D){
+    const names = k => R.cfg.productos[k].map(c => { const p = D.stratProds.get(c); return p ? `${p.name} (${c})` : `código ${c}`; }).join(", ");
+    const w = IND.map(i => `${i.n} ${num(R.cfg.pesos[i.k])}`).join(" · ");
+    const exc = R.cfg.postresExcluir.map(c => (D.postresProds.get(c)||{name:"código "+c}).name).join(", ");
+    const free = D.freeUnits;
+    return `<details class="how"><summary>Cómo se calcula</summary><ul>
+      <li>Datos de Morphi, base Puerto de Palos, del ${dmy(S.from)} al ${dmy(S.to)} por día operativo (día de apertura de la caja)${R.turno!=="todos" ? ", filtrado por la hora del ticket" : ""}. Importes con IVA; las notas de crédito ya vienen restadas.</li>
+      <li>Puntaje de 0 a 100. En cada indicador, el mejor camarero del período saca 100 y el resto en proporción. El total es el promedio ponderado: ${w} (los pesos se reparten en proporción si no suman 100).</li>
+      <li>Entran al ranking principal quienes atendieron al menos ${num(R.cfg.minCubSemana)} cubiertos por semana: ${num(D.minCub)} en este período.</li>
+      <li>Postres: rubros ${esc(R.cfg.postresRubros.join(", "))} de Morphi${exc ? `, sin contar ${esc(exc)}` : ""}. Parrilladas: ${esc(names("parri"))}. Degustaciones: ${esc(names("degus"))}. Frituras: ${esc(names("frit"))}.</li>
+      <li>Se cuentan las unidades vendidas sueltas. No se cuentan las que se cobraron $ 0 (regalos, invitaciones, 100 % de descuento)${(free.postres+free.parri+free.degus+free.frit) ? `: en este período fueron ${num(free.postres)} postres, ${num(free.parri)} parrilladas, ${num(free.degus)} degustaciones y ${num(free.frit)} frituras` : ""}.</li>
+      <li>Quedan afuera hasta que se definan: "Parrillada Promo" (215), que no dice si es de pescados o de carnes, y las versiones Take Away (2010, 2005), que no se atienden en mesa.</li>
+    </ul></details>`;
+  }
+  function cfgHTML(){
+    const c = R.cfg, D = R.data, ro = R.canEdit ? "" : "disabled";
+    const wsum = IND.reduce((t,i)=>t+(+c.pesos[i.k]||0),0);
+    const posts = D ? [...D.postresProds.values()].sort((a,b)=>b.u-a.u) : [];
+    const nm = k => D ? c.productos[k].map(code => (D.stratProds.get(code)||{}).name).filter(Boolean).join(", ") : "";
+    return `<form class="card cfg" id="rkForm"><h3>Configuración del ranking</h3>
+      ${R.canEdit ? "" : `<div class="notice">Solo quien puede editar esta página cambia la configuración.</div>`}
+      ${R.db ? "" : `<div class="notice">Esta vista no tiene base compartida: los cambios se guardan solo en este dispositivo.</div>`}
+      <fieldset><legend>Pesos (suman <span id="wsum">${num(wsum)}</span>)</legend>
+        ${IND.map(i => `<label class="f" for="w_${i.k}">${i.n}${i.per100?" c/100 cubiertos":""}<input id="w_${i.k}" type="number" min="0" max="100" step="1" value="${c.pesos[i.k]}" ${ro}></label>`).join("")}
+      </fieldset>
+      <fieldset><legend>Ranking principal</legend>
+        <label class="f" for="minCub">Cubiertos mínimos por semana<input id="minCub" type="number" min="0" max="1000" step="1" value="${c.minCubSemana}" ${ro}></label>
+        <div class="lbl">Para el período elegido: ${num(minCubFor(daysBetween(S.from,S.to)))} cubiertos</div>
+      </fieldset>
+      <fieldset><legend>Turnos (hora del ticket)</legend>
+        <div class="row2"><label class="f wide" for="tmA">Mediodía desde<input id="tmA" type="number" min="0" max="23" value="${c.turnos.mediodia[0]}" ${ro}></label><label class="f wide" for="tmB">hasta<input id="tmB" type="number" min="0" max="23" value="${c.turnos.mediodia[1]}" ${ro}></label></div>
+        <div class="row2"><label class="f wide" for="tnA">Noche desde<input id="tnA" type="number" min="0" max="23" value="${c.turnos.noche[0]}" ${ro}></label><label class="f wide" for="tnB">hasta<input id="tnB" type="number" min="0" max="23" value="${c.turnos.noche[1]}" ${ro}></label></div>
+      </fieldset>
+      <fieldset><legend>Productos estratégicos (códigos de Morphi)</legend>
+        ${STRAT.map(k => `<label class="f wide" for="pc_${k}">${IND.find(i=>i.k===k).n}${nm(k)?` · ${esc(nm(k))}`:""}<input id="pc_${k}" type="text" inputmode="numeric" value="${esc(c.productos[k].join(", "))}" ${ro}></label>`).join("")}
+        <label class="f wide" for="pc_rub">Rubros de postres<input id="pc_rub" type="text" value="${esc(c.postresRubros.join(", "))}" ${ro}></label>
+      </fieldset>
+      ${posts.length ? `<fieldset><legend>Postres que cuentan (vendidos en el período)</legend>${posts.map(p => `<label class="chk"><input type="checkbox" data-pos="${esc(p.code)}" ${c.postresExcluir.includes(p.code)?"":"checked"} ${ro}>${esc(p.name)} <span class="lbl">${num(p.u)} u.</span></label>`).join("")}</fieldset>` : ""}
+      ${R.saveMsg ? `<div class="notice ${R.saveMsg.bad?"bad":"info"}">${esc(R.saveMsg.t)}</div>` : ""}
+      <div class="actions"><button type="button" class="btn" id="rkReset" ${ro}>Valores sugeridos</button><button type="submit" class="btn primary" ${ro}>Guardar</button></div>
+    </form>`;
+  }
+  function readForm(){
+    const c = clone(R.cfg), v = id => document.getElementById(id);
+    IND.forEach(i => c.pesos[i.k] = Math.max(0, Math.min(100, Number(v("w_"+i.k).value)||0)));
+    c.minCubSemana = Math.max(0, Number(v("minCub").value)||0);
+    const hr = id => Math.max(0, Math.min(23, parseInt(v(id).value,10)||0));
+    c.turnos = {mediodia:[hr("tmA"),hr("tmB")], noche:[hr("tnA"),hr("tnB")]};
+    const codes = id => v(id).value.split(/[\s,;]+/).map(s=>s.trim()).filter(Boolean);
+    STRAT.forEach(k => c.productos[k] = codes("pc_"+k));
+    c.postresRubros = codes("pc_rub");
+    const boxes = [...document.querySelectorAll("[data-pos]")];
+    if (boxes.length){ const shown = new Set(boxes.map(b=>b.dataset.pos)); c.postresExcluir = c.postresExcluir.filter(x=>!shown.has(x)).concat(boxes.filter(b=>!b.checked).map(b=>b.dataset.pos)); }
+    return c;
+  }
+  function bind(){
+    document.querySelectorAll("[data-turno]").forEach(b => b.onclick = () => { R.turno = b.dataset.turno; render(); });
+    const cb = document.getElementById("rkCfg"); if (cb) cb.onclick = () => { R.showCfg = !R.showCfg; R.saveMsg = null; render(); };
+    document.querySelectorAll("[data-rk]").forEach(el => el.onclick = () => { R.sel = el.dataset.rk; S.view = "rk"; render(); window.scrollTo({top:0}); });
+    const f = document.getElementById("rkForm");
+    if (f){
+      f.oninput = () => { const s = IND.reduce((t,i)=>t+(Number(document.getElementById("w_"+i.k).value)||0),0); const el = document.getElementById("wsum"); if (el) el.textContent = num(s); };
+      f.onsubmit = async ev => { ev.preventDefault(); const c = readForm();
+        try { await saveCfg(c); R.saveMsg = {t: R.cfgSrc==="db" ? "Guardado. El ranking se recalculó con la nueva configuración." : "Guardado en este dispositivo."}; }
+        catch(e){ R.saveMsg = {t:"No se pudo guardar: " + (e && e.message || "error"), bad:true}; }
+        render(); };
+      const rs = document.getElementById("rkReset"); if (rs) rs.onclick = async () => { try { await saveCfg(clone(DEFAULT)); R.saveMsg = {t:"Se volvió a los valores sugeridos."}; } catch(e){ R.saveMsg = {t:"No se pudo guardar.", bad:true}; } render(); };
+    }
+  }
+
+  function detailHTML(){
+    const D = R.data;
+    let h = `<div class="detail-head"><button type="button" class="back" id="rkBack" aria-label="Volver al ranking">←</button><div style="min-width:0"><h2 id="rkName">Camarero</h2><div class="meta"><span class="badge mozo">Mozo</span><span>Puerto de Palos</span></div></div></div>`;
+    h += sourceLine() + periodBlock() + turnoChips();
+    if (R.key !== [S.from,S.to,R.turno,JSON.stringify(R.cfg)].join("|") && !R.loading) setTimeout(load, 0);
+    if (R.err) return h + `<div class="notice bad"><b>No se pudo armar el ranking</b>${esc(R.err)}</div>`;
+    if (!D) return h + `<div class="loading">Calculando…</div>`;
+    const m = D.elig.find(x=>x.code===R.sel) || D.out.find(x=>x.code===R.sel);
+    if (!m) return h.replace(`>Camarero<`, `>${esc((D.mozos.get(R.sel)||{}).name||"Camarero")}<`) + `<div class="notice"><b>Sin ventas atendidas en este período</b>No registró cubiertos ni facturación entre el ${dmy(S.from)} y el ${dmy(S.to)}${R.turno!=="todos"?" en este turno":""}.</div>`;
+    h = h.replace(`>Camarero<`, `>${esc(m.name)}<`);
+    const T = D.team;
+    if (m.pos){
+      h += `<section class="card"><div class="rank"><span class="big">${m.pos}º</span><span>de ${D.elig.length} en el ranking · <b>${dec1(m.score)}</b> puntos</span></div>${m.pos>1 ? `<div class="hint">A ${dec1(D.elig[m.pos-2].score - m.score)} puntos de ${esc(D.elig[m.pos-2].name)} (${m.pos-1}º).</div>` : `<div class="hint">Es el mejor vendedor del período.</div>`}</section>`;
+    } else h += `<div class="notice"><b>Fuera del ranking principal</b>Atendió ${num(m.cubiertos)} cubiertos y el mínimo para este período es ${num(D.minCub)}. Se muestran sus indicadores sin puntaje.</div>`;
+    h += `<div class="kpis">
+      <div class="kpi"><div class="k">Cubiertos atendidos</div><div class="v">${num(m.cubiertos)}</div></div>
+      <div class="kpi"><div class="k">Ticket promedio</div><div class="v">${money(m.v.tp)}</div></div>
+      <div class="kpi"><div class="k">Facturación por cubierto</div><div class="v">${money(m.v.ppc)}</div></div>
+      <div class="kpi"><div class="k">Facturación</div><div class="v">${money(m.importe)}</div><div class="d">${num(m.tickets)} tickets</div></div>
+      ${["postres","parri","degus","frit"].map(k => `<div class="kpi"><div class="k">${IND.find(i=>i.k===k).n}</div><div class="v">${num(m.u[k])}</div><div class="d">${dec1(m.v[k])} cada 100 cubiertos</div></div>`).join("")}
+    </div>`;
+    // comparación con el equipo
+    h += `<section class="card"><h3>Comparado con el promedio del equipo</h3><div class="hint">La línea marca el promedio de los ${D.elig.length} camareros del ranking principal.</div><div class="cmp">`;
+    IND.forEach(i => {
+      const v = m.v[i.k], a = T.v[i.k];
+      const mx = Math.max(v||0, a||0, ...D.elig.map(x=>x.v[i.k]||0)) || 1;
+      const diff = a ? 100*((v||0)-a)/a : null;
+      h += `<div class="cmp-row"><div class="top"><span>${i.n}${i.per100?" <small>c/100 cub.</small>":""}</span><b>${i.money?money(v):dec1(v)}</b></div>
+        <div class="track"><div class="fill" style="width:${(100*(v||0)/mx).toFixed(1)}%"></div><div class="avgm" style="left:${(100*(a||0)/mx).toFixed(1)}%"></div></div>
+        <div class="sub">Equipo: ${i.money?money(a):dec1(a)}${diff!=null?` · <span class="${diff>=0?"up":"down"}">${pctTxt(diff)}</span>`:""}${m.s&&m.s[i.k]!=null&&D.usable[i.k].ok?` · ${dec1(m.s[i.k])} pts (peso ${num(R.cfg.pesos[i.k])})`:""}</div></div>`;
+    });
+    h += `</div></section>`;
+    // fortalezas y oportunidades
+    const rows = IND.map(i => ({i, v:m.v[i.k], a:T.v[i.k]})).filter(x => x.a > 0 && x.v != null).map(x => Object.assign(x,{r:x.v/x.a}));
+    const fmtv = x => x.i.money ? money(x.v) : dec1(x.v)+" c/100 cub.";
+    const good = rows.filter(x=>x.r>=1.10).sort((a,b)=>b.r-a.r), bad = rows.filter(x=>x.r<=0.90).sort((a,b)=>a.r-b.r);
+    h += `<section class="card"><h3>Puntos fuertes</h3>${good.length ? `<ul class="tags good">${good.map(x=>`<li><b>${x.i.n}</b>: ${fmtv(x)}, ${pctTxt(100*(x.r-1))} sobre el equipo.</li>`).join("")}</ul>` : `<div class="hint">Ningún indicador supera al equipo por 10 % o más.</div>`}
+      <h3>Oportunidades de mejora</h3>${bad.length ? `<ul class="tags bad">${bad.map(x=>`<li><b>${x.i.n}</b>: ${fmtv(x)}, ${pctTxt(100*(x.r-1))} contra el equipo (${x.i.money?money(x.a):dec1(x.a)}).</li>`).join("")}</ul>` : `<div class="hint">No está 10 % o más por debajo del equipo en ningún indicador.</div>`}</section>`;
+    // evolución
+    h += `<section class="card evo"><h3>Evolución de su puesto</h3>${evoHTML(m)}</section>`;
+    h += `<button type="button" class="btn" id="rkSales">Ver sus ventas día por día y productos</button>`;
+    return h + footHTML();
+  }
+  function evoHTML(m){
+    const E = R.evo[R.key];
+    if (!E){ setTimeout(loadEvo, 0); return `<div class="loading">Calculando el puesto en cada ${bucketKind()==="dia"?"día":bucketKind()==="semana"?"semana":"mes"}…</div>`; }
+    if (E.err) return `<div class="notice bad">${esc(E.err)}</div>`;
+    const pts = E.buckets.map(b => ({b, p:b.pos[m.code]}));
+    if (!pts.some(x=>x.p)) return `<div class="hint">No llegó al mínimo de cubiertos en ninguna ${E.kind==="semana"?"semana":E.kind==="dia"?"jornada":"mes"} del período.</div>`;
+    const lab = b => E.kind==="mes" ? b.bk.slice(5,7)+"/"+b.bk.slice(0,4) : (E.kind==="semana" ? "Sem. " : "") + short(b.a);
+    const maxOf = Math.max(...pts.map(x=>x.p?x.p.of:1), 2);
+    const W = 340, H = 150, L = 28, Rr = 12, T = 16, Bm = 30, n = pts.length;
+    const x = i => n===1 ? (L+W-Rr)/2 : L + (W-L-Rr)*i/(n-1), y = p => T + (H-T-Bm)*(p-1)/(maxOf-1);
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Puesto en el ranking por ${E.kind}">`;
+    [1, Math.ceil(maxOf/2), maxOf].filter((v,i,a)=>a.indexOf(v)===i).forEach(p => s += `<line x1="${L}" x2="${W-Rr}" y1="${y(p)}" y2="${y(p)}" stroke="var(--line)"/><text x="${L-6}" y="${y(p)+3}" font-size="10" text-anchor="end" fill="var(--muted)">${p}º</text>`);
+    let path = ""; pts.forEach((q,i) => { if (q.p) path += (path && pts[i-1] && pts[i-1].p ? " L" : " M") + x(i).toFixed(1) + " " + y(q.p.pos).toFixed(1); });
+    s += `<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>`;
+    pts.forEach((q,i) => { s += `<text x="${x(i)}" y="${H-Bm+16}" font-size="10" text-anchor="${n>1&&i===0?"start":n>1&&i===n-1?"end":"middle"}" fill="var(--muted)">${esc(lab(q.b))}</text>`;
+      if (q.p) s += `<circle cx="${x(i)}" cy="${y(q.p.pos)}" r="5" fill="var(--accent)"/><text x="${x(i)}" y="${y(q.p.pos)-9}" font-size="11" font-weight="700" text-anchor="middle" fill="var(--fg)">${q.p.pos}º</text>`;
+      else s += `<text x="${x(i)}" y="${T+(H-T-Bm)/2}" font-size="10" text-anchor="middle" fill="var(--muted)">—</text>`; });
+    s += `</svg>`;
+    return `<div class="chart">${s}</div><div class="hint">Puesto en cada ${E.kind==="semana"?"semana (de lunes a domingo, dentro del período)":E.kind==="dia"?"día":"mes"}, con la misma fórmula y el mínimo de cubiertos ajustado a los días. "—" = no llegó al mínimo.${E.partial?" Sin datos de productos para alguna parte: el puesto usa los indicadores disponibles.":""}</div>`;
+  }
+  function bindDetail(){
+    bindPeriod();
+    document.querySelectorAll("[data-turno]").forEach(b => b.onclick = () => { R.turno = b.dataset.turno; render(); });
+    const cb = document.getElementById("rkCfg"); if (cb) cb.onclick = () => { R.showCfg = true; S.view = "list"; S.tab = "rank"; render(); };
+    document.getElementById("rkBack").onclick = () => { S.view = "list"; S.tab = "rank"; render(); };
+    const sb = document.getElementById("rkSales"); if (sb) sb.onclick = () => openEmp(R.sel, "mozo");
+  }
+  const reset = () => { R.key = null; R.evo = {}; };
+  return {on, html, bind, detailHTML, bindDetail, reset};
+})();
+
+// ---------- eventos ----------
+function bindPeriod(){
+  document.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { const p = PRESETS.find(x=>x[0]===b.dataset.p); [S.from,S.to] = p[2](todayISO()); S.preset = p[0]; periodChanged(); });
+  const f = document.getElementById("dFrom"), t = document.getElementById("dTo");
+  const ch = () => {
+    if (!f.value || !t.value) return;
+    let a = f.value, b = t.value; if (a > b) [a,b] = [b,a];
+    if (daysBetween(a,b) > 366) a = addDays(b,-365);
+    S.from = a; S.to = b; S.preset = (PRESETS.find(p => { const [x,y] = p[2](todayISO()); return x===a && y===b; })||[null])[0]; periodChanged();
+  };
+  if (f) { f.onchange = ch; t.onchange = ch; }
+  const rf = document.getElementById("refresh"); if (rf) rf.onclick = () => { S.fresh = true; S.updatedAt = null; RK.reset(); periodChanged(); };
+}
+async function periodChanged(){
+  const my = ++seq; S.updatedAt = S.fresh ? null : S.updatedAt;
+  const wasDetail = S.view==="detail";
+  if (wasDetail) { S.det = {loading:true}; S.ai={text:"",busy:false,err:null}; }
+  await loadBranchTotals(my);
+  if (my!==seq) return;
+  renderHeader();
+  await loadBranchData(my);
+}
+function bindList(){
+  bindPeriod();
+  document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { S.tab = b.dataset.tab; render(); });
+  document.querySelectorAll("[data-rr]").forEach(b => b.onclick = () => { S.rankRole = b.dataset.rr; render(); });
+  document.querySelectorAll("[data-emp]").forEach(b => b.onclick = () => openEmp(b.dataset.emp, b.dataset.role));
+  const q = document.getElementById("q");
+  if (q) q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = document.getElementById("q"); n.focus(); try{ n.setSelectionRange(pos,pos);}catch(e){} };
+}
+function bindDetail(){
+  bindPeriod();
+  document.getElementById("back").onclick = () => { S.view="list"; S.emp=null; render(); };
+  document.querySelectorAll("[data-role-sw]").forEach(b => b.onclick = () => { S.ai={text:"",busy:false,err:null}; openEmp(S.emp.code, b.dataset.roleSw); });
+  const tr = document.getElementById("toRank"); if (tr) tr.onclick = () => { S.rankRole = S.role; S.tab="rank"; S.view="list"; render(); window.scrollTo({top:0}); };
+  const ai = document.getElementById("ai"); if (ai) ai.onclick = analyze;
+  document.querySelectorAll(".bar-g").forEach(g => g.onclick = () => { const t = document.getElementById("tip"); if (t) t.textContent = g.dataset.tip; });
+}
+document.getElementById("groups").addEventListener("click", ev => { const b = ev.target.closest("[data-g]"); if (b && (!S.g || b.dataset.g!==S.g.alias)) selectGroup(b.dataset.g); });
+document.getElementById("branches").addEventListener("click", ev => { const b = ev.target.closest("[data-b]"); if (b && (!S.b || b.dataset.b!==S.b.codigo)) selectBranch(b.dataset.b); });
+
+boot();
+})();
+</script>
