@@ -1,0 +1,30 @@
+name: Pulso Informativo - generar placas
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pulso-news/**'
+      - '.github/workflows/pulso-media.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Instalar renderizador
+        run: python -m pip install --disable-pip-version-check pillow requests
+      - name: Generar imágenes JPEG para Instagram
+        run: python pulso-news/render.py
+      - name: Guardar placas de forma pública
+        run: |
+          git config user.email "actions@users.noreply.github.com"
+          git config user.name "Pulso Informativo Bot"
+          git add public/pulso-informativo/
+          if ! git diff --cached --quiet; then
+            git commit -m "Publicar placas JPEG de Pulso Informativo"
+            git push
+          fi
