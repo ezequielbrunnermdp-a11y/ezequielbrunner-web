@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<defs><linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07090e" stop-opacity=".26"/><stop offset=".42" stop-color="#05070a" stop-opacity=".28"/><stop offset="1" stop-color="#030408" stop-opacity=".99"/></linearGradient></defs>
+<rect width="1080" height="1350" fill="#253d48"/>
+<image href="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1600" width="1080" height="1350" preserveAspectRatio="xMidYMid slice"/>
+<rect width="1080" height="1350" fill="url(#shade)"/>
+<text x="72" y="98" font-family="Arial,sans-serif" font-size="48" font-weight="800" letter-spacing="2" fill="white">PULSO</text>
+<path d="M72 125 L115 125 L129 110 L146 141 L163 107 L177 125 L278 125" stroke="#ef3434" fill="none" stroke-width="6"/>
+<text x="72" y="167" font-family="Arial,sans-serif" font-size="21" font-weight="600" letter-spacing="4" fill="white">INFORMATIVO</text>
+<rect x="72" y="805" width="286" height="48" fill="#d62c2f" rx="5"/>
+<text x="91" y="838" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="white">MAR DEL PLATA</text>
+<text x="72" y="927" font-family="Arial,sans-serif" font-size="69" font-weight="800" fill="white"><tspan x="72" dy="0">Erosión costera:</tspan><tspan x="72" dy="81">9 de 10 sectores</tspan><tspan x="72" dy="81">relevados, en rojo</tspan></text>
+<text x="72" y="1224" font-family="Arial,sans-serif" font-size="25" fill="#ddd">Informe ambiental bonaerense</text>
+<text x="72" y="1299" font-family="Arial,sans-serif" font-size="17" fill="#aaa">Imagen ilustrativa</text>
+<text x="885" y="90" font-family="Arial,sans-serif" font-size="16" fill="#ddd">10 NOV 2026</text>
+</svg>
