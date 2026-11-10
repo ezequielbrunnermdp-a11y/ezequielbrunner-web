@@ -87,7 +87,8 @@
       "slug": "diplomatura-cirugia-espinal",
       "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "17878078317581690"
+      "post_id": "17878078317581690",
+      "story_id": "18110546440944312"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
