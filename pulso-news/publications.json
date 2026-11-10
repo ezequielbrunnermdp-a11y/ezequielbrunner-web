@@ -65,6 +65,13 @@
       "created_by": "Windsor.ai",
       "post_id": "17941862559389661",
       "story_id": "17893371183621484"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "uthgra-marcha-paritarias-16",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "17941882929400183"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
