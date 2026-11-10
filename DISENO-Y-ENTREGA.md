@@ -42,7 +42,7 @@ Referencias: [contraste de texto, W3C](https://www.w3.org/WAI/WCAG22/Understandi
 | `assets/` | Retrato WebP, imágenes de especialidades, retrato para Open Graph y favicon |
 | `robots.txt` / `sitemap.xml` | Descubrimiento básico para buscadores |
 
-HTML, CSS y JavaScript nativos. No requiere instalación de paquetes ni compilación. La navegación usa archivos `.html`, compatibles con la publicación actual; los enlaces canónicos usan las rutas públicas sin extensión.
+HTML, CSS y JavaScript nativos. No requiere instalación de paquetes ni compilación. La capa visual avanzada (punto 5) se sirve con archivos propios y librerías incluidas en `assets/js/vendor/`; no depende de CDN externos. La navegación usa archivos `.html`, compatibles con la publicación actual; los enlaces canónicos usan las rutas públicas sin extensión.
 
 ### Editar logos y testimonios
 
@@ -95,6 +95,93 @@ El formulario valida los campos y prepara una consulta en la aplicación de corr
 - Para cada caso: situación inicial, alcance, tiempo de trabajo, cambio implementado y evidencia del resultado.
 - Si se publica un ahorro, reducción de merma o mejora de servicio: indicar cómo se midió, con qué base se compara y durante qué período.
 - Definir modalidades de trabajo, alcance geográfico, disponibilidad y canal preferido de consulta.
+
+## 5. Rediseño editorial en negro (noviembre de 2026)
+
+Primera versión en negro: tipografía protagonista, publicaciones al frente y la sección «Por capas». La reemplazó el rediseño del punto 6; de esa etapa quedan la sección por capas (ahora en Gastronomía) y el criterio de movimiento discreto.
+
+## 6. Black premium con dos experiencias (noviembre de 2026)
+
+La portada es una elección: **Asesoramiento gastronómico** o **Automatización & Inteligencia Artificial**. Cada área es una experiencia propia, con su recorrido, su acento de color y su formulario. Las publicaciones profesionales tienen página propia y las noticias de IA salieron del sitio.
+
+### Identidad
+
+| Uso | Valor |
+| --- | --- |
+| Fondo principal | `#101315` |
+| Negro profundo (portada, contacto, pie) | `#080A0B` |
+| Superficies | `#171B1D`, `#1C2124` al pasar el cursor |
+| Texto principal · blanco cálido | `#F5F3EF` |
+| Texto de lectura · gris | `#A8ADAF` (8:1 sobre el fondo) |
+| Rótulos y datos | `#82898D` (5:1) |
+| Acento Gastronomía · cobre | `#C9956A` |
+| Acento Automatización · turquesa apagado | `#82B0AA` |
+| Acento común · champagne | `#D8C8A8` |
+| Líneas | blanco cálido al 9, 16 y 30 % |
+
+**Títulos:** Fraunces liviana (300), con itálica en la segunda línea. **Lectura, navegación y botones:** Inter. Rótulos en mayúsculas pequeñas con interletrado amplio, botones rectangulares (el principal en blanco cálido y, al pasar el cursor, se llena con el acento del área), grilla de 12 columnas y mucho espacio. Las imágenes de cada área son las del sitio, con un tratamiento de color: cálido en gastronomía y turquesa apagado en automatización.
+
+### Portada: pantalla dividida
+
+- Ocupa toda la pantalla. A la izquierda Gastronomía y a la derecha Automatización, con «Ezequiel Brunner» centrado arriba y una línea divisoria fina con el rótulo «Elegí un área».
+- En escritorio, al pasar el cursor el panel crece, el otro se reduce y se oscurece, y aparecen los 15 y 16 servicios de cada área. Los títulos se ajustan al ancho de cada panel. La imagen acompaña al cursor con un movimiento de profundidad mínimo.
+- Al elegir, el panel ocupa toda la pantalla, el texto se desvanece y se entra al área sobre la misma imagen (transición entre páginas del navegador; en los que no la tienen, un fundido corto).
+- En el celular son dos paneles verticales, uno sobre otro, con título, subtítulo y botón.
+- Debajo: Sobre mí, publicaciones destacadas y contacto con las dos vías.
+
+**Preferencia:** la elección queda guardada en el navegador del visitante. En la visita siguiente, si entra desde afuera, va directo a su área. «Cambiar de área» está siempre a la vista (encabezado, menú, pie y barra inferior en el celular) y lleva a la elección (`index.html#elegir`, que nunca redirige).
+
+### Las dos experiencias
+
+| Gastronomía (`gastronomia.html`) | Automatización & IA (`inteligencia-artificial.html`) |
+| --- | --- |
+| Portada · propuesta de valor con datos (15+ años, equipos de hasta 135 personas) | Portada · soluciones tecnológicas y principios (alcance, control humano, información cuidada) |
+| Por capas (la pieza que se arma al bajar) | Automatizaciones por categoría (los 16 servicios del brief + capacitación) |
+| Servicios en 4 categorías con «Qué incluye» y entregables · Recursos humanos | Ejemplos prácticos de IA y un flujo de proceso que se enciende paso a paso |
+| Problemas habituales · tu punto de partida (local en marcha, apertura, sucursales) | Soluciones por departamento (Administración, Ventas, Operaciones, RR. HH., Gerencia) |
+| Metodología: diagnóstico, planificación, implementación, seguimiento · formas de trabajo | Proceso: diagnóstico, diseño, desarrollo, implementación, mantenimiento · formas de trabajo |
+| Trayectoria, prensa gastronómica, doctrina sobre gestión del personal, formación | IA y Derecho: doctrina, Dossier Legislativo, perfil y formación |
+| Preguntas frecuentes · formulario «Solicitar asesoramiento» · Trabajá conmigo | Preguntas frecuentes · formulario «Evaluar mi empresa» |
+
+Los servicios se presentan como soluciones a evaluar según la viabilidad de cada proyecto. **Proyectos reales:** no hay casos documentados, así que esa sección no se publica (la maqueta de caso que estaba oculta se retiró). Cuando haya un caso con datos y autorización, se agrega en Automatización.
+
+Cada botón «Consultar por este servicio», «Quiero conversar sobre esto» o «Evaluar…» baja al formulario y deja elegido el servicio, la etapa o el área.
+
+### Formularios
+
+Dos formularios distintos, con nombre, empresa, email, teléfono y la necesidad, más campos propios de cada área (tipo de negocio, etapa y servicio; o rubro, tamaño del equipo y área a evaluar). Validan antes de enviar y avisan qué falta.
+
+- **Ya funcionan:** si el servicio de formularios de Netlify no está activo, al enviar se abre el correo del visitante con la consulta completa dirigida a contacto@ezequielbrunner.com (como antes), con un enlace de respaldo.
+- **Qué resta conectar:** en Netlify → *Project configuration → Forms*, activar la detección de formularios (*Enable form detection*) y volver a publicar. Desde ese momento las consultas se guardan en Netlify (formularios `solicitar-asesoramiento` y `evaluar-empresa`) y el visitante ve «¡Gracias! Recibí tu consulta» sin salir de la página. Para recibirlas por email: *Forms → Form notifications → Add notification → Email notification*. Tiene un campo trampa contra spam. No hace falta tocar el código.
+
+### Publicaciones
+
+`publicaciones.html` reúne el Dossier Legislativo n.º 335 (destacado), doctrina e investigación (con su etiqueta, como «Ponencia premiada»), artículos de autor y cartas, apariciones en medios y prensa gastronómica, con filtros y el enlace original de cada una. Cada publicación tiene una portada tipográfica con el nombre del medio: las fotos de las notas no se pudieron descargar desde el entorno de trabajo. Si se consiguen (o se autoriza el acceso a esos sitios), se reemplazan las portadas por fotos.
+
+**Noticias de IA:** se retiraron la sección «Novedades», las notas de `news-data.js` y sus páginas (`article.html`, `articulo.html`). Los enlaces viejos a esas páginas redirigen a `/publicaciones` (archivo `_redirects`), igual que los enlaces a secciones que cambiaron de lugar.
+
+### Movimiento
+
+Títulos que suben línea por línea, apariciones breves al bajar, imágenes con profundidad mínima, tarjetas cuyo borde se ilumina apenas siguiendo el cursor, subrayados que se dibujan, desplazamiento suave con mouse y transiciones entre páginas. Sin cursor personalizado: no mejoraba la experiencia. Con movimiento reducido no hay animaciones y todo se ve completo; sin JavaScript también.
+
+### SEO
+
+Título, descripción, Open Graph y Twitter propios por página, con imagen para compartir de 1200 × 630 (`assets/og/`). Datos estructurados: persona, servicio profesional, catálogo de servicios por área, preguntas frecuentes y migas. `sitemap.xml` actualizado, `404.html` propia y `/automatizacion` como dirección corta del área.
+
+### Archivos
+
+| Archivo | Función |
+| --- | --- |
+| `assets/css/main.css` | Todo el sistema visual: colores, tipografía, componentes, portada dividida, áreas, publicaciones |
+| `assets/js/main.js` | Encabezado y menú, desplazamiento suave, apariciones, formularios, pestañas, filtros, por capas, transiciones |
+| `assets/js/split.js` | Portada: crecimiento de paneles, profundidad, elección del área |
+| `assets/img/` | Imágenes de las áreas con su tratamiento (800 y 1086 px) |
+| `assets/og/` · `assets/apple-touch-icon.png` | Imágenes para compartir e ícono para el celular |
+| `_redirects` | Redirecciones de Netlify |
+
+### Verificación
+
+Revisado en escritorio (1440 × 900 y 1280 × 760) y celular (390 y 449 px): sin errores de consola, sin desplazamiento horizontal, un solo título principal por página, sin saltos de jerarquía, imágenes con texto alternativo y controles con nombre. Probados: elección de área y transición, visita siguiente, «Cambiar de área», enlaces viejos, formularios (con y sin Netlify Forms), botones que completan el formulario, pestañas con teclado, filtros, menú del celular y movimiento reducido.
 
 ## Operación del sitio
 

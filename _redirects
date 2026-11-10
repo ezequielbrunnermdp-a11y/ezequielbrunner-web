@@ -1,0 +1,9 @@
+# Las notas de actualidad sobre IA se retiraron del sitio: sus enlaces llevan a las publicaciones profesionales.
+/article.html     /publicaciones    301
+/article          /publicaciones    301
+/articulo.html    /publicaciones    301
+/articulo         /publicaciones    301
+/news-data.js     /publicaciones    301
+
+# Dirección corta para el área de automatización.
+/automatizacion   /inteligencia-artificial    301
