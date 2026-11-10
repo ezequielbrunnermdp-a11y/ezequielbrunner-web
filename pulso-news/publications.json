@@ -17,6 +17,38 @@
       "story_id": "17887517367626265",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "cine-gratis-martes",
+      "post_id": "17976874257156956",
+      "story_id": "18035696357855413",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "servicios-feriado-11",
+      "post_id": "17951964351345290",
+      "story_id": "18115478912096098",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "saturnino-destete",
+      "post_id": "17964230913229151",
+      "story_id": "18111327694908589",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "salud-barragan-casal",
+      "post_id": "18159944572453610",
+      "story_id": "18155309374487463",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
