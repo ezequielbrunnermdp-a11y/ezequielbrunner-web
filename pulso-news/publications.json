@@ -1,0 +1,23 @@
+{
+  "account_id": "17841456177149828",
+  "platform": "instagram",
+  "published": [
+    {
+      "date": "2026-11-10",
+      "slug": "erosion-costera",
+      "post_id": "18645462475019823",
+      "story_id": "18114134510225357",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "hoteles-70",
+      "post_id": "18115759460154261",
+      "story_id": "17887517367626265",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    }
+  ],
+  "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
+}
