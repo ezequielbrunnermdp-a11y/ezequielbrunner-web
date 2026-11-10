@@ -135,7 +135,8 @@
       "slug": "condena-cristian-velazquez",
       "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18120334804958415"
+      "post_id": "18120334804958415",
+      "story_id": "18128961586853653"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
