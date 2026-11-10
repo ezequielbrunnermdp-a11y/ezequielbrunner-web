@@ -49,6 +49,22 @@
       "story_id": "18155309374487463",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "festival-cine-150-peliculas",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "18158265925496393",
+      "story_id": "18507632944099746"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "sergio-dalma-arena-martes",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "17941862559389661",
+      "story_id": "17893371183621484"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
