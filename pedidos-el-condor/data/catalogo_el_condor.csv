@@ -1,0 +1,143 @@
+seccion,categoria,producto,presentacion,precio_sin_iva
+Panadería,Panes tradicionales y especiales,PAN FLAUTAS,Kg,1890.00
+Panadería,Panes tradicionales y especiales,PAN MIGNON,Kg,1890.00
+Panadería,Panes tradicionales y especiales,PAN CASERO GRANDE,Unidad,3300.00
+Panadería,Panes tradicionales y especiales,PAN DE CAMPO,Unidad,4200.00
+Panadería,Panes tradicionales y especiales,ROSETA,Kg,3890.00
+Panadería,Panes tradicionales y especiales,PAN SABORIZADO,Kg,3990.00
+Panadería,Panes tradicionales y especiales,BOLLO DULCE,Kg,3890.00
+Panadería,Panes para sándwiches y hamburguesas,ARABE,Unidad,700.00
+Panadería,Panes para sándwiches y hamburguesas,BAGEL,Unidad,500.00
+Panadería,Panes para sándwiches y hamburguesas,BAGUETIN,Unidad,800.00
+Panadería,Panes para sándwiches y hamburguesas,CIABATTA,Unidad,800.00
+Panadería,Panes para sándwiches y hamburguesas,PAN HAMBURGUESA BRIOCHE,Unidad,950.00
+Panadería,Panes para sándwiches y hamburguesas,PAN HAMBURGUESA S/SEMILLA,Unidad,850.00
+Panadería,Panes para sándwiches y hamburguesas,PAN HAMBURGUESA C/SEMILLA,Unidad,850.00
+Panadería,Panes para sándwiches y hamburguesas,PEBETE,Unidad,800.00
+Panadería,Panes para sándwiches y hamburguesas,FUGAZZA,Kg,3700.00
+Panadería,Panes de molde,MOLDE INTEGRAL,Unidad,2250.00
+Panadería,Panes de molde,MOLDE INTEGRAL 4 SEMILLAS,Unidad,2350.00
+Panadería,Panes de molde,"MOLDE AVENA, SALVADO Y GIRASOL",Unidad,2350.00
+Panadería,Panes de molde,MOLDE DE CENTENO,Unidad,2350.00
+Panadería,Panes de molde,MOLDE LACTAL XL,Unidad,3300.00
+Panadería,Panes de molde,MOLDE MULTICEREAL,Unidad,2350.00
+Panadería,Panes de molde,MOLDE SALVADO S/ SAL,Unidad,2350.00
+Panadería,Panera a granel,GRISINES,Kg,9500.00
+Panadería,Panera a granel,TALITA SABOR PIMENTON,Kg,9900.00
+Panadería,Panera a granel,TALITA SABOR ROMERO,Kg,9900.00
+Panadería,Panera a granel,TALITAS,Kg,9500.00
+Panadería,Panera a granel,ZAPATILLA CON SAL,Kg,9500.00
+Panadería,Bizcochos y chipá,BIZCOCHO CONGELADO,2 kg,14500.00
+Panadería,Bizcochos y chipá,CHIPA CONGELADO,2 kg,31900.00
+Panadería,Pan rallado,PAN RALLADO,500 g,1300.00
+Panadería,Pan rallado,PAN RALLADO,5 kg,12000.00
+Pastelería,Medialunas y facturas,MEDIALUNAS PREMIUM EL CONDOR — COCIDAS,Docena (12 unidades),7200.00
+Pastelería,Medialunas y facturas,MEDIALUNAS PREMIUM EL CONDOR — CONGELADAS,Caja de 120 unidades (10 docenas),60000.00
+Pastelería,Medialunas y facturas,MEDIALUNAS SALADAS — COCIDAS,Docena (12 unidades),5600.00
+Pastelería,Medialunas y facturas,MEDIALUNAS SALADAS — CONGELADAS,Caja de 24 unidades (2 docenas),10500.00
+Pastelería,Medialunas y facturas,MEDIALUNAS HOTELERAS - COCIDAS,Docena (12 unidades),4800.00
+Pastelería,Medialunas y facturas,MEDIALUNAS HOTELERAS - CONGELADAS,Caja de 120 unidades (10 docenas),42000.00
+Pastelería,Medialunas y facturas,FACTURAS SURTIDAS PREMIUM,Docena (12 unidades),7200.00
+Pastelería,Medialunas y facturas,NAPOLITANO,Unidad,850.00
+Pastelería,"Budines, alfajores y otras especialidades",SCON C/FRUTA CONGELADO,Docena (12 unidades),13200.00
+Pastelería,"Budines, alfajores y otras especialidades",SCON S/FRUTA CONGELADO,Docena (12 unidades),13200.00
+Pastelería,"Budines, alfajores y otras especialidades",ALFAJOR MAICENA XL,Pack de 6 unidades,15000.00
+Pastelería,"Budines, alfajores y otras especialidades",ALFAJOR VEGANO,Pack de 8 unidades,9600.00
+Pastelería,"Budines, alfajores y otras especialidades",BROWNIE,Pack de 7 unidades,17500.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN CARROT CAKE,Pack de 6 unidades,18000.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN INGLES FRUTAS SECAS,Unidad,5100.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN INGLES LIMON,Unidad,4500.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN INGLES MARMOLADO,Unidad,4500.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN INGLES DE CHOCOLATE,Unidad,5100.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN LIMON C/AMAPOLA,Pack de 6 unidades,19200.00
+Pastelería,"Budines, alfajores y otras especialidades",BUDIN LIMON GLASEADO,Pack de 7 unidades,17500.00
+Pastelería,"Budines, alfajores y otras especialidades",PASTA FROLA,Pack de 7 unidades,16500.00
+Pastelería,Lingotes y porciones dulces,LINGOTE BROWNIE,Caja de 6 unidades,25650.00
+Pastelería,Lingotes y porciones dulces,LINGOTE CHEESECAKE,Caja de 6 unidades,22140.00
+Pastelería,Lingotes y porciones dulces,LINGOTE CHOCOTORTA,Caja de 6 unidades,25650.00
+Pastelería,Lingotes y porciones dulces,LINGOTE DELICIA,Caja de 6 unidades,25650.00
+Pastelería,Lingotes y porciones dulces,LINGOTE LEMON PIE,Caja de 6 unidades,22140.00
+Pastelería,Lingotes y porciones dulces,LINGOTE CRUMBLE MANZANA,Caja de 6 unidades,22140.00
+Pastelería,Lingotes y porciones dulces,LINGOTE RICOTA,Caja de 6 unidades,22140.00
+Pastelería,Lingotes y porciones dulces,LINGOTE TIRAMISU,Caja de 6 unidades,22140.00
+Pastelería,Masas finas y secas,MASA FINA CHEESECAKE,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA FINA CHOCOTORTA,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA FINA DDL C/ CREMA,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA FINA GANACHE,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA FINA LEMON PIE,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA ALF CHOCO BLANCO,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA ALF CHOCO NEGRO,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA ALF DE NUEZ,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA ALF MAICENA,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA CONO BLANCO,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASA SECA CONO NEGRO,Caja de 500 g,9900.00
+Pastelería,Masas finas y secas,MASAS SECAS SURTIDAS,Caja de 1 kg,16000.00
+Pastelería,Galletitas y mini muffins,COOKIE PARA CAFE,Kg,12900.00
+Pastelería,Galletitas y mini muffins,"CUARTERIO (PALMERITAS, PEPAS, ROSQUITAS)",Kg,13900.00
+Pastelería,Galletitas y mini muffins,GALLETITA AVENA Y BANANA,Kg,14900.00
+Pastelería,Galletitas y mini muffins,GALLETITA CHOCOLATE,Kg,14900.00
+Pastelería,Galletitas y mini muffins,GALLETITA DE LIMON VEGANA,Pack de 8 unidades,7900.00
+Pastelería,Galletitas y mini muffins,GALLETITA LIMON AZUCARADA,Kg,12500.00
+Pastelería,Galletitas y mini muffins,GALLETITA VAINILLA Y ROCKLETS,Kg,17500.00
+Pastelería,Galletitas y mini muffins,MINI MUFFIN,Kg,16500.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y QUESO,Unidad,2400.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE ATUN Y QUESO,Unidad,3900.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE CAESAR,Unidad,2800.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE CRUDO Y QUESO PAN NEGRO,Unidad,2800.00
+Salados y comidas,Sándwiches de miga,"SANDWICH TRIPLE CRUDO, RUCULA Y PARMESANO",Unidad,2800.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y ANANA,Unidad,2400.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y HUEVO,Unidad,2200.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y QUESO PAN NEGRO,Unidad,2400.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y ROQUEFORT,Unidad,3100.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE JAMON Y TOMATE,Unidad,2100.00
+Salados y comidas,Sándwiches de miga,"SANDWICH TRIPLE JAMON, HUEVO Y ACEITUNA",Unidad,2400.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE LOMITO Y CHEDDAR,Unidad,3100.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE POLLO Y RUCULA,Unidad,2800.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE PRIMAVERA,Unidad,2200.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE PRIMAVERA VEGGIE,Unidad,2200.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE RUCU QUESO TOMATE PARM. PAN NEGRO,Unidad,2800.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE SALAME Y QUESO,Unidad,2300.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE TOMATE Y QUESO,Unidad,2200.00
+Salados y comidas,Sándwiches de miga,SANDWICH TRIPLE ZANAHORIA Y QUESO,Unidad,2200.00
+Salados y comidas,Empanadas,EMPANADA DE ATUN,Unidad,2500.00
+Salados y comidas,Empanadas,EMPANADA DE CAPRESSE,Unidad,1400.00
+Salados y comidas,Empanadas,EMPANADA DE CARNE,Unidad,1400.00
+Salados y comidas,Empanadas,EMPANADA DE JAMON Y QUESO,Unidad,1400.00
+Salados y comidas,Empanadas,EMPANADA DE POLLO,Unidad,1400.00
+Salados y comidas,Empanadas,EMPANADA DE VERDURA,Unidad,1400.00
+Salados y comidas,Tartas,TARTA DE ATUN,Pack de 4 unidades,28000.00
+Salados y comidas,Tartas,TARTA DE ESPINACA,Pack de 4 unidades,19900.00
+Salados y comidas,Tartas,TARTA DE JAMON Y QUESO,Pack de 4 unidades,25000.00
+Salados y comidas,Tartas,TARTA DE POLLO,Pack de 4 unidades,25000.00
+Salados y comidas,Tartas,TARTA DE TRICOLOR,Pack de 4 unidades,19900.00
+Salados y comidas,Prepizzas y bases,PRE PIZZA CEBOLLA CHICA,Unidad,900.00
+Salados y comidas,Prepizzas y bases,PRE PIZZA CEBOLLA GRANDE,Unidad,1750.00
+Salados y comidas,Prepizzas y bases,PRE PIZZA TOMATE GRANDE,Unidad,1750.00
+Salados y comidas,Prepizzas y bases,PRE PIZZA TOMATE CHICA,Unidad,900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,GRISIN C/ SAL,Caja de 12 bolsas de 250 g (3 kg),32900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,GRISIN MIXTO,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,GRISIN SABORIZADO,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,TALITA SABO PIMENTON,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,TALITA SABO ROMERO,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,MIX TALITA SABO ROMERO Y PIMENTON,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,ROSQUITAS,Caja de 12 bolsas de 250 g (3 kg),47900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,ZAPATILLA C/ SAL,Caja de 12 bolsas de 250 g (3 kg),32900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,ZAPATILLA S/ SAL,Caja de 12 bolsas de 250 g (3 kg),32900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,ZAPATILLA SABORIZADA,Caja de 12 bolsas de 250 g (3 kg),34900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,CUARTERIO DULCE,Caja de 12 bolsas de 250 g (3 kg),47900.00
+Línea envasada El Cóndor,Snacks y dulces envasados,MINI MUFFIN,Caja de 12 bolsas de 250 g (3 kg),56900.00
+Línea envasada El Cóndor,Vasos cookie,VASO COOKIE BANANA Y AVENA,130 g,2500.00
+Línea envasada El Cóndor,Vasos cookie,VASO COOKIE CHOCOLATE,130 g,2500.00
+Línea envasada El Cóndor,Vasos cookie,VASO COOKIE LIMON AZUCARADO,130 g,2500.00
+Línea envasada El Cóndor,Vasos cookie,VASO COOKIE PEPAS,130 g,2500.00
+Línea envasada El Cóndor,Vasos cookie,VASO COOKIE VAINILLA Y ROCKLET,130 g,2900.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA 4 INGREDIENTES,Unidad,7000.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA 4 INGREDIENTES CHICA,Unidad,4300.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CAESAR,Unidad,9000.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CAESAR CHICA,Unidad,5300.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CAPRESSE,Unidad,9500.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CAPRESSE CHICA,Unidad,6500.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CONDOR,Unidad,8000.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA CONDOR CHICA,Unidad,4800.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA MEDITERRANEA,Unidad,11000.00
+Línea envasada El Cóndor,Ensaladas,ENSALADA MEDITERRANEA CHICA,Unidad,7000.00
