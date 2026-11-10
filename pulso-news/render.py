@@ -53,29 +53,46 @@ def render(article,typ):
  d.text((70,70),'PULSO',font=font(58),fill='white',stroke_width=0)
  d.line([(70,144),(121,144),(134,125),(155,165),(171,134),(185,144),(300,144)],fill='#E63137',width=7,joint='curve')
  d.text((71,171),'I N F O R M A T I V O',font=font(23),fill='white')
- d.text((W-72,88),'10 NOV 2026',font=font(21,False),fill='#E1E1E1',anchor='ra')
+ from datetime import datetime
+ d.text((W-72,88),datetime.strptime(article['date'],'%Y-%m-%d').strftime('%d %b %Y').upper(),font=font(21,False),fill='#E1E1E1',anchor='ra')
+ # Texto dentro de zona segura: ninguna línea ni bajada puede cortarse.
  label=article['category'].upper()
- d.rounded_rectangle((70,int(H*.60),min(620,135+len(label)*27),int(H*.60)+58),fill='#D72430',radius=7)
- d.text((91,int(H*.60)+14),label,font=font(28),fill='white')
  title=article['headline']
- fs=79 if typ=='feed' else 83
- while True:
-  f=font(fs)
-  lines=wrap(d,title,f,W-140)
-  maxlines=4 if typ=='feed' else 5
-  if len(lines)<=maxlines or fs<=51: break
-  fs-=3
- y=int(H*.60)+91
- for line in lines:
-  d.text((70,y),line,font=f,fill='white',stroke_width=0)
-  y+=fs*1.22
- d.line((70,y+17,250,y+17),fill='#E63137',width=6)
- y+=49
  subtitle=article.get('subtitle','')
- for line in wrap(d,subtitle,font(30,False),W-160):
-  d.text((70,y),line,font=font(30,False),fill='#F0F0F0')
-  y+=42
- d.text((72,H-85),'Imagen ilustrativa · Pulso Informativo',font=font(23,False),fill='#DDDDDD')
+ safe_bottom=H-175 if typ=='feed' else H-335
+ safe_top=340 if typ=='feed' else 620
+ label_height=54
+ sub_font=font(28,False)
+ subtitle_lines=wrap(d,subtitle,sub_font,W-160)
+ subtitle_height=len(subtitle_lines)*40
+ # La cabecera de texto se posiciona desde abajo según la altura real.
+ for fs in range(77 if typ=='feed' else 83,49,-2):
+  title_font=font(fs)
+  lines=wrap(d,title,title_font,W-150)
+  title_step=int(fs*1.17)
+  content_height=label_height+25+len(lines)*title_step+36+subtitle_height
+  top=safe_bottom-content_height
+  if top>=safe_top and len(lines)<=(5 if typ=='feed' else 6):
+   break
+ else:
+  raise ValueError('El titular es demasiado largo para la zona segura: '+article['slug'])
+ y=top
+ label_width=min(650,146+len(label)*24)
+ d.rounded_rectangle((70,y,label_width,y+label_height),fill='#D72430',radius=7)
+ d.text((91,y+12),label,font=font(26),fill='white')
+ y+=label_height+25
+ for line in lines:
+  d.text((70,y),line,font=title_font,fill='white')
+  y+=title_step
+ d.line((70,y+10,250,y+10),fill='#E63137',width=6)
+ y+=36
+ for line in subtitle_lines:
+  d.text((70,y),line,font=sub_font,fill='#F0F0F0')
+  y+=40
+ if y>safe_bottom:
+  raise ValueError('Desbordamiento detectado en placa '+article['slug']+' '+typ)
+ footer_y=H-86 if typ=='feed' else H-228
+ d.text((72,footer_y),'Imagen ilustrativa · Pulso Informativo',font=font(23,False),fill='#DDDDDD')
  path=OUT/article['date']/f"{article['slug']}-{typ}.jpg"
  path.parent.mkdir(parents=True,exist_ok=True)
  canvas.save(path,'JPEG',quality=90,subsampling=0,optimize=True,progressive=True)
