@@ -4,9 +4,9 @@ import { nombreCliente } from '../lib/formato.js';
 
 const MENUS = {
   cliente: [['/pedido', 'Hacer pedido'], ['/mis-pedidos', 'Mis pedidos']],
-  admin: [['/admin/pedidos', 'Pedidos'], ['/admin/clientes', 'Clientes'], ['/admin/productos', 'Productos'],
+  admin: [['/admin/pedidos', 'Pedidos'], ['/admin/produccion', 'Producción'], ['/admin/reparto', 'Reparto'], ['/admin/pendientes', 'Pendientes'], ['/admin/clientes', 'Clientes'], ['/admin/productos', 'Productos'],
     ['/admin/usuarios', 'Usuarios'], ['/admin/configuracion', 'Configuración']],
-  fabrica: [['/fabrica', 'Pedidos']],
+  fabrica: [['/fabrica', 'Pedidos'], ['/fabrica/produccion', 'Producción'], ['/fabrica/reparto', 'Reparto']],
 };
 
 export default function Layout({ children }) {
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         <div className="derecha"><button onClick={salir}>Salir</button></div>
       </header>
       <nav className="nav">
-        {MENUS[perfil.rol].map(([to, txt]) => <NavLink key={to} to={to}>{txt}</NavLink>)}
+        {MENUS[perfil.rol].map(([to, txt]) => <NavLink key={to} to={to} end={to === '/fabrica'}>{txt}</NavLink>)}
       </nav>
       <main className="contenido">{children}</main>
     </>

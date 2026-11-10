@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase.js';
 import { useAuth } from '../../auth.jsx';
 import PedidoItems from '../../components/PedidoItems.jsx';
-import { ESTADOS, fmtFechaHora, fmtFechaLarga, fmtMoneda, pedidoAbierto } from '../../lib/formato.js';
+import { ESTADOS, fmtCantidad, fmtFechaHora, fmtFechaLarga, fmtMoneda, pedidoAbierto } from '../../lib/formato.js';
 
 export default function MisPedidos() {
   const { cliente } = useAuth();
@@ -13,7 +13,7 @@ export default function MisPedidos() {
 
   useEffect(() => {
     supabase.from('config').select('hora_corte').eq('id', 1).single().then(({ data }) => data && setHoraCorte(data.hora_corte));
-    supabase.from('pedidos').select('*, pedido_items(*)').order('fecha_entrega', { ascending: false }).order('id', { referencedTable: 'pedido_items' }).limit(60)
+    supabase.from('pedidos').select('*, pedido_items(*), faltantes!faltantes_pedido_id_fkey(*)').order('fecha_entrega', { ascending: false }).order('id', { referencedTable: 'pedido_items' }).limit(60)
       .then(({ data }) => setPedidos(data || []));
   }, []);
 
@@ -38,6 +38,14 @@ export default function MisPedidos() {
               <>
                 <PedidoItems items={p.pedido_items} />
                 {p.observacion && <p><b>Observación:</b> {p.observacion}</p>}
+                {p.faltantes?.length > 0 && (
+                  <div className="aviso alerta">
+                    <b>No se entregó:</b> {p.faltantes.map((f) => {
+                      const it = p.pedido_items.find((i) => i.producto_id === f.producto_id);
+                      return `${fmtCantidad(f.cantidad, it?.presentacion || '')} ${it?.producto_nombre || ''}${f.estado === 'reprogramado' ? ' (se agregó a un próximo pedido)' : ''}`;
+                    }).join(' · ')}
+                  </div>
+                )}
                 {cliente?.ve_precios && <p style={{ textAlign: 'right' }}>Total: <b>{fmtMoneda(p.total_sin_iva)}</b> <small>+ IVA</small></p>}
                 <p className="suave" style={{ fontSize: '.85rem' }}>Última actualización: {fmtFechaHora(p.updated_at)}</p>
               </>

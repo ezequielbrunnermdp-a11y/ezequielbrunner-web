@@ -53,6 +53,10 @@ export default function HacerPedido({ modoAdmin = false }) {
   const [error, setError] = useState('');
   const [listo, setListo] = useState(null);
   const [recarga, setRecarga] = useState(0);
+  const [habitual, setHabitual] = useState(null);
+  const [ultimo, setUltimo] = useState(null);
+  const [guardarHabitual, setGuardarHabitual] = useState(false);
+  const [aviso, setAviso] = useState(null);
 
   // Datos iniciales
   useEffect(() => {
@@ -97,6 +101,40 @@ export default function HacerPedido({ modoAdmin = false }) {
     return () => { vigente = false; };
   }, [clienteId, fecha, recarga]);
 
+  useEffect(() => setAviso(null), [fecha, clienteId]);
+
+  // Pedido habitual y último pedido (para cargarlos con un toque)
+  useEffect(() => {
+    if (!clienteId || !fecha) return;
+    supabase.from('pedidos_habituales').select('items').eq('cliente_id', clienteId).maybeSingle()
+      .then(({ data }) => setHabitual(data?.items?.length ? data.items : null));
+    supabase.from('pedidos').select('fecha_entrega, pedido_items(producto_id, cantidad)').eq('cliente_id', clienteId)
+      .neq('estado', 'cancelado').neq('fecha_entrega', fecha).order('fecha_entrega', { ascending: false }).limit(1).maybeSingle()
+      .then(({ data }) => setUltimo(data || null));
+  }, [clienteId, fecha, recarga]);
+
+  function cargarItems(items, origen) {
+    if (Object.values(cant).some((v) => v > 0) && !window.confirm(`¿Reemplazar lo que ya elegiste por ${origen}?`)) return;
+    const disponibles = new Set((catalogo || []).map((p) => p.id));
+    const nuevos = {};
+    let faltan = 0;
+    for (const i of items) {
+      if (disponibles.has(i.producto_id)) nuevos[i.producto_id] = Number(i.cantidad);
+      else faltan++;
+    }
+    setCant(nuevos);
+    setAviso(`Cargamos ${origen}: ${Object.keys(nuevos).length} productos.${faltan ? ` ${faltan} ya no están disponibles.` : ''} Revisalo y confirmá.`);
+  }
+
+  async function cancelar() {
+    if (!window.confirm(`¿Cancelar el pedido #${existente.id} para el ${fmtFechaCorta(fecha)}?`)) return;
+    try {
+      await api('pedido', { accion: 'cancelar', cliente_id: clienteId, fecha_entrega: fecha });
+      setAviso('Pedido cancelado.');
+      setRecarga((x) => x + 1);
+    } catch (e) { setAviso(e.message); }
+  }
+
   const infoFecha = fechas.find((f) => f.fecha === fecha);
   const bloqueado = !modoAdmin && (
     (infoFecha && !infoFecha.abierto) || (existente && !['recibido', 'cancelado'].includes(existente.estado)));
@@ -130,7 +168,13 @@ export default function HacerPedido({ modoAdmin = false }) {
         cliente_id: clienteId, fecha_entrega: fecha, observacion: obs,
         items: elegidos.map((p) => ({ producto_id: p.id, cantidad: cant[p.id] })),
       });
-      setListo(r); setRevisar(false); setRecarga((x) => x + 1);
+      if (guardarHabitual) {
+        await supabase.from('pedidos_habituales').upsert({
+          cliente_id: clienteId, updated_at: new Date().toISOString(),
+          items: elegidos.map((p) => ({ producto_id: p.id, cantidad: cant[p.id] })),
+        });
+      }
+      setListo(r); setRevisar(false); setGuardarHabitual(false); setAviso(null); setRecarga((x) => x + 1);
       window.scrollTo(0, 0);
     } catch (e) {
       setError(e.message);
@@ -200,6 +244,7 @@ export default function HacerPedido({ modoAdmin = false }) {
               {modificando && !bloqueado && (
                 <div className="aviso info">
                   Ya {modoAdmin ? 'hay' : 'tenés'} un pedido para el {fmtFechaCorta(fecha)} (#{existente.id}). Lo que cambies se envía como <b>modificación</b>.
+                  <div><button type="button" className="chico peligro" style={{ marginTop: 8 }} onClick={cancelar}>Cancelar este pedido</button></div>
                 </div>
               )}
               {bloqueado && (
@@ -217,6 +262,14 @@ export default function HacerPedido({ modoAdmin = false }) {
                 </p>
               )}
               {cliente.observaciones_fijas && modoAdmin && <div className="aviso alerta">Obs. fijas: {cliente.observaciones_fijas}</div>}
+
+              {!bloqueado && (ultimo || habitual) && (
+                <div className="fila" style={{ margin: '8px 0 0' }}>
+                  {ultimo && <button type="button" className="chico" onClick={() => cargarItems(ultimo.pedido_items, `${modoAdmin ? 'el' : 'tu'} último pedido (${fmtFechaCorta(ultimo.fecha_entrega)})`)}>↺ Repetir {modoAdmin ? 'último' : 'mi último'} pedido</button>}
+                  {habitual && <button type="button" className="chico" onClick={() => cargarItems(habitual, `${modoAdmin ? 'el' : 'tu'} pedido habitual`)}>★ Cargar pedido habitual</button>}
+                </div>
+              )}
+              {aviso && <div className="aviso info">{aviso}</div>}
 
               <div className="buscador">
                 <input type="search" placeholder="Buscar producto…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} aria-label="Buscar producto" />
@@ -290,6 +343,10 @@ export default function HacerPedido({ modoAdmin = false }) {
           {verPrecios && total > 0 && <p className="derecha" style={{ textAlign: 'right' }}><b>Total {fmtMoneda(total)}</b> <span className="suave">+ IVA</span></p>}
           <label htmlFor="obs">Observación (opcional)</label>
           <textarea id="obs" value={obs} onChange={(e) => setObs(e.target.value)} placeholder="Ej.: entregar por la puerta de atrás" maxLength={500} />
+          <label className="check">
+            <input type="checkbox" checked={guardarHabitual} onChange={(e) => setGuardarHabitual(e.target.checked)} />
+            Guardar como {modoAdmin ? 'pedido habitual del cliente' : 'mi pedido habitual'}{habitual ? ' (reemplaza al anterior)' : ''}
+          </label>
           {error && <div className="aviso error">{error}</div>}
           <div className="fila" style={{ marginTop: 14 }}>
             <button className="crece" onClick={() => setRevisar(false)} disabled={enviando}>Seguir eligiendo</button>

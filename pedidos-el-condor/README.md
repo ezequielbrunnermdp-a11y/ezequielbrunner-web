@@ -10,9 +10,9 @@ App web para que los clientes mayoristas de El Cóndor hagan sus pedidos desde e
 
 | Etapa | Contenido | Estado |
 |---|---|---|
-| 1 | Login, alta de clientes, catálogo, pedido, email con PDF, modificaciones hasta la hora de corte | ✅ Lista para probar |
-| 2 | Pedido habitual / repetir último, PDF "Pedidos del día" automático, totales para producción | Pendiente |
-| 3 | Usuario Fábrica (marcar entregas), faltantes y pendientes | Pendiente |
+| 1 | Login, alta de clientes, catálogo, pedido, email con PDF, modificaciones hasta la hora de corte | ✅ |
+| 2 | Pedido habitual / repetir último, cancelar, PDF "Pedidos del día" automático, totales para producción | ✅ |
+| 3 | Usuario Fábrica, estados de entrega, faltantes y pendientes, hoja de reparto | ✅ |
 
 ---
 
@@ -24,19 +24,20 @@ App web para que los clientes mayoristas de El Cóndor hagan sus pedidos desde e
    - Nombre: `el-condor-pedidos`. Región: **South America (São Paulo)**.
    - Guardá la contraseña de la base en un lugar seguro.
 2. **SQL Editor → New query**: pegá todo el archivo `supabase/01_esquema.sql` y tocá **Run**.
-3. Otra query nueva: pegá `supabase/02_datos_prueba.sql` y tocá **Run**. Carga los 142 productos y 3 clientes de ejemplo.
-4. **Authentication → Sign In / Providers → Email**: desactivá **Allow new users to sign up**. Así nadie se puede registrar solo.
-5. **Authentication → URL Configuration**:
+3. Otra query nueva: pegá `supabase/03_etapas_2_y_3.sql` y tocá **Run**.
+4. Otra query nueva: pegá `supabase/02_datos_prueba.sql` y tocá **Run**. Carga los 142 productos y 3 clientes de ejemplo.
+5. **Authentication → Sign In / Providers → Email**: desactivá **Allow new users to sign up**. Así nadie se puede registrar solo.
+6. **Authentication → URL Configuration**:
    - **Site URL:** la dirección de Netlify (paso C), por ejemplo `https://pedidos-el-condor.netlify.app`.
    - **Redirect URLs:** agregá `https://pedidos-el-condor.netlify.app/definir-clave`.
-6. **Crear tu usuario administrador:**
+7. **Crear tu usuario administrador:**
    - **Authentication → Users → Add user → Create new user**: tu email y una contraseña, con **Auto Confirm User** tildado.
    - Después, en **SQL Editor**, corré esto con tu email:
      ```sql
      insert into perfiles (id, rol, nombre, email)
      select id, 'admin', 'Ezequiel', email from auth.users where email = 'TU-EMAIL@gmail.com';
      ```
-7. **Project Settings → API**: copiá la **Project URL**, la clave **anon public** y la clave **service_role** (esta última es secreta).
+8. **Project Settings → API**: copiá la **Project URL**, la clave **anon public** y la clave **service_role** (esta última es secreta).
 
 ### B. Envío de emails con Gmail
 
@@ -61,6 +62,7 @@ Sin dominio propio, los emails salen desde tu Gmail.
 | `SUPABASE_SERVICE_ROLE_KEY` | Clave **service_role** (secreta) |
 | `APP_URL` | `https://pedidos-el-condor.netlify.app` (la dirección del sitio) |
 | `EMAILS_PEDIDOS` | Emails que reciben cada pedido, separados por coma |
+| `EMAILS_FABRICA` | (Opcional) Quién recibe el resumen "Pedidos del día" a la hora de corte. Si no la cargás, va a `EMAILS_PEDIDOS`. |
 | `SMTP_HOST` | `smtp.gmail.com` |
 | `SMTP_PORT` | `465` |
 | `SMTP_USER` | Tu Gmail |
@@ -69,7 +71,8 @@ Sin dominio propio, los emails salen desde tu Gmail.
 | `VITE_WHATSAPP` | (Opcional) WhatsApp de El Cóndor, con formato `549223XXXXXXX`. Se usa en el botón "escribinos" cuando pasó la hora de corte. |
 
 4. **Deploys → Trigger deploy**. Si cambiás una variable, hay que volver a publicar.
-5. Para cambiar la dirección: **Domain management → Options → Edit site name**. Si la cambiás, actualizá también `APP_URL` y las URL de Supabase (paso A.5).
+   - El envío automático del resumen (función `resumen-automatico`) solo corre en el sitio publicado. Podés verlo en **Logs → Functions**.
+5. Para cambiar la dirección: **Domain management → Options → Edit site name**. Si la cambiás, actualizá también `APP_URL` y las URL de Supabase (paso A.6).
 
 ---
 
@@ -117,6 +120,34 @@ Regla: un pedido para entregar el día **D** se puede cargar o modificar hasta e
 
 **Usuarios → Nuevo usuario**, con rol **Administrador** o **Fábrica**.
 
+### Resumen "Pedidos del día"
+
+- **Automático:** a la hora de corte, en los 10 minutos siguientes, sale un email con el PDF "Pedidos del día" para la entrega del día siguiente.
+  - Va a `EMAILS_FABRICA`, o a `EMAILS_PEDIDOS` si esa variable no existe.
+  - El PDF trae una tabla con las columnas Cliente | Pedido | Cumplido | No cumplido | Observaciones, el total de pedidos y los **Totales para producción**.
+  - Se envía una sola vez por fecha.
+- **Manual:** **Producción** → elegí la fecha:
+  - **PDF Pedidos del día** lo descarga.
+  - **Enviar / Reenviar por email** lo manda con los datos actuales. Sirve si hubo cambios después del corte, y el asunto dice "REENVÍO".
+- Si alguien modifica un pedido después del resumen (solo puede hacerlo el admin), igual llega el email "MODIFICADO" de ese pedido.
+
+### Fábrica: entregas y faltantes
+
+1. La fábrica entra con su usuario y ve **Pedidos** (con atajos Hoy / Mañana), **Producción** (totales por producto) y **Reparto** (ordenado por horario límite, con PDF para imprimir).
+2. En cada pedido cambia el **Estado**: En preparación, Entregado o Entregado con faltantes.
+   - Desde "En preparación", el cliente ya no puede modificar el pedido.
+3. Con **Entregado con faltantes** se abre una lista: se tilda lo que no se entregó y la cantidad que faltó.
+4. Los faltantes aparecen en **Pendientes** (admin):
+   - **Pasar al [día]** lo suma al pedido de ese cliente para esa fecha (lo crea si no existe) y avisa por email como modificación.
+   - **Cerrar** lo descarta, con una nota opcional.
+5. El cliente ve el estado de cada pedido y lo que faltó en **Mis pedidos**.
+
+### Pedido habitual, repetir y cancelar (cliente)
+
+- **↺ Repetir mi último pedido:** carga las cantidades del último pedido, para revisar y confirmar.
+- **★ Cargar pedido habitual:** al confirmar cualquier pedido, tildá "Guardar como mi pedido habitual". Desde ahí queda a un toque.
+- **Cancelar este pedido:** disponible hasta la hora de corte. Avisa por email a El Cóndor (asunto "CANCELADO").
+
 ---
 
 ## 3. Cómo funciona un pedido
@@ -143,12 +174,16 @@ pedidos-el-condor/
 ├── data/catalogo_el_condor.csv     Catálogo (generado de la lista de oct-2026)
 ├── supabase/01_esquema.sql         Tablas, reglas de acceso y lógica de pedidos
 ├── supabase/02_datos_prueba.sql    Catálogo + 3 clientes de ejemplo
+├── supabase/03_etapas_2_y_3.sql    Cancelar, estados de entrega, faltantes
 ├── netlify/functions/              Servidor: pedidos, emails, PDF, altas de usuarios
 │   ├── pedido.mjs                  Guardar pedido + emails
 │   ├── pedido-pdf.mjs              Descargar PDF de un pedido
 │   ├── reenviar-pedido.mjs         Reenviar emails de un pedido
 │   ├── admin.mjs                   Clientes, accesos y usuarios
 │   ├── recuperar.mjs               "Olvidé mi contraseña"
+│   ├── resumen.mjs                 PDF Pedidos del día / Reparto y reenvío
+│   ├── resumen-automatico.mjs      Envío automático a la hora de corte (cada 10 min)
+│   ├── pendientes.mjs              Pasar faltantes a otro día
 │   └── _lib/                       Supabase, emails, PDF
 └── src/                            Pantallas (React)
 ```

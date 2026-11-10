@@ -1,4 +1,5 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { ordenClientes, ordenarItems, ordenReparto, totalesProduccion } from '../../../src/lib/resumen.js';
 import { cantidadCorta, descripcion, fmtCantidad, fmtFechaLarga, fmtFechaHora, nombreCliente } from '../../../src/lib/formato.js';
 
 const A4 = [595.28, 841.89];
@@ -165,5 +166,67 @@ export async function pdfPedido({ pedido, cliente, items, cambios = [] }) {
     quitados.forEach((c) => d.texto(`- ${c.item.nombre} (${fmtCantidad(c.item.cantidad, c.item.presentacion)})`));
   }
   d.pieDePagina(`El Cóndor · Pedido #${pedido.id}`);
+  return d.guardar();
+}
+
+// ---------- PDF "Pedidos del día" (mismo formato que la planilla manual) ----------
+export async function pdfPedidosDelDia({ fecha, pedidos }) {
+  const activos = ordenClientes(pedidos.filter((p) => p.estado !== 'cancelado'));
+  const d = await Doc.crear();
+  d.texto('EL CÓNDOR · Panadería tradicional · Mar del Plata', { size: 14, bold: true, color: MARRON, gap: 4 });
+  d.texto(`Pedidos del día · ${fmtFechaLarga(fecha)}`, { size: 12, bold: true, gap: 8 });
+  d.linea(1.5, MARRON);
+  d.saltar(10);
+
+  if (!activos.length) d.texto('No hay pedidos para esta fecha.');
+  else {
+    d.tabla(
+      [{ titulo: 'Cliente', ancho: 1.5 }, { titulo: 'Pedido', ancho: 3.4 }, { titulo: 'Cumplido', ancho: 0.85, align: 'center' },
+        { titulo: 'No cumplido', ancho: 0.95, align: 'center' }, { titulo: 'Observaciones', ancho: 1.8 }],
+      activos.map((p) => [
+        [nombreCliente(p.cliente), ...(p.cliente.horario_limite ? [p.cliente.horario_limite] : []), `#${p.id}${p.modificado ? ' (MODIF.)' : ''}`],
+        ordenarItems(p.pedido_items).map((i) => `${cantidadCorta(i.cantidad, i.presentacion)}  ${descripcion(i.producto_nombre, i.presentacion)}`),
+        '', '',
+        [p.cliente.observaciones_fijas, p.observacion].filter(Boolean),
+      ]),
+      { size: 9 },
+    );
+    d.texto(`Total de pedidos: ${activos.length}`, { size: 11, bold: true, gap: 10 });
+  }
+
+  const totales = totalesProduccion(activos);
+  if (totales.length) {
+    d.saltar(10);
+    d.espacio(60);
+    d.texto('Totales para producción', { size: 14, bold: true, color: MARRON, gap: 6 });
+    d.tabla(
+      [{ titulo: 'Producto', ancho: 4 }, { titulo: 'Total', ancho: 1.6, align: 'right' }, { titulo: 'Clientes', ancho: 0.8, align: 'center' }],
+      totales.map((t) => [descripcion(t.producto_nombre, t.presentacion), fmtCantidad(t.cantidad, t.presentacion).replace(` × ${t.presentacion}`, ''), String(t.clientes)]),
+      { size: 10 },
+    );
+  }
+  d.pieDePagina(`El Cóndor · Pedidos del día ${fmtFechaLarga(fecha)} · generado ${fmtFechaHora(new Date())}`);
+  return d.guardar();
+}
+
+// ---------- Hoja de reparto ----------
+export async function pdfReparto({ fecha, pedidos }) {
+  const lista = ordenReparto(pedidos);
+  const d = await Doc.crear();
+  d.encabezado(`Hoja de reparto · ${fmtFechaLarga(fecha)}`, `${lista.length} entregas, ordenadas por horario límite`);
+  d.tabla(
+    [{ titulo: '#', ancho: 0.35, align: 'center' }, { titulo: 'Cliente y dirección', ancho: 2.6 }, { titulo: 'Horario', ancho: 1.1 },
+      { titulo: 'Obs.', ancho: 1.8 }, { titulo: 'Ítems', ancho: 0.55, align: 'center' }, { titulo: 'Entregado / firma', ancho: 1.5 }],
+    lista.map((p, n) => [
+      String(n + 1),
+      [nombreCliente(p.cliente), p.cliente.direccion || '', p.cliente.telefono ? `Tel. ${p.cliente.telefono}` : ''].filter(Boolean),
+      p.cliente.horario_limite || '',
+      [p.cliente.observaciones_fijas, p.observacion].filter(Boolean),
+      String(p.pedido_items.length),
+      '',
+    ]),
+    { size: 9, pad: 7 },
+  );
+  d.pieDePagina(`El Cóndor · Reparto ${fmtFechaLarga(fecha)}`);
   return d.guardar();
 }

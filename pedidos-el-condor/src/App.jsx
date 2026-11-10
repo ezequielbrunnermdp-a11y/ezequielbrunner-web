@@ -13,6 +13,9 @@ import ClienteFicha from './pages/admin/ClienteFicha.jsx';
 import Productos from './pages/admin/Productos.jsx';
 import Usuarios from './pages/admin/Usuarios.jsx';
 import Configuracion from './pages/admin/Configuracion.jsx';
+import Produccion from './pages/admin/Produccion.jsx';
+import Reparto from './pages/admin/Reparto.jsx';
+import Pendientes from './pages/admin/Pendientes.jsx';
 
 const INICIO = { admin: '/admin/pedidos', fabrica: '/fabrica', cliente: '/pedido' };
 
@@ -60,6 +63,9 @@ export default function App() {
       <Route path="/mis-pedidos" element={<Protegida roles={['cliente']}><MisPedidos /></Protegida>} />
 
       <Route path="/admin/pedidos" element={<Protegida roles={['admin']}><Pedidos /></Protegida>} />
+      <Route path="/admin/produccion" element={<Protegida roles={['admin']}><Produccion /></Protegida>} />
+      <Route path="/admin/reparto" element={<Protegida roles={['admin']}><Reparto /></Protegida>} />
+      <Route path="/admin/pendientes" element={<Protegida roles={['admin']}><Pendientes /></Protegida>} />
       <Route path="/admin/cargar-pedido" element={<Protegida roles={['admin']}><HacerPedido modoAdmin /></Protegida>} />
       <Route path="/admin/clientes" element={<Protegida roles={['admin']}><Clientes /></Protegida>} />
       <Route path="/admin/clientes/:id" element={<Protegida roles={['admin']}><ClienteFicha /></Protegida>} />
@@ -67,7 +73,9 @@ export default function App() {
       <Route path="/admin/usuarios" element={<Protegida roles={['admin']}><Usuarios /></Protegida>} />
       <Route path="/admin/configuracion" element={<Protegida roles={['admin']}><Configuracion /></Protegida>} />
 
-      <Route path="/fabrica" element={<Protegida roles={['fabrica', 'admin']}><Pedidos soloLectura /></Protegida>} />
+      <Route path="/fabrica" element={<Protegida roles={['fabrica']}><Pedidos /></Protegida>} />
+      <Route path="/fabrica/produccion" element={<Protegida roles={['fabrica']}><Produccion /></Protegida>} />
+      <Route path="/fabrica/reparto" element={<Protegida roles={['fabrica']}><Reparto /></Protegida>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

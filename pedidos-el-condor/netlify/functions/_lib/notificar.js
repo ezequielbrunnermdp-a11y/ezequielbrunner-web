@@ -97,3 +97,30 @@ export async function notificarPedido(pedidoId, resultado = {}) {
   }
   return resultadoEnvio;
 }
+
+// Aviso de cancelación a El Cóndor y al cliente
+export async function notificarCancelacion(pedidoId) {
+  const { pedido, cliente } = await cargarPedido(pedidoId);
+  const nombre = nombreCliente(cliente);
+  const fecha = fmtFechaCorta(pedido.fecha_entrega);
+  const r = { fabrica: false, cliente: false };
+  try {
+    await enviarEmail({
+      to: emailsPedidos(),
+      subject: `CANCELADO – Pedido #${pedido.id} – ${nombre} – entrega ${fecha}`,
+      html: plantilla(`Pedido #${pedido.id} CANCELADO`, `<div style="background:#fde8ea;color:#b00020;padding:10px;border-radius:6px"><b>${esc(nombre)}</b> canceló su pedido para el <b>${esc(fmtFechaLarga(pedido.fecha_entrega))}</b>. No hay que prepararlo.</div>`),
+    });
+    r.fabrica = true;
+  } catch (e) { console.error(e); }
+  if (cliente.email) {
+    try {
+      await enviarEmail({
+        to: cliente.email,
+        subject: `Pedido cancelado #${pedido.id} – entrega ${fecha}`,
+        html: plantilla(`Cancelamos tu pedido #${pedido.id}`, `<p>El pedido para el <b>${esc(fmtFechaLarga(pedido.fecha_entrega))}</b> quedó cancelado.</p><p>Si fue un error, podés volver a cargarlo desde <a href="${appUrl()}">la app</a> antes de la hora de corte.</p>`),
+      });
+      r.cliente = true;
+    } catch (e) { console.error(e); }
+  }
+  return r;
+}

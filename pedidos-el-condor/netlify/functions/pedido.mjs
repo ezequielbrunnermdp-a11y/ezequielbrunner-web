@@ -1,6 +1,6 @@
-// POST /.netlify/functions/pedido  — alta o modificación de un pedido
+// POST /.netlify/functions/pedido — alta, modificación o cancelación (accion: 'cancelar') de un pedido
 import { admin, cuerpo, HttpError, json, manejar, usuarioActual } from './_lib/supa.js';
-import { notificarPedido } from './_lib/notificar.js';
+import { notificarCancelacion, notificarPedido } from './_lib/notificar.js';
 
 export default manejar(async (req) => {
   if (req.method !== 'POST') throw new HttpError(405, 'Método no permitido');
@@ -10,6 +10,17 @@ export default manejar(async (req) => {
   const clienteId = esAdmin ? b.cliente_id : perfil.cliente_id;
   if (!clienteId) throw new HttpError(400, 'Falta el cliente.');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(b.fecha_entrega || '')) throw new HttpError(400, 'Fecha de entrega inválida.');
+
+  if (b.accion === 'cancelar') {
+    const { data, error } = await admin.rpc('cancelar_pedido', { p_cliente: clienteId, p_fecha: b.fecha_entrega, p_usuario: user.id, p_es_admin: esAdmin });
+    if (error) {
+      if (error.message?.startsWith('PED: ')) throw new HttpError(400, error.message.slice(5));
+      throw error;
+    }
+    const envio = await notificarCancelacion(data.pedido_id).catch(() => ({}));
+    return json({ ok: true, pedido_id: data.pedido_id, emails: envio });
+  }
+
   const items = (b.items || []).map((i) => ({ producto_id: Number(i.producto_id), cantidad: Number(i.cantidad) }));
 
   const { data, error } = await admin.rpc('guardar_pedido', {
