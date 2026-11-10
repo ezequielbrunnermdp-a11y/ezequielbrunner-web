@@ -12,6 +12,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ["pdfkit", "exceljs", "pg"],
+  // Fuentes estándar que pdfkit lee del disco al generar PDF.
+  outputFileTracingIncludes: { "/api/reports/export": ["./node_modules/pdfkit/js/data/**"] },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

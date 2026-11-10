@@ -3,7 +3,7 @@
 -- Todas las marcas de tiempo se guardan como timestamptz (UTC).
 -- =====================================================================
 
-create extension if not exists pgcrypto;
+-- gen_random_uuid() es nativo desde PostgreSQL 13.
 
 -- ---------------------------------------------------------------------
 -- Empresas y sucursales

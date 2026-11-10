@@ -1,0 +1,10 @@
+# Configuración de Netlify para la app de asistencia (directorio base: asistencia/).
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"

@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation";
 import { getActor } from "@/lib/session";
 import { LoginForm } from "./form";
+import { needsSetup } from "../setup/actions";
 
 export const metadata = { title: "Ingresar" };
 
 export default async function LoginPage() {
   if (await getActor()) redirect("/");
+  if (await needsSetup()) redirect("/setup");
   return (
     <main className="grid min-h-dvh place-items-center px-5 py-10">
       <div className="w-full max-w-sm animate-in">

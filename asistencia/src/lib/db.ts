@@ -1,4 +1,5 @@
 import { Pool, type PoolClient, type QueryResultRow } from "pg";
+import { getConnectionString } from "@netlify/database";
 
 declare global {
   // eslint-disable-next-line no-var
@@ -6,8 +7,12 @@ declare global {
 }
 
 function createPool() {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) throw new Error("DATABASE_URL no está configurada");
+  // DATABASE_URL (local / Supabase / propio) o la base administrada de Netlify.
+  let connectionString = process.env.DATABASE_URL || process.env.NETLIFY_DB_URL;
+  if (!connectionString) {
+    try { connectionString = getConnectionString(); } catch { /* sin base de Netlify */ }
+  }
+  if (!connectionString) throw new Error("No hay base de datos configurada (DATABASE_URL o Netlify Database)");
   return new Pool({
     connectionString,
     max: Number(process.env.DATABASE_POOL_MAX ?? 10),
