@@ -89,6 +89,13 @@
       "created_by": "Windsor.ai",
       "post_id": "17878078317581690",
       "story_id": "18110546440944312"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "seru-giran-polideportivo",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "18164608198444417"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
