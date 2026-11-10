@@ -1,803 +1,285 @@
-<!DOCTYPE html>
-<html lang="es-AR">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0a0a0a">
-    <title>IA para empresas y procesos | Ezequiel Brunner</title>
-    <meta name="description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
-    <link rel="canonical" href="https://ezequielbrunner.com/inteligencia-artificial">
-    <meta property="og:title" content="IA para empresas y procesos | Ezequiel Brunner">
-    <meta property="og:description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ezequielbrunner.com/inteligencia-artificial">
-    <meta property="og:image" content="https://ezequielbrunner.com/assets/profile.jpeg">
-    <meta property="og:image:alt" content="Ezequiel Brunner">
-    <meta property="og:locale" content="es_AR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IA para empresas y procesos | Ezequiel Brunner">
-    <meta name="twitter:description" content="Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <script>
-/* Mejora progresiva: sin JavaScript o con movimiento reducido, todo el contenido se ve igual. */
-(function () {
-  var d = document.documentElement, done = false;
-  d.classList.add('js');
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
-  function go() { if (done) return; done = true; requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('ready'); }); }); }
-  document.addEventListener('DOMContentLoaded', function () {
-    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); setTimeout(go, 900); } else go();
-  });
-  setTimeout(go, 2200);
-})();
+<!doctype html>
+<html lang="es-AR" class="no-js" data-area="automatizacion">
+<head>
+<meta charset="utf-8">
+<script>
+(function (l) {
+  var map = {'#publicaciones': 'publicaciones.html#doctrina', '#dossier': 'publicaciones.html#dossier', '#medios': 'publicaciones.html#medios', '#novedades': 'publicaciones.html'};
+  if (map[l.hash]) l.replace(map[l.hash]);
+})(location);
 </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400..600&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/base.css?v=20261108">
-    <link rel="stylesheet" href="site.css?v=20261108">
-    <link rel="preload" as="image" href="assets/procesos-ia-v2.webp">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://ezequielbrunner.com/#ezequiel", "name": "Ezequiel Brunner", "url": "https://ezequielbrunner.com/", "image": "https://ezequielbrunner.com/assets/profile.jpeg", "sameAs": ["https://ar.linkedin.com/in/ezequielbrunner"], "jobTitle": "Consultor en IA y asesoramiento gastronómico"}, {"@type": "WebSite", "@id": "https://ezequielbrunner.com/#website", "url": "https://ezequielbrunner.com/", "name": "Ezequiel Brunner", "inLanguage": "es-AR", "publisher": {"@id": "https://ezequielbrunner.com/#ezequiel"}}, {"@type": "WebPage", "@id": "https://ezequielbrunner.com/inteligencia-artificial#page", "url": "https://ezequielbrunner.com/inteligencia-artificial", "name": "IA para empresas y procesos | Ezequiel Brunner", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "inLanguage": "es-AR", "isPartOf": {"@id": "https://ezequielbrunner.com/#website"}}, {"@type": "Service", "name": "IA y optimización de procesos para empresas", "url": "https://ezequielbrunner.com/inteligencia-artificial", "description": "Automatización de procesos, IA aplicada, capacitación de equipos y análisis de datos. Servicios de Ezequiel Brunner para empresas, Mar del Plata.", "provider": {"@id": "https://ezequielbrunner.com/#ezequiel"}}]}</script>
-    <script src="news-data.js" defer></script>
-    <script src="site.js?v=20261108" defer></script>
-      <script src="assets/js/vendor/gsap.min.js" defer></script>
-    <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
-    <script src="assets/js/vendor/SplitText.min.js" defer></script>
-    <script src="assets/js/vendor/lenis.min.js" defer></script>
-    <script src="assets/js/fx.js?v=20261108" defer></script>
-  </head>
-  <body data-page="ai">
-    <a class="skip" href="#contenido">Ir al contenido</a>
-<header class="hdr" id="top">
-<div class="wrap hdr-in">
-<a class="brand" href="index.html" aria-label="Ezequiel Brunner, inicio">Ezequiel <em>Brunner</em></a>
-<nav class="nav" aria-label="Principal">
-<ul>
-<li><a href="index.html">Inicio</a></li>
-<li><a href="publicaciones.html">Publicaciones</a></li>
-<li><a href="inteligencia-artificial.html" aria-current="page">IA</a></li>
-<li><a href="gastronomia.html">Gastronomía</a></li>
-<li><a href="gastronomia.html#recursos-humanos">Personas</a></li>
-<li><a href="index.html#sobre-mi">Sobre mí</a></li>
-<li><a href="#contacto">Contacto</a></li>
-</ul>
-</nav>
-<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav"><span class="menu-label">Menú</span><i aria-hidden="true"></i></button>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Automatización e inteligencia artificial para empresas | Ezequiel Brunner</title>
+<meta name="description" content="Automatización de procesos, agentes y asistentes con IA, chatbots de WhatsApp, integraciones por API, dashboards y reportes para empresas de cualquier sector. Ezequiel Brunner, Mar del Plata.">
+<link rel="canonical" href="https://ezequielbrunner.com/inteligencia-artificial">
+<meta name="theme-color" content="#101315">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:site_name" content="Ezequiel Brunner">
+<meta property="og:title" content="Automatización &amp; Inteligencia Artificial | Ezequiel Brunner">
+<meta property="og:description" content="Automatización de procesos, agentes y asistentes con IA, chatbots de WhatsApp, integraciones por API, dashboards y reportes para empresas de cualquier sector. Ezequiel Brunner, Mar del Plata.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ezequielbrunner.com/inteligencia-artificial">
+<meta property="og:image" content="https://ezequielbrunner.com/assets/og/automatizacion.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Automatización e inteligencia artificial para empresas | Ezequiel Brunner">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Automatización &amp; Inteligencia Artificial | Ezequiel Brunner">
+<meta name="twitter:description" content="Automatización de procesos, agentes y asistentes con IA, chatbots de WhatsApp, integraciones por API, dashboards y reportes para empresas de cualquier sector. Ezequiel Brunner, Mar del Plata.">
+<meta name="twitter:image" content="https://ezequielbrunner.com/assets/og/automatizacion.jpg">
+<script>
+(function (d, w) {
+  var h = d.documentElement, done = false;
+  h.classList.remove('no-js'); h.classList.add('js');
+  try { if (w.matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('rm'); } catch (e) {}
+  function go() { if (done) return; done = true; requestAnimationFrame(function () { h.classList.add('ready'); }); }
+  if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { setTimeout(go, 30); });
+  setTimeout(go, 1400);
+  try { localStorage.setItem('eb:area', 'automatizacion'); sessionStorage.setItem('eb:nav', '1'); } catch (e) {}
+})(document, window);
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/css/main.css?v=20261110">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ezequielbrunner.com/#ezequiel","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","image":"https://ezequielbrunner.com/assets/ezequiel-brunner-perfil.webp","email":"mailto:contacto@ezequielbrunner.com","jobTitle":"Consultor en gestión gastronómica y automatización con inteligencia artificial","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressRegion":"Buenos Aires","addressCountry":"AR"},"sameAs":["https://ar.linkedin.com/in/ezequielbrunner","https://about.me/ezequielbrunner"],"knowsAbout":["Gestión gastronómica","Control de costos","Recursos humanos","Automatización de procesos","Inteligencia artificial","Transparencia algorítmica"]},{"@type":"Service","name":"Automatización e inteligencia artificial para empresas","serviceType":"Consultoría en automatización e inteligencia artificial","provider":{"@id":"https://ezequielbrunner.com/#ezequiel"},"areaServed":"AR","url":"https://ezequielbrunner.com/inteligencia-artificial","description":"Tecnología inteligente para automatizar procesos, optimizar decisiones y transformar empresas.","hasOfferCatalog":{"@type":"OfferCatalog","name":"Soluciones de automatización e IA","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Consultoría en inteligencia artificial aplicada a empresas"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatización de tareas administrativas"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Diseño de agentes inteligentes"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Desarrollo de asistentes virtuales empresariales"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Chatbots y automatizaciones de WhatsApp"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Integraciones entre sistemas mediante APIs"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatización de reportes operativos"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Dashboards de indicadores en tiempo real"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Análisis inteligente de ventas y rendimiento"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Sistemas de gestión de personal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatización de procesos de RR. HH."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Integración de plataformas comerciales"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digitalización de procesos internos"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Desarrollo de herramientas web a medida"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatización de alertas y seguimiento de objetivos"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Implementación de soluciones de IA adaptadas a cada negocio"}}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://ezequielbrunner.com/"},{"@type":"ListItem","position":2,"name":"Automatización e inteligencia artificial","item":"https://ezequielbrunner.com/inteligencia-artificial"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Tengo que cambiar los sistemas que uso?","acceptedAnswer":{"@type":"Answer","text":"No necesariamente. Primero revisamos las herramientas existentes y sus posibilidades de integración. Si hace falta sumar una herramienta o un desarrollo, se explica y se presupuesta dentro del alcance."}},{"@type":"Question","name":"¿Toda mejora necesita inteligencia artificial?","acceptedAnswer":{"@type":"Answer","text":"No. Algunas tareas se resuelven mejor con un procedimiento claro, una plantilla o una automatización simple. La IA se incorpora cuando aporta valor al proceso y puede revisarse su resultado."}},{"@type":"Question","name":"¿Por dónde conviene empezar?","acceptedAnswer":{"@type":"Answer","text":"Por una tarea repetitiva, frecuente y de alcance acotado. Acordamos qué problema se busca resolver, qué información hace falta y cómo se va a evaluar el piloto antes de extenderlo."}},{"@type":"Question","name":"¿Qué pasa con los datos de mi empresa?","acceptedAnswer":{"@type":"Answer","text":"El diseño debe definir qué información se usa, quién accede y en qué herramientas. Antes de implementar, se acuerdan permisos, fuentes y pautas de manejo de la información según el proyecto."}},{"@type":"Question","name":"¿La IA puede tomar todas las decisiones?","acceptedAnswer":{"@type":"Answer","text":"El proyecto define qué tareas puede asistir o ejecutar la herramienta y qué requiere revisión. Las decisiones sensibles y las excepciones necesitan responsables y criterios claros de intervención."}},{"@type":"Question","name":"¿Las herramientas externas están incluidas?","acceptedAnswer":{"@type":"Answer","text":"Las suscripciones, licencias y consumos que pueda necesitar una solución se identifican antes de implementar. El presupuesto distingue esos costos del trabajo de diagnóstico, diseño y acompañamiento."}}]}]}</script>
+</head>
+<body class="pg-area pg-ia">
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="hdr" data-hdr>
+<div class="hdr-in">
+<a class="brand" href="index.html#elegir" aria-label="Ezequiel Brunner · elegir área"><span class="brand-name">Ezequiel Brunner</span><span class="brand-area">Automatización &amp; IA</span></a>
+<nav class="nav" aria-label="Secciones"><a href="#servicios" data-sec>Servicios</a><a href="#aplicaciones" data-sec>Ejemplos</a><a href="#departamentos" data-sec>Por área</a><a href="#metodo" data-sec>Proceso</a><a href="#investigacion" data-sec>IA y Derecho</a></nav>
+<div class="hdr-act">
+<a class="switch" href="index.html#elegir" data-switch><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13m0 0-3.5-3.5M17 8l-3.5 3.5M20 16H7m0 0 3.5-3.5M7 16l3.5 3.5"/></svg><span>Cambiar de área</span></a>
+<a class="btn btn-sm" href="#contacto">Evaluar mi empresa</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn><span class="mb-lines" aria-hidden="true"><i></i><i></i></span><span class="sr">Abrir menú</span></button>
+</div>
 </div>
 </header>
-<div class="mnav" id="mnav" data-lenis-prevent>
-<nav aria-label="Menú del sitio">
-<ol>
-<li><a href="index.html">Inicio</a></li>
-<li><a href="publicaciones.html">Publicaciones</a></li>
-<li><a href="inteligencia-artificial.html" aria-current="page">Inteligencia artificial</a></li>
-<li><a href="gastronomia.html">Gastronomía</a></li>
-<li><a href="gastronomia.html#recursos-humanos">Personas</a></li>
-<li><a href="index.html#sobre-mi">Sobre mí</a></li>
-<li><a href="#contacto">Contacto</a></li>
-</ol>
-</nav>
-<div class="mnav-foot">
-<a class="btn p" href="#contacto">Hablemos <span class="arr" aria-hidden="true">→</span></a>
-<p>contacto@ezequielbrunner.com · Mar del Plata, Argentina</p>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú" hidden data-menu>
+<div class="menu-in">
+<nav aria-label="Menú principal"><ol><li><a href="#servicios"><span class="mi-n">01</span>Servicios</a></li><li><a href="#aplicaciones"><span class="mi-n">02</span>Ejemplos</a></li><li><a href="#departamentos"><span class="mi-n">03</span>Por área</a></li><li><a href="#metodo"><span class="mi-n">04</span>Proceso</a></li><li><a href="#investigacion"><span class="mi-n">05</span>IA y Derecho</a></li></ol></nav>
+<div class="menu-foot">
+<a class="btn" href="#contacto">Evaluar mi empresa <span class="arr" aria-hidden="true">→</span></a>
+<div class="menu-sw"><a class="menu-switch" href="index.html#elegir"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13m0 0-3.5-3.5M17 8l-3.5 3.5M20 16H7m0 0 3.5-3.5M7 16l3.5 3.5"/></svg><span>Cambiar de área</span></a><a class="menu-other" href="gastronomia.html">Ir a Gastronomía <span class="arr" aria-hidden="true">→</span></a></div>
+<a class="menu-mail" href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a>
 </div>
 </div>
-    <main class="container" id="contenido">
-      <section class="page-hero" id="inicio" aria-labelledby="ai-title">
-        <div class="hero-copy">
-          <p class="eyebrow">
-            <span class="dot" aria-hidden="true"></span>IA y optimización de procesos para empresas</p>
-          <h1 id="ai-title">Menos tareas<br>repetidas.<br>
-            <em>Más capacidad.</em>
-          </h1>
-          <p class="hero-summary">Diseño soluciones de organización, automatización e inteligencia artificial para que tu empresa ordene información, simplifique tareas y trabaje con mejores procesos.</p>
-          <div class="actions">
-            <a class="button button-primary" href="#contacto">Conversemos sobre tu empresa<span class="button-arrow" aria-hidden="true">↗</span>
-            </a>
-            <a class="button button-secondary" href="#aplicaciones">Ver aplicaciones<span class="button-arrow" aria-hidden="true">↗</span>
-            </a>
-          </div>
-          <p class="hero-fine">Primero el proceso. Después, la herramienta adecuada.</p>
-        </div>
-        <figure class="page-hero-media">
-          <img class="media-monochrome" src="assets/procesos-ia-v2.webp" width="1088" height="1448" alt="Ilustración conceptual de una estructura de procesos conectados" fetchpriority="high" decoding="async">
-          <figcaption class="media-caption">
-            <span>Organizar. Analizar. Validar.</span>
-            <span class="mini-mark" aria-hidden="true">ia.</span>
-          </figcaption>
-        </figure>
-      </section>
-      <div class="sector-strip">
-        <span>Tecnología con un propósito</span>
-        <span>Administración</span>
-        <span>Operaciones</span>
-        <span>Atención al cliente</span>
-        <span>Equipos de trabajo</span>
-      </div>
-      <section class="section split-section">
-        <div class="section-heading">
-          <p class="eyebrow">Una mirada de negocio</p>
-          <h2>La tecnología sirve<br>cuando resuelve algo.</h2>
-        </div>
-        <div class="prose">
-          <p>Copiar datos de un sistema a otro, buscar documentos, responder las mismas consultas o armar reportes a mano consume tiempo que tu equipo podría dedicar a tareas de mayor valor.</p>
-          <p>Trabajo sobre esos procesos para identificar <strong>qué conviene simplificar, qué puede automatizarse y dónde la IA aporta una mejora concreta.</strong> La solución se define según tus herramientas, tu información y las personas que la van a usar.</p>
-          <a class="text-link" href="#investigacion">Conocé mi trabajo en IA y Derecho <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </section>
-      <section class="section" id="servicios">
-        <div class="section-heading">
-          <p class="eyebrow">Servicios para empresas</p>
-          <h2>Procesos más claros.<br>
-            <em>Herramientas que se usan.</em>
-          </h2>
-          <p>Proyectos acotados y objetivos definidos. Desde detectar una oportunidad hasta acompañar su puesta en marcha.</p>
-        </div>
-        <div class="service-grid">
-          <article class="service-card" data-reveal>
-            <div class="service-card-top">
-              <span class="service-index">01</span>
-              <span class="service-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="3" y="3" width="6" height="6" rx="1"></rect>
-                  <rect x="15" y="15" width="6" height="6" rx="1"></rect>
-                  <path d="M9 6h6a3 3 0 0 1 3 3v6M3 18h7M6 15v6"></path>
-                </svg>
-              </span>
-            </div>
-            <h3>Automatización de procesos</h3>
-            <p>Ordenar circuitos de trabajo, reducir tareas repetitivas y conectar información con reglas claras.</p>
-            <details class="service-details">
-              <summary>Qué incluye</summary>
-              <div class="service-detail-copy">
-                <h4>Diagnóstico y rediseño de procesos</h4>
-                <p>Relevamiento de tareas, circuitos de información y trabajos repetitivos. Identificación de cuellos de botella y oportunidades para simplificar antes de incorporar tecnología.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> mapa de procesos · prioridades · hoja de ruta</span>
-                <h4>Automatización administrativa</h4>
-                <p>Diseño de flujos para organizar datos, documentos, correos, solicitudes y recordatorios. Evaluación de cómo conectar las herramientas existentes según sus posibilidades de integración.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> flujo de trabajo · reglas de validación · documentación</span>
-              </div>
-            </details>
-          </article>
-          <article class="service-card" data-reveal>
-            <div class="service-card-top">
-              <span class="service-index">02</span>
-              <span class="service-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 3v18M3 12h18M6 6l12 12M6 18 18 6"></path>
-                </svg>
-              </span>
-            </div>
-            <h3>IA aplicada</h3>
-            <p>Asistentes, conocimiento interno y respuestas asistidas, con contexto y criterios de revisión.</p>
-            <details class="service-details">
-              <summary>Qué incluye</summary>
-              <div class="service-detail-copy">
-                <h4>Asistentes internos y conocimiento</h4>
-                <p>Diseño de asistentes para consultar procedimientos, preparar borradores y encontrar información de trabajo. Definición de qué pueden responder y cuándo deben derivar a una persona.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> casos de uso · base documental · pautas de respuesta</span>
-                <h4>Atención y comunicación</h4>
-                <p>Organización de consultas frecuentes, respuestas asistidas y circuitos de derivación. Un tono consistente con tu empresa y revisión humana en situaciones que requieren criterio.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> guías de respuesta · circuitos de atención · criterios de derivación</span>
-              </div>
-            </details>
-          </article>
-          <article class="service-card" data-reveal>
-            <div class="service-card-top">
-              <span class="service-index">03</span>
-              <span class="service-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="m2 9 10-5 10 5-10 5zM6 11v6c4 3 8 3 12 0v-6M22 9v7"></path>
-                </svg>
-              </span>
-            </div>
-            <h3>Capacitación de equipos</h3>
-            <p>Formación práctica para incorporar IA a las tareas reales de las personas que la van a usar.</p>
-            <details class="service-details">
-              <summary>Qué incluye</summary>
-              <div class="service-detail-copy">
-                <h4>Capacitación y adopción de IA</h4>
-                <p>Formación práctica para aplicar herramientas de IA al trabajo cotidiano. Ejercicios sobre tareas del equipo, criterios para revisar respuestas y pautas de uso de la información.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> talleres aplicados · guías de uso · acompañamiento inicial</span>
-              </div>
-            </details>
-          </article>
-          <article class="service-card" data-reveal>
-            <div class="service-card-top">
-              <span class="service-index">04</span>
-              <span class="service-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 3v17h17M8 16l4-5 4 2 5-8"></path>
-                </svg>
-              </span>
-            </div>
-            <h3>Análisis de datos</h3>
-            <p>Reportes, resúmenes y alertas para transformar información dispersa en una lectura útil del negocio.</p>
-            <details class="service-details">
-              <summary>Qué incluye</summary>
-              <div class="service-detail-copy">
-                <h4>Reportes e información para decidir</h4>
-                <p>Organización de fuentes y preparación de resúmenes, reportes y alertas. Definición de qué información necesita cada responsable, con criterios de revisión y trazabilidad.</p>
-                <span class="service-output">
-                  <b>Entregables:</b> estructura de reporte · fuentes definidas · criterios de control</span>
-              </div>
-            </details>
-          </article>
-        </div>
-      </section>
-      <section class="section" id="aplicaciones">
-        <div class="section-heading">
-          <p class="eyebrow">Aplicaciones concretas</p>
-          <h2>Empezar por una tarea.<br>
-            <em>Hacerla funcionar mejor.</em>
-          </h2>
-          <p>Estos ejemplos muestran posibles aplicaciones. Su viabilidad depende de la información, las herramientas y el alcance de cada proyecto.</p>
-        </div>
-        <div class="usecase-grid">
-          <article class="usecase-card">
-            <p class="case-label">Ejemplo ilustrativo · Administración</p>
-            <h3>De información dispersa a un circuito claro.</h3>
-            <p>Una solicitud que llega por correo puede ordenarse, clasificarse y convertirse en una tarea para el responsable, con los controles que el proceso necesite.</p>
-            <ul class="check-list">
-              <li>Recibir y clasificar una solicitud.</li>
-              <li>Extraer los datos necesarios.</li>
-              <li>Validar la información y asignar.</li>
-              <li>Preparar un resumen para revisión.</li>
-            </ul>
-            <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consulta%3A%20Administraci%C3%B3n">Quiero conversar sobre esto<span class="circle-arrow" aria-hidden="true">↗</span>
-            </a>
-          </article>
-          <article class="usecase-card">
-            <p class="case-label">Ejemplo ilustrativo · Operaciones</p>
-            <h3>De reportes sueltos a una lectura útil.</h3>
-            <p>En una empresa con varias unidades, un flujo puede organizar los reportes disponibles, señalar datos faltantes y preparar una síntesis para la revisión del responsable.</p>
-            <ul class="check-list">
-              <li>Reunir reportes de cada unidad.</li>
-              <li>Detectar información incompleta.</li>
-              <li>Preparar un resumen de desvíos.</li>
-              <li>Revisar antes de tomar decisiones.</li>
-            </ul>
-            <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consulta%3A%20Operaciones">Quiero conversar sobre esto<span class="circle-arrow" aria-hidden="true">↗</span>
-            </a>
-          </article>
-          <article class="usecase-card">
-            <p class="case-label">Ejemplo ilustrativo · Atención</p>
-            <h3>Responder con contexto y un criterio común.</h3>
-            <p>Una base de respuestas y un circuito de derivación pueden ayudar a resolver consultas frecuentes y reservar la intervención del equipo para situaciones específicas.</p>
-            <ul class="check-list">
-              <li>Identificar el motivo de la consulta.</li>
-              <li>Consultar información autorizada.</li>
-              <li>Preparar una respuesta consistente.</li>
-              <li>Derivar lo que requiere una persona.</li>
-            </ul>
-            <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consulta%3A%20Atenci%C3%B3n">Quiero conversar sobre esto<span class="circle-arrow" aria-hidden="true">↗</span>
-            </a>
-          </article>
-        </div>
-        <p class="example-note">Ejemplos de diseño de procesos. No se presentan como casos de clientes ni como resultados ya obtenidos.</p>
-        <!-- EDITABLE: cases remain unpublished until real figures, dates and sources are provided. -->
-        <div class="draft-panel" data-draft hidden>
-          <p class="draft-notice">Maqueta editable · Caso de estudio pendiente de documentar. No representa un resultado real.</p>
-          <div class="usecase-card">
-            <p class="case-label">[Empresa / sector]</p>
-            <h3>[Nombre del caso]</h3>
-            <dl class="case-fields">
-              <dt>Problema</dt>
-              <dd>[Proceso inicial y dificultad observada]</dd>
-              <dt>Intervención</dt>
-              <dd>[Trabajo realizado y alcance]</dd>
-              <dt>Resultado</dt>
-              <dd>[Indicador medido, valor inicial, valor final y período]</dd>
-              <dt>Fuente</dt>
-              <dd>[Registro o evidencia y autorización de publicación]</dd>
-            </dl>
-          </div>
-        </div>
-        <div class="principle-strip">
-          <article>
-            <h3>Alcance definido</h3>
-            <p>Cada solución empieza con una tarea y un objetivo concreto.</p>
-          </article>
-          <article>
-            <h3>Control humano</h3>
-            <p>Los puntos de revisión forman parte del diseño del proceso.</p>
-          </article>
-          <article>
-            <h3>Información cuidada</h3>
-            <p>Se acuerdan fuentes, accesos y pautas de uso de los datos.</p>
-          </article>
-        </div>
-      </section>
-      <section class="section" id="flujo">
-        <div class="section-heading">
-          <p class="eyebrow">Ejemplo de aplicación</p>
-          <h2>Así se conecta<br>
-            <em>un proceso.</em>
-          </h2>
-        </div>
-        <figure class="process-diagram" aria-label="Ejemplo ilustrativo de un flujo de trabajo con IA, validación y revisión humana">
-          <div class="flow-visual-header">
-            <span>Proceso conectado / 01</span>
-            <span class="flow-lights" aria-hidden="true">
-              <i></i>
-              <i></i>
-              <i></i>
-            </span>
-          </div>
-          <div class="flow-node">
-            <small>01 / Información de origen</small>
-            <strong>Datos que tu empresa ya genera</strong>
-            <span>Correos · Planillas · Pedidos · Documentos</span>
-          </div>
-          <span class="flow-connector" aria-hidden="true"></span>
-          <div class="flow-node flow-node-core">
-            <div class="flow-core-mark" aria-hidden="true">ia.</div>
-            <div>
-              <small>02 / Un proceso definido</small>
-              <strong>Organizar. Analizar. Validar.</strong>
-              <span>IA + reglas de tu negocio</span>
-            </div>
-          </div>
-          <span class="flow-connector" aria-hidden="true"></span>
-          <div class="flow-output-row">
-            <div class="flow-node">
-              <small>03 / Resultado</small>
-              <strong>Información lista<br>para revisar</strong>
-            </div>
-            <div class="flow-node">
-              <small>04 / Decisión</small>
-              <strong>Tu equipo<br>mantiene el control</strong>
-            </div>
-          </div>
-          <figcaption class="flow-bottom">
-            <span class="flow-status">Ejemplo ilustrativo</span>
-            <span>El alcance se define en el diagnóstico.</span>
-          </figcaption>
-        </figure>
-      </section>
-      <section class="section section-line" id="metodo">
-        <div class="section-heading">
-          <p class="eyebrow">Cómo trabajo</p>
-          <h2>Un proceso de mejora.<br>
-            <em>De principio a uso real.</em>
-          </h2>
-        </div>
-        <div class="steps steps-four">
-          <article class="step" data-reveal>
-            <span class="step-number">01</span>
-            <h3>Entender la tarea</h3>
-            <p>Relevo el proceso actual, sus responsables, herramientas y puntos de fricción.</p>
-          </article>
-          <article class="step" data-reveal>
-            <span class="step-number">02</span>
-            <h3>Definir una solución</h3>
-            <p>Acordamos el alcance, los datos necesarios y los criterios para evaluar si funciona.</p>
-          </article>
-          <article class="step" data-reveal>
-            <span class="step-number">03</span>
-            <h3>Probar y ajustar</h3>
-            <p>Preparamos un piloto acotado, validamos sus resultados y corregimos con el equipo.</p>
-          </article>
-          <article class="step" data-reveal>
-            <span class="step-number">04</span>
-            <h3>Documentar y acompañar</h3>
-            <p>Dejamos instrucciones de uso, responsables y una forma de revisar su funcionamiento.</p>
-          </article>
-        </div>
-      </section>
-      <section class="section" id="modalidades">
-        <div class="section-heading">
-          <p class="eyebrow">Alcance a medida</p>
-          <h2>Formas de<br>
-            <em>trabajar juntos.</em>
-          </h2>
-        </div>
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary>Diagnóstico puntual</summary>
-            <p>
-              <span class="card-meta">Para entender dónde estás</span>
-              <br>Relevamiento de un proceso, oportunidades de mejora y evaluación de qué conviene automatizar.<br>
-              <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consultar%20por%20un%20diagn%C3%B3stico%20en%20procesos%20e%20IA">Conversemos<span class="circle-arrow" aria-hidden="true">↗</span>
-              </a>
-            </p>
-          </details>
-          <details class="faq-item">
-            <summary>Proyecto de mejora</summary>
-            <p>
-              <span class="card-meta">Para resolver una necesidad</span>
-              <br>Diseño y puesta en marcha de un flujo de trabajo acotado, con pruebas, documentación y capacitación.<br>
-              <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consultar%20por%20un%20proyecto%20en%20procesos%20e%20IA">Conversemos<span class="circle-arrow" aria-hidden="true">↗</span>
-              </a>
-            </p>
-          </details>
-          <details class="faq-item">
-            <summary>Acompañamiento</summary>
-            <p>
-              <span class="card-meta">Para sostener el cambio</span>
-              <br>Seguimiento del uso, revisión de resultados y ajustes para que las herramientas se integren al trabajo cotidiano.<br>
-              <a class="text-link" href="mailto:contacto@ezequielbrunner.com?subject=Consultar%20por%20acompa%C3%B1amiento%20en%20procesos%20e%20IA">Conversemos<span class="circle-arrow" aria-hidden="true">↗</span>
-              </a>
-            </p>
-          </details>
-        </div>
-        <p class="example-note">El alcance, los plazos y los honorarios se definen según el punto de partida y las necesidades del proyecto.</p>
-      </section>
-      <section class="section" id="preguntas">
-        <div class="section-heading">
-          <p class="eyebrow">Antes de empezar</p>
-          <h2>Preguntas frecuentes.</h2>
-        </div>
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary>¿Tengo que cambiar los sistemas que uso?</summary>
-            <p>No necesariamente. Primero revisamos las herramientas existentes y sus posibilidades de integración. Si hace falta sumar una herramienta o un desarrollo, se explica y se presupuesta dentro del alcance.</p>
-          </details>
-          <details class="faq-item">
-            <summary>¿Toda mejora necesita inteligencia artificial?</summary>
-            <p>No. Algunas tareas se resuelven mejor con un procedimiento claro, una plantilla o una automatización simple. La IA se incorpora cuando aporta valor al proceso y puede revisarse su resultado.</p>
-          </details>
-          <details class="faq-item">
-            <summary>¿Por dónde conviene empezar?</summary>
-            <p>Por una tarea repetitiva, frecuente y de alcance acotado. Acordamos qué problema se busca resolver, qué información hace falta y cómo se va a evaluar el piloto antes de extenderlo.</p>
-          </details>
-          <details class="faq-item">
-            <summary>¿Qué pasa con los datos de mi empresa?</summary>
-            <p>El diseño debe definir qué información se usa, quién accede y en qué herramientas. Antes de implementar, se acuerdan permisos, fuentes y pautas de manejo de la información según el proyecto.</p>
-          </details>
-          <details class="faq-item">
-            <summary>¿La IA puede tomar todas las decisiones?</summary>
-            <p>El proyecto define qué tareas puede asistir o ejecutar la herramienta y qué requiere revisión. Las decisiones sensibles y las excepciones necesitan responsables y criterios claros de intervención.</p>
-          </details>
-          <details class="faq-item">
-            <summary>¿Las herramientas externas están incluidas?</summary>
-            <p>Las suscripciones, licencias y consumos que pueda necesitar una solución se identifican antes de implementar. El presupuesto distingue esos costos del trabajo de diagnóstico, diseño y acompañamiento.</p>
-          </details>
-        </div>
-      </section>
-      <aside class="bridge" aria-label="Asesoramiento gastronómico">
-        <div>
-          <p class="eyebrow">La experiencia también cuenta</p>
-          <h2>Gestión real.<br>Una base para pensar procesos.</h2>
-          <p>Mi experiencia en operaciones gastronómicas aporta una mirada práctica sobre equipos, circuitos de trabajo, coordinación e información para decidir.</p>
-        </div>
-        <a class="text-link" href="gastronomia.html">Conocé mi perfil gastronómico <span aria-hidden="true">↗</span>
-        </a>
-      </aside>
-      <section class="contact-section" id="contacto" aria-labelledby="contact-title">
-        <div class="contact-copy">
-          <p class="eyebrow">Tu próximo paso</p>
-          <h2 id="contact-title">Empecemos por<br>
-            <em>un proceso.</em>
-          </h2>
-          <p>Contame qué tarea te consume tiempo, dónde se repite el trabajo o qué información necesitás ordenar. A partir de ahí, evaluamos una solución concreta.</p>
-          <a class="contact-email" href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com ↗</a>
-          <span class="contact-place">Mar del Plata, Argentina · Modalidad a definir según el proyecto.</span>
-        </div>
-        <form class="contact-form" data-contact-form action="mailto:contacto@ezequielbrunner.com" method="post" enctype="text/plain">
-          <div class="field">
-            <label for="contact-name">Tu nombre *</label>
-            <input id="contact-name" name="name" required maxlength="100" autocomplete="name" placeholder="Nombre y apellido">
-          </div>
-          <div class="field">
-            <label for="contact-email">Tu email *</label>
-            <input id="contact-email" name="email" type="email" required maxlength="150" autocomplete="email" placeholder="nombre@empresa.com">
-          </div>
-          <div class="field field-wide">
-            <label for="contact-company">Empresa o emprendimiento</label>
-            <input id="contact-company" name="company" maxlength="150" autocomplete="organization" placeholder="Cómo se llama tu negocio">
-          </div>
-          <div class="field field-wide">
-            <label for="contact-area">¿En qué puedo ayudarte? *</label>
-            <select id="contact-area" name="area" required>
-              <option value="" disabled selected>Elegí una opción</option>
-              <option>Automatización de procesos</option>
-              <option>IA aplicada</option>
-              <option>Capacitación de equipos</option>
-              <option>Análisis de datos</option>
-              <option>Otro proyecto de IA</option>
-            </select>
-          </div>
-          <div class="field field-wide">
-            <label for="contact-message">Contame brevemente tu proyecto *</label>
-            <textarea id="contact-message" name="message" minlength="15" maxlength="2000" required placeholder="Qué está pasando y qué te gustaría mejorar."></textarea>
-          </div>
-          <button class="button button-primary" type="submit">Preparar consulta por email <span class="button-arrow" aria-hidden="true">↗</span>
-          </button>
-          <p class="form-notice">Se abrirá tu aplicación de correo con la consulta preparada. Podés revisarla y enviarla desde allí. Este formulario no almacena tus datos.</p>
-          <p class="form-status" data-form-status role="status"></p>
-        </form>
-      </section>
-      <section class="section section-line" id="investigacion">
-        <div class="section-heading">
-          <p class="eyebrow">Investigación y publicaciones</p>
-          <h2>Inteligencia Artificial<br>
-            <em>y Derecho.</em>
-          </h2>
-          <p>Transparencia algorítmica, garantías y responsabilidad pública. Un espacio de investigación, publicaciones y análisis jurídico.</p>
-        </div>
-        <div class="actions">
-          <a class="button button-primary" href="#publicaciones">Ver publicaciones<span class="button-arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="button button-secondary" href="#medios">Artículos y medios<span class="button-arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </section>
-      <section id="sobre-mi" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Sobre mí</p>
-          <h2>Trayectoria, enfoque y línea de trabajo</h2>
-        </div>
-        <div class="about-grid">
-          <article class="panel panel-accent">
-            <h3>Perfil</h3>
-            <p>
-              Ezequiel Brunner es estudiante de Abogacía en la Universidad Kennedy y autor enfocado en inteligencia artificial, derecho y transparencia algorítmica. Su trabajo se centra en el análisis de los desafíos jurídicos que plantea la tecnología, con especial interés en la regulación, las decisiones automatizadas y el impacto institucional de la IA.
-            </p>
-          </article>
-          <article class="panel">
-            <h3>Enfoque y desarrollo</h3>
-            <p>
-              Ha desarrollado publicaciones y análisis sobre estas materias, combinando reflexión jurídica, actualidad tecnológica y observación crítica de los cambios que la inteligencia artificial introduce en el ámbito normativo y social. Su interés está puesto en construir una mirada clara, seria y accesible sobre debates que ya no pertenecen al futuro, sino al presente del derecho.
-            </p>
-          </article>
-        </div>
-      </section>
-      <section id="formacion" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Estudios y capacitación</p>
-          <h2>Formación académica</h2>
-        </div>
-        <div class="about-grid">
-          <article class="panel">
-            <p class="card-meta">Universidad Kennedy · En curso</p>
-            <h3>Abogacía — tercer año</h3>
-            <p>Formación universitaria en Derecho.</p>
-          </article>
-          <article class="panel">
-            <p class="card-meta">Formación tecnológica</p>
-            <h3>Analista de Sistemas</h3>
-            <p>Formación en análisis de sistemas informáticos.</p>
-          </article>
-        </div>
-        <div class="section-heading subsection-heading">
-          <h3>Cursos y formación continua</h3>
-        </div>
-        <div class="media-grid">
-          <article class="panel">
-            <p class="card-meta">Redes informáticas</p>
-            <h3>Administrador de Redes SOHO</h3>
-          </article>
-          <article class="panel">
-            <p class="card-meta">Informática</p>
-            <h3>Reparación de PC</h3>
-          </article>
-          <article class="panel">
-            <p class="card-meta">United Nations Volunteers (UNV)</p>
-            <h3>Information Security Awareness</h3>
-          </article>
-        </div>
-        <p class="career-source">
-          <a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">Ver formación y actividad en LinkedIn</a>
-        </p>
-      </section>
-      <section id="publicaciones" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Publicaciones</p>
-          <h2>Doctrinas y trabajos publicados</h2>
-          <p>Trabajos sobre transparencia algorítmica, responsabilidad pública y Derecho Laboral, con acceso a sus fuentes de publicación.</p>
-        </div>
-        <div class="publication-layout">
-          <div class="featured-publications">
-            <article class="publication-card publication-card-featured">
-              <span class="tag tag-highlight">IA y Derecho</span>
-              <p class="card-meta">Doctrina · SAIJ</p>
-              <h3>Transparencia algorítmica como garantía constitucional: hacia un modelo argentino de control real y responsabilidad pública</h3>
-              <p>Un trabajo centrado en transparencia algorítmica, garantías constitucionales y responsabilidad pública en el contexto argentino.</p>
-              <a href="https://www.saij.gob.ar/ezequiel-brunner-transparencia-algoritmica-como-garantia-constitucional-hacia-modelo-argentino-control-real-responsabilidad-publica-dacf250125-2025-12-17/123456789-0abc-defg5210-52fcanirtcod" target="_blank" rel="noreferrer">Leer en SAIJ</a>
-            </article>
-            <article class="publication-card publication-card-academic">
-              <span class="tag">Ponencia premiada</span>
-              <p class="card-meta">Congreso académico · 2024</p>
-              <h3>Inteligencia Artificial y Derecho: Innovación y Retos Éticos en la Legislación Tecnológica</h3>
-              <p>II Congreso Estudiantil de Práctica Profesional y Actualidad Jurídica, Facultad de Ciencias Jurídicas, Universidad Argentina John F. Kennedy.</p>
-              <p>Publicada en el Anuario Oficial 2024 de la Facultad de Ciencias Jurídicas.</p>
-              <a href="https://www.kennedy.edu.ar/wp-content/uploads/2025/04/2024.-Anuario-60-Aniversario.-Fac.-Cs.-Juri%CC%81dicas_compressed-2.pdf?utm_source=chatgpt.com" target="_blank" rel="noreferrer">Abrir anuario oficial</a>
-            </article>
-          </div>
-          <div class="publication-list">
-            <article class="publication-card">
-              <p class="card-meta">Investigación · SSRN · 2026</p>
-              <h3>Algorithmic Transparency as a Due Process Requirement in Automated Decision-Making</h3>
-              <p>Trabajo en inglés sobre transparencia algorítmica y debido proceso.</p>
-              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5997154" target="_blank" rel="noopener noreferrer">Leer en SSRN</a>
-            </article>
-            <article class="publication-card">
-              <p class="card-meta">Derecho Laboral · 2026</p>
-              <h3>Certificados Médicos Digitales y Enfermedad Inculpable: regla, excepción y riesgos de una lectura incompleta del artículo 210 LCT</h3>
-              <p>Doctrina publicada en SAIJ y reseñada en prensa el 3 de julio de 2026. Análisis de la acreditación de licencias y el control médico laboral.</p>
-              <a href="https://elretratodehoy.com.ar/2026/07/03/ezequien-brunner-el-certificado-medico-en-papel-ya-no-alcanza-para-justificar-una-falta-laboral/" target="_blank" rel="noopener noreferrer">Leer la reseña en El Retrato de Hoy</a>
-            </article>
-            <article class="publication-card">
-              <span class="tag">Derecho e Inteligencia Artificial</span>
-              <p class="card-meta">Doctrina · SAIJ</p>
-              <h3>Cuando explicar no alcanza: responsabilidad algorítmica, prueba y reparación frente a decisiones automatizadas en la Administración Pública argentina</h3>
-              <a href="https://www.saij.gob.ar/ezequiel-brunner-cuando-explicar-alcanza-responsabilidad-algoritmica-prueba-reparacion-frente-decisiones-automatizadas-administracion-publica-argentina-dacf260043-2026-04-30/123456789-0abc-defg3400-62fcanirtcod?q=fecha-rango%3A%5B20251130%20TO%2020260530%5D&amp;o=6&amp;f=Total%7CFecha%7CEstado%20de%20Vigencia%5B5%2C1%5D%7CTema%5B5%2C1%5D%7COrganismo%5B5%2C1%5D%7CAutor%5B5%2C1%5D%7CJurisdicci%F3n%5B5%2C1%5D%7CTribunal%5B5%2C1%5D%7CPublicaci%F3n%5B5%2C1%5D%7CColecci%F3n%20tem%E1tica%5B5%2C1%5D%7CTipo%20de%20Documento/Doctrina&amp;t=65" target="_blank" rel="noreferrer">Abrir publicación</a>
-            </article>
-            <article class="publication-card">
-              <span class="tag">Derecho Laboral</span>
-              <p class="card-meta">Doctrina · SAIJ</p>
-              <h3>La sanción disciplinaria laboral como micro procedimiento</h3>
-              <a href="https://www.saij.gob.ar/ezequiel-brunner-sancion-disciplinaria-laboral-como-micro-procedimiento-dacf260002-2026-01-07/123456789-0abc-defg2000-62fcanirtcod" target="_blank" rel="noreferrer">Abrir publicación</a>
-            </article>
-            <article class="publication-card">
-              <span class="tag">Derecho Laboral</span>
-              <p class="card-meta">Doctrina · SAIJ</p>
-              <h3>La salud como prioridad, el control médico como deber y los límites de la ignorancia estratégica en el régimen de licencias</h3>
-              <a href="https://www.saij.gob.ar/ezequiel-brunner-salud-como-prioridad-control-medico-como-deber-limites-ignorancia-estrategica-regimen-licencias-dacf260020-2026-02-26/123456789-0abc-defg0200-62fcanirtcod" target="_blank" rel="noreferrer">Abrir publicación</a>
-            </article>
-            <article class="publication-card">
-              <span class="tag">Derecho / Publicación jurídica</span>
-              <p class="card-meta">Doctrina · SAIJ</p>
-              <h3>Resolución 9/2025 (PBA): transparencia, explicabilidad y control algorítmico en la Administración Pública</h3>
-              <a href="https://www.saij.gob.ar/DACF260022" target="_blank" rel="noreferrer">Abrir publicación</a>
-            </article>
-          </div>
-        </div>
-      </section>
-      <section id="dossier" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Biblioteca del Congreso de la Nación</p>
-          <h2>Dossier Legislativo n.º 335</h2>
-        </div>
-        <article class="publication-card">
-          <p class="card-meta">Selección bibliográfica · Abril de 2026</p>
-          <h3>Enfermedades y accidentes inculpables</h3>
-          <p>La Biblioteca del Congreso incluyó en la sección Doctrina el artículo de Ezequiel Brunner “La Salud como prioridad y el control médico como deber: límites a la ignorancia estratégica en el régimen de licencias”, publicado en SAIJ el 26 de febrero de 2026 (DACF260020).</p>
-          <a href="https://bcn.gob.ar/uploads/adjuntos/Dossier-335-legis-nacional-enfermedades-accidentes-inculpables-abr-2026.pdf#page=32" target="_blank" rel="noopener noreferrer">Consultar dossier · página 32</a>
-        </article>
-      </section>
-      <section id="medios" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Apariciones en medios</p>
-          <h2>Medios, menciones y reconocimientos</h2>
-        </div>
-        <div class="media-grid">
-          <article class="media-card">
-            <p class="card-meta">La Capital · Artículo de autor · 3 de julio de 2026</p>
-            <h3>Certificados médicos digitales: el nuevo foco de conflicto entre trabajadores y empleadores</h3>
-            <a href="https://www.lacapitalmdp.com/certificados-medicos-digitales-el-nuevo-foco-de-conflicto-entre-trabajadores-y-empleadores/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-          <article class="media-card">
-            <p class="card-meta">El Retrato de Hoy · 3 de julio de 2026</p>
-            <h3>Brunner: ¿El certificado médico en papel ya no alcanza para justificar una falta laboral?</h3>
-            <a href="https://elretratodehoy.com.ar/2026/07/03/ezequien-brunner-el-certificado-medico-en-papel-ya-no-alcanza-para-justificar-una-falta-laboral/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-          <article class="media-card">
-            <p class="card-meta">Mar del Plata Web · 6 de enero de 2026</p>
-            <h3>Orgullo marplatense: un estudiante local publicó doctrina jurídica en el SAIJ y advierte sobre la inteligencia artificial</h3>
-            <a href="https://www.mardelplataweb.com/contenido/94409-orgullo-marplatense-un-estudiante-local-publico-doctrina-juridica-en-el-saij-y-advierte-sobre-la-inteligencia-artificial" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-          <article class="media-card">
-            <p class="card-meta">Diario Constitucional · Carta al director · 6 de octubre de 2025</p>
-            <h3>Argentina: Reforma penal e inteligencia artificial, el Derecho ante el desafío de la era digital</h3>
-            <a href="https://www.diarioconstitucional.cl/cartas-al-director/argentina-reforma-penal-e-inteligencia-artificial-el-derecho-ante-el-desafio-de-la-era-digital/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-          <article class="media-card">
-            <p class="card-meta">El Periódico · Carta de autor · 23 de agosto de 2025</p>
-            <h3>La caja negra de la IA</h3>
-            <a href="https://www.elperiodico.cat/entre-tots/participacio/caja-negra-ia-reserva-tecnica-carta-ezequiel-brunner-120743430" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-          <article class="media-card">
-            <p class="card-meta">Diario Constitucional · Carta al director</p>
-            <h3>Phishing con IA: la inteligencia artificial perfecciona las estafas digitales y desafía al derecho</h3>
-            <a href="https://www.diarioconstitucional.cl/cartas-al-director/phishing-con-ia-la-inteligencia-artificial-perfecciona-las-estafas-digitales-y-desafia-al-derecho/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-          </article>
-        </div>
-        <details class="archive-details">
-          <summary>Ver todas las menciones y reconocimientos (13 más)</summary>
-          <div class="media-grid">
-            <article class="media-card">
-              <p class="card-meta">Diario Constitucional · Carta al director · 16 de agosto de 2025</p>
-              <h3>Inteligencia Artificial en la Justicia: del piloto automático al riesgo de colisión</h3>
-              <a href="https://www.diarioconstitucional.cl/cartas-al-director/inteligencia-artificial-en-la-justicia-del-piloto-automatico-al-riesgo-de-colision/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">Diario Constitucional · Carta al director · 9 de agosto de 2025</p>
-              <h3>La caja negra de la inteligencia artificial entra a tribunales: Chile acelera la adopción; Argentina marca límites penales</h3>
-              <a href="https://www.diarioconstitucional.cl/cartas-al-director/la-caja-negra-de-la-inteligencia-artificial-entra-a-tribunales-chile-acelera-la-adopcion-argentina-marca-limites-penales/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">Diario Constitucional · Carta al director · 4 de agosto de 2025</p>
-              <h3>Transparencia algorítmica y Derecho: cuando regular la inteligencia artificial ya no es opcional</h3>
-              <a href="https://www.diarioconstitucional.cl/cartas-al-director/transparencia-algoritmica-y-derecho-cuando-regular-la-inteligencia-artificial-ya-no-es-opcional/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">Diario Constitucional · Carta al director · 4 de septiembre de 2025</p>
-              <h3>Los delegados del odio: cuando la representación se vuelve hostigamiento</h3>
-              <a href="https://www.diarioconstitucional.cl/cartas-al-director/los-delegados-del-odio-cuando-la-representacion-se-vuelve-hostigamiento/" target="_blank" rel="noopener noreferrer">Leer en el medio</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">El Retrato de Hoy</p>
-              <h3>Ezequiel Brunner: el desafío del derecho argentino frente a la IA en el Estado</h3>
-              <a href="https://elretratodehoy.com.ar/2026/05/10/ezequiel-brunner-el-desafio-del-derecho-argentino-frente-a-la-ia-en-el-estado/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">La Capital de Mar del Plata</p>
-              <h3>Cuando una IA se equivoca: el debate jurídico que empieza a crecer en la Argentina</h3>
-              <a href="https://www.lacapitalmdp.com/cuando-una-ia-se-equivoca-el-debate-juridico-que-empieza-a-crecer-en-la-argentina/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">MDP OK</p>
-              <h3>¿Quién responde cuando un algoritmo se equivoca?</h3>
-              <a href="https://mdpok.ar/noticia/tecnologia/2026/05/11/quin-responde-cuando-un-algoritmo-se-equivoca/29308.html" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card media-card-primary">
-              <p class="card-meta">La Capital</p>
-              <h3>Un estudio académico expone el vacío legal ante la inteligencia artificial</h3>
-              <a href="https://www.lacapitalmdp.com/un-estudio-academico-expone-el-vacio-legal-ante-la-inteligencia-artificial/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card media-card-primary">
-              <p class="card-meta">La Capital</p>
-              <h3>Distinguen a estudiante marplatense por anticipar debate legal sobre la IA</h3>
-              <a href="https://www.lacapitalmdp.com/distinguen-a-estudiante-marplatense-por-anticipar-debate-legal-sobre-la-ia/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">El Retrato de Hoy</p>
-              <h3>Estudiante marplatense publicó doctrina jurídica en el SAIJ y advierte sobre la inteligencia artificial</h3>
-              <a href="https://elretratodehoy.com.ar/2026/01/06/estudiante-marplatense-publico-doctrina-juridica-en-el-saij-y-advierte-sobre-la-inteligencia-artificial/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">El Retrato de Hoy</p>
-              <h3>Premian a marplatense por anticipar los desafíos legales de la inteligencia artificial</h3>
-              <a href="https://elretratodehoy.com.ar/2025/07/28/premian-a-marplatense-por-anticipar-los-desafios-legales-de-la-inteligencia-artificial/" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card">
-              <p class="card-meta">MDPok</p>
-              <h3>Un estudiante marplatense es reconocido por su aporte académico sobre IA y derecho</h3>
-              <a href="https://mdpok.ar/noticia/curiosidades/2025/07/28/un-estudiante-marplatense-es-reconocido-por-su-aporte-acadmico-sobre-ia-y-derecho/26261.html" target="_blank" rel="noreferrer">Leer nota</a>
-            </article>
-            <article class="media-card media-card-secondary">
-              <p class="card-meta">Instagram</p>
-              <h3>Publicación en redes sobre aparición o reconocimiento</h3>
-              <a href="https://www.instagram.com/p/DMtE-Z8NJIL/" target="_blank" rel="noreferrer">Ver publicación</a>
-            </article>
-          </div>
-        </details>
-      </section>
-      <section id="novedades" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Novedades y artículos</p>
-          <h2>Actualidad y análisis</h2>
-          <p>Una selección de notas, intervenciones y lecturas sobre inteligencia artificial, derecho y debates regulatorios en desarrollo.</p>
-        </div>
-        <div class="news-groups" aria-live="polite">
-          <div class="news-group">
-            <h3 class="news-group-title">Últimas noticias</h3>
-            <div id="latest-news-list" class="news-grid"></div>
-          </div>
-          <div class="news-group">
-            <h3 class="news-group-title">Archivo / notas anteriores</h3>
-            <div id="archive-news-list" class="news-grid"></div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer class="ftr">
+</div>
+<main id="contenido">
+<section class="hero" id="inicio" aria-labelledby="hero-t">
+<div class="hero-media" aria-hidden="true"><img src="assets/img/automatizacion.webp" srcset="assets/img/automatizacion-800.webp 800w, assets/img/automatizacion.webp 1086w" sizes="100vw" alt="" width="1086" height="1448" decoding="async" fetchpriority="high"></div>
+<div class="hero-shade" aria-hidden="true"></div>
+<div class="wrap hero-in">
+<p class="label hero-label" data-in="1">IA y optimización de procesos para empresas</p>
+<h1 class="hero-t" id="hero-t"><span class="ln" style="--l:0"><span>Automatización &amp;</span></span><span class="ln" style="--l:1"><span><em>inteligencia</em></span></span><span class="ln" style="--l:2"><span><em>artificial</em></span></span></h1>
+<div class="hero-row">
+<p class="hero-sub" data-in="3">Tecnología inteligente para automatizar procesos, optimizar decisiones y transformar empresas.</p>
+<div class="hero-cta" data-in="4"><a class="btn" href="#contacto">Evaluar mi empresa <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="#servicios">Ver servicios <span class="arr" aria-hidden="true">→</span></a></div>
+</div>
+<p class="hero-fine" data-in="5">Primero el proceso. Después, la herramienta adecuada.</p>
+</div>
+<a class="hero-down" href="#soluciones" aria-label="Bajar"><span aria-hidden="true"></span></a>
+</section>
+<section class="sec value" id="soluciones" aria-labelledby="soluciones-t">
 <div class="wrap">
-<div class="ftr-top">
-<div><p class="ftr-name">Ezequiel <em>Brunner</em></p><p>Consultoría empresarial en inteligencia artificial, gestión gastronómica y organización de equipos. Mar del Plata, Argentina.</p></div>
-<nav aria-label="Secciones"><h2>Secciones</h2><ul><li><a href="index.html">Inicio</a></li><li><a href="publicaciones.html">Publicaciones</a></li><li><a href="inteligencia-artificial.html">Inteligencia artificial</a></li><li><a href="gastronomia.html">Gastronomía</a></li><li><a href="gastronomia.html#recursos-humanos">Personas</a></li><li><a href="index.html#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul></nav>
-<div><h2>Contacto</h2><ul><li><a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a></li><li><a href="https://ar.linkedin.com/in/ezequielbrunner" rel="noopener">LinkedIn ↗</a></li><li><a href="publicaciones.html">Todas las publicaciones</a></li><li><a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a></li></ul></div>
+<div class="value-grid">
+<div class="value-l">
+<p class="label"><span class="lab-n">01</span>Soluciones tecnológicas</p>
+<h2 class="h2 h2-xl" id="soluciones-t">Menos tareas repetidas. <em>Más capacidad.</em></h2>
 </div>
-<div class="ftr-line"><span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span><a href="#top">Volver arriba ↑</a></div>
+<div class="value-r">
+<p class="lead">Diseño soluciones de organización, automatización e inteligencia artificial para que tu empresa ordene información, simplifique tareas y trabaje con mejores procesos.</p>
+<blockquote class="vq"><p>Incorporo IA con criterio: donde ahorra tiempo real y donde la información ayuda a decidir mejor. Sin promesas mágicas.</p></blockquote><h3 class="h3">La tecnología sirve cuando resuelve algo.</h3>
+<div class="prose"><p>Copiar datos de un sistema a otro, buscar documentos, responder las mismas consultas o armar reportes a mano consume tiempo que tu equipo podría dedicar a tareas de mayor valor.</p><p>Trabajo sobre esos procesos para identificar qué conviene simplificar, qué puede automatizarse y dónde la IA aporta una mejora concreta. La solución se define según tus herramientas, tu información y las personas que la van a usar.</p></div>
+<p class="sectors" aria-label="Sectores"><span>Para empresas de cualquier sector</span><i aria-hidden="true">/</i><span>Administración</span><i aria-hidden="true">/</i><span>Ventas</span><i aria-hidden="true">/</i><span>Operaciones</span><i aria-hidden="true">/</i><span>Personas</span></p>
+</div>
+</div>
+<ul class="principles"><li class="lit"><h3>Alcance definido</h3><p>Cada solución empieza con una tarea y un objetivo concreto.</p></li><li class="lit"><h3>Control humano</h3><p>Los puntos de revisión forman parte del diseño del proceso.</p></li><li class="lit"><h3>Información cuidada</h3><p>Se acuerdan fuentes, accesos y pautas de uso de los datos.</p></li></ul>
+</div>
+</section>
+<section class="sec services" id="servicios" aria-labelledby="servicios-t">
+<div class="wrap">
+<div class="sec-head "><p class="label"><span class="lab-n">02</span>Automatizaciones para empresas</p><h2 class="h2" id="servicios-t">Procesos más claros. <em>Herramientas que se usan.</em></h2><p class="intro">Proyectos acotados y objetivos definidos. Desde detectar una oportunidad hasta acompañar su puesta en marcha.</p></div><p class="note note-top">Cada solución se evalúa y se desarrolla según la viabilidad del proyecto: las herramientas que ya usa tu empresa, sus posibilidades de integración y la información disponible.</p>
+<div class="cats"><article class="cat" id="cat-ia-aplicada" data-rv>
+<div class="cat-head"><span class="cat-n">01</span><h3 class="cat-t">IA aplicada a la empresa</h3><p class="cat-desc">Asistentes, conocimiento interno y respuestas asistidas, con contexto y criterios de revisión.</p></div>
+<ul class="cat-list"><li>Consultoría en inteligencia artificial aplicada a empresas</li><li>Implementación de soluciones de IA adaptadas a cada negocio</li><li>Diseño de agentes inteligentes</li><li>Desarrollo de asistentes virtuales empresariales</li><li>Capacitación y adopción de IA</li></ul>
+<details class="cat-more"><summary><span>Qué incluye</span><i aria-hidden="true"></i></summary><div class="cat-more-in"><div class="cat-d"><h4>Asistentes internos y conocimiento</h4><p>Diseño de asistentes para consultar procedimientos, preparar borradores y encontrar información de trabajo. Definición de qué pueden responder y cuándo deben derivar a una persona.</p><p class="cat-out"><b>Entregables:</b> casos de uso · base documental · pautas de respuesta</p></div><div class="cat-d"><h4>Capacitación y adopción de IA</h4><p>Formación práctica para aplicar herramientas de IA al trabajo cotidiano. Ejercicios sobre tareas del equipo, criterios para revisar respuestas y pautas de uso de la información.</p><p class="cat-out"><b>Entregables:</b> talleres aplicados · guías de uso · acompañamiento inicial</p></div></div></details>
+<a class="cat-cta" href="#contacto" data-prefill="mensaje:Me interesa: IA aplicada a la empresa.">Consultar por este servicio <span class="arr" aria-hidden="true">→</span></a>
+</article><article class="cat" id="cat-procesos" data-rv>
+<div class="cat-head"><span class="cat-n">02</span><h3 class="cat-t">Automatización de procesos</h3><p class="cat-desc">Ordenar circuitos de trabajo, reducir tareas repetitivas y conectar información con reglas claras.</p></div>
+<ul class="cat-list"><li>Automatización de tareas administrativas</li><li>Digitalización de procesos internos</li><li>Automatización de reportes operativos</li><li>Automatización de alertas y seguimiento de objetivos</li></ul>
+<details class="cat-more"><summary><span>Qué incluye</span><i aria-hidden="true"></i></summary><div class="cat-more-in"><div class="cat-d"><h4>Diagnóstico y rediseño de procesos</h4><p>Relevamiento de tareas, circuitos de información y trabajos repetitivos. Identificación de cuellos de botella y oportunidades para simplificar antes de incorporar tecnología.</p><p class="cat-out"><b>Entregables:</b> mapa de procesos · prioridades · hoja de ruta</p></div><div class="cat-d"><h4>Automatización administrativa</h4><p>Diseño de flujos para organizar datos, documentos, correos, solicitudes y recordatorios. Evaluación de cómo conectar las herramientas existentes según sus posibilidades de integración.</p><p class="cat-out"><b>Entregables:</b> flujo de trabajo · reglas de validación · documentación</p></div></div></details>
+<a class="cat-cta" href="#contacto" data-prefill="mensaje:Me interesa: Automatización de procesos.">Consultar por este servicio <span class="arr" aria-hidden="true">→</span></a>
+</article><article class="cat" id="cat-integraciones" data-rv>
+<div class="cat-head"><span class="cat-n">03</span><h3 class="cat-t">Integraciones y canales</h3><p class="cat-desc">Conectar las herramientas que ya usa la empresa y ordenar la atención por los canales donde llegan las consultas.</p></div>
+<ul class="cat-list"><li>Chatbots y automatizaciones de WhatsApp</li><li>Integraciones entre sistemas mediante APIs</li><li>Integración de plataformas comerciales</li><li>Desarrollo de herramientas web a medida</li></ul>
+<details class="cat-more"><summary><span>Qué incluye</span><i aria-hidden="true"></i></summary><div class="cat-more-in"><div class="cat-d"><h4>Atención y comunicación</h4><p>Organización de consultas frecuentes, respuestas asistidas y circuitos de derivación. Un tono consistente con tu empresa y revisión humana en situaciones que requieren criterio.</p><p class="cat-out"><b>Entregables:</b> guías de respuesta · circuitos de atención · criterios de derivación</p></div></div></details>
+<a class="cat-cta" href="#contacto" data-prefill="mensaje:Me interesa: Integraciones y canales.">Consultar por este servicio <span class="arr" aria-hidden="true">→</span></a>
+</article><article class="cat" id="cat-datos" data-rv>
+<div class="cat-head"><span class="cat-n">04</span><h3 class="cat-t">Datos, indicadores y personas</h3><p class="cat-desc">Reportes, resúmenes y alertas para transformar información dispersa en una lectura útil del negocio.</p></div>
+<ul class="cat-list"><li>Dashboards de indicadores en tiempo real</li><li>Análisis inteligente de ventas y rendimiento</li><li>Sistemas de gestión de personal</li><li>Automatización de procesos de RR. HH.</li></ul>
+<details class="cat-more"><summary><span>Qué incluye</span><i aria-hidden="true"></i></summary><div class="cat-more-in"><div class="cat-d"><h4>Reportes e información para decidir</h4><p>Organización de fuentes y preparación de resúmenes, reportes y alertas. Definición de qué información necesita cada responsable, con criterios de revisión y trazabilidad.</p><p class="cat-out"><b>Entregables:</b> estructura de reporte · fuentes definidas · criterios de control</p></div></div></details>
+<a class="cat-cta" href="#contacto" data-prefill="mensaje:Me interesa: Datos, indicadores y personas.">Consultar por este servicio <span class="arr" aria-hidden="true">→</span></a>
+</article></div>
+</div>
+</section>
+
+<section class="sec examples" id="aplicaciones" aria-labelledby="aplicaciones-t">
+<span class="anchor" id="flujo" aria-hidden="true"></span>
+<div class="wrap">
+<div class="sec-head "><p class="label"><span class="lab-n">03</span>Ejemplos prácticos de IA</p><h2 class="h2" id="aplicaciones-t">Empezar por una tarea. <em>Hacerla funcionar mejor.</em></h2><p class="intro">Estos ejemplos muestran posibles aplicaciones. Su viabilidad depende de la información, las herramientas y el alcance de cada proyecto.</p></div>
+<div class="flow-wrap"><h3 class="sub-h">Así se conecta un proceso.</h3><figure class="flow" data-flow aria-label="Ejemplo ilustrativo de un flujo de trabajo con IA, validación y revisión humana">
+<div class="flow-top"><span>Proceso conectado / 01</span><span class="flow-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+<ol class="flow-nodes"><li class="fn" style="--i:0"><span class="fn-k">01 / Información de origen</span><strong class="fn-t">Datos que tu empresa ya genera</strong><span class="fn-s">Correos · Planillas · Pedidos · Documentos</span></li><li class="fn fn-core" style="--i:1"><span class="fn-k">02 / Un proceso definido</span><strong class="fn-t">Organizar. Analizar. Validar.</strong><span class="fn-s">IA + reglas de tu negocio</span></li><li class="fn" style="--i:2"><span class="fn-k">03 / Resultado</span><strong class="fn-t">Información lista para revisar</strong></li><li class="fn" style="--i:3"><span class="fn-k">04 / Decisión</span><strong class="fn-t">Tu equipo mantiene el control</strong></li></ol>
+<figcaption class="flow-cap"><span>Ejemplo ilustrativo</span><span>El alcance se define en el diagnóstico.</span></figcaption>
+</figure></div>
+<div class="ex-grid"><article class="ex lit" data-rv><p class="ex-k">Ejemplo ilustrativo · Administración</p><h3>De información dispersa a un circuito claro.</h3><p>Una solicitud que llega por correo puede ordenarse, clasificarse y convertirse en una tarea para el responsable, con los controles que el proceso necesite.</p><ol class="ex-steps"><li>Recibir y clasificar una solicitud.</li><li>Extraer los datos necesarios.</li><li>Validar la información y asignar.</li><li>Preparar un resumen para revisión.</li></ol><a class="tlink" href="#contacto" data-prefill="area:Administración"><span>Quiero conversar sobre esto</span> <span class="arr" aria-hidden="true">→</span></a></article><article class="ex lit" data-rv><p class="ex-k">Ejemplo ilustrativo · Operaciones</p><h3>De reportes sueltos a una lectura útil.</h3><p>En una empresa con varias unidades, un flujo puede organizar los reportes disponibles, señalar datos faltantes y preparar una síntesis para la revisión del responsable.</p><ol class="ex-steps"><li>Reunir reportes de cada unidad.</li><li>Detectar información incompleta.</li><li>Preparar un resumen de desvíos.</li><li>Revisar antes de tomar decisiones.</li></ol><a class="tlink" href="#contacto" data-prefill="area:Operaciones"><span>Quiero conversar sobre esto</span> <span class="arr" aria-hidden="true">→</span></a></article><article class="ex lit" data-rv><p class="ex-k">Ejemplo ilustrativo · Atención</p><h3>Responder con contexto y un criterio común.</h3><p>Una base de respuestas y un circuito de derivación pueden ayudar a resolver consultas frecuentes y reservar la intervención del equipo para situaciones específicas.</p><ol class="ex-steps"><li>Identificar el motivo de la consulta.</li><li>Consultar información autorizada.</li><li>Preparar una respuesta consistente.</li><li>Derivar lo que requiere una persona.</li></ol><a class="tlink" href="#contacto" data-prefill="area:Ventas y atención"><span>Quiero conversar sobre esto</span> <span class="arr" aria-hidden="true">→</span></a></article></div>
+<p class="note">Ejemplos de diseño de procesos. No se presentan como casos de clientes ni como resultados ya obtenidos.</p>
+</div>
+</section>
+
+<section class="sec depts" id="departamentos" aria-labelledby="departamentos-t">
+<div class="wrap">
+<div class="sec-head "><p class="label"><span class="lab-n">04</span>Soluciones por departamento</p><h2 class="h2" id="departamentos-t">Cada área de la empresa, <em>con su propia mejora.</em></h2><p class="intro">Las mismas herramientas resuelven necesidades distintas según quién las usa. Estas son posibles líneas de trabajo para evaluar en tu empresa.</p></div>
+<div class="tabs" data-tabs>
+<div class="tablist" role="tablist" aria-label="Áreas de la empresa"><button class="tab" type="button" role="tab" id="tab-administracion" aria-controls="pan-administracion" aria-selected="true"><span class="tab-n">01</span>Administración</button><button class="tab" type="button" role="tab" id="tab-ventas" aria-controls="pan-ventas" aria-selected="false" tabindex="-1"><span class="tab-n">02</span>Ventas</button><button class="tab" type="button" role="tab" id="tab-operaciones" aria-controls="pan-operaciones" aria-selected="false" tabindex="-1"><span class="tab-n">03</span>Operaciones</button><button class="tab" type="button" role="tab" id="tab-rrhh" aria-controls="pan-rrhh" aria-selected="false" tabindex="-1"><span class="tab-n">04</span>RR. HH.</button><button class="tab" type="button" role="tab" id="tab-gerencia" aria-controls="pan-gerencia" aria-selected="false" tabindex="-1"><span class="tab-n">05</span>Gerencia</button></div>
+<div class="tabpanels"><div class="tabpanel" role="tabpanel" id="pan-administracion" aria-labelledby="tab-administracion"><h3 class="tp-t">Administración</h3><p class="tp-s">Tareas de oficina repetitivas resueltas de forma ordenada y verificable.</p><ul class="tp-list"><li>Automatización de tareas administrativas</li><li>Digitalización de procesos internos</li><li>Organización de datos, documentos, correos, solicitudes y recordatorios</li><li>Preparación de resúmenes para revisión</li></ul><a class="btn ghost" href="#contacto" data-prefill="area:Administración">Evaluar Administración <span class="arr" aria-hidden="true">→</span></a></div><div class="tabpanel" role="tabpanel" id="pan-ventas" aria-labelledby="tab-ventas" hidden><h3 class="tp-t">Ventas</h3><p class="tp-s">Consultas atendidas a tiempo e información comercial ordenada.</p><ul class="tp-list"><li>Análisis inteligente de ventas y rendimiento</li><li>Chatbots y automatizaciones de WhatsApp</li><li>Integración de plataformas comerciales</li><li>Respuestas asistidas y circuitos de derivación</li></ul><a class="btn ghost" href="#contacto" data-prefill="area:Ventas y atención">Evaluar Ventas <span class="arr" aria-hidden="true">→</span></a></div><div class="tabpanel" role="tabpanel" id="pan-operaciones" aria-labelledby="tab-operaciones" hidden><h3 class="tp-t">Operaciones</h3><p class="tp-s">Procesos mapeados, simplificados y llevados a herramientas digitales.</p><ul class="tp-list"><li>Automatización de reportes operativos</li><li>Automatización de alertas y seguimiento de objetivos</li><li>Integraciones entre sistemas mediante APIs</li><li>Desarrollo de herramientas web a medida</li></ul><a class="btn ghost" href="#contacto" data-prefill="area:Operaciones">Evaluar Operaciones <span class="arr" aria-hidden="true">→</span></a></div><div class="tabpanel" role="tabpanel" id="pan-rrhh" aria-labelledby="tab-rrhh" hidden><h3 class="tp-t">RR. HH.</h3><p class="tp-s">Ordeno la estructura y la documentación para que encargados y dueños sepan quién hace qué y cómo se registra.</p><ul class="tp-list"><li>Sistemas de gestión de personal</li><li>Automatización de procesos de RR. HH.</li><li>Asistentes para consultar procedimientos internos</li><li>Capacitación y adopción de IA</li></ul><a class="btn ghost" href="#contacto" data-prefill="area:RR. HH.">Evaluar RR. HH. <span class="arr" aria-hidden="true">→</span></a></div><div class="tabpanel" role="tabpanel" id="pan-gerencia" aria-labelledby="tab-gerencia" hidden><h3 class="tp-t">Gerencia</h3><p class="tp-s">Tableros claros para ver qué pasa en el negocio sin perseguir planillas.</p><ul class="tp-list"><li>Dashboards de indicadores en tiempo real</li><li>Análisis inteligente de ventas y rendimiento</li><li>Resúmenes, reportes y alertas para cada responsable</li><li>Consultoría en inteligencia artificial aplicada a empresas</li></ul><a class="btn ghost" href="#contacto" data-prefill="area:Gerencia">Evaluar Gerencia <span class="arr" aria-hidden="true">→</span></a></div></div>
+</div>
+</div>
+</section>
+
+<section class="sec method" id="metodo" aria-labelledby="metodo-t">
+<div class="wrap">
+<div class="sec-head "><p class="label"><span class="lab-n">05</span>Proceso de trabajo</p><h2 class="h2" id="metodo-t">Un proceso de mejora. <em>De principio a uso real.</em></h2><p class="intro">Cinco etapas para que cada solución llegue al trabajo cotidiano y se sostenga en el tiempo.</p></div>
+<ol class="steps steps-5" data-steps><span class="steps-line" aria-hidden="true"><i></i></span><li class="step" style="--i:0"><span class="st-n">01</span><h3 class="st-t">Diagnóstico</h3><p class="st-k">Entender la tarea</p><p class="st-p">Relevo el proceso actual, sus responsables, herramientas y puntos de fricción.</p></li><li class="step" style="--i:1"><span class="st-n">02</span><h3 class="st-t">Diseño</h3><p class="st-k">Definir una solución</p><p class="st-p">Acordamos el alcance, los datos necesarios y los criterios para evaluar si funciona.</p></li><li class="step" style="--i:2"><span class="st-n">03</span><h3 class="st-t">Desarrollo</h3><p class="st-k">Probar y ajustar</p><p class="st-p">Preparamos un piloto acotado, validamos sus resultados y corregimos con el equipo.</p></li><li class="step" style="--i:3"><span class="st-n">04</span><h3 class="st-t">Implementación</h3><p class="st-k">Documentar y acompañar</p><p class="st-p">Dejamos instrucciones de uso, responsables y una forma de revisar su funcionamiento.</p></li><li class="step" style="--i:4"><span class="st-n">05</span><h3 class="st-t">Mantenimiento</h3><p class="st-k">Sostener el cambio</p><p class="st-p">Seguimiento del uso, revisión de resultados y ajustes para que las herramientas se integren al trabajo cotidiano.</p></li></ol>
+</div>
+</section>
+<section class="sec modes" id="modalidades" aria-labelledby="modalidades-t">
+<div class="wrap">
+<div class="sec-head "><p class="label">Alcance a medida</p><h2 class="h2" id="modalidades-t">Formas de <em>trabajar juntos.</em></h2></div>
+<ul class="modes-grid"><li class="mode lit"><p class="mode-k">Para entender dónde estás</p><h3>Diagnóstico puntual</h3><p>Relevamiento de un proceso, oportunidades de mejora y evaluación de qué conviene automatizar.</p><a class="tlink" href="#contacto" data-prefill="modalidad:Diagnóstico puntual"><span>Conversemos</span> <span class="arr" aria-hidden="true">→</span></a></li><li class="mode lit"><p class="mode-k">Para resolver una necesidad</p><h3>Proyecto de mejora</h3><p>Diseño y puesta en marcha de un flujo de trabajo acotado, con pruebas, documentación y capacitación.</p><a class="tlink" href="#contacto" data-prefill="modalidad:Proyecto de mejora"><span>Conversemos</span> <span class="arr" aria-hidden="true">→</span></a></li><li class="mode lit"><p class="mode-k">Para sostener el cambio</p><h3>Acompañamiento</h3><p>Seguimiento del uso, revisión de resultados y ajustes para que las herramientas se integren al trabajo cotidiano.</p><a class="tlink" href="#contacto" data-prefill="modalidad:Acompañamiento"><span>Conversemos</span> <span class="arr" aria-hidden="true">→</span></a></li></ul>
+<p class="note">El alcance, los plazos y los honorarios se definen según el punto de partida y las necesidades del proyecto.</p>
+</div>
+</section>
+
+<section class="sec research" id="investigacion" aria-labelledby="investigacion-t">
+<div class="wrap">
+<div class="research-top">
+<div class="sec-head "><p class="label"><span class="lab-n">06</span>Investigación y publicaciones</p><h2 class="h2" id="investigacion-t">Inteligencia Artificial <em>y Derecho.</em></h2><p class="intro">Transparencia algorítmica, garantías y responsabilidad pública. Un espacio de investigación, publicaciones y análisis jurídico.</p></div>
+<a class="dossier-mini lit" href="https://bcn.gob.ar/uploads/adjuntos/Dossier-335-legis-nacional-enfermedades-accidentes-inculpables-abr-2026.pdf#page=32" target="_blank" rel="noopener noreferrer">
+<span class="label">Biblioteca del Congreso de la Nación</span>
+<span class="dm-t">Dossier Legislativo n.º 335</span>
+<span class="dm-p">La Biblioteca del Congreso incluyó en la sección Doctrina el artículo de Ezequiel Brunner “La Salud como prioridad y el control médico como deber: límites a la ignorancia estratégica en el régimen de licencias”, publicado en SAIJ el 26 de febrero de 2026 (DACF260020).</span>
+<span class="pub-go">Consultar dossier · página 32 <span class="arr ext" aria-hidden="true">↗</span></span>
+</a>
+</div>
+<ul class="pub-grid pub-grid-4"><li class="pub "><a class="pub-a lit" href="https://www.saij.gob.ar/ezequiel-brunner-transparencia-algoritmica-como-garantia-constitucional-hacia-modelo-argentino-control-real-responsabilidad-publica-dacf250125-2025-12-17/123456789-0abc-defg5210-52fcanirtcod" target="_blank" rel="noopener noreferrer"><div class="cover cv-sage" aria-hidden="true"><span class="cv-mark">S</span><span class="cv-outlet">SAIJ</span><span class="cv-kind">Doctrina</span><span class="cv-date">17 de diciembre de 2025</span></div><span class="pub-body"><span class="pub-tag">IA y Derecho</span><span class="pub-meta">SAIJ · Doctrina · 17 de diciembre de 2025</span><h3 class="pub-t">Transparencia algorítmica como garantía constitucional: hacia un modelo argentino de control real y responsabilidad pública</h3><span class="pub-d">Un trabajo centrado en transparencia algorítmica, garantías constitucionales y responsabilidad pública en el contexto argentino.</span><span class="pub-go">Leer en SAIJ <span class="arr ext" aria-hidden="true">↗</span></span></span></a></li><li class="pub "><a class="pub-a lit" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5997154" target="_blank" rel="noopener noreferrer"><div class="cover cv-stone" aria-hidden="true"><span class="cv-mark">S</span><span class="cv-outlet">SSRN</span><span class="cv-kind">Investigación</span><span class="cv-date">2026</span></div><span class="pub-body"><span class="pub-meta">SSRN · Investigación · 2026</span><h3 class="pub-t">Algorithmic Transparency as a Due Process Requirement in Automated Decision-Making</h3><span class="pub-d">Trabajo en inglés sobre transparencia algorítmica y debido proceso.</span><span class="pub-go">Leer en SSRN <span class="arr ext" aria-hidden="true">↗</span></span></span></a></li><li class="pub "><a class="pub-a lit" href="https://www.saij.gob.ar/ezequiel-brunner-cuando-explicar-alcanza-responsabilidad-algoritmica-prueba-reparacion-frente-decisiones-automatizadas-administracion-publica-argentina-dacf260043-2026-04-30/123456789-0abc-defg3400-62fcanirtcod?q=fecha-rango%3A%5B20251130%20TO%2020260530%5D&amp;o=6&amp;f=Total%7CFecha%7CEstado%20de%20Vigencia%5B5%2C1%5D%7CTema%5B5%2C1%5D%7COrganismo%5B5%2C1%5D%7CAutor%5B5%2C1%5D%7CJurisdicci%F3n%5B5%2C1%5D%7CTribunal%5B5%2C1%5D%7CPublicaci%F3n%5B5%2C1%5D%7CColecci%F3n%20tem%E1tica%5B5%2C1%5D%7CTipo%20de%20Documento/Doctrina&amp;t=65" target="_blank" rel="noopener noreferrer"><div class="cover cv-sage" aria-hidden="true"><span class="cv-mark">S</span><span class="cv-outlet">SAIJ</span><span class="cv-kind">Doctrina</span><span class="cv-date">30 de abril de 2026</span></div><span class="pub-body"><span class="pub-tag">Derecho e Inteligencia Artificial</span><span class="pub-meta">SAIJ · Doctrina · 30 de abril de 2026</span><h3 class="pub-t">Cuando explicar no alcanza: responsabilidad algorítmica, prueba y reparación frente a decisiones automatizadas en la Administración Pública argentina</h3><span class="pub-go">Abrir publicación <span class="arr ext" aria-hidden="true">↗</span></span></span></a></li><li class="pub "><a class="pub-a lit" href="https://www.saij.gob.ar/DACF260022" target="_blank" rel="noopener noreferrer"><div class="cover cv-sage" aria-hidden="true"><span class="cv-mark">S</span><span class="cv-outlet">SAIJ</span><span class="cv-kind">Doctrina</span></div><span class="pub-body"><span class="pub-tag">Derecho / Publicación jurídica</span><span class="pub-meta">SAIJ · Doctrina</span><h3 class="pub-t">Resolución 9/2025 (PBA): transparencia, explicabilidad y control algorítmico en la Administración Pública</h3><span class="pub-go">Abrir publicación <span class="arr ext" aria-hidden="true">↗</span></span></span></a></li></ul>
+<div class="row-links row-center"><a class="btn ghost" href="publicaciones.html">Ver todas las publicaciones <span class="arr" aria-hidden="true">→</span></a></div>
+<div class="research-about" id="sobre-mi">
+<div class="ra-l"><p class="label">Sobre mí</p><h3 class="h3 h3-l">Trayectoria, enfoque y línea de trabajo</h3></div>
+<div class="ra-r"><div class="cb"><h4 class="h4">Perfil</h4><p>Ezequiel Brunner es estudiante de Abogacía en la Universidad Kennedy y autor enfocado en inteligencia artificial, derecho y transparencia algorítmica. Su trabajo se centra en el análisis de los desafíos jurídicos que plantea la tecnología, con especial interés en la regulación, las decisiones automatizadas y el impacto institucional de la IA.</p></div><div class="cb"><h4 class="h4">Enfoque y desarrollo</h4><p>Ha desarrollado publicaciones y análisis sobre estas materias, combinando reflexión jurídica, actualidad tecnológica y observación crítica de los cambios que la inteligencia artificial introduce en el ámbito normativo y social. Su interés está puesto en construir una mirada clara, seria y accesible sobre debates que ya no pertenecen al futuro, sino al presente del derecho.</p></div></div>
+</div>
+<div class="sub-block" id="formacion">
+<h3 class="sub-h">Formación</h3>
+<ul class="training"><li><span class="tr-k">Formación tecnológica</span><span class="tr-t">Analista de Sistemas</span><span class=tr-d>Formación en análisis de sistemas informáticos.</span></li><li><span class="tr-k">Universidad Kennedy · En curso</span><span class="tr-t">Abogacía — tercer año</span><span class=tr-d>Formación universitaria en Derecho.</span></li><li><span class="tr-k">Redes informáticas</span><span class="tr-t">Administrador de Redes SOHO</span></li><li><span class="tr-k">Informática</span><span class="tr-t">Reparación de PC</span></li><li><span class="tr-k">United Nations Volunteers (UNV)</span><span class="tr-t">Information Security Awareness</span></li></ul>
+</div>
+</div>
+</section>
+
+<section class="sec faq" id="preguntas" aria-labelledby="preguntas-t">
+<div class="wrap faq-grid">
+<div class="sec-head "><p class="label"><span class="lab-n">07</span>Antes de empezar</p><h2 class="h2" id="preguntas-t">Preguntas <em>frecuentes.</em></h2></div>
+<div class="qa-list"><details class="qa"><summary><span>¿Tengo que cambiar los sistemas que uso?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>No necesariamente. Primero revisamos las herramientas existentes y sus posibilidades de integración. Si hace falta sumar una herramienta o un desarrollo, se explica y se presupuesta dentro del alcance.</p></div></details><details class="qa"><summary><span>¿Toda mejora necesita inteligencia artificial?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>No. Algunas tareas se resuelven mejor con un procedimiento claro, una plantilla o una automatización simple. La IA se incorpora cuando aporta valor al proceso y puede revisarse su resultado.</p></div></details><details class="qa"><summary><span>¿Por dónde conviene empezar?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>Por una tarea repetitiva, frecuente y de alcance acotado. Acordamos qué problema se busca resolver, qué información hace falta y cómo se va a evaluar el piloto antes de extenderlo.</p></div></details><details class="qa"><summary><span>¿Qué pasa con los datos de mi empresa?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>El diseño debe definir qué información se usa, quién accede y en qué herramientas. Antes de implementar, se acuerdan permisos, fuentes y pautas de manejo de la información según el proyecto.</p></div></details><details class="qa"><summary><span>¿La IA puede tomar todas las decisiones?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>El proyecto define qué tareas puede asistir o ejecutar la herramienta y qué requiere revisión. Las decisiones sensibles y las excepciones necesitan responsables y criterios claros de intervención.</p></div></details><details class="qa"><summary><span>¿Las herramientas externas están incluidas?</span><i aria-hidden="true"></i></summary><div class="qa-a"><p>Las suscripciones, licencias y consumos que pueda necesitar una solución se identifican antes de implementar. El presupuesto distingue esos costos del trabajo de diagnóstico, diseño y acompañamiento.</p></div></details></div>
+</div>
+</section>
+<aside class="bridge" aria-label="Gastronomía">
+<div class="wrap bridge-in">
+<a class="bridge-a lit" href="gastronomia.html" data-go-area="gastronomia">
+<span class="label">La experiencia también cuenta</span>
+<span class="bridge-t">Gestión real. Una base para pensar procesos.</span>
+<span class="bridge-p">Mi experiencia en operaciones gastronómicas aporta una mirada práctica sobre equipos, circuitos de trabajo, coordinación e información para decidir.</span>
+<span class="bridge-go">Conocé el asesoramiento gastronómico <span class="arr" aria-hidden="true">→</span></span>
+</a>
+</div>
+</aside>
+<section class="sec contact" id="contacto" aria-labelledby="contacto-t">
+<div class="wrap contact-grid">
+<div class="contact-l">
+<div class="sec-head "><p class="label"><span class="lab-n">08</span>Evaluar mi empresa</p><h2 class="h2" id="contacto-t">Empecemos por <em>un proceso.</em></h2><p class="intro">Contame qué tarea te consume tiempo, dónde se repite el trabajo o qué información necesitás ordenar. A partir de ahí, evaluamos una solución concreta.</p></div>
+<div class="direct">
+<p class="label">Contacto directo</p>
+<div class="mailrow"><a class="mail" href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a><button class="copy" type="button" data-copy="contacto@ezequielbrunner.com">Copiar</button></div>
+<a class="tlink" href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer"><span>LinkedIn /in/ezequielbrunner</span> <span class="arr ext" aria-hidden="true">↗</span></a>
+<p class="place">Mar del Plata, Argentina · Modalidad a definir según el proyecto.</p>
+</div>
+</div>
+<div class="contact-r"><form class="form" name="evaluar-empresa" method="post" action="mailto:contacto@ezequielbrunner.com" enctype="text/plain" data-netlify="true" netlify-honeypot="bot-field" data-form data-subject="Evaluación de empresa: automatización e IA">
+<input type="hidden" name="form-name" value="evaluar-empresa">
+<p class="hp" aria-hidden="true"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<div class="f-grid">
+<div class="f"><label for="f-nombre">Nombre y apellido *</label><input id="f-nombre" name="nombre" required maxlength="100" autocomplete="name"></div>
+<div class="f"><label for="f-empresa">Empresa *</label><input id="f-empresa" name="empresa" maxlength="150" autocomplete="organization" required></div>
+<div class="f"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" required maxlength="150" autocomplete="email" inputmode="email"></div>
+<div class="f"><label for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" maxlength="40" autocomplete="tel" inputmode="tel"></div>
+<div class="f"><label for="f-rubro">Rubro o sector</label><input id="f-rubro" name="rubro" maxlength="120" autocomplete="off" placeholder="Por ejemplo: comercio, servicios, salud"></div><div class="f"><label for="f-tam">Tamaño del equipo</label><div class="sel"><select id="f-tam" name="tamano"><option value="" disabled selected>Elegí una opción</option><option>1 a 10 personas</option><option>11 a 50 personas</option><option>51 a 200 personas</option><option>Más de 200 personas</option></select></div></div><div class="f f-wide"><label for="f-area">Área a evaluar *</label><div class="sel"><select id="f-area" name="area" required><option value="" disabled selected>Elegí una opción</option><option>Administración</option><option>Ventas y atención</option><option>Operaciones</option><option>RR. HH.</option><option>Gerencia</option><option>Varias áreas</option><option>Todavía no lo sé</option></select></div></div>
+<div class="f f-wide"><label for="f-msg">Qué tarea o proceso te gustaría mejorar *</label><textarea id="f-msg" name="mensaje" rows="5" minlength="15" maxlength="2000" required placeholder="Qué se repite, dónde se pierde tiempo o qué información necesitás ordenar."></textarea></div>
+</div>
+<div class="f-foot">
+<button class="btn btn-lg" type="submit"><span class="b-t">Evaluar mi empresa</span> <span class="arr" aria-hidden="true">→</span></button>
+<p class="f-note">Tus datos se usan solo para responder tu consulta.</p>
+</div>
+<div class="f-status" role="status" aria-live="polite" data-status></div>
+</form></div>
+</div>
+</section>
+</main>
+<footer class="ftr">
+<div class="wrap">
+<div class="ftr-grid">
+<div class="ftr-brand">
+<p class="ftr-name">Ezequiel Brunner</p>
+<p class="ftr-desc">Asesoramiento gastronómico y automatización con inteligencia artificial para empresas. Mar del Plata, Argentina.</p>
+<a class="switch switch-ftr" href="index.html#elegir"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13m0 0-3.5-3.5M17 8l-3.5 3.5M20 16H7m0 0 3.5-3.5M7 16l3.5 3.5"/></svg><span>Cambiar de área</span></a>
+</div>
+<nav class="ftr-col" aria-label="Áreas">
+<p class="label">Áreas</p>
+<a href="gastronomia.html">Asesoramiento gastronómico</a>
+<a href="inteligencia-artificial.html">Automatización &amp; IA</a>
+<a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
+</nav>
+<nav class="ftr-col" aria-label="Publicaciones">
+<p class="label">Publicaciones</p>
+<a href="publicaciones.html#doctrina">Doctrina e investigación</a>
+<a href="publicaciones.html#dossier">Dossier legislativo</a>
+<a href="publicaciones.html#medios">Prensa y medios</a>
+</nav>
+<div class="ftr-col">
+<p class="label">Contacto</p>
+<a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a>
+<a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">LinkedIn <span class="arr ext" aria-hidden="true">↗</span></a>
+<a href="https://about.me/ezequielbrunner" target="_blank" rel="noopener noreferrer">Perfil biográfico <span class="arr ext" aria-hidden="true">↗</span></a>
+</div>
+</div>
+<div class="ftr-bottom">
+<span>© 2026 Ezequiel Brunner · Mar del Plata, Argentina</span>
+<a href="#top" data-top>Volver arriba ↑</a>
+</div>
 </div>
 </footer>
-  </body>
+<div class="dock" data-dock aria-hidden="true">
+<a class="btn dock-cta" href="#contacto" tabindex="-1">Evaluar mi empresa <span class="arr" aria-hidden="true">→</span></a>
+<a class="dock-sw" href="index.html#elegir" tabindex="-1" aria-label="Cambiar de área"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13m0 0-3.5-3.5M17 8l-3.5 3.5M20 16H7m0 0 3.5-3.5M7 16l3.5 3.5"/></svg></a>
+</div>
+<script src="assets/js/vendor/gsap.min.js" defer></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/vendor/SplitText.min.js" defer></script>
+<script src="assets/js/vendor/lenis.min.js" defer></script>
+<script src="assets/js/main.js?v=20261110" defer></script>
+
+</body>
 </html>
