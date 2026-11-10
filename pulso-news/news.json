@@ -1,0 +1,26 @@
+{
+  "articles": [
+    {
+      "date": "2026-11-10",
+      "slug": "erosion-costera",
+      "category": "MAR DEL PLATA",
+      "headline": "Erosión costera: 9 de 10 sectores relevados presentan indicadores críticos",
+      "subtitle": "Alerta en un informe ambiental bonaerense",
+      "photo_urls": [
+        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1600&q=85",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "hoteles-70",
+      "category": "TURISMO",
+      "headline": "Mar del Plata: ocupación hotelera cercana al 70%",
+      "subtitle": "El sector destacó el movimiento del fin de semana",
+      "photo_urls": [
+        "https://commons.wikimedia.org/wiki/Special:FilePath/Buenos_Aires_-_Mar_del_Plata_-_Hotel_Provincial%2C_Casino_y_Rambla.jpg?width=1600",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85"
+      ]
+    }
+  ]
+}
