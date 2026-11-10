@@ -121,6 +121,13 @@
       "created_by": "Windsor.ai",
       "post_id": "18083235605359315",
       "story_id": "17972471579960866"
+    },
+    {
+      "date": "2026-11-10",
+      "slug": "noche-vinotecas-13",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "17894705091448177"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
