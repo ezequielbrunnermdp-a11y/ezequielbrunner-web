@@ -103,7 +103,8 @@
       "slug": "tandil-record-salame",
       "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "17995127463063455"
+      "post_id": "17995127463063455",
+      "story_id": "18099667940400001"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
