@@ -119,7 +119,8 @@
       "slug": "dia-de-la-tradicion",
       "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18083235605359315"
+      "post_id": "18083235605359315",
+      "story_id": "17972471579960866"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
