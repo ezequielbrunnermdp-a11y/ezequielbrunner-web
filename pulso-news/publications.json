@@ -164,9 +164,10 @@
     {
       "date": "2026-11-11",
       "slug": "feriado-bonaerense-11",
-      "status": "partial",
+      "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18320751022303441"
+      "post_id": "18320751022303441",
+      "story_id": "18123380831290556"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
