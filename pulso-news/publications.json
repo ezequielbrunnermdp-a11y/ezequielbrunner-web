@@ -223,6 +223,12 @@
       "slug": "lluvias-vuelven-mardel-jueves",
       "post_id": "18455428924120139",
       "story_id": "18120146374812756"
+    },
+    {
+      "date": "2026-11-11",
+      "slug": "festival-cine-hasta-domingo-15",
+      "post_id": "18647074480018866",
+      "story_id": "18138097003640931"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
