@@ -168,6 +168,13 @@
       "created_by": "Windsor.ai",
       "post_id": "18320751022303441",
       "story_id": "18123380831290556"
+    },
+    {
+      "date": "2026-11-11",
+      "slug": "bancos-escuelas-feriado-11",
+      "status": "partial",
+      "created_by": "Windsor.ai",
+      "post_id": "18175653265481047"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
