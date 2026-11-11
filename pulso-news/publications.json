@@ -185,6 +185,13 @@
       "created_by": "Windsor.ai",
       "post_id": "18098899547555841",
       "story_id": "18019576478744709"
+    },
+    {
+      "date": "2026-11-11",
+      "slug": "festival-cine-borges-clausura",
+      "status": "partial",
+      "created_by": "Windsor.ai",
+      "post_id": "18117346994520093"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
