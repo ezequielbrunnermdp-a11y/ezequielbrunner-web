@@ -255,6 +255,12 @@
       "created_by": "Windsor.ai",
       "story_id": "17841456177149828",
       "status": "published"
+    },
+    {
+      "date": "2026-11-12",
+      "slug": "barbi-recanati-club-tri-jueves",
+      "post_id": "17841456177149828",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
