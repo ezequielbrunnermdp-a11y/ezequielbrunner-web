@@ -178,6 +178,7 @@ Título, descripción, Open Graph y Twitter propios por página, con imagen para
 | `assets/img/` | Imágenes de las áreas con su tratamiento (800 y 1086 px) |
 | `assets/og/` · `assets/apple-touch-icon.png` | Imágenes para compartir e ícono para el celular |
 | `_redirects` | Redirecciones de Netlify |
+| `netlify.toml` | Netlify no publica el sitio cuando solo cambian archivos de Pulso Informativo (`pulso-news/`, `public/pulso-informativo/`, `.github/`): cada publicación consume créditos |
 
 ### Verificación
 
