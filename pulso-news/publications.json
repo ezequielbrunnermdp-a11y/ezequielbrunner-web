@@ -241,6 +241,11 @@
       "slug": "playas-llenas-feriado",
       "post_id": "18107924882314657",
       "story_id": "18034064165681297"
+    },
+    {
+      "date": "2026-11-11",
+      "slug": "premios-condor-plata-belen",
+      "post_id": "18094022786220048"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
