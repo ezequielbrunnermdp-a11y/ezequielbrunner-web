@@ -263,6 +263,14 @@
       "created_by": "Windsor.ai",
       "story_id": "17976545492947661",
       "status": "published"
+    },
+    {
+      "date": "2026-11-12",
+      "slug": "allanamiento-acantilados-cuatro-robos-autos",
+      "post_id": "18097675910447179",
+      "story_id": "18102456011424578",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
