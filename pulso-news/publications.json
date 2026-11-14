@@ -271,6 +271,86 @@
       "story_id": "18102456011424578",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "alerta-tormentas-sabado-14",
+      "post_id": "17958185415272078",
+      "story_id": "18387732064235899",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "medicina-unmdp-directorio-mundial",
+      "post_id": "18079036196732604",
+      "story_id": "18117107954168178",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "vuelo-mendoza-reclamo-municipio",
+      "post_id": "18087402962709860",
+      "story_id": "17916347805518732",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "guitarras-mar-museo-mar-14",
+      "post_id": "18113562134266187",
+      "story_id": "18102673700437737",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "puerto-obras-desagues-pluviales",
+      "post_id": "17912145372578901",
+      "story_id": "18111567158188470",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "batan-reacondicionaron-sillas",
+      "post_id": "17912407950568418",
+      "story_id": "18376949653244941",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "estudio-meteotsunami-2026",
+      "post_id": "18108245078364641",
+      "story_id": "17919318495496086",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "robo-cobre-alumbrado-publico",
+      "post_id": "18110310605459977",
+      "story_id": "18290226490289559",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "aticma-awards-tecnologia-2026",
+      "post_id": "18120232558792142",
+      "story_id": "18153174433543818",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "argentina-cotizacion-dolar-viernes-13",
+      "post_id": "17955731301318223",
+      "story_id": "18094162001250375",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
