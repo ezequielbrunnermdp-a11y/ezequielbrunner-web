@@ -6,7 +6,8 @@
   var RM = H.classList.contains('rm');
   var G = W.gsap, ST = W.ScrollTrigger, SPLIT = W.SplitText;
   var FINE = !!(W.matchMedia && W.matchMedia('(hover: hover) and (pointer: fine)').matches);
-  var EMAIL = 'contacto@ezequielbrunner.com';
+  var EMAIL = 'ezequielbrunnermdp@gmail.com';
+  var WA = '5492236343371';
   function $(s, r) { return (r || D).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || D).querySelectorAll(s)); }
   if (G && ST) G.registerPlugin(ST);
@@ -233,7 +234,8 @@
   });
 
   /* ------------------------------------------------ formularios
-     Si Netlify Forms está activo, la consulta se guarda allí. Si no, se prepara el email con todos los datos. */
+     Por defecto la consulta se envía por WhatsApp, con todos los datos ya escritos; el visitante puede elegir email.
+     Si se activa Netlify Forms, alcanza con cambiar data-endpoint="whatsapp" por "netlify" en cada formulario. */
   var LABELS = { nombre: 'Nombre', empresa: 'Empresa', email: 'Email', telefono: 'Teléfono', tipo: 'Tipo de negocio', etapa: 'Etapa del negocio',
     servicio: 'Servicio de interés', rubro: 'Rubro o sector', tamano: 'Tamaño del equipo', area: 'Área a evaluar' };
   $$('[data-form]').forEach(function (f) {
@@ -268,26 +270,39 @@
       el.addEventListener('input', function () { var w = wrapOf(el); if (w && w.classList.contains('err')) check(el); });
       el.addEventListener('change', function () { if (el.tagName === 'SELECT') check(el); });
     });
-    function mailtoHref(fd) {
+    function summary(fd) {
       var lines = [];
       Object.keys(LABELS).forEach(function (k) { var v = fd.get(k); if (v) lines.push(LABELS[k] + ': ' + v); });
-      var subj = f.getAttribute('data-subject') + (fd.get('empresa') ? ' · ' + fd.get('empresa') : '');
-      return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(lines.join('\n') + '\n\n' + (fd.get('mensaje') || ''));
+      return lines;
     }
-    function ok() {
+    function mailtoHref(fd) {
+      var subj = f.getAttribute('data-subject') + (fd.get('empresa') ? ' · ' + fd.get('empresa') : '');
+      return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(summary(fd).join('\n') + '\n\n' + (fd.get('mensaje') || ''));
+    }
+    function waHref(fd) {
+      var text = 'Hola Ezequiel, te escribo desde tu web.\n\n*' + f.getAttribute('data-subject') + '*\n' + summary(fd).join('\n') + '\n\n' + (fd.get('mensaje') || '');
+      return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text);
+    }
+    function done(html) {
       f.classList.remove('sending');
       status.className = 'f-status ok';
-      status.innerHTML = '<b>¡Gracias! Recibí tu consulta.</b>Te voy a responder al email que dejaste.';
+      status.innerHTML = html;
+      status.setAttribute('tabindex', '-1'); status.focus({ preventScroll: true });
+    }
+    function ok() {
+      done('<b>¡Gracias! Recibí tu consulta.</b>Te voy a responder a la brevedad.');
       f.reset();
-      status.setAttribute('tabindex', '-1'); status.focus();
+    }
+    function viaWhatsApp(fd) {
+      var href = waHref(fd), win = W.open(href, '_blank');
+      if (win) { try { win.opener = null; } catch (_) {} } else { W.location.href = href; }
+      done('<b>Tu consulta está lista en WhatsApp.</b>Solo falta tocar «Enviar». Si no se abrió, <a href="' + href + '" target="_blank" rel="noopener noreferrer">abrí WhatsApp acá</a>. ' +
+        '¿Preferís email? <a href="' + mailtoHref(fd) + '">Enviala por email</a>.');
     }
     function viaEmail(fd) {
       var href = mailtoHref(fd);
-      f.classList.remove('sending');
-      status.className = 'f-status ok';
-      status.innerHTML = '<b>Tu consulta está lista para enviar.</b>Se abrió tu aplicación de correo con todos los datos completos: solo falta enviarla. ' +
-        'Si no se abrió, <a href="' + href + '">tocá acá</a> o escribí a <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>.';
-      status.setAttribute('tabindex', '-1'); status.focus();
+      done('<b>Tu consulta está lista para enviar.</b>Se abrió tu aplicación de correo con todos los datos. Si no se abrió, <a href="' + href + '">tocá acá</a> ' +
+        'o escribí a <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>.');
       W.location.href = href;
     }
     f.addEventListener('submit', function (ev) {
@@ -297,15 +312,18 @@
       if (bad) { status.className = 'f-status'; status.textContent = 'Revisá los campos marcados.'; bad.focus(); return; }
       var fd = new FormData(f);
       if (fd.get('bot-field')) return;
+      var via = ev.submitter && ev.submitter.value;
+      if (via === 'email') return viaEmail(fd);
+      if (f.getAttribute('data-endpoint') !== 'netlify') return viaWhatsApp(fd);
       f.classList.add('sending');
       status.className = 'f-status'; status.textContent = 'Enviando…';
       var body = new URLSearchParams();
-      fd.forEach(function (v, k) { body.append(k, v); });
+      fd.forEach(function (v, k) { if (k !== 'via') body.append(k, v); });
       var ctrl = W.AbortController ? new AbortController() : null;
       var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 9000);
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString(), signal: ctrl ? ctrl.signal : undefined })
         .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error(String(r.status)); ok(); })
-        .catch(function () { clearTimeout(timer); viaEmail(fd); });
+        .catch(function () { clearTimeout(timer); viaWhatsApp(fd); });
     });
   });
 
@@ -419,8 +437,50 @@
     }
     tl.to({}, { duration: 0.5 });
     ST.create({
-      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 3.4); },
+      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 2.6); },
       pin: $('.capas-pin', sec), scrub: 0.7, animation: tl, invalidateOnRefresh: true, anticipatePin: 1
+    });
+  })();
+
+  /* ------------------------------------------------ la palabra «operación» se abre hasta mostrar al equipo */
+  (function zoom() {
+    var sec = $('[data-zoom]');
+    if (!sec || !G || !ST || RM) return;
+    var svg = $('.zoom-mask', sec), word = $('.zoom-word', sec), text = $('text', sec), veil = $('.zoom-veil', sec);
+    var copy = $('.zoom-copy', sec), pin = $('.zoom-pin', sec), mask = $('mask', sec), rect = $('mask rect', sec);
+    var origin = { x: 800, y: 500 };
+    function fit() {
+      // unidades con alto 900: el ancho acompaña la proporción de la pantalla
+      var vw = Math.max(1, pin.clientWidth), vh = Math.max(1, pin.clientHeight), w2 = Math.round(900 * vw / vh);
+      svg.setAttribute('viewBox', '0 0 ' + w2 + ' 900');
+      rect.setAttribute('width', w2); veil.setAttribute('width', w2); mask.setAttribute('width', w2);
+      text.setAttribute('x', w2 / 2);
+      text.style.fontSize = '330px';
+      var len = text.getComputedTextLength() || 1;
+      var fs = Math.min(420, 330 * (w2 * 0.86) / len);
+      text.style.fontSize = fs + 'px';
+      var base = 450 + fs * 0.28;
+      text.setAttribute('y', base);
+      // el zoom entra por el trazo de la «i»: la letra termina cubriendo toda la pantalla
+      try {
+        var box = text.getExtentOfChar(6);
+        origin = { x: box.x + box.width / 2, y: base - fs * 0.2 };
+      } catch (_) { origin = { x: w2 / 2, y: 450 }; }
+    }
+    fit();
+    sec.classList.add('live');
+    G.set(copy, { autoAlpha: 0, y: 24 });
+    var tl = G.timeline({ defaults: { ease: 'none' } });
+    tl.to({}, { duration: 0.18 })
+      .to(word, { scale: 46, svgOrigin: function () { return origin.x + ' ' + origin.y; }, duration: 1, ease: 'power3.in' })
+      .to(veil, { opacity: 0, duration: 0.42 }, '-=0.58')
+      .to(copy, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.05')
+      .to({}, { duration: 0.25 });
+    ST.create({
+      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 1.9); },
+      pin: pin, scrub: 0.6, animation: tl, invalidateOnRefresh: true, anticipatePin: 1,
+      onUpdate: function (st) { pin.classList.toggle('open', st.progress > 0.72); },
+      onRefreshInit: function () { fit(); }
     });
   })();
 

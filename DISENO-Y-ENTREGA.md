@@ -119,7 +119,7 @@ La portada es una elección: **Asesoramiento gastronómico** o **Automatización
 | Acento común · champagne | `#D8C8A8` |
 | Líneas | blanco cálido al 9, 16 y 30 % |
 
-**Títulos:** Fraunces liviana (300), con itálica en la segunda línea. **Lectura, navegación y botones:** Inter. Rótulos en mayúsculas pequeñas con interletrado amplio, botones rectangulares (el principal en blanco cálido y, al pasar el cursor, se llena con el acento del área), grilla de 12 columnas y mucho espacio. Las imágenes de cada área son las del sitio, con un tratamiento de color: cálido en gastronomía y turquesa apagado en automatización.
+**Títulos:** Fraunces liviana (300), con itálica en la segunda línea. **Lectura, navegación y botones:** Inter. Rótulos en mayúsculas pequeñas con interletrado amplio, botones rectangulares (el principal en blanco cálido y, al pasar el cursor, se llena con el acento del área), grilla de 12 columnas y mucho espacio. Gastronomía usa fotos reales de trabajo y Automatización, líneas de datos que se dibujan en el navegador (punto 7).
 
 ### Portada: pantalla dividida
 
@@ -129,7 +129,7 @@ La portada es una elección: **Asesoramiento gastronómico** o **Automatización
 - En el celular son dos paneles verticales, uno sobre otro, con título, subtítulo y botón.
 - Debajo: Sobre mí, publicaciones destacadas y contacto con las dos vías.
 
-**Preferencia:** la elección queda guardada en el navegador del visitante. En la visita siguiente, si entra desde afuera, va directo a su área. «Cambiar de área» está siempre a la vista (encabezado, menú, pie y barra inferior en el celular) y lleva a la elección (`index.html#elegir`, que nunca redirige).
+**Preferencia:** la elección queda guardada en el navegador del visitante. En la visita siguiente la portada se ve igual —ya no redirige— y el área de la última visita lleva la marca «Tu última visita» (en escritorio). «Cambiar de área» está siempre a la vista (encabezado, menú, pie y barra inferior en el celular) y lleva a la elección (`index.html#elegir`).
 
 ### Las dos experiencias
 
@@ -143,7 +143,7 @@ La portada es una elección: **Asesoramiento gastronómico** o **Automatización
 | Trayectoria, prensa gastronómica, doctrina sobre gestión del personal, formación | IA y Derecho: doctrina, Dossier Legislativo, perfil y formación |
 | Preguntas frecuentes · formulario «Solicitar asesoramiento» · Trabajá conmigo | Preguntas frecuentes · formulario «Evaluar mi empresa» |
 
-Los servicios se presentan como soluciones a evaluar según la viabilidad de cada proyecto. **Proyectos reales:** no hay casos documentados, así que esa sección no se publica (la maqueta de caso que estaba oculta se retiró). Cuando haya un caso con datos y autorización, se agrega en Automatización.
+Los servicios se presentan como soluciones a evaluar según la viabilidad de cada proyecto. **Casos reales:** Automatización muestra dos automatizaciones propias que funcionan todos los días (asignación de salones según el desempeño de cada camarero y ranking semanal de ventas para premiar al equipo), sin nombres de locales ni de personas. Cuando haya un caso con autorización para nombrar al cliente, se suma en la misma sección.
 
 Cada botón «Consultar por este servicio», «Quiero conversar sobre esto» o «Evaluar…» baja al formulario y deja elegido el servicio, la etapa o el área.
 
@@ -151,8 +151,8 @@ Cada botón «Consultar por este servicio», «Quiero conversar sobre esto» o �
 
 Dos formularios distintos, con nombre, empresa, email, teléfono y la necesidad, más campos propios de cada área (tipo de negocio, etapa y servicio; o rubro, tamaño del equipo y área a evaluar). Validan antes de enviar y avisan qué falta.
 
-- **Ya funcionan:** si el servicio de formularios de Netlify no está activo, al enviar se abre el correo del visitante con la consulta completa dirigida a contacto@ezequielbrunner.com (como antes), con un enlace de respaldo.
-- **Qué resta conectar:** en Netlify → *Project configuration → Forms*, activar la detección de formularios (*Enable form detection*) y volver a publicar. Desde ese momento las consultas se guardan en Netlify (formularios `solicitar-asesoramiento` y `evaluar-empresa`) y el visitante ve «¡Gracias! Recibí tu consulta» sin salir de la página. Para recibirlas por email: *Forms → Form notifications → Add notification → Email notification*. Tiene un campo trampa contra spam. No hace falta tocar el código.
+- **Cómo funcionan:** al enviar se abre WhatsApp (223 634-3371) con la consulta completa ya escrita; el visitante solo toca «Enviar». Debajo del botón está «Enviala por email», que abre el correo con los mismos datos dirigidos a ezequielbrunnermdp@gmail.com. Si WhatsApp no se abre, el aviso trae los dos enlaces.
+- **Opcional · guardar las consultas en Netlify:** en Netlify → *Project configuration → Forms*, activar *Enable form detection*; después, en `gastronomia.html` e `inteligencia-artificial.html`, cambiar `data-endpoint="whatsapp"` por `data-endpoint="netlify"` y volver a publicar. Las consultas quedan en Netlify (formularios `solicitar-asesoramiento` y `evaluar-empresa`), el visitante ve «¡Gracias! Recibí tu consulta» sin salir de la página y, si Netlify falla, se pasa solo a WhatsApp. Para recibirlas por email: *Forms → Form notifications → Email notification*. Tiene un campo trampa contra spam. Las consultas guardadas consumen créditos del plan de Netlify.
 
 ### Publicaciones
 
@@ -162,7 +162,7 @@ Dos formularios distintos, con nombre, empresa, email, teléfono y la necesidad,
 
 ### Movimiento
 
-Títulos que suben línea por línea, apariciones breves al bajar, imágenes con profundidad mínima, tarjetas cuyo borde se ilumina apenas siguiendo el cursor, subrayados que se dibujan, desplazamiento suave con mouse y transiciones entre páginas. Sin cursor personalizado: no mejoraba la experiencia. Con movimiento reducido no hay animaciones y todo se ve completo; sin JavaScript también.
+La palabra «operación» que se abre hasta mostrar al equipo, la luz que sigue al cursor sobre la foto de la portada, las líneas de datos de Automatización (punto 7), títulos que suben línea por línea, apariciones breves al bajar, imágenes con profundidad mínima, tarjetas cuyo borde se ilumina apenas siguiendo el cursor, subrayados que se dibujan, desplazamiento suave con mouse y transiciones entre páginas. Sin cursor personalizado: no mejoraba la experiencia. Con movimiento reducido no hay animaciones y todo se ve completo; sin JavaScript también.
 
 ### SEO
 
@@ -174,15 +174,46 @@ Título, descripción, Open Graph y Twitter propios por página, con imagen para
 | --- | --- |
 | `assets/css/main.css` | Todo el sistema visual: colores, tipografía, componentes, portada dividida, áreas, publicaciones |
 | `assets/js/main.js` | Encabezado y menú, desplazamiento suave, apariciones, formularios, pestañas, filtros, por capas, transiciones |
-| `assets/js/split.js` | Portada: crecimiento de paneles, profundidad, elección del área |
-| `assets/img/` | Imágenes de las áreas con su tratamiento (800 y 1086 px) |
+| `assets/js/split.js` | Portada: crecimiento de paneles, luz bajo el cursor, marca de última visita, elección del área |
+| `assets/js/lines.js` | Líneas de datos de la portada y de Automatización (se pausan fuera de pantalla; quietas con movimiento reducido) |
+| `assets/img/` | `equipo` y `operacion` (fotos reales) y `lineas` (imagen previa de las líneas), en 1000 y 1800 px |
 | `assets/og/` · `assets/apple-touch-icon.png` | Imágenes para compartir e ícono para el celular |
 | `_redirects` | Redirecciones de Netlify |
 | `netlify.toml` | Netlify no publica el sitio cuando solo cambian archivos de Pulso Informativo (`pulso-news/`, `public/pulso-informativo/`, `.github/`): cada publicación consume créditos |
 
 ### Verificación
 
-Revisado en escritorio (1440 × 900 y 1280 × 760) y celular (390 y 449 px): sin errores de consola, sin desplazamiento horizontal, un solo título principal por página, sin saltos de jerarquía, imágenes con texto alternativo y controles con nombre. Probados: elección de área y transición, visita siguiente, «Cambiar de área», enlaces viejos, formularios (con y sin Netlify Forms), botones que completan el formulario, pestañas con teclado, filtros, menú del celular y movimiento reducido.
+Revisado en escritorio (1440 × 900 y 1280 × 760) y celular (390 y 449 px): sin errores de consola, sin desplazamiento horizontal, un solo título principal por página, sin saltos de jerarquía, imágenes con texto alternativo y controles con nombre. Probados (33 pruebas automáticas, 14/11): elección de área, visita siguiente sin redirección y marca de última visita, «Cambiar de área», enlaces viejos, formularios por WhatsApp, por email y con Netlify Forms (incluida la caída a WhatsApp si Netlify falla), botones que completan el formulario, pestañas, filtros, WhatsApp en menú, barra inferior y botón flotante, efectos activos y movimiento reducido.
+
+## 7. Contacto directo, fotos reales y efectos (14 de noviembre de 2026)
+
+**Contacto.** Email: ezequielbrunnermdp@gmail.com (reemplaza a contacto@ezequielbrunner.com, que no está en uso). WhatsApp: 223 634-3371 (`wa.me/5492236343371`), con un mensaje inicial que dice desde qué página escribe la persona. Está en el botón flotante, el menú, la barra inferior del celular, los bloques de contacto, el pie y los datos estructurados. Las postulaciones de «Trabajá conmigo» siguen yendo a rrhhmdpgastronomia@gmail.com.
+
+**Fotos reales.** Reemplazan a las imágenes que parecían generadas:
+
+- `equipo.webp`: equipo de Puerto de Palos en Bendu Arena (portada y sección «operación» de Gastronomía).
+- `operacion.webp`: coordinación durante un evento (portada de Gastronomía).
+- `lineas.webp`: solo la imagen previa de Automatización; el fondo real son líneas dibujadas en el navegador.
+
+**Efectos nuevos.**
+
+- *Luz bajo el cursor* (portada, escritorio): sobre la foto del equipo, un círculo de luz revela los colores reales donde está el cursor.
+- *La palabra «operación»* (Gastronomía): al bajar, la palabra se agranda hasta que su «i» abre la pantalla y deja ver al equipo; después aparece el dato de equipos de hasta 135 personas.
+- *Líneas de datos* (portada y Automatización): un relieve de líneas que se mueve despacio, con pulsos turquesa y una reacción leve al cursor.
+
+Con movimiento reducido no hay animaciones: la palabra y las líneas quedan quietas y todo el contenido se ve completo.
+
+**Correcciones de la revisión.**
+
+1. Casos reales de automatización (anonimizados) en lugar de ejemplos genéricos.
+2. Fotos reales.
+3. Una sola voz, en primera persona.
+4. Páginas más cortas: prensa y doctrina en listas compactas, etapas y formas de trabajo resumidas.
+5. WhatsApp en todo el sitio y formularios que llegan por WhatsApp.
+6. La portada ya no redirige al área de la última visita: la marca.
+7. Rótulos más grandes y secciones claras (fondo marfil) que alternan con las oscuras.
+
+**Imágenes para compartir.** Regeneradas con las fotos reales y las líneas (`assets/og/`). La dirección lleva `?v=20261114` para que WhatsApp y LinkedIn no muestren la versión anterior guardada.
 
 ## Operación del sitio
 

@@ -26,18 +26,31 @@
     p.addEventListener('focusout', function (e) { if (!going && !p.contains(e.relatedTarget)) setOn(null); });
   });
 
-  /* --- profundidad casi imperceptible: la imagen acompaña al cursor */
+  /* --- la última área visitada queda señalada (no se redirige: la portada siempre se ve) */
+  try {
+    var last = localStorage.getItem('eb:area');
+    panels.forEach(function (p) { p.classList.toggle('last', p.getAttribute('data-panel') === last); });
+  } catch (_) {}
+
+  /* --- profundidad casi imperceptible y una luz que revela los colores reales bajo el cursor */
   if (HOVER && !RM) {
-    var raf = 0, mx = 0, my = 0;
+    var raf = 0, mx = 0, my = 0, cx = 0, cy = 0;
     split.addEventListener('pointermove', function (e) {
-      mx = e.clientX / W.innerWidth - 0.5; my = e.clientY / W.innerHeight - 0.5;
+      mx = e.clientX / W.innerWidth - 0.5; my = e.clientY / W.innerHeight - 0.5; cx = e.clientX; cy = e.clientY;
       if (raf) return;
       raf = requestAnimationFrame(function () {
         raf = 0;
         panels.forEach(function (p, i) {
-          var img = p.querySelector('.p-media img'), d = i ? 12 : 16;
-          img.style.setProperty('--px', (-mx * d).toFixed(2) + 'px');
-          img.style.setProperty('--py', (-my * d * 0.8).toFixed(2) + 'px');
+          var media = p.querySelector('.p-media'), d = i ? 12 : 16;
+          if (!media) return;
+          media.style.setProperty('--px', (-mx * d).toFixed(2) + 'px');
+          media.style.setProperty('--py', (-my * d * 0.8).toFixed(2) + 'px');
+          var lit = p.querySelector('.pm-litwrap');
+          if (lit) {
+            var r = lit.getBoundingClientRect();
+            lit.style.setProperty('--sx', (cx - r.left).toFixed(0) + 'px');
+            lit.style.setProperty('--sy', (cy - r.top).toFixed(0) + 'px');
+          }
         });
       });
     }, { passive: true });
