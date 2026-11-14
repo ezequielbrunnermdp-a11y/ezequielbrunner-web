@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script>
-/* Enlaces viejos a secciones que cambiaron de lugar y, en visitas siguientes, entrada directa al área elegida. */
+/* Enlaces viejos a secciones que cambiaron de lugar. */
 (function (l) {
   var map = {'#gastronomia': 'gastronomia.html', '#servicios-gastronomia': 'gastronomia.html#servicios', '#trabaja-conmigo': 'gastronomia.html#trabaja-conmigo',
     '#personas': 'gastronomia.html#recursos-humanos', '#servicios-personas': 'gastronomia.html#recursos-humanos', '#capas': 'gastronomia.html#capas',
@@ -11,16 +11,7 @@
     '#servicios-ia': 'inteligencia-artificial.html#servicios', '#dossier': 'publicaciones.html#dossier', '#medios': 'publicaciones.html#medios',
     '#novedades': 'publicaciones.html', '#notas': 'publicaciones.html', '#enfoque': '#sobre-mi'};
   var h = l.hash, to = map[h];
-  if (to) { if (to.charAt(0) === '#') { try { history.replaceState(null, '', to); } catch (e) {} } else { l.replace(to); } return; }
-  if (h || /[?&]elegir/.test(l.search)) return;
-  try {
-    var a = localStorage.getItem('eb:area');
-    if (!a || sessionStorage.getItem('eb:nav')) return;
-    var r = document.referrer;
-    if (r && r.indexOf(l.protocol + '//' + l.host) === 0) return;
-    if (a === 'gastronomia') l.replace('gastronomia.html');
-    else if (a === 'automatizacion') l.replace('inteligencia-artificial.html');
-  } catch (e) {}
+  if (to) { if (to.charAt(0) === '#') { try { history.replaceState(null, '', to); } catch (e) {} } else { l.replace(to); } }
 })(location);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -36,7 +27,7 @@
 <meta property="og:description" content="Consultoría en gestión gastronómica y en automatización e inteligencia artificial para empresas. Costos, equipos, procesos, agentes, asistentes y tableros. Ezequiel Brunner, Mar del Plata.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ezequielbrunner.com/">
-<meta property="og:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg">
+<meta property="og:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261114">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Ezequiel Brunner: asesoramiento gastronómico y automatización con inteligencia artificial">
@@ -44,7 +35,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ezequiel Brunner · Asesoramiento gastronómico y automatización con IA">
 <meta name="twitter:description" content="Consultoría en gestión gastronómica y en automatización e inteligencia artificial para empresas. Costos, equipos, procesos, agentes, asistentes y tableros. Ezequiel Brunner, Mar del Plata.">
-<meta name="twitter:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg">
+<meta name="twitter:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261114">
 <script>
 (function (d, w) {
   var h = d.documentElement, done = false;
@@ -59,8 +50,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&amp;family=Inter:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/main.css?v=20261110">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ezequielbrunner.com/#ezequiel","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","image":"https://ezequielbrunner.com/assets/ezequiel-brunner-perfil.webp","email":"mailto:contacto@ezequielbrunner.com","jobTitle":"Consultor en gestión gastronómica y automatización con inteligencia artificial","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressRegion":"Buenos Aires","addressCountry":"AR"},"sameAs":["https://ar.linkedin.com/in/ezequielbrunner","https://about.me/ezequielbrunner"],"knowsAbout":["Gestión gastronómica","Control de costos","Recursos humanos","Automatización de procesos","Inteligencia artificial","Transparencia algorítmica"]},{"@type":"WebSite","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","inLanguage":"es-AR"},{"@type":"ProfessionalService","name":"Ezequiel Brunner · Consultoría","url":"https://ezequielbrunner.com/","founder":{"@id":"https://ezequielbrunner.com/#ezequiel"},"areaServed":"AR","email":"contacto@ezequielbrunner.com","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressCountry":"AR"},"knowsAbout":["Asesoramiento gastronómico","Automatización de procesos","Inteligencia artificial aplicada a empresas"]}]}</script>
+<link rel="stylesheet" href="assets/css/main.css?v=20261114">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ezequielbrunner.com/#ezequiel","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","image":"https://ezequielbrunner.com/assets/ezequiel-brunner-perfil.webp","email":"mailto:ezequielbrunnermdp@gmail.com","telephone":"+54 9 223 634-3371","jobTitle":"Consultor en gestión gastronómica y automatización con inteligencia artificial","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressRegion":"Buenos Aires","addressCountry":"AR"},"sameAs":["https://ar.linkedin.com/in/ezequielbrunner","https://about.me/ezequielbrunner"],"knowsAbout":["Gestión gastronómica","Control de costos","Recursos humanos","Automatización de procesos","Inteligencia artificial","Transparencia algorítmica"]},{"@type":"WebSite","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","inLanguage":"es-AR"},{"@type":"ProfessionalService","name":"Ezequiel Brunner · Consultoría","url":"https://ezequielbrunner.com/","founder":{"@id":"https://ezequielbrunner.com/#ezequiel"},"areaServed":"AR","email":"ezequielbrunnermdp@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressCountry":"AR"},"knowsAbout":["Asesoramiento gastronómico","Automatización de procesos","Inteligencia artificial aplicada a empresas"]}]}</script>
 </head>
 <body class="pg-home">
 <a class="skip" href="#elegir">Saltar a la elección de área</a>
@@ -72,23 +63,23 @@
 <nav class="st-nav" aria-label="Accesos"><a href="publicaciones.html">Publicaciones</a><a href="#contacto">Contacto</a></nav>
 </div>
 <article class="panel panel-gastronomia" data-panel="gastronomia" aria-labelledby="t-gastronomia">
-<div class="p-media" aria-hidden="true"><img src="assets/img/gastronomia.webp" srcset="assets/img/gastronomia-800.webp 800w, assets/img/gastronomia.webp 1086w" sizes="(max-width: 900px) 100vw, 62vw" alt="" width="1086" height="1448" decoding="async" fetchpriority="high"></div>
+<div class="p-media pm-photo" aria-hidden="true"><img class="pm-base" src="assets/img/equipo.webp" srcset="assets/img/equipo-1000.webp 1000w, assets/img/equipo.webp 1800w" sizes="(max-width: 900px) 100vw, 62vw" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"><div class="pm-litwrap"><img class="pm-lit" src="assets/img/equipo.webp" srcset="assets/img/equipo-1000.webp 1000w, assets/img/equipo.webp 1800w" sizes="(max-width: 900px) 100vw, 62vw" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"></div></div>
 <div class="p-shade" aria-hidden="true"></div>
 <div class="p-body">
-<p class="p-label"><span class="p-num">01</span><span>Gastronomía</span></p>
+<p class="p-label"><span class="p-num">01</span><span class="p-name">Gastronomía</span><span class="p-last">Tu última visita</span></p>
 <h2 class="p-title" id="t-gastronomia"><span class="ln" style="--l:0"><span>Asesoramiento</span></span><span class="ln" style="--l:1"><span><em>gastronómico</em></span></span></h2>
-<p class="p-sub">Transformamos operaciones gastronómicas en negocios más eficientes, rentables y profesionales.</p>
+<p class="p-sub">Transformo operaciones gastronómicas en negocios más eficientes, rentables y profesionales.</p>
 <p class="p-teaser" aria-hidden="true"><span>Costos y CMV</span><i aria-hidden="true">·</i><span>Auditorías</span><i aria-hidden="true">·</i><span>Equipos</span><i aria-hidden="true">·</i><span>Aperturas</span><i aria-hidden="true">·</i><span>Franquicias</span></p>
 <div class="p-more"><div class="p-more-in"><ul class="p-list" aria-label="Servicios de gastronomía"><li style="--i:0"><span class="pl-n">01</span>Consultoría y diagnóstico gastronómico integral</li><li style="--i:1"><span class="pl-n">02</span>Gerenciamiento operativo y estratégico</li><li style="--i:2"><span class="pl-n">03</span>Auditorías de restaurantes, cafeterías y cadenas gastronómicas</li><li style="--i:3"><span class="pl-n">04</span>Control de costos, CMV y rentabilidad</li><li style="--i:4"><span class="pl-n">05</span>Gestión de compras, proveedores y stock</li><li style="--i:5"><span class="pl-n">06</span>Reducción de desperdicios y mermas</li><li style="--i:6"><span class="pl-n">07</span>Optimización de procesos operativos</li><li style="--i:7"><span class="pl-n">08</span>Organización de equipos y recursos humanos</li><li style="--i:8"><span class="pl-n">09</span>Diseño de estructuras de supervisión</li><li style="--i:9"><span class="pl-n">10</span>Capacitación de personal y mandos medios</li><li style="--i:10"><span class="pl-n">11</span>Desarrollo y estandarización de procedimientos</li><li style="--i:11"><span class="pl-n">12</span>Apertura y reorganización de establecimientos</li><li style="--i:12"><span class="pl-n">13</span>Desarrollo y gestión de franquicias</li><li style="--i:13"><span class="pl-n">14</span>Indicadores de gestión y tableros de control</li><li style="--i:14"><span class="pl-n">15</span>Optimización de ventas y experiencia del cliente</li></ul></div></div>
 <a class="p-cta" href="gastronomia.html" data-go="gastronomia"><span>Explorar gastronomía</span> <span class="arr" aria-hidden="true">→</span></a>
 </div>
 </article>
 <div class="split-line"><span class="sl-tag" aria-hidden="true">Elegí un área</span><a class="split-down" href="#sobre-mi" aria-label="Conocé mi trayectoria"><span aria-hidden="true">↓</span></a></div>
-<article class="panel panel-automatizacion" data-panel="automatizacion" aria-labelledby="t-automatizacion">
-<div class="p-media" aria-hidden="true"><img src="assets/img/automatizacion.webp" srcset="assets/img/automatizacion-800.webp 800w, assets/img/automatizacion.webp 1086w" sizes="(max-width: 900px) 100vw, 62vw" alt="" width="1086" height="1448" decoding="async" fetchpriority="high"></div>
+<article class="panel panel-automatizacion" data-panel="automatizacion" aria-labelledby="t-automatizacion" data-lines-host>
+<div class="p-media pm-lines" aria-hidden="true"><canvas data-lines data-t="38000"></canvas></div>
 <div class="p-shade" aria-hidden="true"></div>
 <div class="p-body">
-<p class="p-label"><span class="p-num">02</span><span>Automatización &amp; IA</span></p>
+<p class="p-label"><span class="p-num">02</span><span class="p-name">Automatización &amp; IA</span><span class="p-last">Tu última visita</span></p>
 <h2 class="p-title" id="t-automatizacion"><span class="ln" style="--l:0"><span>Automatización &amp;</span></span><span class="ln" style="--l:1"><span><em>inteligencia</em></span></span><span class="ln" style="--l:2"><span><em>artificial</em></span></span></h2>
 <p class="p-sub">Tecnología inteligente para automatizar procesos, optimizar decisiones y transformar empresas.</p>
 <p class="p-teaser" aria-hidden="true"><span>Agentes y asistentes</span><i aria-hidden="true">·</i><span>WhatsApp</span><i aria-hidden="true">·</i><span>APIs</span><i aria-hidden="true">·</i><span>Dashboards</span><i aria-hidden="true">·</i><span>RR. HH.</span></p>
@@ -132,7 +123,9 @@
 <div class="sec-head "><p class="label">Contacto</p><h2 class="h2" id="hc-t">Conversemos sobre tu <em>próximo paso.</em></h2><p class="intro">Contame qué necesitás ordenar, mejorar o poner en marcha. Elegí el área para que la consulta llegue con la información justa.</p></div>
 <div class="direct">
 <p class="label">Contacto directo</p>
-<div class="mailrow"><a class="mail" href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a><button class="copy" type="button" data-copy="contacto@ezequielbrunner.com">Copiar</button></div>
+<a class="btn btn-wa" href="https://wa.me/5492236343371?text=Hola%20Ezequiel%2C%20te%20escribo%20desde%20tu%20web." target="_blank" rel="noopener noreferrer"><svg class="ico ico-wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span>Escribime por WhatsApp</span></a>
+<p class="wa-num">WhatsApp 223 634-3371</p>
+<div class="mailrow"><a class="mail" href="mailto:ezequielbrunnermdp@gmail.com">ezequielbrunnermdp@gmail.com</a><button class="copy" type="button" data-copy="ezequielbrunnermdp@gmail.com">Copiar</button></div>
 <a class="tlink" href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer"><span>LinkedIn /in/ezequielbrunner</span> <span class="arr ext" aria-hidden="true">↗</span></a>
 <p class="place">Mar del Plata, Argentina · Modalidad a definir según el proyecto.</p>
 </div>
@@ -166,7 +159,8 @@
 </nav>
 <div class="ftr-col">
 <p class="label">Contacto</p>
-<a href="mailto:contacto@ezequielbrunner.com">contacto@ezequielbrunner.com</a>
+<a href="https://wa.me/5492236343371?text=Hola%20Ezequiel%2C%20te%20escribo%20desde%20tu%20web." target="_blank" rel="noopener noreferrer">WhatsApp · 223 634-3371</a>
+<a href="mailto:ezequielbrunnermdp@gmail.com">ezequielbrunnermdp@gmail.com</a>
 <a href="https://ar.linkedin.com/in/ezequielbrunner" target="_blank" rel="noopener noreferrer">LinkedIn <span class="arr ext" aria-hidden="true">↗</span></a>
 <a href="https://about.me/ezequielbrunner" target="_blank" rel="noopener noreferrer">Perfil biográfico <span class="arr ext" aria-hidden="true">↗</span></a>
 </div>
@@ -177,7 +171,9 @@
 </div>
 </div>
 </footer>
-<script src="assets/js/split.js?v=20261110" defer></script>
-<script src="assets/js/main.js?v=20261110" defer></script>
+<a class="wa-float" href="https://wa.me/5492236343371?text=Hola%20Ezequiel%2C%20te%20escribo%20desde%20tu%20web." target="_blank" rel="noopener noreferrer" aria-label="Escribime por WhatsApp"><svg class="ico ico-wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span class="wa-tip" aria-hidden="true">WhatsApp</span></a>
+<script src="assets/js/split.js?v=20261114" defer></script>
+<script src="assets/js/lines.js?v=20261114" defer></script>
+<script src="assets/js/main.js?v=20261114" defer></script>
 </body>
 </html>
