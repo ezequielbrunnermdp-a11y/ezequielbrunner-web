@@ -351,6 +351,22 @@
       "story_id": "18094162001250375",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "taller-globos-muelle-noviembre",
+      "post_id": "18146919277596437",
+      "story_id": "18102366281413703",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-14",
+      "slug": "noche-museos-caba-2026",
+      "post_id": "18128924644921149",
+      "story_id": "17913071880581595",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
