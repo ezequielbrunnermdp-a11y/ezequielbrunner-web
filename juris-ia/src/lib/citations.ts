@@ -1,4 +1,3 @@
-import "server-only";
 import { query } from "./db";
 import { normForMatch } from "./chunk";
 import type { Block } from "./claude";

@@ -1,4 +1,3 @@
-import "server-only";
 import { extractPdfPages } from "./pdf";
 import { ocrImage, ocrPdfPage } from "./ocr";
 

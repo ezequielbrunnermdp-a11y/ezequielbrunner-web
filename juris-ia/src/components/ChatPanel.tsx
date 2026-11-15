@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { CitedMarkdown, CitasList } from "./CitedMarkdown";
-import { postSSE } from "./sse";
+import { followJob, startTask, type Job } from "./sse";
 import type { Cita } from "./types";
 import { PERSPECTIVAS, type Perspectiva } from "@/lib/taxonomy";
 
@@ -38,8 +38,38 @@ export function ChatPanel({ caseId, onCita, expanded, onToggleExpand }: { caseId
     setThreadId(j.threadId);
     setThreads(j.threads);
     setMessages(j.messages);
+    // Si había una respuesta en curso (p. ej. se recargó la página), seguirla.
+    if (j.jobActivo && !abortRef.current) follow(j.jobActivo, j.threadId);
   }
   useEffect(() => { load(); }, [caseId]);
+
+  async function follow(jobId: string, tid: string | null) {
+    const ac = new AbortController();
+    abortRef.current = ac;
+    setBusy(true);
+    let shown = 0;
+    try {
+      const job = await followJob(jobId, (j: Job) => {
+        setStatus(j.progreso ?? "");
+        setStreaming(j.texto);
+        if (j.mensajes.length > shown) {
+          const nuevos = j.mensajes.slice(shown);
+          shown = j.mensajes.length;
+          setMessages((m) => [...m, ...nuevos.map((x) => ({ role: "assistant" as const, markdown: x.markdown, citas: x.citas }))]);
+        }
+      }, ac.signal);
+      if (job.result?.stop === "refusal") setError("El modelo declinó responder esta consulta.");
+      if (job.result?.stop === "max_rounds") setError("Se alcanzó el límite de búsquedas en este turno; reformule o pida continuar.");
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") setError((e as Error).message);
+    } finally {
+      abortRef.current = null;
+      setBusy(false);
+      setStatus("");
+      setStreaming("");
+      load(tid);
+    }
+  }
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, streaming, status]);
 
   async function send(text: string) {
@@ -49,25 +79,13 @@ export function ChatPanel({ caseId, onCita, expanded, onToggleExpand }: { caseId
     setInput("");
     setStreaming("");
     setMessages((m) => [...m, { role: "user", markdown: text, citas: [], perspectiva }]);
-    const ac = new AbortController();
-    abortRef.current = ac;
     try {
-      await postSSE(`/api/cases/${caseId}/chat`, { threadId, pregunta: text, perspectiva }, (ev, data) => {
-        if (ev === "thread") setThreadId(data.threadId);
-        else if (ev === "delta") setStreaming((s) => s + data.text);
-        else if (ev === "status") { setStatus(data.text); setStreaming(""); }
-        else if (ev === "message") { setStreaming(""); setMessages((m) => [...m, { role: "assistant", markdown: data.markdown, citas: data.citas }]); }
-        else if (ev === "stop" && data.reason === "refusal") setError("El modelo declinó responder esta consulta.");
-        else if (ev === "stop" && data.reason === "max_rounds") setError("Se alcanzó el límite de búsquedas en este turno; reformule o pida continuar.");
-        else if (ev === "error") setError(data.message);
-      }, ac.signal);
+      const r = await startTask(`/api/cases/${caseId}/chat`, { threadId, pregunta: text, perspectiva });
+      setThreadId(r.threadId);
+      await follow(r.jobId, r.threadId);
     } catch (e) {
-      if ((e as Error).name !== "AbortError") setError((e as Error).message);
-    } finally {
+      setError((e as Error).message);
       setBusy(false);
-      setStatus("");
-      setStreaming("");
-      load(threadId);
     }
   }
 
@@ -133,7 +151,7 @@ export function ChatPanel({ caseId, onCita, expanded, onToggleExpand }: { caseId
         />
         <div className="mt-2 flex items-center justify-between text-[11px] text-ink-400">
           <span>Respuestas basadas solo en la documentación incorporada. No reemplazan el criterio profesional.</span>
-          {busy ? <button type="button" onClick={() => abortRef.current?.abort()} className="rounded border border-ink-600 px-3 py-1 text-xs">Detener</button>
+          {busy ? <button type="button" onClick={() => abortRef.current?.abort()} className="rounded border border-ink-600 px-3 py-1 text-xs" title="Deja de mostrar el avance; la respuesta se guarda igual en la conversación">Ocultar avance</button>
             : <button className="rounded bg-gold-500 px-3 py-1 text-xs font-semibold text-ink-950 hover:bg-gold-400">Enviar</button>}
         </div>
       </form>

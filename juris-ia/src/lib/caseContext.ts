@@ -1,4 +1,3 @@
-import "server-only";
 import { one, query } from "./db";
 import { PIEZAS_ESPERADAS, TIPOS_DOCUMENTO, tipoLabel } from "./taxonomy";
 

@@ -1,4 +1,3 @@
-import "server-only";
 
 type TextItem = { str: string; hasEOL?: boolean; transform?: number[] };
 

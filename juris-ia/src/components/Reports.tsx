@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { CitedMarkdown, CitasList } from "./CitedMarkdown";
-import { postSSE } from "./sse";
+import { followJob, startTask } from "./sse";
 import type { Cita } from "./types";
 import { PERSPECTIVAS, type Perspectiva } from "@/lib/taxonomy";
 
@@ -20,14 +20,11 @@ export function ReportRunner({
   async function run() {
     setBusy(true); setText(""); setError(""); setResult(null); setStatus("Leyendo el expediente…");
     try {
-      await postSSE(`/api/cases/${caseId}/reports`, { kind, perspectiva }, (ev, d) => {
-        if (ev === "delta") setText((t) => t + d.text);
-        else if (ev === "status") setStatus(d.text);
-        else if (ev === "report") {
-          const r: Report = { id: d.id, kind, perspectiva, markdown: d.markdown, citas: d.citas, meta: { modo: d.modo }, created_at: new Date().toISOString() };
-          setResult(r); onDone?.(r);
-        } else if (ev === "error") setError(d.message);
-      });
+      const { jobId } = await startTask(`/api/cases/${caseId}/reports`, { kind, perspectiva });
+      const job = await followJob(jobId, (j) => { setText(j.texto); if (j.progreso) setStatus(j.progreso); });
+      const d = job.result;
+      const r: Report = { id: d.id, kind, perspectiva, markdown: d.markdown, citas: d.citas, meta: { modo: d.modo }, created_at: new Date().toISOString() };
+      setResult(r); onDone?.(r);
     } catch (e) { setError((e as Error).message); }
     setBusy(false); setStatus("");
   }

@@ -1,4 +1,3 @@
-import "server-only";
 import { z } from "zod";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { claude, FALLBACK, MODEL } from "./claude";

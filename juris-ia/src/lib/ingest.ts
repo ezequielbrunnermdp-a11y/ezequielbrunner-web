@@ -1,6 +1,6 @@
-import "server-only";
 import { one, query, tx } from "./db";
-import { storeOriginal } from "./storage";
+import { readOriginal, storeOriginal } from "./storage";
+import { ocrImage, ocrPdfPage } from "./extract/ocr";
 import { detectMime, extract, SUPPORTED_MIME } from "./extract";
 import { chunkPages } from "./chunk";
 import { classifyDocument } from "./classify";
@@ -8,7 +8,7 @@ import { embed, embeddingsEnabled, toPgVector } from "./embeddings";
 import { isConfigured } from "./claude";
 import { sha256 } from "./crypto";
 import { categoriaDeTipo } from "./taxonomy";
-import { HttpError } from "./auth";
+import { HttpError } from "./errors";
 
 export const MAX_FILE_BYTES = 50 * 1024 * 1024;
 
@@ -31,9 +31,16 @@ export async function ingestDocument(
   );
   if (dup) return { documentId: dup.id, duplicate: true, pages: dup.page_count, warnings: ["Documento ya incorporado (mismo hash)."] };
 
-  const { pages, warnings } = await extract(file.buf, mime, { ocr: isConfigured() });
-  if (!isConfigured() && pages.some((p) => p.source === "sin_texto")) {
-    warnings.push("OCR no disponible: configure ANTHROPIC_API_KEY para transcribir páginas escaneadas.");
+  // El OCR (lento) se hace después, en segundo plano: ver ocrPendingPages().
+  const { pages, warnings: rawWarnings } = await extract(file.buf, mime, { ocr: false });
+  const warnings = rawWarnings.filter((w) => !w.includes("sin texto legible") && w !== "Imagen sin OCR");
+  const sinTexto = pages.filter((p) => p.source === "sin_texto").length;
+  if (sinTexto) {
+    warnings.push(
+      isConfigured()
+        ? `${sinTexto} página(s) sin capa de texto: se transcribirán con OCR por IA en segundo plano.`
+        : `${sinTexto} página(s) sin capa de texto y OCR no disponible (falta ANTHROPIC_API_KEY): su contenido no está disponible para el análisis.`,
+    );
   }
   const stored = await storeOriginal(file.buf);
   const chunks = chunkPages(pages.filter((p) => p.text.trim()));
@@ -66,7 +73,44 @@ export async function ingestDocument(
   return { documentId, duplicate: false, pages: pages.length, warnings };
 }
 
-/** Etapa 2 (en segundo plano): clasificación con Claude, embeddings, partes y actuaciones. */
+/** OCR con Claude de las páginas sin capa de texto; agrega sus fragmentos al índice. */
+export async function ocrPendingPages(documentId: string): Promise<string[]> {
+  const notes: string[] = [];
+  const doc = await one<{ case_id: string; mime_type: string; storage_key: string; sha256: string }>(
+    "SELECT case_id, mime_type, storage_key, sha256 FROM documents WHERE id = $1",
+    [documentId],
+  );
+  if (!doc) return notes;
+  const pending = await query<{ page_number: number }>(
+    "SELECT page_number FROM document_pages WHERE document_id = $1 AND text_source = 'sin_texto' ORDER BY page_number",
+    [documentId],
+  );
+  if (!pending.length) return notes;
+  const original = await readOriginal(doc.storage_key, doc.sha256);
+  let ok = 0;
+  for (const { page_number } of pending) {
+    try {
+      const text = doc.mime_type === "application/pdf" ? await ocrPdfPage(original, page_number) : await ocrImage(original, doc.mime_type);
+      if (!text.trim()) continue;
+      const max = await one<{ m: number | null }>("SELECT max(ordinal) AS m FROM chunks WHERE document_id = $1", [documentId]);
+      const chunks = chunkPages([{ page: page_number, text }]);
+      await tx(async (c) => {
+        await c.query("UPDATE document_pages SET text = $3, text_source = 'ocr_ia' WHERE document_id = $1 AND page_number = $2", [documentId, page_number, text]);
+        for (const [i, ch] of chunks.entries())
+          await c.query("INSERT INTO chunks (document_id, case_id, page_number, ordinal, segments, text) VALUES ($1,$2,$3,$4,$5,$6)", [
+            documentId, doc.case_id, ch.page, (max?.m ?? -1) + 1 + i, JSON.stringify(ch.segments), ch.text,
+          ]);
+      });
+      ok++;
+    } catch (e) {
+      notes.push(`OCR falló en pág. ${page_number}: ${(e as Error).message}`);
+    }
+  }
+  if (ok) notes.push(`${ok} página(s) transcriptas por OCR con IA: verificar contra el original.`);
+  return notes;
+}
+
+/** Etapa 2 (en segundo plano): OCR, clasificación con Claude, embeddings, partes y actuaciones. */
 export async function enrichDocument(documentId: string): Promise<void> {
   const doc = await one<{ case_id: string; filename: string; clasificacion_origen: string }>(
     "SELECT case_id, filename, clasificacion_origen FROM documents WHERE id = $1",
@@ -74,6 +118,13 @@ export async function enrichDocument(documentId: string): Promise<void> {
   );
   if (!doc) return;
   const notes: string[] = [];
+  if (isConfigured()) {
+    try {
+      notes.push(...(await ocrPendingPages(documentId)));
+    } catch (e) {
+      notes.push(`OCR no realizado: ${(e as Error).message}`);
+    }
+  }
 
   if (embeddingsEnabled()) {
     try {

@@ -1,4 +1,3 @@
-import "server-only";
 import { createHash } from "node:crypto";
 import type Anthropic from "@anthropic-ai/sdk";
 import { one, query } from "./db";

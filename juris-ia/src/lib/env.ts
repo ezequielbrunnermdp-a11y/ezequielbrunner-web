@@ -1,4 +1,3 @@
-import "server-only";
 
 function required(name: string): string {
   const v = process.env[name];
@@ -7,8 +6,27 @@ function required(name: string): string {
 }
 
 export const env = {
+  /** DATABASE_URL (local) o NETLIFY_DB_URL (Netlify Database, inyectada en el despliegue). */
   get databaseUrl() {
-    return required("DATABASE_URL");
+    const v = process.env.DATABASE_URL || process.env.NETLIFY_DB_URL;
+    if (!v) throw new Error("Falta DATABASE_URL (o NETLIFY_DB_URL en Netlify). Ver .env.example");
+    return v;
+  },
+  /** true cuando corre en Netlify (funciones sin disco persistente y con límite de 60 s). */
+  get onNetlify() {
+    return Boolean(process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT || process.env.NETLIFY_DB_URL);
+  },
+  /** Secreto compartido entre la app y la función de segundo plano. */
+  get workerSecret() {
+    return required("WORKER_SECRET");
+  },
+  /** URL pública del sitio (Netlify la define como URL). */
+  get siteUrl() {
+    return process.env.URL || process.env.SITE_URL || "http://localhost:3000";
+  },
+  /** Token para crear el primer usuario administrador desde /configuracion-inicial. */
+  get setupToken() {
+    return process.env.SETUP_TOKEN || "";
   },
   /** Clave de 32 bytes en base64 para cifrar los documentos en reposo (AES-256-GCM). */
   get encryptionKey(): Buffer {

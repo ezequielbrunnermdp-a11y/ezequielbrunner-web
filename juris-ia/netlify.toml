@@ -1,0 +1,9 @@
+# JURIS IA en Netlify (proyecto independiente; directorio base: juris-ia).
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["pg", "pdf-lib", "@anthropic-ai/sdk", "@netlify/blobs"]

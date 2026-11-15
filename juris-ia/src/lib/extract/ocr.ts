@@ -1,4 +1,3 @@
-import "server-only";
 import { PDFDocument } from "pdf-lib";
 import type Anthropic from "@anthropic-ai/sdk";
 import { claude, FALLBACK, MODEL, textOf } from "../claude";

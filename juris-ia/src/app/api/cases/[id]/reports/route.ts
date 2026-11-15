@@ -2,12 +2,11 @@ import { z } from "zod";
 import { audit, handle, requireCaseAccess, requireUser } from "@/lib/auth";
 import { isConfigured } from "@/lib/claude";
 import { query } from "@/lib/db";
-import { generateReport, REPORT_KINDS } from "@/lib/reports";
-import { sse } from "@/lib/sse";
+import { createJob, startJob } from "@/lib/jobs";
+import { REPORT_KINDS } from "@/lib/reports";
 import { PERSPECTIVAS } from "@/lib/taxonomy";
 
 type Ctx = { params: Promise<{ id: string }> };
-export const maxDuration = 800;
 
 export const GET = handle(async (_req: Request, { params }: Ctx) => {
   const { id } = await params;
@@ -26,13 +25,10 @@ export const POST = handle(async (req: Request, { params }: Ctx) => {
   const { id } = await params;
   const user = await requireUser();
   await requireCaseAccess(user, id);
-  if (!isConfigured()) return Response.json({ error: "Claude no está configurado (ANTHROPIC_API_KEY)." }, { status: 503 });
+  if (!isConfigured()) return Response.json({ error: "Claude no está configurado (falta ANTHROPIC_API_KEY en el servidor)." }, { status: 503 });
   const b = Body.parse(await req.json());
   await audit(user, "generar_informe", id, b);
-  return sse(async (send, signal) => {
-    const r = await generateReport({ caseId: id, userId: user.id, kind: b.kind, perspectiva: b.perspectiva, signal, onEvent: (e) => {
-      if (e.type === "delta" || e.type === "status") send(e.type, e);
-    } });
-    send("report", r);
-  }, req.signal);
+  const jobId = await createJob(user.id, id, { kind: "report", caseId: id, userId: user.id, reportKind: b.kind, perspectiva: b.perspectiva });
+  await startJob(jobId, new URL(req.url).origin);
+  return Response.json({ jobId }, { status: 202 });
 });

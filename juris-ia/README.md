@@ -98,3 +98,18 @@ Ver [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) y la sección 5 de la investi
 - ningún HTML importado se ejecuta (se sirve como texto).
 
 Antes de usarlo con datos reales, el estudio debe evaluar el envío de textos a la API de Anthropic según la Ley 25.326.
+
+## Despliegue en Netlify
+
+La app está preparada para Netlify. Usa Netlify Database (PostgreSQL con pgvector) y Netlify Blobs para los originales cifrados. Las tareas largas de Claude (chat, informes, OCR, clasificación) corren en la función de segundo plano `netlify/functions/juris-worker.mts`, que admite hasta 15 minutos; la interfaz consulta su avance cada segundo. Los archivos se suben en partes de 4 MB.
+
+- Directorio base: `juris-ia`.
+- Migraciones: `netlify/database/migrations/`. No se editan las ya aplicadas; cada cambio de esquema va en una migración nueva (y en `db/schema.sql` para el entorno local).
+- Variables del proyecto:
+  - `ANTHROPIC_API_KEY`
+  - `DOCUMENT_ENCRYPTION_KEY`
+  - `WORKER_SECRET`
+  - `SETUP_TOKEN`
+  - `JURISPRUDENCIA_WEB_SEARCH`
+  - opcional: `VOYAGE_API_KEY`
+- Primer uso: abrir `/configuracion-inicial` y crear el administrador con el código `SETUP_TOKEN`. Esto solo es posible mientras no exista ningún usuario.

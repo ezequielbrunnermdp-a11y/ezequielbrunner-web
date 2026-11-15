@@ -186,3 +186,22 @@ CREATE TABLE IF NOT EXISTS audit_log (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS audit_case_idx ON audit_log (case_id, created_at);
+
+-- Tareas largas (chat, informes, OCR/clasificación, jurisprudencia). En Netlify las ejecuta
+-- una función de segundo plano (hasta 15 min); la interfaz consulta su avance.
+CREATE TABLE IF NOT EXISTS jobs (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    uuid REFERENCES users(id) ON DELETE CASCADE,
+  case_id    uuid REFERENCES cases(id) ON DELETE CASCADE,
+  kind       text NOT NULL,
+  payload    jsonb NOT NULL,
+  status     text NOT NULL DEFAULT 'pendiente', -- pendiente | en_curso | listo | error
+  progreso   text,
+  texto      text NOT NULL DEFAULT '',
+  mensajes   jsonb NOT NULL DEFAULT '[]',
+  result     jsonb,
+  error      text,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS jobs_case_idx ON jobs (case_id, created_at);

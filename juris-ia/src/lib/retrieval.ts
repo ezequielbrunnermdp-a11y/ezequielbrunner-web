@@ -1,4 +1,3 @@
-import "server-only";
 import type Anthropic from "@anthropic-ai/sdk";
 import { query } from "./db";
 import { embed, embeddingsEnabled, toPgVector } from "./embeddings";

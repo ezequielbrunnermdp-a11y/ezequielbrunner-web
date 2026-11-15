@@ -7,6 +7,7 @@ import { ChatPanel } from "./ChatPanel";
 import { ReportRunner, ReportView, useReports } from "./Reports";
 import { CitedMarkdown, CitasList } from "./CitedMarkdown";
 import type { Causa, Cita, Doc, Party } from "./types";
+import { followJob, startTask, uploadFile } from "./sse";
 import { CATEGORIAS, TIPOS_DOCUMENTO, categoriaDeTipo, tipoLabel, type Perspectiva } from "@/lib/taxonomy";
 
 type CaseData = { causa: Causa; documentos: Doc[]; partes: Party[]; relacionadas: { id: string; caratula: string; motivo: string }[]; faltantes: string[] };
@@ -106,14 +107,23 @@ function DocsPanel({ caseId, data, selected, onSelect, reload }: { caseId: strin
     const list = [...files];
     if (!list.length) return;
     setUploading(true);
-    const fd = new FormData();
-    list.forEach((f) => fd.append("files", f));
-    const r = await fetch(`/api/cases/${caseId}/documents`, { method: "POST", body: fd });
-    const j = await r.json();
+    const lines: string[] = [];
+    const jobs: string[] = [];
+    for (const f of list) {
+      try {
+        setLog([...lines, `↑ ${f.name}…`]);
+        const x = await uploadFile(caseId, f, (p) => setLog([...lines, `↑ ${f.name} ${Math.round(p * 100)}%`]));
+        lines.push(`${x.duplicate ? "= ya incorporado:" : "✓"} ${f.name} (${x.pages} pág.) ${x.warnings.join(" ")}`);
+        if (x.jobId) jobs.push(x.jobId);
+      } catch (e) {
+        lines.push(`✗ ${f.name}: ${(e as Error).message}`);
+      }
+      setLog([...lines]);
+      reload();
+    }
     setUploading(false);
-    if (!r.ok) setLog([j.error]);
-    else setLog(j.results.map((x: { filename: string; error?: string; duplicate: boolean; pages: number; warnings: string[] }) => x.error ? `✗ ${x.filename}: ${x.error}` : `${x.duplicate ? "=" : "✓"} ${x.filename} (${x.pages} pág.) ${x.warnings.join(" ")}`));
-    reload();
+    // OCR y clasificación en segundo plano: refrescar al terminar.
+    for (const id of jobs) followJob(id, () => {}).then(reload, reload);
   }
 
   const groups = new Map<string, Doc[]>();
@@ -259,9 +269,14 @@ function Jurisprudencia({ caseId, causa, onCita }: { caseId: string; causa: Caus
   const [res, setRes] = useState<{ disponible: boolean; motivo?: string; markdown?: string; citas?: Cita[]; fuentes: { nombre: string; url: string }[]; consulta: string } | null>(null);
   const inp = "w-full rounded-md border border-ink-700 bg-ink-850 px-3 py-2 text-sm outline-none focus:border-gold-500";
   async function buscar(e: React.FormEvent) {
-    e.preventDefault(); setBusy(true);
-    const r = await fetch("/api/jurisprudencia", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...f, caseId }) });
-    setRes(await r.json()); setBusy(false);
+    e.preventDefault(); setBusy(true); setRes(null);
+    try {
+      const r = await startTask("/api/jurisprudencia", { ...f, caseId });
+      setRes(r.jobId ? (await followJob(r.jobId, () => {})).result : r);
+    } catch (err) {
+      setRes({ disponible: false, motivo: (err as Error).message, fuentes: [], consulta: "" });
+    }
+    setBusy(false);
   }
   return (
     <div>

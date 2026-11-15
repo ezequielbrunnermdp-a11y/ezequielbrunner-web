@@ -9,11 +9,8 @@ const SESSION_DAYS = 7;
 
 export type User = { id: string; email: string; name: string; role: "admin" | "abogado" };
 
-export class HttpError extends Error {
-  constructor(public status: number, message: string) {
-    super(message);
-  }
-}
+import { HttpError } from "./errors";
+export { HttpError };
 
 export async function login(email: string, password: string): Promise<User | null> {
   const row = await one<User & { password_hash: string }>(

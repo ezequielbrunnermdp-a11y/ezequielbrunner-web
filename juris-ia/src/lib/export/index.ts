@@ -1,4 +1,3 @@
-import "server-only";
 import PDFDocument from "pdfkit";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType } from "docx";
 import { citaReferencia, type Cita } from "../citations";
