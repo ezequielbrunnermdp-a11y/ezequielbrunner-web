@@ -7,3 +7,7 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
   external_node_modules = ["pg", "pdf-lib", "@anthropic-ai/sdk", "@netlify/blobs"]
+
+# Adaptador oficial de Next.js (servidor de páginas y rutas de API).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
