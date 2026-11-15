@@ -5,8 +5,6 @@
 
 /* ------------------------------------------------------------------ portada */
 .p-hero { padding: calc(var(--hdr) + clamp(64px, 9vw, 150px)) 0 clamp(36px, 4vw, 60px); }
-.pubs-title { font: 300 clamp(48px, 7.4vw, 132px)/.94 var(--serif); letter-spacing: -.034em; }
-.pubs-title em { font-style: italic; }
 .p-hero-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; margin-top: 48px; padding-top: 30px; border-top: 1px solid var(--line-2); }
 .p-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .p-counts li { display: grid; gap: 8px; font-size: 12.5px; line-height: 1.4; color: var(--ink-2); }

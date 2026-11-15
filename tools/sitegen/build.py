@@ -30,9 +30,11 @@ def portrait(cls='', sizes='(max-width: 900px) 100vw, 40vw', lazy=True):
     return pic('retrato', 'Retrato de Ezequiel Brunner', cls, sizes, lazy=lazy, w=697, h=1046, widths=(480, 697))
 
 
-def field_canvas(cls, t, mode):
-    """Relieve de líneas con red de nodos (assets/js/lines.js). La imagen de fondo es el respaldo sin JavaScript."""
-    return f'<div class="{cls} pm-lines" aria-hidden="true"><canvas data-lines data-t="{t}" data-mode="{mode}"></canvas></div>'
+def field_canvas(cls, t, mode, sizes='100vw'):
+    """Relieve de líneas con red de nodos (assets/js/lines.js). Debajo, una imagen fija del mismo dibujo:
+    se ve al instante, sin JavaScript y con movimiento reducido, hasta que el lienzo está listo."""
+    poster = pic('lineas', cls='pm-poster', sizes=sizes, prio=True)
+    return f'<div class="{cls} pm-lines" aria-hidden="true">{poster}<canvas data-lines data-t="{t}" data-mode="{mode}"></canvas></div>'
 
 
 def title_lines(a, key='title_lines'):
@@ -88,7 +90,7 @@ def panel(a):
                  + pic('equipo', cls='pm-base', sizes='(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw', prio=True)
                  + '<div class="pm-litwrap">' + pic('equipo', cls='pm-lit', sizes='(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw') + '</div></div>')
     else:
-        media = field_canvas('p-media', 38000, 'panel')
+        media = field_canvas('p-media', 38000, 'panel', '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw')
     return f"""<article class="panel panel-{k}" data-panel="{k}" aria-labelledby="t-{k}">
 {media}
 <div class="p-shade" aria-hidden="true"></div>
@@ -194,7 +196,8 @@ def home():
 def hero(a, page):
     k = a['key']
     if k == 'gastronomia':
-        media = '<div class="hero-media" aria-hidden="true">' + pic('operacion', prio=True) + '</div>'
+        # sin prioridad alta: el contenido principal es el texto y sus fuentes van primero
+        media = '<div class="hero-media" aria-hidden="true">' + pic('operacion') + '</div>'
     else:
         media = field_canvas('hero-media', 51000, 'hero')
     down = {'gastronomia': 'operacion', 'automatizacion': 'soluciones'}[k]
@@ -342,7 +345,7 @@ def services_index(cats, head_html, note_after=''):
             h, p_, o = d[0], d[1], d[2]
             li = ''.join(f'<li>{esc(x)}</li>' for x in d[3]) if len(d) > 3 else ''
             aid = f' id="{ANCHORS[h]}"' if h in ANCHORS else ''
-            det += (f'<div class="si-d"{aid}><h4>{esc(h)}</h4><p>{esc(p_)}</p>' + (f'<ul class="ticks">{li}</ul>' if li else '')
+            det += (f'<div class="si-d"{aid}><h3>{esc(h)}</h3><p>{esc(p_)}</p>' + (f'<ul class="ticks">{li}</ul>' if li else '')
                     + f'<p class="si-out"><b>Entregables</b> {esc(o)}</p></div>')
         anchor = '<span class="anchor" id="recursos-humanos" aria-hidden="true"></span>' if c['id'] == 'equipos' else ''
         rows.append(f"""<li class="si" id="cat-{c['id']}" data-rv>{anchor}

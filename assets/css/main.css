@@ -175,9 +175,9 @@ html.js:not(.rm):not(.ready) [data-in] { opacity: 0; }
 html.js.ready:not(.rm) [data-in] { animation: fade-up var(--t-med) var(--ease-out) backwards; }
 html.js.ready:not(.rm) [data-in="1"] { animation-delay: .05s; }
 html.js.ready:not(.rm) [data-in="2"] { animation-delay: .2s; }
-html.js.ready:not(.rm) [data-in="3"] { animation-delay: .32s; }
-html.js.ready:not(.rm) [data-in="4"] { animation-delay: .42s; }
-html.js.ready:not(.rm) [data-in="5"] { animation-delay: .54s; }
+html.js.ready:not(.rm) [data-in="3"] { animation-delay: .12s; }
+html.js.ready:not(.rm) [data-in="4"] { animation-delay: .2s; }
+html.js.ready:not(.rm) [data-in="5"] { animation-delay: .3s; }
 :root { interpolate-size: allow-keywords; }
 .direct { display: grid; justify-items: start; gap: 16px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line-2); }
 .mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
@@ -187,6 +187,8 @@ html.js.ready:not(.rm) [data-in="5"] { animation-delay: .54s; }
 .copy:hover { border-color: var(--accent); }
 .place { font-size: 13.5px; color: var(--ink-3); }
 .pubs-title { max-width: 13ch; margin-top: 28px; font: 300 clamp(46px, 7.6vw, 136px)/.95 var(--serif); letter-spacing: -.035em; }
+.pubs-title { font: 300 clamp(46px, 7vw, 112px)/.95 var(--serif); letter-spacing: -.034em; }
+.pubs-title em { font-style: italic; }
 .nf { min-height: 100svh; display: flex; align-items: center; padding: 80px 0; }
 .nf .lead { margin-top: 28px; color: var(--ink-2); }
 .nf-act { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 40px; }
@@ -273,7 +275,7 @@ html.rm *, html.rm *::before, html.rm *::after { animation: none !important; }
 .prow > a:hover .pb-go { color: var(--ink); }
 @media (max-width: 760px) {
   .prow > a { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
-  .pb-meta { grid-auto-flow: column; justify-content: start; gap: 12px; }
+  .pb-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; }
 }
 
 .badge { display: inline-flex; align-items: center; gap: 10px; padding: 9px 14px; border: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent); border-radius: 999px; font: 500 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
