@@ -27,15 +27,27 @@ Necesita Python 3.12 o posterior, sin dependencias externas. Después revisá el
 
 | Archivo | Uso |
 | --- | --- |
-| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, encabezado, menú, pie, apariciones y publicaciones como índice |
-| `css/home.css` | Portada: pantalla dividida, sobre mí, publicaciones destacadas |
+| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, encabezado, menú, pie, apariciones, publicaciones como índice y el lenguaje cinematográfico (luz de color, vidrio) |
+| `css/home.css` | Portada: escena con el retrato, accesos de vidrio, franja inferior; quién soy, trayectoria, publicaciones destacadas y contacto |
 | `css/areas.css` | Gastronomía e IA: portada, narrativa, servicios, demostración, casos, método, trayectoria, contacto |
 | `css/publicaciones.css` | Biblioteca de publicaciones |
 | `js/main.js` | Común: menú, desplazamiento suave, apariciones, formularios, pestañas, filtros, barra inferior |
-| `js/split.js` | Portada: reacción al cursor, luz sobre la foto, elección del área y transición |
-| `js/lines.js`, `lines-engine.js`, `lines-worker.js` | Líneas de datos con red de nodos. Corren en un hilo aparte cuando el navegador lo permite |
+| `js/home.js` | Portada: luz y profundidad que siguen al cursor, acceso activo (mouse o teclado), elección del área, última visita y transición |
+| `js/lines.js`, `lines-engine.js`, `lines-worker.js` | Líneas de datos con red de nodos (portada de IA) y líneas de luz que unen los dos accesos de la portada (`ConnectEngine`). Corren en un hilo aparte cuando el navegador lo permite |
 | `js/gastronomia.js` | «Detrás de cada servicio hay una operación» |
 | `js/ia.js` | Demostración interactiva |
+
+## Retrato de la portada
+
+El retrato es la foto real (`assets/profile.jpeg`), recortada en el equipo con OpenCV, sin IA generativa: solo se quita la pared del fondo y no se toca el rostro. Para regenerarlo:
+
+```bash
+pip install opencv-python-headless pillow
+python3 tools/imagenes/recorte-retrato.py             # deja el recorte y dos vistas de control en tools/imagenes/
+python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp
+```
+
+Si se cambia la foto, hay que revisar las zonas marcadas a mano en el script (el mueble junto al hombro derecho). Los PNG y JPG de control no se guardan en el repositorio.
 
 ## Formularios
 

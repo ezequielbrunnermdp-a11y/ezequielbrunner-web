@@ -446,12 +446,18 @@ IA_PAGE = {
 # Lo justo para elegir: una promesa por área y dos datos acreditados. El catálogo vive en cada página.
 
 HOME = {
-    'tagline': 'Gestión gastronómica · Automatización e IA · Derecho y tecnología',
-    'intro_m': 'Gestión gastronómica, automatización con inteligencia artificial y Derecho aplicado a la tecnología.',
-    'proof': {
-        'gastronomia': [('15+', 'años en operaciones gastronómicas'), ('135', 'personas en equipos para eventos de gran escala')],
-        'automatizacion': [('02', 'automatizaciones propias en funcionamiento'), ('05', 'áreas: administración, ventas, operaciones, RR. HH. y gerencia')],
+    # portada cinematográfica (textos del brief de Ezequiel)
+    'name': ('Ezequiel', 'Brunner'),
+    'claim': ('Operaciones reales.', 'Tecnología que resuelve.'),
+    'sub': 'Dirección gastronómica, optimización de procesos y automatización inteligente.',
+    'doors': {
+        'gastronomia': {'k': '01', 'title': 'Gastronomía', 'sub': 'Dirección, operación y gestión de establecimientos.', 'go': 'Entrar'},
+        'automatizacion': {'k': '02', 'title': 'Automatización &amp; Inteligencia Artificial', 'title_m': 'Automatización &amp; IA',
+                           'sub': 'Procesos más simples, equipos más eficientes y decisiones con información.', 'go': 'Entrar'},
     },
+    'strip': [('#trayectoria', 'Trayectoria', '15+ años en operaciones gastronómicas'),
+              ('#publicaciones', 'Producción académica', 'Doctrina en SAIJ · Dossier n.º 335 · SSRN'),
+              ('#contacto', 'Contacto', 'WhatsApp · email')],
 }
 
 ABOUT = {

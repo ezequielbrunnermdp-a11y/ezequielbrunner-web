@@ -204,4 +204,101 @@
   };
 
   root.FieldEngine = Field;
+
+  /* ------------------------------------------------------------ líneas que conectan los dos universos (portada)
+     Varias hebras salen del borde interno de cada acceso, pasan por detrás del retrato y llevan pulsos de luz:
+     cobre del lado de Gastronomía, turquesa del lado de Automatización. Al acercarse a un acceso, los pulsos
+     corren hacia el otro lado y las hebras ganan intensidad. Movimiento orgánico con ruido, muy lento. */
+  var COP = [226, 152, 92], TEA = [92, 204, 190];
+  function tone(u, a) {
+    return 'rgba(' + Math.round(COP[0] + (TEA[0] - COP[0]) * u) + ', ' + Math.round(COP[1] + (TEA[1] - COP[1]) * u) + ', ' +
+      Math.round(COP[2] + (TEA[2] - COP[2]) * u) + ', ' + a.toFixed(3) + ')';
+  }
+  function bez(c, u) {
+    var v = 1 - u, a = v * v * v, b = 3 * v * v * u, d = 3 * v * u * u, e = u * u * u;
+    return [a * c[0] + b * c[2] + d * c[4] + e * c[6], a * c[1] + b * c[3] + d * c[5] + e * c[7]];
+  }
+
+  function Connect(ctx, opts) {
+    this.ctx = ctx;
+    this.t = opts.t || 0;
+    this.lite = !!opts.lite;
+    this.n = this.lite ? 4 : 7;
+    this.w = 0; this.h = 0; this.A = null;
+    this.mouse = { x: -9999, y: -9999, k: 0, tk: 0 };
+    this.act = 0.35; this.tact = 0.35; this.side = 0;
+    if (opts.act != null) { this.act = this.tact = opts.act; }
+    this.pulses = [];
+  }
+  Connect.prototype.resize = function (w, h, dpr) {
+    this.w = w; this.h = h;
+    var c = this.ctx.canvas;
+    c.width = Math.max(1, Math.round(w * dpr)); c.height = Math.max(1, Math.round(h * dpr));
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  Connect.prototype.anchors = function (a) { this.A = a; this.pulses = []; };
+  Connect.prototype.pointer = function (x, y, k) { this.mouse.x = x; this.mouse.y = y; this.mouse.tk = k; };
+  Connect.prototype.activate = function (v, side) { this.tact = 0.35 + 0.65 * Math.max(0, Math.min(1, v)); this.side = side || 0; };
+
+  /* hebra i: extremos repartidos a lo largo del borde de cada acceso y controles que se mueven despacio */
+  Connect.prototype.curve = function (i, t) {
+    var A = this.A, n = this.n, u = n > 1 ? 0.12 + 0.76 * i / (n - 1) : 0.5;
+    var p0x = A.ax1 + (A.ax2 - A.ax1) * u, p0y = A.ay1 + (A.ay2 - A.ay1) * u;
+    var p3x = A.bx1 + (A.bx2 - A.bx1) * u, p3y = A.by1 + (A.by2 - A.by1) * u;
+    var L = A.reach * (0.78 + 0.32 * (0.5 + 0.5 * noise(i * 1.7, t * 0.00011, 0.5)));
+    var wa = A.wob * noise(i * 2.3 + 10, t * 0.00015, 1.7), wb = A.wob * noise(i * 2.9 + 20, t * 0.00013, 3.1);
+    return [p0x, p0y, p0x + A.adx * L + wa * A.ady, p0y + A.ady * L + wa * A.adx + A.sag,
+            p3x + A.bdx * L + wb * A.bdy, p3y + A.bdy * L + wb * A.bdx + A.sag, p3x, p3y];
+  };
+
+  Connect.prototype.frame = function (dt, still) {
+    var ctx = this.ctx, w = this.w, h = this.h, A = this.A;
+    if (!w || !h || !A) return;
+    if (!still) this.t += dt;
+    var m = this.mouse;
+    m.k += (m.tk - m.k) * 0.08;
+    this.act += (this.tact - this.act) * (still ? 1 : 0.06);
+    var act = this.act, SAMPLES = 44, i, j, k;
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    var gx0 = Math.min(A.ax1, A.ax2), gx1 = Math.max(A.bx1, A.bx2);
+    var halo = ctx.createLinearGradient(gx0, 0, gx1, 0), line = ctx.createLinearGradient(gx0, 0, gx1, 0);
+    halo.addColorStop(0, tone(0, 0.05 + 0.08 * act)); halo.addColorStop(0.5, tone(0.5, 0.02 + 0.04 * act)); halo.addColorStop(1, tone(1, 0.05 + 0.08 * act));
+    line.addColorStop(0, tone(0, 0.2 + 0.4 * act)); line.addColorStop(0.5, tone(0.5, 0.07 + 0.16 * act)); line.addColorStop(1, tone(1, 0.2 + 0.4 * act));
+    var curves = [];
+    for (i = 0; i < this.n; i++) {
+      var c = this.curve(i, this.t);
+      curves.push(c);
+      ctx.beginPath();
+      for (j = 0; j <= SAMPLES; j++) {
+        var p = bez(c, j / SAMPLES);
+        if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+      }
+      ctx.strokeStyle = halo; ctx.lineWidth = 6; ctx.stroke();
+      ctx.strokeStyle = line; ctx.lineWidth = 1 + (i % 3 === 1 ? 0.5 : 0); ctx.stroke();
+    }
+    if (still) return;
+    /* pulsos: corren desde el acceso activo hacia el otro (o en ambos sentidos en reposo) */
+    var rate = (this.lite ? 0.5 : 1) * (0.022 + 0.09 * act);
+    if (Math.random() < rate && this.pulses.length < 14) {
+      var dir = this.side === 0 ? (Math.random() < 0.5 ? 1 : -1) : (this.side < 0 ? 1 : -1);
+      this.pulses.push({ i: (Math.random() * this.n) | 0, u: dir > 0 ? 0 : 1, d: dir, v: 0.00026 + Math.random() * 0.00024 });
+    }
+    for (k = this.pulses.length - 1; k >= 0; k--) {
+      var q = this.pulses[k];
+      q.u += q.d * q.v * dt;
+      if (q.u < 0 || q.u > 1) { this.pulses.splice(k, 1); continue; }
+      var cc = curves[q.i], head = bez(cc, q.u), tail = bez(cc, Math.max(0, Math.min(1, q.u - q.d * 0.09)));
+      var pg = ctx.createLinearGradient(tail[0], tail[1], head[0], head[1]);
+      pg.addColorStop(0, tone(q.u, 0)); pg.addColorStop(1, tone(q.u, 0.95));
+      ctx.strokeStyle = pg; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(tail[0], tail[1]);
+      var mid = bez(cc, Math.max(0, Math.min(1, q.u - q.d * 0.045)));
+      ctx.quadraticCurveTo(mid[0], mid[1], head[0], head[1]); ctx.stroke();
+      ctx.fillStyle = tone(q.u, 0.35);
+      ctx.beginPath(); ctx.arc(head[0], head[1], 4.5, 0, 6.2832); ctx.fill();
+    }
+  };
+
+  root.ConnectEngine = Connect;
 })(typeof self !== 'undefined' ? self : this);

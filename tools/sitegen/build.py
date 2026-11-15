@@ -38,7 +38,8 @@ def field_canvas(cls, t, mode, sizes='100vw'):
 
 
 def title_lines(a, key='title_lines'):
-    return ''.join(f'<span class="ln" style="--l:{i}"><span>{t}</span></span>' for i, t in enumerate(a[key]))
+    # las líneas van separadas por un espacio: no se ve (son bloques), pero el texto queda «línea uno línea dos»
+    return ' '.join(f'<span class="ln" style="--l:{i}"><span>{t}</span></span>' for i, t in enumerate(a[key]))
 
 
 def _norm_doc(d):
@@ -81,33 +82,44 @@ LEGACY_HOME = """<script>
 """
 
 
-def panel(a):
-    """Un universo de la portada: rótulo, título, una promesa y dos datos. Sin catálogo."""
-    k = a['key']
-    proof = ''.join(f'<li><span class="pp-n">{esc(n)}</span><span class="pp-l">{esc(l)}</span></li>' for n, l in HOME['proof'][k])
+PROCESS_SVG = ('<svg class="pg" viewBox="0 0 320 170" preserveAspectRatio="xMidYMid slice" focusable="false" aria-hidden="true">'
+               '<defs><linearGradient id="pg-l" x1="0" x2="1"><stop offset="0" stop-color="#82B0AA" stop-opacity=".15"/><stop offset=".5" stop-color="#a7e3d8" stop-opacity=".95"/><stop offset="1" stop-color="#82B0AA" stop-opacity=".2"/></linearGradient>'
+               '<radialGradient id="pg-g"><stop offset="0" stop-color="#bff3ea" stop-opacity=".95"/><stop offset="1" stop-color="#82B0AA" stop-opacity="0"/></radialGradient></defs>'
+               '<g class="pg-grid"><path d="M0 34H320M0 68H320M0 102H320M0 136H320M64 0V170M128 0V170M192 0V170M256 0V170"/></g>'
+               '<g class="pg-bars"><rect x="230" y="120" width="9" height="30"/><rect x="244" y="108" width="9" height="42"/><rect x="258" y="114" width="9" height="36"/><rect x="272" y="96" width="9" height="54"/><rect x="286" y="80" width="9" height="70"/></g>'
+               '<path id="pg-p1" class="pg-path" d="M18 112C52 112 58 58 96 58S142 106 178 94 222 42 262 44 300 66 306 66"/>'
+               '<path id="pg-p2" class="pg-path pg-path-b" d="M18 140C70 140 92 98 132 98S196 132 236 122 288 100 306 100"/>'
+               '<g class="pg-nodes"><circle cx="18" cy="112" r="4"/><circle cx="96" cy="58" r="4"/><circle cx="178" cy="94" r="4"/><circle cx="262" cy="44" r="4"/><circle cx="18" cy="140" r="3"/><circle cx="132" cy="98" r="3"/><circle cx="236" cy="122" r="3"/></g>'
+               '<circle class="pg-glow" r="12" fill="url(#pg-g)"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#pg-p1"/></animateMotion></circle>'
+               '<circle class="pg-dot" r="2.6"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#pg-p1"/></animateMotion></circle>'
+               '<circle class="pg-dot pg-dot-b" r="2"><animateMotion dur="5.4s" begin="-2s" repeatCount="indefinite"><mpath href="#pg-p2"/></animateMotion></circle>'
+               '</svg>')
+
+
+def door(k):
+    """Acceso a una especialidad: panel de vidrio con su imagen, título, subtítulo y acción."""
+    D = HOME['doors'][k]
+    a = GAS if k == 'gastronomia' else IA
     if k == 'gastronomia':
-        media = ('<div class="p-media pm-photo" aria-hidden="true">'
-                 + pic('equipo', cls='pm-base', sizes='(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw', prio=True)
-                 + '<div class="pm-litwrap">' + pic('equipo', cls='pm-lit', sizes='(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw') + '</div></div>')
+        media = '<span class="door-media dm-photo" aria-hidden="true">' + pic('equipo', cls='dm-img', sizes='(max-width: 1023px) 46vw, 26vw', widths=(600, 1000, 1800)) + '</span>'
     else:
-        media = field_canvas('p-media', 38000, 'panel', '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 62vw')
-    return f"""<article class="panel panel-{k}" data-panel="{k}" aria-labelledby="t-{k}">
+        media = '<span class="door-media dm-graph" aria-hidden="true">' + PROCESS_SVG + '</span>'
+    return f"""<a class="door door-{k}" id="door-{k}" href="{a['href']}" data-go="{k}">
 {media}
-<div class="p-shade" aria-hidden="true"></div>
-<div class="p-body">
-<p class="p-label"><span class="p-num">{a['num']}</span><span class="p-name">{esc(a['label'])}</span><span class="p-last">Tu última visita</span></p>
-<h2 class="p-title" id="t-{k}">{title_lines(a)}</h2>
-<p class="p-sub">{esc(a['subtitle'])}</p>
-<div class="p-more"><div class="p-more-in"><ul class="p-proof">{proof}</ul></div></div>
-<a class="p-cta" href="{a['href']}" data-go="{k}"><span>{esc(a['explore'])}</span> {ARR}</a>
-</div>
-</article>"""
+<span class="door-body">
+<span class="door-k" aria-hidden="true">{D['k']}</span>
+<span class="door-t"><span class="dt-l">{D['title']}</span><span class="dt-m" aria-hidden="true">{D.get('title_m', D['title'])}</span></span>
+<span class="door-s">{esc(D['sub'])}</span>
+<span class="door-go"><span>{esc(D['go'])}</span> {ARR}</span>
+</span>
+<span class="door-last" aria-hidden="true">Tu última visita</span>
+</a>"""
 
 
 def home():
     page = {'file': 'index.html', 'path': '/', 'area': None, 'css': 'home',
-            'title': 'Ezequiel Brunner · Asesoramiento gastronómico y automatización con IA',
-            'desc': 'Consultoría en gestión gastronómica y en automatización e inteligencia artificial para empresas. Costos, equipos, procesos, agentes, asistentes y tableros. Ezequiel Brunner, Mar del Plata.',
+            'title': 'Ezequiel Brunner · Operaciones reales. Tecnología que resuelve.',
+            'desc': 'Dirección gastronómica, optimización de procesos y automatización inteligente. Asesoramiento gastronómico y automatización con inteligencia artificial para empresas. Ezequiel Brunner, Mar del Plata.',
             'og': 'assets/og/inicio.jpg', 'og_alt': 'Ezequiel Brunner: asesoramiento gastronómico y automatización con inteligencia artificial',
             'pre_head': LEGACY_HOME,
             'ld': [{'@type': 'WebSite', 'name': 'Ezequiel Brunner', 'url': SITE + '/', 'inLanguage': 'es-AR'},
@@ -115,6 +127,8 @@ def home():
                     'founder': {'@id': SITE + '/#ezequiel'}, 'areaServed': 'AR', 'email': EMAIL,
                     'address': {'@type': 'PostalAddress', 'addressLocality': 'Mar del Plata', 'addressCountry': 'AR'},
                     'knowsAbout': ['Asesoramiento gastronómico', 'Automatización de procesos', 'Inteligencia artificial aplicada a empresas']}]}
+    nav = [('gastronomia.html', 'Gastronomía'), ('inteligencia-artificial.html', 'Automatización & IA'), ('#trayectoria', 'Trayectoria'), ('publicaciones.html', 'Publicaciones')]
+    cta = ('Contacto', '#contacto')
     dz = P['dossier']
     feat = [
         {'outlet': 'Biblioteca del Congreso', 'kind': 'Selección bibliográfica', 'human_date': 'Abril de 2026',
@@ -127,43 +141,70 @@ def home():
     for m in P['medios'] + P['gastro']:
         if m['outlet'] not in outlets and m['outlet'] != 'Instagram':
             outlets.append(m['outlet'])
+    npubs = len(DOCT) + 1 + len(P['medios']) + len(P['gastro'])
+    c0, c1 = HOME['claim']
+    strip = ''.join(f'<a href="{h}"><span class="cs-k">{esc(k)}</span><span class="cs-v">{esc(v)}</span>{ARR}</a>' for h, k, v in HOME['strip'])
     chapters = ''.join(f'<li class="ch" data-rv><span class="ch-n">{n}</span><h3 class="ch-t">{esc(t)}</h3><p>{esc(p)}</p></li>' for n, t, p in ABOUT['chapters'])
+    C = GAS_PAGE['career']
+    tl = ''.join(f'<li class="tl" data-rv><span class="tl-k">{esc(k)}</span><h4 class="tl-t">{esc(t)}</h4><p>{esc(p)}</p></li>' for k, t, p in C['timeline'])
+    facts = [('15', '+', 'años en operaciones gastronómicas, liderazgo de equipos y gestión de servicios'),
+             ('135', '', 'personas en equipos para eventos de gran escala'),
+             (str(npubs), '', 'publicaciones y apariciones en medios, con sus enlaces originales')]
+    facts_html = ''.join(f'<li><span class="fact-n"><span class="count" data-to="{n}">{n}</span>{s}</span><span class="fact-l">{esc(l)}</span></li>' for n, s, l in facts)
+    train = [('Universidad Kennedy · En curso', 'Abogacía — tercer año'), ('Formación tecnológica', 'Analista de Sistemas'),
+             ('Academia Gastro Argentina · 2024', 'Gerenciamiento Gastronómico, Recursos Humanos de la Gastronomía y Asesor Gastronómico')]
+    train_html = ''.join(f'<li><span class="tr-k">{esc(k)}</span><span class="tr-t">{esc(t)}</span></li>' for k, t in train)
+
     body = f"""<body class="pg-home">
-<a class="skip" href="#elegir">Saltar a la elección de área</a>
+{header(None, nav, cta=cta, home=True)}
+{menu(None, nav, cta=cta, home=True)}
 <main id="contenido">
-<section class="split" id="elegir" aria-label="Elegí un área de trabajo" data-split>
-<div class="split-top">
-<p class="st-tag">Mar del Plata · Argentina</p>
-<div class="st-id">
-<h1 class="st-brand"><a href="#elegir">Ezequiel Brunner</a></h1>
-<p class="st-line">{esc(HOME['tagline'])}</p>
+<section class="cine" id="elegir" aria-labelledby="cine-t" data-cine>
+<span class="anchor" id="inicio" aria-hidden="true"></span>
+<div class="cine-bg" aria-hidden="true"><span class="glow glow-warm"></span><span class="glow glow-cool"></span><span class="glow glow-core"></span></div>
+<div class="cine-lines" aria-hidden="true"><canvas data-connect data-a="#door-gastronomia" data-b="#door-automatizacion"></canvas></div>
+<h1 class="cine-name" id="cine-t"><span class="cn cn-a">{esc(HOME['name'][0])}</span> <span class="cn cn-b">{esc(HOME['name'][1])}</span></h1>
+<figure class="cine-portrait">
+<span class="rims" aria-hidden="true"><span class="rim rim-warm"></span><span class="rim rim-cool"></span></span>
+{pic('retrato-recorte', alt='Retrato de Ezequiel Brunner', cls='cp-img', sizes='(max-width: 640px) 293px, (max-width: 1023px) 373px, 613px', prio=True, w=697, h=1046, widths=(480, 697))}
+<span class="tint" aria-hidden="true"></span>
+</figure>
+<div class="cine-claim">
+<p class="cc-t"><span class="ln" style="--l:0"><span>{esc(c0)}</span></span> <span class="ln" style="--l:1"><span><em>{esc(c1)}</em></span></span></p>
+<p class="cc-s">{esc(HOME['sub'])}</p>
 </div>
-<nav class="st-nav" aria-label="Accesos"><a href="publicaciones.html">Publicaciones</a><a href="#contacto">Contacto</a></nav>
-</div>
-<p class="split-intro">{esc(HOME['intro_m'])}</p>
-{panel(GAS)}
-<div class="split-line" aria-hidden="true"><span class="sl-tag">Elegí un área</span></div>
-{panel(IA)}
-<a class="split-down" href="#sobre-mi"><span>Conocé mi trayectoria</span> <span class="sd-ico" aria-hidden="true">↓</span></a>
+<div class="cine-doors">{door('gastronomia')}{door('automatizacion')}</div>
+<nav class="cine-strip" aria-label="Trayectoria, producción académica y contacto">{strip}</nav>
 </section>
 
-<section class="sec about" id="sobre-mi" aria-labelledby="about-t">
+<section class="sec about amb amb-warm" id="sobre-mi" aria-labelledby="about-t">
 <div class="wrap about-grid">
-<figure class="about-photo" data-rv>{portrait('about-img')}<figcaption>Ezequiel Brunner · Mar del Plata</figcaption></figure>
 <div class="about-copy">
-<p class="label">{esc(ABOUT['label'])}</p>
+<p class="label">Quién soy</p>
 <h2 class="h2 h2-xl" id="about-t">{ABOUT['h2']}</h2>
 <p class="manifesto">{ABOUT['manifesto']}</p>
 <ol class="chapters">{chapters}</ol>
 <p class="about-note">{esc(ABOUT['note'])}</p>
-<div class="row-links">{tlink('Trayectoria completa', 'gastronomia.html#trayectoria')}{tlink('Publicaciones', 'publicaciones.html')}{tlink('LinkedIn', LINKEDIN, ext=True)}</div>
+</div>
+<figure class="about-photo" data-rv>{pic('operacion', alt=OPS_ALT, sizes='(max-width: 900px) 100vw, 40vw', lazy=True)}<figcaption>{esc(OPS_ALT)}.</figcaption></figure>
+</div>
+</section>
+
+<section class="sec home-career" id="trayectoria" aria-labelledby="hcar-t">
+<div class="wrap">
+<div class="sec-top">{sec_head('Trayectoria', 'Experiencia que se puede <em>comprobar.</em>', esc(C['intro']), h2_id='hcar-t')}
+{btn('Trayectoria completa', 'gastronomia.html#trayectoria', ghost=True)}</div>
+<ul class="facts">{facts_html}</ul>
+<div class="hc-cols">
+<div><h3 class="sub-h">Recorrido profesional</h3><ol class="timeline">{tl}</ol></div>
+<div><h3 class="sub-h">Formación</h3><ul class="training training-1">{train_html}</ul></div>
 </div>
 </div>
 </section>
 
-<section class="sec home-pubs" id="publicaciones" aria-labelledby="hp-t">
+<section class="sec home-pubs amb amb-cool" id="publicaciones" aria-labelledby="hp-t">
 <div class="wrap">
-<div class="sec-top">{sec_head('Publicaciones', 'Doctrina, investigación <em>y prensa.</em>', esc(P['heads']['doctrina']['intro']), h2_id='hp-t')}
+<div class="sec-top">{sec_head('Producción académica', 'Doctrina, investigación <em>y prensa.</em>', esc(P['heads']['doctrina']['intro']), h2_id='hp-t')}
 {btn('Ver la biblioteca completa', 'publicaciones.html', ghost=True)}</div>
 <ol class="plist plist-feat">{''.join(pub_row(f, desc=False) for f in feat)}</ol>
 <div class="outlets" data-rv><p class="label">En los medios</p><ul>{''.join(f'<li>{esc(o)}</li>' for o in outlets)}</ul></div>
@@ -185,7 +226,7 @@ def home():
 </main>
 {footer()}
 {wa_float()}
-{scripts(['gsap', 'split', 'lenis'], 'lines', 'split')}
+{scripts(['gsap', 'split', 'lenis'], 'lines', 'home')}
 </body>
 </html>"""
     write('index.html', head(page) + '\n' + body)
@@ -207,7 +248,7 @@ def hero(a, page):
 <div class="wrap hero-in">
 <p class="label hero-label" data-in="1">{esc(page['hero_label'])}</p>
 <h1 class="hero-t" id="hero-t">{title_lines(a)}</h1>
-<div class="hero-row">
+<div class="hero-row hero-glass">
 <p class="hero-sub" data-in="3">{esc(a['subtitle'])}</p>
 <div class="hero-cta" data-in="4">{btn(a['cta'], '#contacto')}{btn('Ver servicios', '#servicios', ghost=True)}</div>
 </div>
@@ -265,7 +306,8 @@ def bridge(b, href, other):
 
 
 def contact(c, kind, services, num='', context=''):
-    return f"""<section class="sec contact" id="contacto" aria-labelledby="contacto-t">
+    amb = 'amb-warm' if kind == 'gastronomia' else 'amb-cool'
+    return f"""<section class="sec contact amb {amb}" id="contacto" aria-labelledby="contacto-t">
 <div class="wrap contact-grid">
 <div class="contact-l">
 {sec_head(c['label'], c['h2'], esc(c['p']), h2_id='contacto-t', num=num)}
@@ -412,7 +454,7 @@ def gastronomia():
 {hero(GAS, G)}
 {narrative()}
 
-<section class="sec problems light" id="problemas" aria-labelledby="problemas-t">
+<section class="sec problems amb amb-warm" id="problemas" aria-labelledby="problemas-t">
 <div class="wrap">
 {sec_head(G['problems']['label'], G['problems']['h2'], esc(G['problems']['intro']), h2_id='problemas-t', num='01')}
 <ol class="probs">{probs}</ol>
@@ -520,7 +562,7 @@ def demo():
 <p class="dv-fine">Consumo semanal de aceite · últimas 5 semanas</p></div>
 <div class="dv-log"><span class="dv-dot"></span><span data-log>Pendiente de decisión</span></div>
 </div>"""
-    return f"""<section class="sec demo-sec" id="{D['id']}" aria-labelledby="{D['id']}-t">
+    return f"""<section class="sec demo-sec amb amb-cool" id="{D['id']}" aria-labelledby="{D['id']}-t">
 <span class="anchor" id="aplicaciones" aria-hidden="true"></span><span class="anchor" id="flujo" aria-hidden="true"></span>
 <div class="wrap">
 <div class="sec-top">{sec_head(D['label'], D['h2'], esc(D['intro']), h2_id=D['id'] + '-t', num='02')}<p class="badge">{esc(D['badge'])}</p></div>
@@ -547,7 +589,7 @@ def cases(K, num):
 </dl>
 <p class="case-tags">{'<i aria-hidden="true">·</i>'.join(f'<span>{esc(t)}</span>' for t in c['tags'])}</p>
 </article>""" for c in K['items'])
-    return f"""<section class="sec cases light" id="{K['id']}" aria-labelledby="{K['id']}-t">
+    return f"""<section class="sec cases amb amb-cool" id="{K['id']}" aria-labelledby="{K['id']}-t">
 <div class="wrap">
 {sec_head(K['label'], K['h2'], esc(K['intro']), h2_id=K['id'] + '-t', num=num)}
 <div class="case-grid">{items}</div>
@@ -732,7 +774,7 @@ def publicaciones():
 <section class="p-hero" aria-labelledby="ph-t">
 <div class="wrap">
 <p class="label" data-in="1">Publicaciones</p>
-<h1 class="pubs-title" id="ph-t"><span class="ln" style="--l:0"><span>Doctrina, investigación</span></span><span class="ln" style="--l:1"><span><em>y prensa.</em></span></span></h1>
+<h1 class="pubs-title" id="ph-t"><span class="ln" style="--l:0"><span>Doctrina, investigación</span></span> <span class="ln" style="--l:1"><span><em>y prensa.</em></span></span></h1>
 <div class="p-hero-row" data-in="3">
 <p class="lead">{esc(P['heads']['doctrina']['intro'])} {esc(P['heads']['medios']['h2'])}.</p>
 <ul class="p-counts">{''.join(f'<li><span class="pc-n">{n:02d}</span><span>{esc(t)}</span></li>' for n, t in counts)}</ul>

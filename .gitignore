@@ -1,3 +1,5 @@
 # cachés de Python del generador (tools/sitegen)
 __pycache__/
 *.pyc
+tools/imagenes/*.png
+tools/imagenes/*.jpg

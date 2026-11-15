@@ -129,9 +129,9 @@
   W.addEventListener('pageswap', function () { H.classList.remove('from-home'); });
 
   /* ------------------------------------------------ portada: el botón de WhatsApp aparece después de la elección */
-  var splitEl = $('[data-split]');
+  var splitEl = $('[data-split], [data-cine]');
   if (splitEl && 'IntersectionObserver' in W) {
-    new IntersectionObserver(function (es) { H.classList.toggle('split-in-view', es[0].intersectionRatio > 0.5); }, { threshold: [0, 0.5, 1] }).observe(splitEl);
+    new IntersectionObserver(function (es) { H.classList.toggle('split-in-view', es[0].intersectionRatio > 0.35); }, { threshold: [0, 0.35, 1] }).observe(splitEl);
   }
 
   /* ------------------------------------------------ sección activa en el menú */
