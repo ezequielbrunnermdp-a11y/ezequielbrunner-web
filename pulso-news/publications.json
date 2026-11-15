@@ -367,6 +367,41 @@
       "story_id": "17913071880581595",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "camareros-hotel-grupo-gestion",
+      "story_id": "17903870325386495",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "ayudante-cocina-grupo-gestion",
+      "story_id": "18081780305735975",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "ayudantes-cocina-manpower",
+      "story_id": "18222731560359037",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "camareros-cafeteria-grupo-mdp",
+      "story_id": "17999903487032668",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "mozos-coto-zona-gourmet",
+      "story_id": "18103305680386566",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
