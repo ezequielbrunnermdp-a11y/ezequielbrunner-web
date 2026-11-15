@@ -1,0 +1,60 @@
+/* Ezequiel Brunner — publicaciones: una biblioteca editorial.
+   Portada con cifras, filtros fijos al bajar, trabajos destacados y un índice por tipo con los enlaces originales. */
+
+.pg-pubs { --accent: var(--champagne); }
+
+/* ------------------------------------------------------------------ portada */
+.p-hero { padding: calc(var(--hdr) + clamp(64px, 9vw, 150px)) 0 clamp(36px, 4vw, 60px); }
+.pubs-title { font: 300 clamp(48px, 7.4vw, 132px)/.94 var(--serif); letter-spacing: -.034em; }
+.pubs-title em { font-style: italic; }
+.p-hero-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; margin-top: 48px; padding-top: 30px; border-top: 1px solid var(--line-2); }
+.p-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.p-counts li { display: grid; gap: 8px; font-size: 12.5px; line-height: 1.4; color: var(--ink-2); }
+.pc-n { font: 300 clamp(40px, 4vw, 64px)/1 var(--serif); color: var(--ink); font-feature-settings: "lnum"; }
+
+/* ------------------------------------------------------------------ filtros: quedan a mano al bajar */
+.pfilter { position: sticky; top: 0; z-index: 40; padding: 14px 0; background: rgba(16, 19, 21, .86); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-block: 1px solid var(--line); transition: top .6s var(--ease); }
+html:not(.menu-open) body:has(.hdr:not(.away)) .pfilter { top: var(--hdr); }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 16px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; font: 500 11.5px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); cursor: pointer; transition: background-color var(--t-short), border-color var(--t-short), color var(--t-short); }
+.chip-n { font: italic 300 13px/1 var(--serif); letter-spacing: 0; color: var(--accent); }
+.chip:hover { border-color: var(--line-3); color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg-deep); }
+.chip[aria-pressed="true"] .chip-n { color: var(--bg-deep); }
+
+/* ------------------------------------------------------------------ destacados */
+.p-sec { padding-block: clamp(64px, 7vw, 116px); }
+.p-sec.is-hidden { display: none; }
+.p-feat { border-top: 0; padding-top: clamp(40px, 5vw, 72px); }
+.feat-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--cg); align-items: stretch; }
+.dossier-card { position: relative; display: grid; align-content: end; gap: 16px; min-height: 520px; padding: clamp(28px, 4vw, 60px); overflow: hidden; border: 1px solid var(--line); background: radial-gradient(80% 70% at 85% 10%, rgba(216, 200, 168, .1), transparent 70%), var(--surface); transition: background-color .6s var(--ease); }
+.dossier-card:hover { background-color: var(--surface-2); }
+.dc-mark { position: absolute; top: -.12em; right: -.04em; font: italic 300 clamp(180px, 22vw, 340px)/1 var(--serif); letter-spacing: -.06em; color: var(--champagne); opacity: .12; transition: transform 1.2s var(--ease-out), opacity .6s; pointer-events: none; }
+.dossier-card:hover .dc-mark { transform: translate(-10px, 8px); opacity: .2; }
+.dc-t { font: 300 clamp(34px, 3.8vw, 62px)/1 var(--serif); letter-spacing: -.026em; }
+.dc-m { font: 500 11.5px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--champagne); }
+.dc-p { max-width: 60ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.62; }
+.dossier-card .pb-go, .fc .pb-go { margin-top: 6px; color: var(--ink); }
+.feat-list { display: grid; gap: var(--cg); grid-template-rows: repeat(3, minmax(0, 1fr)); }
+.fc > a { display: grid; align-content: space-between; gap: 14px; height: 100%; padding: clamp(22px, 2.4vw, 34px); border: 1px solid var(--line); background: var(--surface); transition: background-color var(--t-short) var(--ease), transform .7s var(--ease-out); }
+.fc > a:hover { background: var(--surface-2); transform: translateX(6px); }
+.fc-k { font: 500 11px/1.5 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.fc .pb-tag { justify-self: start; }
+.fc-t { font: 400 clamp(20px, 1.6vw, 25px)/1.25 var(--serif); letter-spacing: -.008em; text-wrap: pretty; }
+
+/* ------------------------------------------------------------------ índice por tipo */
+.p-count { font: 300 clamp(48px, 5vw, 84px)/1 var(--serif); color: var(--ink-3); font-feature-settings: "lnum"; }
+.plist-lib { margin-top: clamp(36px, 4vw, 56px); }
+
+@media (max-width: 900px) {
+  .p-hero-row { grid-template-columns: 1fr; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .dossier-card { min-height: 420px; }
+  .feat-list { grid-template-rows: none; }
+}
+@media (max-width: 700px) {
+  .p-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pc-n { font-size: 40px; }
+  .pfilter { padding: 10px 0; }
+}

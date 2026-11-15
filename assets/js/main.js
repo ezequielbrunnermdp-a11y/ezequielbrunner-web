@@ -1,5 +1,6 @@
 /* Ezequiel Brunner — comportamiento común a todas las páginas.
-   GSAP, ScrollTrigger, SplitText y Lenis mejoran la experiencia, pero el sitio funciona sin ellos. */
+   GSAP, SplitText y Lenis (y ScrollTrigger en las áreas) mejoran la experiencia, pero el sitio funciona sin ellos.
+   Lo propio de cada página está en split.js (portada), gastronomia.js, ia.js y lines.js (líneas de datos). */
 (function () {
   'use strict';
   var D = document, W = window, H = D.documentElement;
@@ -116,24 +117,22 @@
     setTimeout(function () { t.focus({ preventScroll: true }); }, RM ? 0 : 700);
   });
 
-  /* ------------------------------------------------ transiciones entre páginas */
-  var VT = ('onpagereveal' in W) && W.CSS && CSS.supports && CSS.supports('view-transition-name: a');
+  /* ------------------------------------------------ transiciones entre páginas
+     Con View Transitions (Chrome, Edge, Safari 18.2+) el navegador anima el paso de una página a otra;
+     sin ellas, se navega al instante. No hay demoras artificiales. */
   D.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href]');
-    if (!a) return;
-    if (a.hasAttribute('data-go-area')) { try { localStorage.setItem('eb:area', a.getAttribute('data-go-area')); } catch (_) {} }
-    if (e.defaultPrevented || VT || RM || a.hasAttribute('data-go')) return;
-    if (e.button > 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download')) return;
-    var href = a.getAttribute('href');
-    if (/^(mailto|tel):/i.test(href)) return;
-    var url = new URL(a.href, location.href);
-    if (url.origin !== location.origin) return;
-    if (url.pathname === location.pathname && url.hash) return;
-    e.preventDefault();
-    H.classList.add('leaving');
-    setTimeout(function () { location.href = url.href; }, 320);
+    var a = e.target.closest && e.target.closest('a[data-go-area]');
+    if (a) { try { localStorage.setItem('eb:area', a.getAttribute('data-go-area')); } catch (_) {} }
   });
-  W.addEventListener('pageshow', function () { H.classList.remove('leaving'); });
+
+  // al salir de un área, su portada ya no participa de la transición siguiente
+  W.addEventListener('pageswap', function () { H.classList.remove('from-home'); });
+
+  /* ------------------------------------------------ portada: el botón de WhatsApp aparece después de la elección */
+  var splitEl = $('[data-split]');
+  if (splitEl && 'IntersectionObserver' in W) {
+    new IntersectionObserver(function (es) { H.classList.toggle('split-in-view', es[0].intersectionRatio > 0.5); }, { threshold: [0, 0.5, 1] }).observe(splitEl);
+  }
 
   /* ------------------------------------------------ sección activa en el menú */
   var navLinks = $$('.nav a[data-sec]');
@@ -166,18 +165,32 @@
     rvs.forEach(function (el) { rio.observe(el); });
   } else rvs.forEach(function (el) { el.removeAttribute('data-rv'); });
 
-  // títulos: cada renglón sube desde su propia línea
-  if (!RM && G && ST && SPLIT) {
-    var titles = $$('.sec .h2, .sub-h').filter(function (h) { return !h.closest('.capas'); });
+  // títulos: cada renglón sube desde su propia línea cuando el título entra en pantalla
+  if (!RM && G && SPLIT && 'IntersectionObserver' in W) {
+    var titles = $$('.sec .h2, .sub-h').filter(function (h) { return !h.closest('.nar'); });
+    var tio = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        tio.unobserve(en.target);
+        var st = en.target._rv; if (!st) return;
+        st.shown = true;
+        G.to(st.lines, { yPercent: 0, duration: 1.15, ease: 'power4.out', stagger: 0.08, overwrite: true });
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
     var startSplit = function () {
       titles.forEach(function (h) {
+        var below = h.getBoundingClientRect().top > W.innerHeight * 0.92;
+        if (!below) return;                      // lo que ya se ve al cargar no se anima
+        h._rv = { shown: false, lines: [] };
         try {
           SPLIT.create(h, {
             type: 'lines', mask: 'lines', linesClass: 'rv-l', autoSplit: true, aria: 'auto',
             onSplit: function (self) {
-              return G.from(self.lines, { yPercent: 108, duration: 1.25, ease: 'power4.out', stagger: 0.085, scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
+              h._rv.lines = self.lines;
+              G.set(self.lines, { yPercent: h._rv.shown ? 0 : 108 });
             }
           });
+          tio.observe(h);
         } catch (err) { /* el título queda visible sin animación */ }
       });
     };
@@ -378,12 +391,6 @@
     });
   });
 
-  /* ------------------------------------------------ flujo de ejemplo: se enciende cuando está a la vista */
-  var flowEl = $('[data-flow]');
-  if (flowEl && !RM && 'IntersectionObserver' in W) {
-    new IntersectionObserver(function (es) { flowEl.classList.toggle('in', es[0].isIntersecting); }, { threshold: 0.35 }).observe(flowEl);
-  }
-
   /* ------------------------------------------------ barra inferior en el celular */
   var dock = $('[data-dock]'), heroEl = $('.hero'), contactEl = $('#contacto'), footEl = $('.ftr');
   if (dock && heroEl && 'IntersectionObserver' in W) {
@@ -406,83 +413,6 @@
       });
     }, { passive: true });
   }
-
-  /* ------------------------------------------------ por capas: la sección queda fija y la pieza se arma al bajar */
-  (function capas() {
-    var sec = $('#capas');
-    if (!sec || !G || !ST || RM) return;
-    sec.classList.add('live');
-    var steps = $$('.cstep', sec), bars = $$('.capas-bar i', sec), box = $('.cs-box', sec);
-    var P = function (n) { return $('.cp-p' + n, sec); }, C = function (n) { return $('.cp-c' + n, sec); };
-    var tones = ['#101315', '#15120F', '#0F1417', '#14110F', '#101315'];
-    var fall = function () { return -Math.min(W.innerHeight * 0.6, 540); };
-    G.set(steps.slice(1), { autoAlpha: 0, y: 26 });
-    G.set([P(2), P(3), P(4), C(2), C(3), C(4)], { autoAlpha: 0 });
-    G.set(bars[0], { backgroundSize: '100% 100%' });
-    G.from(P(1), { y: -50, autoAlpha: 0, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: sec, start: 'top 75%', once: true } });
-    var tl = G.timeline({ defaults: { ease: 'none' } });
-    for (var k = 2; k <= 5; k++) {
-      var at = (k - 2) * 1.4 + 0.3;
-      tl.to(steps[k - 2], { autoAlpha: 0, y: -26, duration: 0.35, ease: 'power2.in' }, at);
-      tl.fromTo(steps[k - 1], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power3.out' }, at + 0.32);
-      tl.to(sec, { backgroundColor: tones[k - 1], duration: 0.8 }, at);
-      tl.to(bars[k - 1], { backgroundSize: '100% 100%', duration: 0.5 }, at + 0.2);
-      if (k <= 4) {
-        tl.fromTo(C(k), { autoAlpha: 0, y: fall, rotation: k % 2 ? 3 : -4, scale: 1.03 }, { autoAlpha: 1, y: 0, rotation: 0, scale: 1, duration: 0.9, ease: 'power3.out' }, at);
-        tl.to(P(k), { autoAlpha: 1, duration: 0.12 }, at + 0.86);
-        tl.to([C(k), P(k - 1)], { autoAlpha: 0, duration: 0.1 }, at + 0.96);
-      } else {
-        tl.to(box, { scale: 1.05, duration: 0.9, ease: 'power2.inOut' }, at);
-      }
-    }
-    tl.to({}, { duration: 0.5 });
-    ST.create({
-      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 2.6); },
-      pin: $('.capas-pin', sec), scrub: 0.7, animation: tl, invalidateOnRefresh: true, anticipatePin: 1
-    });
-  })();
-
-  /* ------------------------------------------------ la palabra «operación» se abre hasta mostrar al equipo */
-  (function zoom() {
-    var sec = $('[data-zoom]');
-    if (!sec || !G || !ST || RM) return;
-    var svg = $('.zoom-mask', sec), word = $('.zoom-word', sec), text = $('text', sec), veil = $('.zoom-veil', sec);
-    var copy = $('.zoom-copy', sec), pin = $('.zoom-pin', sec), mask = $('mask', sec), rect = $('mask rect', sec);
-    var origin = { x: 800, y: 500 };
-    function fit() {
-      // unidades con alto 900: el ancho acompaña la proporción de la pantalla
-      var vw = Math.max(1, pin.clientWidth), vh = Math.max(1, pin.clientHeight), w2 = Math.round(900 * vw / vh);
-      svg.setAttribute('viewBox', '0 0 ' + w2 + ' 900');
-      rect.setAttribute('width', w2); veil.setAttribute('width', w2); mask.setAttribute('width', w2);
-      text.setAttribute('x', w2 / 2);
-      text.style.fontSize = '330px';
-      var len = text.getComputedTextLength() || 1;
-      var fs = Math.min(420, 330 * (w2 * 0.86) / len);
-      text.style.fontSize = fs + 'px';
-      var base = 450 + fs * 0.28;
-      text.setAttribute('y', base);
-      // el zoom entra por el trazo de la «i»: la letra termina cubriendo toda la pantalla
-      try {
-        var box = text.getExtentOfChar(6);
-        origin = { x: box.x + box.width / 2, y: base - fs * 0.2 };
-      } catch (_) { origin = { x: w2 / 2, y: 450 }; }
-    }
-    fit();
-    sec.classList.add('live');
-    G.set(copy, { autoAlpha: 0, y: 24 });
-    var tl = G.timeline({ defaults: { ease: 'none' } });
-    tl.to({}, { duration: 0.18 })
-      .to(word, { scale: 46, svgOrigin: function () { return origin.x + ' ' + origin.y; }, duration: 1, ease: 'power3.in' })
-      .to(veil, { opacity: 0, duration: 0.42 }, '-=0.58')
-      .to(copy, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.05')
-      .to({}, { duration: 0.25 });
-    ST.create({
-      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 1.9); },
-      pin: pin, scrub: 0.6, animation: tl, invalidateOnRefresh: true, anticipatePin: 1,
-      onUpdate: function (st) { pin.classList.toggle('open', st.progress > 0.72); },
-      onRefreshInit: function () { fit(); }
-    });
-  })();
 
   if (ST) W.addEventListener('load', function () { ST.refresh(); });
 })();
