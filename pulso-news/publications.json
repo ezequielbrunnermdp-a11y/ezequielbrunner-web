@@ -432,6 +432,41 @@
         "camareros-cafeteria-grupo-mdp",
         "mozos-coto-zona-gourmet"
       ]
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "grupo-fava-auxiliar-logistica",
+      "story_id": "18015471203762918",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "animal-center-vendedor-mostrador",
+      "story_id": "18135796108805857",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "taranto-vendedor-viajante",
+      "story_id": "18074112401600706",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "cencosud-makro-coordinador-mantenimiento",
+      "story_id": "17875546509641323",
+      "status": "published",
+      "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "miniso-promotores-venta-mdp",
+      "story_id": "18106388027010108",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
