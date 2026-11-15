@@ -217,7 +217,7 @@ Con movimiento reducido no hay animaciones: la palabra y las líneas quedan quie
 
 ## 8. Digital Experience 2026 (15 de noviembre de 2026)
 
-Este punto describe la versión vigente. Donde contradice a los anteriores, vale este.
+La portada y el lenguaje visual de este punto fueron reemplazados por el punto 9; el resto sigue vigente.
 
 ### Auditoría (fase A)
 
@@ -405,6 +405,128 @@ El LCP es ahora un texto y queda en el orden de los 2,5 s. Lo que falta para baj
 - **Analítica:** no se agregó. Si se quiere, conviene una herramienta respetuosa de la privacidad (por ejemplo Plausible, o Netlify Analytics en el plan de Netlify), configurada antes de activarla.
 - **Fotos:** hay tres fotos reales (equipo, coordinación y retrato). Más fotos propias de trabajo (cocina, capacitación, aperturas) permitirían enriquecer Gastronomía.
 - **Para confirmar:** la redacción de los dos casos reales de automatización y el email de postulaciones (rrhhmdpgastronomia@gmail.com).
+
+## 9. Rediseño cinematográfico (15 de noviembre de 2026)
+
+Este punto describe la versión vigente. Donde contradice a los anteriores (en especial la portada del punto 8), vale este.
+
+**Referencia.** La imagen de referencia que menciona el pedido no llegó adjunta. Se trabajó con su descripción escrita:
+
+- fondo negro profundo y un retrato cinematográfico al centro;
+- Gastronomía en luz cobre a la izquierda e IA en turquesa a la derecha, separadas por la luz y no por cortes;
+- dos accesos grandes en paneles de vidrio, unidos por líneas de luz;
+- navegación limpia arriba y, abajo, trayectoria, producción académica y contacto.
+
+El personaje de la imagen de referencia, generado con IA, no se usó.
+
+### Retrato
+
+- Es la foto real (`assets/profile.jpeg`). Se recortó en el equipo con OpenCV (GrabCut), sin IA generativa: solo se quitó la pared del fondo. El rostro y los rasgos no se modificaron. El script es `tools/imagenes/recorte-retrato.py`.
+- La integración es solo con CSS:
+  - una máscara elíptica funde los hombros, que la foto corta en línea recta;
+  - luces de borde cobre y turquesa toman la forma de la silueta (un trazado vectorial de 1,6 KB dentro del CSS) y se difuminan alrededor de la figura;
+  - un tono suave y un contraste leve lo integran a la escena.
+- El retrato se mueve como bloque, como máximo 5 px, y no se escala ni se deforma.
+- Peso: 37 KB (AVIF) o 40 KB (WebP); en celulares, 13 a 21 KB.
+
+### Portada
+
+- **Jerarquía:** quién soy (retrato y nombre) → qué hago («Operaciones reales. / Tecnología que resuelve.» y «Dirección gastronómica, optimización de procesos y automatización inteligente.») → los dos accesos → trayectoria, producción académica y contacto. Después siguen «Quién soy», la trayectoria, la producción académica y el contacto.
+- **Escritorio:** el nombre flanquea el rostro a la altura de los ojos, por detrás del retrato. La propuesta va sobre el torso, los accesos a los costados y la franja de vidrio abajo.
+- **Accesos** (paneles de vidrio):
+  - **Gastronomía:** la foto real del equipo con tono cobre. «Dirección, operación y gestión de establecimientos.»
+  - **Automatización & Inteligencia Artificial:** un gráfico de proceso animado (nodos, recorridos y barras), sin robots ni cerebros. «Procesos más simples, equipos más eficientes y decisiones con información.»
+- **Líneas de luz:** siete hebras de cobre a turquesa unen los dos accesos y llevan pulsos hacia el área activa. Se dibujan en un hilo aparte (Worker con OffscreenCanvas) y se pausan fuera de pantalla.
+- **Tablet:** retrato, nombre y propuesta en columna, y los dos accesos lado a lado.
+- **Celular:** el retrato toma el alto que dejan libre el nombre, la propuesta y los accesos. Así, los dos accesos se ven completos en la primera pantalla desde 320 × 568, también en un iPhone con las barras de Safari visibles (390 × 664).
+- **Pantallas bajas de escritorio** (por ejemplo 1440 × 700 o una tablet apaisada): el retrato gana alto y los accesos se compactan para que el nombre no los toque.
+- La portada no muestra catálogos: los servicios están en cada área.
+
+### Movimiento
+
+| Efecto | Qué hace | Cuándo | Táctil | Movimiento reducido |
+| --- | --- | --- | --- | --- |
+| A. Luz que responde | Las luces cobre y turquesa siguen al cursor con inercia y se inclinan hacia el área activa | Cursor | Luces fijas | Luces fijas |
+| B. Profundidad | Fondo, nombre y retrato se desplazan en capas (hasta 15, 7 y 5 px). El rostro no se deforma | Cursor | No | No |
+| C. Líneas de luz | Siete hebras con pulsos que viajan hacia el área activa | Siempre, en pausa fuera de pantalla | Sí | Un cuadro quieto |
+| D. Acceso activo | El panel sube 8 px, se enciende su perímetro, la escena cambia de temperatura y la flecha avanza | Cursor o foco del teclado | Leve presión al tocar | Sin animación |
+| E. Transición entre páginas | El panel, su imagen y su título se convierten en el panel de vidrio, la portada y el título del área, en 0,7 s | Al elegir un acceso | Igual (Safari 18.2+) | Desactivada |
+| F. Apariciones | Entrada escalonada del retrato, el nombre, la propuesta y los accesos; títulos línea por línea y contenidos al verse | Al cargar y al desplazarse | Igual | Todo visible desde el inicio |
+
+### Lenguaje común en las páginas internas
+
+- Fondo negro con luz de color en las esquinas: cobre en Gastronomía, turquesa en IA y champagne en Publicaciones.
+- **Paneles de vidrio:** el texto de la portada de cada área (es el mismo panel que se eligió en la portada), las etapas, los casos, la demostración y los formularios.
+- Las líneas de progreso brillan con el color del área.
+- Se retiraron las secciones claras, que cortaban la continuidad.
+- Publicaciones conserva los 31 enlaces originales y la distinción por tipo. El contacto mantiene WhatsApp, email y los formularios.
+
+### Corrección: transición entre páginas
+
+En la versión publicada, la transición entre páginas se cancelaba en cerca de la mitad de las navegaciones. Chromium informaba «ViewTransition opt-in disabled».
+
+- **Causa:** un script inicial consultaba la preferencia de movimiento antes de que llegara `main.css`, donde estaba la regla `@view-transition`.
+- **Arreglo:** la regla va en línea en el `<head>` de cada página.
+- **Resultado:** 10 de 10 navegaciones con transición (antes, 3 de 6). Panel, imagen y título viajan desde el acceso elegido, en las dos áreas.
+
+### Rendimiento: publicado y rediseño
+
+Mediana de 3 corridas por página. Lighthouse 12.6.1, perfil móvil (4G lenta simulada y CPU ×4), mismo servidor local para las dos versiones. «Publicado» es el código de `main`, idéntico al sitio actual.
+
+| Página | Rendimiento | LCP | TBT | FCP | CLS | Peso | Accesibilidad |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Inicio | 97 → 96 | 2,51 → 2,81 s | 0 → 0 ms | 0,93 → 0,94 s | 0 → 0 | 297 → 300 KB | 100 → 100 |
+| Gastronomía | 97 → 97 | 2,54 → 2,61 s | 5 → 20 ms | 0,97 → 0,96 s | 0 → 0 | 300 → 301 KB | 100 → 100 |
+| Automatización & IA | 98 → 97 | 2,45 → 2,61 s | 12 → 2 ms | 0,95 → 0,96 s | 0 → 0 | 254 → 256 KB | 100 → 100 |
+| Publicaciones | 99 → 99 | 2,14 → 2,15 s | 3 → 0 ms | 0,94 → 0,95 s | 0 → 0 | 200 → 201 KB | 100 → 100 |
+
+Buenas prácticas y SEO: 100 en las cuatro páginas, en las dos versiones.
+
+- **Inicio:** el elemento principal ahora es la foto del retrato, y antes era un texto. Por eso el LCP sube 0,3 s en la red simulada. El peso es el mismo: la silueta de las luces de borde es un trazado vectorial de 1,6 KB dentro del CSS, sin otra descarga, y la foto del acceso de Gastronomía tiene una versión de 600 px. Antes de esos dos ajustes, la portada daba 94 y 3,04 s.
+- **Páginas internas:** quedan prácticamente iguales. El panel de vidrio sobre la portada de cada área suma algo de trabajo de dibujo (+0,1 s de LCP).
+
+### Accesibilidad y pruebas
+
+- **64 pruebas de comportamiento, todas superadas.** 23 cubren la portada nueva:
+  - nombre, claim, subtítulo y textos de los accesos exactos;
+  - retrato real con texto alternativo;
+  - luz y escena que responden al cursor y al teclado;
+  - elección inmediata, área guardada, transición y última visita;
+  - franja inferior;
+  - en el celular, los dos accesos en la primera pantalla y el toque que navega.
+- **Matriz de accesibilidad y maquetación** (13 tamaños × 5 páginas, incluidos 375 × 548 y 390 × 664 con las barras del navegador), sin observaciones:
+  - sin desplazamiento horizontal;
+  - sin textos que se pisen;
+  - controles con nombre;
+  - un h1 por página;
+  - objetivos táctiles de al menos 24 × 24 px.
+- **Primera pantalla de la portada:** 24 tamaños, de 320 × 568 a 2560 × 1440, sin superposiciones entre nombre, propuesta y accesos.
+- **Títulos en varias líneas:** el texto queda separado («Operaciones reales. Tecnología que resuelve.»). Antes quedaba pegado para lectores de pantalla y buscadores («reales.Tecnología»).
+- **Marca del encabezado:** el objetivo táctil pasa a 44 px de alto.
+
+### Archivos
+
+- **Nuevos:**
+  - `assets/js/home.js`, que reemplaza a `split.js`;
+  - `assets/img/retrato-recorte*.avif|webp` y `equipo-600.avif|webp`, la foto del acceso de Gastronomía;
+  - `tools/imagenes/recorte-retrato.py`.
+- **Cambiados:**
+  - `assets/css/home.css` (reescrito), `main.css`, `areas.css` y `publicaciones.css`;
+  - `assets/js/lines*.js` y `main.js`;
+  - el generador (`tools/sitegen/`).
+- **Sin cambios:**
+  - `netlify.toml` y `_redirects`;
+  - `pulso-news/`, `public/pulso-informativo/` y las automatizaciones de GitHub Actions;
+  - los formularios.
+
+### Limitaciones
+
+- **Imagen de referencia:** no llegó. Con la imagen se puede ajustar la composición, la intensidad de la luz y la tipografía.
+- **Resolución del retrato:** la foto mide 697 × 1046 px y en pantallas grandes se ve algo blanda. Una foto de mayor resolución, con fondo liso y luz lateral, daría un resultado más nítido.
+- **Navegadores:**
+  - sin `backdrop-filter`, los paneles se ven translúcidos sin desenfoque, igual de legibles;
+  - Firefox navega sin transición.
+- **Dispositivos:** no hubo pruebas en dispositivos físicos. La vista previa de Netlify sirve para revisarlo en celulares reales.
 
 ## Operación del sitio
 

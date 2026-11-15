@@ -3,7 +3,7 @@ import json
 from urllib.parse import quote
 from content import esc, SITE, EMAIL, LINKEDIN, ABOUTME, GAS, IA, WA_URL, WA_DISPLAY
 
-V = '20261115'
+V = '20261115b'
 
 ARR = '<span class="arr" aria-hidden="true">→</span>'
 EXT = '<span class="arr ext" aria-hidden="true">↗</span>'
@@ -70,6 +70,7 @@ def head(page):
 <html lang="es-AR" class="no-js"{f' data-area="{page["area"]}"' if page.get('area') else ''}>
 <head>
 <meta charset="utf-8">
+<style>@view-transition {{ navigation: auto; }} @media (prefers-reduced-motion: reduce) {{ @view-transition {{ navigation: none; }} }}</style>
 {page.get('pre_head', '')}<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 <meta name="description" content="{esc(page['desc'])}">
@@ -101,19 +102,19 @@ def area_of(key):
     return GAS if key == 'gastronomia' else IA
 
 
-def header(area_key, nav, cta=None):
+def header(area_key, nav, cta=None, home=False):
     """Encabezado de las áreas y de publicaciones. area_key: gastronomia | automatizacion | None."""
     area = area_of(area_key) if area_key else None
-    tag = esc(area['label']) if area else 'Publicaciones'
+    tag = esc(area['label']) if area else ('' if home else 'Publicaciones')
     links = ''.join(f'<a href="{h}"{" data-sec" if h.startswith("#") else ""}>{esc(t)}</a>' for h, t in nav)
     cta = cta or ((area['cta'], '#contacto') if area else ('Contacto', '#contacto'))
     return f"""<a class="skip" href="#contenido">Saltar al contenido</a>
 <header class="hdr" data-hdr>
 <div class="hdr-in">
-<a class="brand" href="index.html#elegir"><span class="brand-name">Ezequiel Brunner</span><span class="brand-area">{tag}</span><span class="sr"> · volver a la portada</span></a>
+<a class="brand" href="index.html#elegir"><span class="brand-name">Ezequiel Brunner</span>{f'<span class="brand-area">{tag}</span>' if tag else ''}<span class="sr"> · volver a la portada</span></a>
 <nav class="nav" aria-label="Secciones">{links}</nav>
 <div class="hdr-act">
-<a class="switch" href="index.html#elegir" aria-label="Cambiar de área" data-switch>{SWITCH_ICON}<span class="switch-t">Cambiar de área</span></a>
+{'' if home else f'<a class="switch" href="index.html#elegir" aria-label="Cambiar de área" data-switch>{SWITCH_ICON}<span class="switch-t">Cambiar de área</span></a>'}
 <a class="btn btn-sm hdr-cta" href="{cta[1]}">{esc(cta[0])}</a>
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn><span class="mb-lines" aria-hidden="true"><i></i><i></i></span><span class="sr">Abrir menú</span></button>
 </div>
@@ -121,20 +122,20 @@ def header(area_key, nav, cta=None):
 </header>"""
 
 
-def menu(area_key, nav, cta=None):
+def menu(area_key, nav, cta=None, home=False):
     area = area_of(area_key) if area_key else None
     other = (IA if area is GAS else GAS) if area else None
     items = ''.join(f'<li><a href="{h}"><span class="mi-n">{i + 1:02d}</span>{esc(t)}</a></li>' for i, (h, t) in enumerate(nav))
     cta = cta or ((area['cta'], '#contacto') if area else ('Contacto', '#contacto'))
-    switch = (f'<a class="menu-switch" href="index.html#elegir">{SWITCH_ICON}<span>Cambiar de área</span></a>'
-              + (f'<a class="menu-other" href="{other["href"]}">Ir a {esc(other["label"])} {ARR}</a>' if other else ''))
+    switch = '' if home else (f'<a class="menu-switch" href="index.html#elegir">{SWITCH_ICON}<span>Cambiar de área</span></a>'
+                              + (f'<a class="menu-other" href="{other["href"]}">Ir a {esc(other["label"])} {ARR}</a>' if other else ''))
     return f"""<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú" hidden data-menu>
 <div class="menu-in">
 <nav aria-label="Menú principal"><ol>{items}</ol></nav>
 <div class="menu-foot">
 <a class="btn" href="{cta[1]}">{esc(cta[0])} {ARR}</a>
 <a class="menu-wa" href="{wa_link(area['label'] if area else '')}" target="_blank" rel="noopener noreferrer">{WA_ICON}<span>WhatsApp · {WA_DISPLAY}</span></a>
-<div class="menu-sw">{switch}</div>
+{f'<div class="menu-sw">{switch}</div>' if switch else ''}
 <a class="menu-mail" href="mailto:{EMAIL}">{EMAIL}</a>
 </div>
 </div>

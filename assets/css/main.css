@@ -41,9 +41,10 @@
 }
 html[data-area="gastronomia"] { --accent: var(--copper); }
 html[data-area="automatizacion"] { --accent: var(--teal); }
-@view-transition { navigation: auto; }
+/* la regla @view-transition va en línea en el <head> de cada página (tpl.py): si llega con este archivo, a veces la
+   página nueva se evalúa antes de cargarlo y Chromium cancela la transición */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .55s; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-::view-transition-group(area-media), ::view-transition-group(area-title) { animation-duration: .7s; animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
+::view-transition-group(area-media), ::view-transition-group(area-title), ::view-transition-group(area-panel) { animation-duration: .7s; animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
 ::view-transition-old(area-title), ::view-transition-new(area-title) { height: 100%; object-fit: none; object-position: left bottom; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg-deep); color-scheme: dark; scroll-padding-top: calc(var(--hdr) + 16px); }
@@ -113,7 +114,7 @@ a:hover .ext { transform: translate(3px, -3px); }
 .hdr.solid { background: rgba(16, 19, 21, .8); -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15); border-bottom-color: var(--line); }
 .hdr.away { transform: translateY(-101%); }
 .hdr-in { display: flex; align-items: center; gap: 36px; height: 100%; width: min(100% - 2 * var(--gut), 1640px); margin-inline: auto; }
-.brand { display: flex; flex-direction: column; margin-right: auto; line-height: 1; }
+.brand { display: flex; flex-direction: column; justify-content: center; min-height: 44px; margin-right: auto; line-height: 1; }
 .brand-name { font: 400 21px/1.05 var(--serif); letter-spacing: -.01em; }
 .brand-area { margin-top: 6px; font: 500 10.5px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
 .nav { display: flex; gap: 30px; }
@@ -154,8 +155,8 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 @keyframes fade-in { from { opacity: 0; } }
 .ln { display: block; overflow: hidden; padding: .1em 0 .14em; margin: -.1em 0 -.14em; }
 .ln > span { display: block; }
-html.js:not(.rm):not(.ready) .split .ln > span, html.js:not(.rm):not(.ready) .hero .ln > span, html.js:not(.rm):not(.ready) .p-hero .ln > span { opacity: 0; }
-html.js.ready:not(.rm) .split .ln > span, html.js.ready:not(.rm) .hero .ln > span, html.js.ready:not(.rm) .p-hero .ln > span { animation: ln-rise var(--t-long) var(--ease-out) backwards; animation-delay: calc(.06s + var(--l, 0) * .09s); }
+html.js:not(.rm):not(.ready) .hero .ln > span, html.js:not(.rm):not(.ready) .p-hero .ln > span { opacity: 0; }
+html.js.ready:not(.rm) .hero .ln > span, html.js.ready:not(.rm) .p-hero .ln > span { animation: ln-rise var(--t-long) var(--ease-out) backwards; animation-delay: calc(.06s + var(--l, 0) * .09s); }
 .about-grid, .hc-grid, .value-grid, .career-top, .contact-grid, .faq-grid, .research-top, .research-about, .tabs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--cg); }
 .about-photo img, .career-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 22%; }
 .home-contact, .pubs-cta { background: var(--bg-deep); }
@@ -218,11 +219,6 @@ html.js:not(.rm) [data-rv].in { opacity: 1; transform: none; }
 .menu-wa .ico { width: 18px; height: 18px; color: #25D366; }
 .btn-wa .ico { width: 18px; height: 18px; }
 .wa-num { margin-top: -6px; font-size: 13.5px; color: var(--ink-3); }
-.sec.light { --ink: #121517; --ink-2: #474C4F; --ink-3: #5F6467; --line: rgba(18, 21, 23, .12); --line-2: rgba(18, 21, 23, .2); --line-3: rgba(18, 21, 23, .36); --surface: #FBFAF7; --surface-2: #FFFFFF; --bg-deep: #F5F3EF; --champagne: #6E5A33; background: #F2EFE9; color: var(--ink); border-top-color: transparent; }
-html[data-area="gastronomia"] .sec.light { --accent: #8A5530; }
-html[data-area="automatizacion"] .sec.light { --accent: #2F6B64; }
-.sec.light ::selection { background: #121517; color: #F5F3EF; }
-.sec.light .prob:hover .pr-go { background: #121517; color: #F5F3EF; }
 .plist { margin-top: 22px; border-top: 1px solid var(--line-2); }
 @media (max-width: 1240px) {
   .nav { display: none; }
@@ -254,7 +250,6 @@ html[data-area="automatizacion"] .sec.light { --accent: #2F6B64; }
   .wa-tip { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .p-media img, .hero-media img { transform: none !important; }
 }
@@ -287,3 +282,48 @@ html.split-in-view .wa-float { opacity: 0; transform: translateY(12px); pointer-
 
 /* áreas táctiles mínimas (WCAG 2.5.8) */
 .ftr-col a, .ftr-bottom a, .menu-mail, .mail { display: inline-flex; align-items: center; min-height: 28px; }
+
+/* ------------------------------------------------------------------ cifras, recorrido y formación (portada y áreas) */
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(72px, 9vw, 132px); border-top: 1px solid var(--line-2); }
+.facts li { padding: 34px 32px 0 0; }
+.facts li + li { padding-left: 32px; border-left: 1px solid var(--line); }
+.fact-n { display: block; font: 300 clamp(54px, 6vw, 104px)/1 var(--serif); letter-spacing: -.035em; font-feature-settings: "lnum"; }
+.fact-txt { font-size: clamp(24px, 2.1vw, 34px); line-height: 1.12; letter-spacing: -.015em; }
+.fact-l { display: block; max-width: 30ch; margin-top: 16px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.sub-block { margin-top: clamp(84px, 9vw, 144px); }
+.sub-h { font: 300 clamp(27px, 2.5vw, 40px)/1.1 var(--serif); letter-spacing: -.016em; }
+.timeline { margin-top: 40px; border-top: 1px solid var(--line-2); }
+.tl { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr); gap: 16px 28px; padding: 30px 0; border-bottom: 1px solid var(--line); }
+.tl-k { font: 500 11.5px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.tl-t { font: 400 clamp(20px, 1.6vw, 24px)/1.25 var(--serif); }
+.tl p { font-size: 15.5px; color: var(--ink-2); }
+.training { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; margin-top: 34px; border-top: 1px solid var(--line-2); }
+.training li { display: grid; gap: 6px; align-content: start; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.tr-k { font: 500 11px/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.tr-t { font: 400 19px/1.3 var(--serif); }
+.tr-d { font-size: 13.5px; color: var(--ink-2); }
+@media (max-width: 900px) {
+  .facts { grid-template-columns: 1fr; }
+  .facts li, .facts li + li { padding: 26px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .tl { grid-template-columns: 1fr; gap: 10px; }
+  .training { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .training { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------------------------------------------ lenguaje cinematográfico: luz ambiente, vidrio y líneas que brillan */
+:root {
+  --copper-rgb: 214, 150, 96; --teal-rgb: 112, 196, 184; --champ-rgb: 216, 200, 168; --accent-rgb: var(--champ-rgb);
+  --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .018) 44%, rgba(255, 255, 255, .04));
+  --glass-line: rgba(255, 255, 255, .12); --r-glass: 18px;
+}
+html[data-area="gastronomia"] { --accent-rgb: var(--copper-rgb); }
+html[data-area="automatizacion"] { --accent-rgb: var(--teal-rgb); }
+/* secciones con luz de color en las esquinas (cobre en gastronomía, turquesa en automatización) */
+.amb { position: relative; isolation: isolate; overflow: clip; }
+.amb::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(46% 40% at 90% 10%, rgba(var(--amb-rgb), .15), transparent 70%), radial-gradient(38% 44% at 4% 94%, rgba(var(--amb-rgb), .09), transparent 72%); }
+.amb-warm { --amb-rgb: var(--copper-rgb); }
+.amb-cool { --amb-rgb: var(--teal-rgb); }
+.glass { background: var(--glass-bg); border: 1px solid var(--glass-line); border-radius: var(--r-glass); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 30px 80px -40px rgba(0, 0, 0, .85); }
+.hdr.solid { background: rgba(10, 12, 13, .72); }

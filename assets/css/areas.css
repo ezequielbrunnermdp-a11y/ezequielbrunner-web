@@ -29,12 +29,6 @@
 .value-r { grid-column: 8 / -1; padding-top: 6px; }
 .value-r .lead { margin-bottom: 44px; }
 .value-r .h3 { margin-bottom: 16px; }
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(72px, 9vw, 132px); border-top: 1px solid var(--line-2); }
-.facts li { padding: 34px 32px 0 0; }
-.facts li + li { padding-left: 32px; border-left: 1px solid var(--line); }
-.fact-n { display: block; font: 300 clamp(54px, 6vw, 104px)/1 var(--serif); letter-spacing: -.035em; font-feature-settings: "lnum"; }
-.fact-txt { font-size: clamp(24px, 2.1vw, 34px); line-height: 1.12; letter-spacing: -.015em; }
-.fact-l { display: block; max-width: 30ch; margin-top: 16px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
 .principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(72px, 9vw, 120px); }
 .principles li { padding: 34px 30px; border: 1px solid var(--line); background: var(--surface); }
 .principles h3 { margin-bottom: 12px; font: 400 23px/1.2 var(--serif); }
@@ -78,18 +72,6 @@
 .career-copy { grid-column: 7 / -1; }
 .cbs { display: grid; gap: 34px; margin-top: 52px; }
 .cb p { margin-top: 10px; color: var(--ink-2); }
-.sub-block { margin-top: clamp(84px, 9vw, 144px); }
-.sub-h { font: 300 clamp(27px, 2.5vw, 40px)/1.1 var(--serif); letter-spacing: -.016em; }
-.timeline { margin-top: 40px; border-top: 1px solid var(--line-2); }
-.tl { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr); gap: 16px 28px; padding: 30px 0; border-bottom: 1px solid var(--line); }
-.tl-k { font: 500 11.5px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
-.tl-t { font: 400 clamp(20px, 1.6vw, 24px)/1.25 var(--serif); }
-.tl p { font-size: 15.5px; color: var(--ink-2); }
-.training { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; margin-top: 34px; border-top: 1px solid var(--line-2); }
-.training li { display: grid; gap: 6px; align-content: start; padding: 22px 0; border-bottom: 1px solid var(--line); }
-.tr-k { font: 500 11px/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
-.tr-t { font: 400 19px/1.3 var(--serif); }
-.tr-d { font-size: 13.5px; color: var(--ink-2); }
 .vq { margin: 0 0 42px; padding-left: 22px; border-left: 1px solid var(--accent); }
 .vq p { font: italic 300 clamp(19px, 1.5vw, 23px)/1.45 var(--serif); color: var(--ink); }
 .faq-grid { row-gap: 48px; }
@@ -234,11 +216,7 @@
   .hero-in { padding-bottom: 40px; }
   .hero-row { grid-template-columns: 1fr; }
   .hero-cta .btn { flex: 1 1 auto; }
-  .facts { grid-template-columns: 1fr; }
-  .facts li, .facts li + li { padding: 26px 0; border-left: 0; border-bottom: 1px solid var(--line); }
   .cat-list, .tp-list { grid-template-columns: 1fr; }
-  .tl { grid-template-columns: 1fr; gap: 10px; }
-  .training { grid-template-columns: 1fr 1fr; }
   .steps, .steps-5 { grid-template-columns: 1fr; row-gap: 0; margin-top: 56px; }
   .steps-line { left: 4px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; display: block !important; }
   .steps-line i { transform: scaleY(var(--p, 0)); transform-origin: top; }
@@ -252,7 +230,6 @@
   .prob { grid-template-columns: 40px minmax(0, 1fr); padding: 26px 0; }
   .pr-a { grid-column: 2; }
   .pr-go { display: none; }
-  .training { grid-template-columns: 1fr; }
   .f-grid { grid-template-columns: 1fr; gap: 26px; }
   .form { padding: 26px 20px 30px; }
   .f-foot .btn { width: 100%; }
@@ -546,3 +523,21 @@ html.js:not(.rm) .nar:not(.live) .ns:not(.in) .nf-line i { transform: scaleX(0);
   .jobs-in { grid-template-columns: 1fr; }
   .mail-s { overflow-wrap: anywhere; }
 }
+
+/* ------------------------------------------------------------------ lenguaje cinematográfico en las áreas: vidrio, luz y continuidad con la portada */
+.stg, .case, .tp-ex, .dossier-mini, .principles li { background: var(--glass-bg); border: 1px solid var(--glass-line); border-radius: var(--r-glass); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 30px 80px -44px rgba(0, 0, 0, .85); }
+.stg:hover, .dossier-mini:hover { background: linear-gradient(160deg, rgba(var(--accent-rgb), .12), rgba(255, 255, 255, .02) 52%); border-color: rgba(var(--accent-rgb), .35); }
+.form, .demo, .bridge-a { border-radius: 22px; background: var(--glass-bg); border: 1px solid var(--glass-line); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 40px 100px -50px rgba(0, 0, 0, .9); }
+.demo { overflow: hidden; }
+.demo-vis { background: radial-gradient(90% 70% at 30% 20%, rgba(var(--teal-rgb), .1), transparent 70%), rgba(5, 6, 7, .55); }
+.bridge-a:hover { background: linear-gradient(160deg, rgba(var(--accent-rgb), .1), rgba(255, 255, 255, .02) 55%); border-color: rgba(var(--accent-rgb), .3); }
+/* el texto de la portada del área va en un panel de vidrio: es el mismo panel que se eligió en la portada */
+.hero-glass { padding: clamp(20px, 2.2vw, 30px) clamp(22px, 2.6vw, 34px); border: 1px solid var(--glass-line); border-radius: 22px; background: linear-gradient(160deg, rgba(255, 255, 255, .085), rgba(255, 255, 255, .02) 46%, rgba(255, 255, 255, .045)); -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .13), 0 34px 90px -34px rgba(0, 0, 0, .85); }
+html.from-home .hero-glass { view-transition-name: area-panel; }
+.pg-gas .hero-media img { filter: brightness(.6) sepia(.24) saturate(1.12) hue-rotate(-8deg); }
+.hero-shade::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.pg-gas .hero-shade::after { background: radial-gradient(55% 60% at 12% 85%, rgba(var(--copper-rgb), .28), transparent 70%), radial-gradient(40% 40% at 90% 15%, rgba(var(--copper-rgb), .12), transparent 70%); }
+.pg-ia .hero-shade::after { background: radial-gradient(50% 55% at 85% 35%, rgba(var(--teal-rgb), .2), transparent 70%), radial-gradient(40% 45% at 8% 90%, rgba(var(--teal-rgb), .1), transparent 72%); }
+/* líneas de progreso que brillan */
+.steps-line i, .nf-line i, .dr-line i { box-shadow: 0 0 14px 1px rgba(var(--accent-rgb), .55); }
+.step.on::before, .nar-prog li.on::before { box-shadow: 0 0 12px rgba(var(--accent-rgb), .8); }
