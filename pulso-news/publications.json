@@ -402,6 +402,21 @@
       "story_id": "18103305680386566",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "domingo-empleo-carrusel-cinco-busquedas",
+      "post_id": "18031097954879649",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "format": "carousel",
+      "jobs": [
+        "federada-dermoasesor",
+        "mishka-vendedora-boutique",
+        "manpower-generalista-rrhh",
+        "lacoste-auxiliar-ventas-verano",
+        "brinks-vigilador-general"
+      ]
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
