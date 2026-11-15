@@ -92,15 +92,17 @@
       .to(close, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.22)
       .to({}, { duration: 0.45 });
 
+    // el índice sigue a la animación (no al desplazamiento): con el arrastre suave, la imagen llega un instante después
     var marks = [[1.1, 2.3], [2.4, 3.95], [4.05, 5.6], [5.65, 7.1]];
     function mark() {
       var t = tl.time();
       prog.forEach(function (li, i) { li.classList.toggle('on', t >= marks[i][0] && t < marks[i][1]); });
     }
+    tl.eventCallback('onUpdate', mark);
     ST.create({
       trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(W.innerHeight * 4.6); },
       pin: pin, scrub: 0.6, animation: tl, invalidateOnRefresh: true, anticipatePin: 1,
-      onUpdate: mark, onRefreshInit: fit
+      onRefreshInit: fit
     });
 
     return function () { sec.classList.remove('live'); prog.forEach(function (li) { li.classList.remove('on'); }); };
