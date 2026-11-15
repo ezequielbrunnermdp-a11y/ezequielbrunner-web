@@ -417,6 +417,21 @@
         "lacoste-auxiliar-ventas-verano",
         "brinks-vigilador-general"
       ]
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "domingo-empleo-carrusel-gastronomia-cinco-busquedas",
+      "post_id": "18191898352365699",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "format": "carousel",
+      "jobs": [
+        "camareros-hotel-grupo-gestion",
+        "ayudante-cocina-grupo-gestion",
+        "ayudantes-cocina-manpower",
+        "camareros-cafeteria-grupo-mdp",
+        "mozos-coto-zona-gourmet"
+      ]
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
