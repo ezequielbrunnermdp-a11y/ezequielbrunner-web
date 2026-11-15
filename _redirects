@@ -7,3 +7,7 @@
 
 # Dirección corta para el área de automatización.
 /automatizacion   /inteligencia-artificial    301
+
+# Herramientas del repositorio: no forman parte del sitio.
+/tools/*   /404.html   404!
+/DISENO-Y-ENTREGA.md   /404.html   404!

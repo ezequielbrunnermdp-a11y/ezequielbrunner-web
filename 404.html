@@ -15,7 +15,7 @@
 <meta property="og:description" content="La página que buscás no existe o cambió de lugar.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ezequielbrunner.com/404">
-<meta property="og:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261114">
+<meta property="og:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261115">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Página no encontrada | Ezequiel Brunner">
@@ -23,22 +23,20 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Página no encontrada | Ezequiel Brunner">
 <meta name="twitter:description" content="La página que buscás no existe o cambió de lugar.">
-<meta name="twitter:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261114">
+<meta name="twitter:image" content="https://ezequielbrunner.com/assets/og/inicio.jpg?v=20261115">
 <script>
 (function (d, w) {
-  var h = d.documentElement, done = false;
+  var h = d.documentElement;
   h.classList.remove('no-js'); h.classList.add('js');
   try { if (w.matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('rm'); } catch (e) {}
-  function go() { if (done) return; done = true; requestAnimationFrame(function () { h.classList.add('ready'); }); }
-  if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { setTimeout(go, 30); });
-  setTimeout(go, 1400);
-  try { sessionStorage.setItem('eb:nav', '1'); } catch (e) {}
+  (w.requestAnimationFrame || setTimeout)(function () { h.classList.add('ready'); });
+  
 })(document, window);
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&amp;family=Inter:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="/assets/css/main.css?v=20261114">
+<link rel="preload" href="/assets/fonts/fraunces-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/main.css?v=20261115">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ezequielbrunner.com/#ezequiel","name":"Ezequiel Brunner","url":"https://ezequielbrunner.com/","image":"https://ezequielbrunner.com/assets/ezequiel-brunner-perfil.webp","email":"mailto:ezequielbrunnermdp@gmail.com","telephone":"+54 9 223 634-3371","jobTitle":"Consultor en gestión gastronómica y automatización con inteligencia artificial","address":{"@type":"PostalAddress","addressLocality":"Mar del Plata","addressRegion":"Buenos Aires","addressCountry":"AR"},"sameAs":["https://ar.linkedin.com/in/ezequielbrunner","https://about.me/ezequielbrunner"],"knowsAbout":["Gestión gastronómica","Control de costos","Recursos humanos","Automatización de procesos","Inteligencia artificial","Transparencia algorítmica"]}]}</script>
 </head>
 <body class="pg-404">
@@ -47,7 +45,7 @@
 <p class="label"><span class="lab-n">404</span>Página no encontrada</p>
 <h1 class="pubs-title">Esta página <em>cambió de lugar.</em></h1>
 <p class="lead">Elegí un área para seguir.</p>
-<div class="nf-act"><a class="btn" href="gastronomia.html">Asesoramiento gastronómico <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="inteligencia-artificial.html">Automatización &amp; IA <span class="arr" aria-hidden="true">→</span></a><a class="tlink" href="publicaciones.html"><span>Publicaciones</span> <span class="arr" aria-hidden="true">→</span></a></div>
+<div class="nf-act"><a class="btn" href="/gastronomia"><span>Asesoramiento gastronómico</span> <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="/inteligencia-artificial"><span>Automatización &amp; IA</span> <span class="arr" aria-hidden="true">→</span></a><a class="tlink" href="/publicaciones"><span>Publicaciones</span> <span class="arr" aria-hidden="true">→</span></a></div>
 </div>
 </main>
 </body>
