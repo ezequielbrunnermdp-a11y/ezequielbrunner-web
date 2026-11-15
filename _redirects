@@ -7,3 +7,6 @@
 
 # Dirección corta para el área de automatización.
 /automatizacion   /inteligencia-artificial    301
+
+# juris-ia/ es el código de una aplicación aparte (JURIS IA): no se sirve desde el sitio.
+/juris-ia/*       /404.html        404

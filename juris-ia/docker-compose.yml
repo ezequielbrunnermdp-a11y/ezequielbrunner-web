@@ -1,0 +1,12 @@
+# PostgreSQL 16 con pgvector para desarrollo local.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: juris
+      POSTGRES_PASSWORD: juris
+      POSTGRES_DB: juris
+    ports: ["5432:5432"]
+    volumes: ["juris_pg:/var/lib/postgresql/data"]
+volumes:
+  juris_pg:
