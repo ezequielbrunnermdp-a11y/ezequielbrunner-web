@@ -496,6 +496,14 @@
       "post_published_at": "2026-11-16T16:54:04.679Z",
       "story_id": "18145572673715927",
       "story_published_at": "2026-11-16T16:54:20.793Z"
+    },
+    {
+      "date": "2026-11-16",
+      "slug": "triple-choque-corrientes-belgrano-15",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "17879952618633890",
+      "post_published_at": "2026-11-16T16:54:38.186Z"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
