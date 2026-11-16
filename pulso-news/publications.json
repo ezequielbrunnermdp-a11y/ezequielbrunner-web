@@ -467,6 +467,14 @@
       "story_id": "18106388027010108",
       "status": "published",
       "created_by": "Windsor.ai"
+    },
+    {
+      "date": "2026-11-16",
+      "slug": "salud-en-tu-barrio-herradura-progreso-16",
+      "post_id": "18149361841570800",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "published_at": "2026-11-16T16:52:06.931Z"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
