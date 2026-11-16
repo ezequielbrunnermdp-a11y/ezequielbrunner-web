@@ -142,13 +142,37 @@ details p,details li{font-size:.84rem;color:var(--fg-2)}
 .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line-2)}
 footer{border-top:1px solid var(--line);padding-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px;font-size:.8rem;color:var(--muted)}
 footer h3{font-size:.8rem;color:var(--fg-2);margin-bottom:6px;font-family:var(--f-body);font-weight:600}
+/* Módulo de productividad e informe */
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;border:0;padding:6px 12px;font-size:.8rem;color:var(--fg-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel-2);color:var(--fg)}
+.shifts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.shift{display:flex;flex-direction:column;gap:3px;min-width:0}
+.shift .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:1.02rem}
+.shift .l{font-size:.72rem;color:var(--muted);letter-spacing:.04em}
+.shift .w{font-size:.78rem;color:var(--fg-2)}
+.warnbox{display:flex;gap:12px;align-items:flex-start;border:1px solid color-mix(in srgb,var(--warn) 55%,transparent);background:color-mix(in srgb,var(--warn) 8%,var(--panel));border-radius:10px;padding:12px 14px;margin-bottom:16px}
+.warnbox b{color:var(--warn);font-family:var(--f-display);font-weight:600;white-space:nowrap}
+.warnbox p{font-size:.86rem;color:var(--fg-2)}
+.mozos{display:flex;flex-direction:column;gap:18px}
+.mz-h{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-bottom:8px}
+.mz-h .swatch{width:10px;height:10px;border-radius:3px}
+td.l,th.l{text-align:left}
+.sm{font-size:.76rem;color:var(--muted)}
+.report{display:flex;flex-direction:column;gap:14px;max-width:84ch}
+.q{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0}
+.q h3{font-family:var(--f-body);font-size:.82rem;font-weight:600;color:var(--accent);letter-spacing:.02em}
+.q p{font-size:.98rem;line-height:1.65}
+.lbl.hecho{color:var(--good);border-color:color-mix(in srgb,var(--good) 50%,transparent)}
+.lbl.pend{color:var(--muted);border-color:var(--line-2)}
 </style>
 
 <div class="wrap">
   <header class="top">
     <div class="brand">
       <span class="eyebrow">Puerto de Palos · Puerto de Mar del Plata</span>
-      <h1>Inteligencia de ventas y clima</h1>
+      <h1>Inteligencia de ventas, clima y productividad</h1>
       <span class="sub">Elegí una fecha: se compara con el mismo día del año anterior y con el mismo día de la semana.</span>
     </div>
     <div class="picker">
@@ -174,27 +198,46 @@ footer h3{font-size:.8rem;color:var(--fg-2);margin-bottom:6px;font-family:var(--
 
   <section class="grid-2" id="cards"></section>
 
+  <section class="panel" id="report-panel">
+    <div class="panel-h"><h2>Informe gerencial</h2><span class="src">Hechos de Morphi, INDEC y Open-Meteo · hipótesis marcadas</span></div>
+    <div class="report" id="report"></div>
+  </section>
+
   <section class="panel" id="var-panel">
-    <div class="panel-h"><h2>Variaciones</h2><span class="src" id="var-src"></span></div>
+    <div class="panel-h"><h2>Facturación y tickets</h2><span class="src" id="var-src">Morphi · sucursal 1 · nominal</span></div>
     <div class="tbl-wrap"><table id="var-tbl"></table></div>
     <p class="note" id="var-note"></p>
   </section>
 
+  <section class="panel" id="ipc-panel">
+    <div class="panel-h"><h2>Inflación y variación real</h2><span class="src">IPC Nacional INDEC · niveles mensuales</span></div>
+    <div class="tbl-wrap"><table id="ipc-tbl"></table></div>
+    <p class="note" id="ipc-note"></p>
+  </section>
+
+  <section class="panel" id="mozo-panel">
+    <div class="panel-h"><h2>Mozos y productividad</h2><span class="src">Morphi · mozo asignado a cada comprobante</span></div>
+    <div class="warnbox"><b>Dotación real no verificada</b><p>Morphi registra qué mozo tiene asignado cada comprobante, pero las fichadas y los horarios del personal no están disponibles en la conexión. Acá se muestran los mozos con ventas registradas y su ventana de actividad según la hora de sus tickets. Puede haber personal que trabajó sin facturar, y la ventana no equivale a horas trabajadas.</p></div>
+    <div class="tbl-wrap"><table id="prod-tbl"></table></div>
+    <p class="note" id="prod-note"></p>
+    <div class="mozos" id="mozos" style="margin-top:18px"></div>
+  </section>
+
   <section class="panel" id="hour-panel">
-    <div class="panel-h"><h2>Ventas por hora</h2><div class="legend" id="hour-legend"></div></div>
+    <div class="panel-h"><h2>Evolución por hora</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center">
+        <div class="seg" role="group" aria-label="Medida"><button id="m-imp" aria-pressed="true">Facturación</button><button id="m-tk" aria-pressed="false">Tickets</button></div>
+        <div class="legend" id="hour-legend"></div>
+      </div>
+    </div>
     <div class="chart" id="hour-chart"></div>
     <div class="chart" id="rain-chart" style="margin-top:10px"></div>
-    <p class="note" id="hour-note">Hora de cierre del comprobante. Día operativo de caja: lo facturado después de medianoche cuenta para el día en que abrió la caja.</p>
+    <p class="note" id="hour-note">Hora de cierre del comprobante. Día operativo de caja: lo facturado después de medianoche cuenta para el día en que abrió la caja. Tickets válidos por hora: comprobantes de venta menos notas de crédito y anulaciones de esa hora.</p>
   </section>
 
   <section class="panel" id="proj-panel" hidden>
     <div class="panel-h"><h2>Proyección orientativa</h2><span class="tag">Estimación · no es una venta confirmada</span></div>
     <div id="proj-body"></div>
-  </section>
-
-  <section class="panel">
-    <div class="panel-h"><h2>Resumen de inteligencia comercial</h2><span class="src">Conclusiones solo con datos disponibles</span></div>
-    <div class="summary" id="summary"></div>
   </section>
 
   <section class="grid-2">
@@ -217,7 +260,8 @@ footer h3{font-size:.8rem;color:var(--fg-2);margin-bottom:6px;font-family:var(--
   <section class="grid-2" id="cats"></section>
 
   <footer id="foot">
-    <div><h3>Facturación (Morphi)</h3><p>Importe bruto con IVA de todos los comprobantes de la sucursal 1 «Puerto de Palos» (base PUERTO DE PALOS · PUERTO, AVALUX SA), por día operativo de caja, con notas de crédito restadas. El mismo criterio se usa en todos los períodos. Consultas de solo lectura.</p></div>
+    <div><h3>Facturación y tickets (Morphi)</h3><p>Facturación: importe bruto con IVA de todos los comprobantes de la sucursal 1 «Puerto de Palos» (base PUERTO DE PALOS · PUERTO, AVALUX SA), por día operativo de caja, con notas de crédito y anulaciones restadas. Tickets válidos: comprobantes de venta menos notas de crédito y anulaciones de preticket (Morphi cuenta cada nota de crédito como un comprobante más; acá se descuenta). Consultas de solo lectura.</p></div>
+    <div><h3>Mozos</h3><p>Mozo asignado a cada comprobante en Morphi. «Ventana con ventas»: de la primera a la última hora con tickets de cada turno (almuerzo antes de las 18 h, cena desde las 18 h). No son horas fichadas.</p></div>
     <div><h3>Clima</h3><p id="foot-clima">Open-Meteo.</p></div>
     <div><h3>Inflación</h3><p id="foot-ipc">INDEC.</p></div>
     <div><h3>Feriados</h3><p id="foot-fer">ArgentinaDatos.</p></div>
@@ -231,7 +275,8 @@ const SERVER = "Morphi";
 const SUC = "PUERTO DE PALOS  PUERTO";        // alias exacto de la base única (dos espacios)
 const FILTRO = { sucursal: ["1"] };             // sucursal 1 = PUERTO DE PALOS (excluye 999 CONCENTRADOR)
 const HIST_DESDE = "2022-11-01";
-const COMM = [12,13,14,15,16,20,21,22,23];       // horario comercial de referencia si el día no tiene ventas por hora
+const ALM = [12,13,14,15,16], CEN = [20,21,22,23];
+const COMM = [...ALM, ...CEN];                   // horario comercial de referencia si el día no tiene ventas por hora
 const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
 const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
 const MES_C = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
@@ -243,34 +288,42 @@ const iso = d => d.toISOString().slice(0,10);
 const add = (s,n) => { const d = pd(s); d.setUTCDate(d.getUTCDate()+n); return iso(d); };
 const dow = s => pd(s).getUTCDay();
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-const tc = v => v==null ? "—" : Number(v).toLocaleString("es-AR",{maximumFractionDigits:1});
 const dmy = s => s.slice(8,10)+"/"+s.slice(5,7)+"/"+s.slice(0,4);
 const largo = s => { const d = pd(s); return `${DIAS[d.getUTCDay()]} ${d.getUTCDate()} de ${MESES[d.getUTCMonth()]} de ${d.getUTCFullYear()}`; };
-const corto = s => { const d = pd(s); return `${DIAS[d.getUTCDay()]} ${s.slice(8,10)}/${s.slice(5,7)}/${s.slice(0,4)}`; };
+const plural = w => DIAS[w].endsWith("s") ? DIAS[w] : DIAS[w]+"s";
+const corto = s => `${DIAS[dow(s)]} ${dmy(s)}`;
 const diff = (a,b) => Math.round((pd(a)-pd(b))/864e5);
-function hoyAR(){ const p = new Intl.DateTimeFormat("en-CA",{timeZone:"America/Argentina/Buenos_Aires",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()); return p; }
+function hoyAR(){ return new Intl.DateTimeFormat("en-CA",{timeZone:"America/Argentina/Buenos_Aires",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()); }
 /* Misma fecha del año anterior: el 29/02 pasa al 28/02. */
-function mismaFecha(s){ let y = +s.slice(0,4)-1, m = s.slice(5,7), d = s.slice(8,10);
+function mismaFecha(s){ const y = +s.slice(0,4)-1, m = s.slice(5,7), d = s.slice(8,10);
   if (m==="02" && d==="29") return { f:`${y}-02-28`, nota:"El 29 de febrero no existe en el año anterior: se usa el 28/02." };
   return { f:`${y}-${m}-${d}`, nota:null }; }
-/* Mismo día de la semana: 52 semanas antes (364 días), siempre el mismo día de la semana. */
+/* Mismo día de la semana: 52 semanas antes (364 días). */
 const mismoDiaSemana = s => add(s,-364);
 
 /* ===================== Formatos ===================== */
 const nfm = new Intl.NumberFormat("es-AR",{maximumFractionDigits:0});
-const money = v => v==null||isNaN(v) ? "—" : "$ " + nfm.format(Math.round(v));
+const money = v => v==null||!isFinite(v) ? "—" : (v<0?"−":"") + "$ " + nfm.format(Math.abs(Math.round(v)));
+const moneyS = v => v==null||!isFinite(v) ? "—" : (v>0?"+":v<0?"−":"") + "$ " + nfm.format(Math.abs(Math.round(v)));
 const moneyK = v => { if (v==null) return "—"; const a=Math.abs(v); return a>=1e6 ? "$ "+(v/1e6).toLocaleString("es-AR",{maximumFractionDigits:a>=1e7?1:2})+" M" : a>=1e3 ? "$ "+Math.round(v/1e3).toLocaleString("es-AR")+" k" : "$ "+Math.round(v); };
-const int = v => v==null||isNaN(v) ? "—" : nfm.format(v);
-const pct = (v,dec=1) => v==null||!isFinite(v) ? "—" : (v>0?"+":"")+(v*100).toLocaleString("es-AR",{maximumFractionDigits:dec,minimumFractionDigits:dec})+" %";
+const int = v => v==null||!isFinite(v) ? "—" : nfm.format(v);
+const intS = v => v==null||!isFinite(v) ? "—" : (v>0?"+":v<0?"−":"") + nfm.format(Math.abs(v));
+const dec = (v,d=1) => v==null||!isFinite(v) ? "—" : Number(v).toLocaleString("es-AR",{maximumFractionDigits:d});
+const tc = v => v==null ? "—" : dec(v,1);
+const pct = (v,d=1) => v==null||!isFinite(v) ? "—" : (v>0?"+":v<0?"−":"")+Math.abs(v*100).toLocaleString("es-AR",{maximumFractionDigits:d,minimumFractionDigits:d})+" %";
+const pctA = (v,d=1) => pct(v,d).replace(/^[+−]/,"");
 const dlt = (a,b) => (a==null||b==null||!b) ? null : a/b-1;
 const cls = v => v==null ? "flat" : v>0.005 ? "up" : v<-0.005 ? "down" : "flat";
+const hh = h => String(h).padStart(2,"0");
 const el = (tag, attrs={}, ...kids) => { const e = document.createElement(tag);
   for (const [k,v] of Object.entries(attrs)) { if (v==null) continue; if (k==="class") e.className=v; else if (k==="style") e.style.cssText=v; else if (k==="text") e.textContent=v; else e.setAttribute(k,v); }
-  for (const k of kids.flat()) if (k!=null) e.append(k.nodeType ? k : document.createTextNode(String(k)));
+  for (const k of kids.flat()) if (k!=null && k!==false) e.append(k.nodeType ? k : document.createTextNode(String(k)));
   return e; };
 const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const median = a => { const s=[...a].sort((x,y)=>x-y); if(!s.length) return null; const m=s.length>>1; return s.length%2?s[m]:(s[m-1]+s[m])/2; };
 const quant = (a,q) => { const s=[...a].sort((x,y)=>x-y); if(!s.length) return null; const p=(s.length-1)*q, i=Math.floor(p); return s[i]+(s[Math.min(i+1,s.length-1)]-s[i])*(p-i); };
+const nombre = s => String(s||"").replace(/\s+/g," ").trim().toLowerCase().replace(/(^|\s)\S/g, m => m.toUpperCase());
 
 /* ===================== Datos de referencia (archivos publicados) ===================== */
 const REF = { clima:null, feriados:null, ipc:null };
@@ -280,38 +333,38 @@ async function loadRef(){
   REF.fer = {}; for (const x of (REF.feriados?.feriados||[])) REF.fer[x.fecha] = x;
   REF.ipcMeses = Object.keys(REF.ipc?.serie||{}).sort();
   REF.ipcBase = REF.ipcMeses[REF.ipcMeses.length-1] || null;
-  if (REF.clima) $("foot-clima").textContent = `${REF.clima.fuentes.reanalisis} ${REF.clima.fuentes.modelo_archivado} Punto: ${REF.clima.ubicacion.lat}, ${REF.clima.ubicacion.lon} (zona America/Argentina/Buenos_Aires). Archivo generado ${REF.clima.generado.slice(0,10)}.`;
-  else $("foot-clima").textContent = "No se pudo leer el archivo de clima publicado con la página.";
-  if (REF.ipc) $("foot-ipc").textContent = `${REF.ipc.fuente}. Último mes publicado: ${mesTxt(REF.ipcBase)}. Ajuste: importe × IPC(${mesTxt(REF.ipcBase)}) ÷ IPC(mes de la venta). Para meses sin IPC publicado se usa el último dato disponible (se avisa).`;
+  $("foot-clima").textContent = REF.clima ? `${REF.clima.fuentes.reanalisis} ${REF.clima.fuentes.modelo_archivado} Punto: ${REF.clima.ubicacion.lat}, ${REF.clima.ubicacion.lon} (zona America/Argentina/Buenos_Aires). Archivo generado ${REF.clima.generado.slice(0,10)}.` : "No se pudo leer el archivo de clima publicado con la página.";
+  if (REF.ipc) $("foot-ipc").textContent = `${REF.ipc.fuente}. Último mes publicado: ${mesTxt(REF.ipcBase)}. Inflación acumulada = IPC(mes final) ÷ IPC(mes inicial) − 1, con niveles del índice (no se suman tasas mensuales). Si el IPC de un mes no está publicado, el cálculo es provisorio con el último índice disponible.`;
   if (REF.feriados) $("foot-fer").textContent = `${REF.feriados.fuente}. Incluye inamovibles, trasladables y días puente. «Fin de semana largo»: 3 o más días seguidos entre sábados, domingos y feriados.`;
 }
 const mesTxt = m => m ? `${MESES[+m.slice(5,7)-1]} ${m.slice(0,4)}` : "—";
+/* Nivel del IPC del mes de una fecha. est=true: el mes no está publicado y se usa el último disponible (provisorio). */
 function ipcDe(fecha){ const m = fecha.slice(0,7); const s = REF.ipc?.serie; if(!s) return null;
-  if (s[m]) return { v:s[m], est:false };
-  const prev = REF.ipcMeses.filter(x=>x<=m).pop(); return prev ? { v:s[prev], est:true, mes:prev } : null; }
+  if (s[m]) return { v:s[m], mes:m, est:false };
+  const prev = REF.ipcMeses.filter(x=>x<=m).pop(); return prev ? { v:s[prev], mes:prev, est:true, pedido:m } : null; }
 function real(importe, fecha){ const a = ipcDe(fecha), b = REF.ipc?.serie?.[REF.ipcBase]; if (!a||!b||importe==null) return null; return importe*b/a.v; }
 
 /* Tipo de día */
-function esFer(s){ return REF.fer?.[s] || null; }
-function finde(s){ const w=dow(s); return w===0||w===6; }
-function libre(s){ return finde(s) || !!esFer(s); }
+const esFer = s => REF.fer?.[s] || null;
+const finde = s => { const w=dow(s); return w===0||w===6; };
+const libre = s => finde(s) || !!esFer(s);
 function fdsLargo(s){ if(!libre(s)) return false; let a=s,b=s; while(libre(add(a,-1))) a=add(a,-1); while(libre(add(b,1))) b=add(b,1); return diff(b,a)>=2; }
-function tipoDia(s){ const f=esFer(s); if (f) return "feriado"; const w=dow(s); return (w===0||w===6) ? "finde" : "habil"; }
-function chipsDia(s){ const out=[]; const f=esFer(s), w=dow(s);
-  out.push(el("span",{class:"chip dot",text: f ? "Feriado" : (w===0||w===6) ? "Fin de semana" : "Día hábil"}));
+function tipoDia(s){ if (esFer(s)) return "feriado"; return finde(s) ? "finde" : "habil"; }
+function chipsDia(s){ const out=[]; const f=esFer(s);
+  out.push(el("span",{class:"chip dot",text: f ? "Feriado" : finde(s) ? "Fin de semana" : "Día hábil"}));
   if (f) out.push(el("span",{class:"chip fer",text:f.nombre + (f.tipo==="puente"?" · puente":"")}));
   if (fdsLargo(s)) out.push(el("span",{class:"chip",text:"Fin de semana largo"}));
   if (!libre(s) && esFer(add(s,1))) out.push(el("span",{class:"chip",text:"Víspera de feriado"}));
   return out; }
 
 /* ===================== Clima ===================== */
-function clima(s){ const c = REF.clima; if(!c) return null; if (c.dias[s]) return c.dias[s]; if (c.pronostico?.[s]) return c.pronostico[s]; return null; }
-function horasConLluvia(h, horas){ return horas.filter(x => (h.pp[x]||0) >= 1); } // >= 0,1 mm en la hora
-function mmEn(h, horas){ return horas.reduce((a,x)=>a+(h.pp[x]||0),0)/10; }
+function clima(s){ const c = REF.clima; if(!c) return null; return c.dias[s] || c.pronostico?.[s] || null; }
+const horasConLluvia = (h, horas) => horas.filter(x => (h.pp[x]||0) >= 1); // >= 0,1 mm en la hora
+const mmEn = (h, horas) => horas.reduce((a,x)=>a+(h.pp[x]||0),0)/10;
 function rangos(hs){ if(!hs.length) return "—"; const r=[]; let a=hs[0],p=hs[0];
   for (const x of hs.slice(1)) { if (x===p+1) { p=x; continue; } r.push([a,p]); a=p=x; } r.push([a,p]);
-  return r.map(([a,b]) => a===b ? `${String(a).padStart(2,"0")} h` : `${String(a).padStart(2,"0")}–${String(b+1).padStart(2,"0")} h`).join(", "); }
-/* Condición general: no se llama «despejado» a un día solo porque no llovió; se mira nubosidad y horas de sol. */
+  return r.map(([a,b]) => a===b ? `${hh(a%24)} h` : `${hh(a%24)}–${hh((b+1)%24||24)} h`).join(", "); }
+/* Condición general: no se llama «despejado» a un día solo porque no llovió; se mira nubosidad. */
 function condicion(w, horas){
   if (!w) return null; const h=w.h; const hs = horas || [...Array(24).keys()];
   const tormenta = hs.some(x => (h.cod[x]||0) >= 95) || (!horas && w.cod>=95);
@@ -321,20 +374,22 @@ function condicion(w, horas){
   let t;
   if (tormenta) t = "Tormentoso"; else if (mm >= 5) t = "Lluvioso"; else if (mm >= 1) t = "Lluvias débiles"; else if (mm >= 0.2) t = "Lloviznas aisladas"; else t = cielo;
   return { t, mm, nub, tormenta, lluvia: mm >= 1 }; }
+/* Clima de una franja (almuerzo o cena). Las horas después de medianoche no se toman (son del día calendario siguiente). */
+function franjaClima(w, horas){ if (!w) return null; const hs = horas.filter(x=>x>=6);
+  if (!hs.length) return null; const t = hs.map(x=>w.h.t[x]).filter(v=>v!=null); const v = hs.map(x=>w.h.v[x]).filter(v=>v!=null);
+  const c = condicion(w, hs); return { ...c, tmin: Math.min(...t), tmax: Math.max(...t), vmax: Math.max(...v), horas: hs, lluviaHs: horasConLluvia(w.h, hs) }; }
 
 /* ===================== Morphi (MCP, solo lectura) ===================== */
-let MCP = null; let mcpEstado = "cargando"; let mcpError = null;
+let MCP = null; let mcpEstado = "cargando";
 function parsePayload(p){ if (p && typeof p === "object") return p;
   if (typeof p === "string") { const i = p.search(/[\[{]/); if (i>=0) { try { return JSON.parse(p.slice(i)); } catch {} } throw { code:"tool_error", message:p.slice(0,300) }; }
   throw { code:"tool_error", message:"Respuesta vacía de Morphi" }; }
 async function morphi(tool, input, staleH=6){
   if (!MCP) throw { code: "no_mcp" };
-  const opts = { cache: { staleTime: staleH*3600e3, gcTime: 7*24*3600e3 } };
-  try { const r = await MCP.callTool(SERVER, tool, input, opts); return parsePayload(r.payload ?? r.content?.[0]?.text); }
-  catch (e) {
-    if (e && e.retryable) { await new Promise(r=>setTimeout(r, (e.retryAfterMs||1500) + Math.random()*800));
-      const r = await MCP.callTool(SERVER, tool, input, opts); return parsePayload(r.payload ?? r.content?.[0]?.text); }
-    throw e; } }
+  const opts = { cache: { staleTime: Math.max(1,staleH*3600e3), gcTime: 7*24*3600e3 } };
+  const call = async () => { const r = await MCP.callTool(SERVER, tool, input, opts); return parsePayload(r.payload ?? r.content?.[0]?.text); };
+  try { return await call(); }
+  catch (e) { if (e && e.retryable) { await new Promise(r=>setTimeout(r, (e.retryAfterMs||1500) + Math.random()*800)); return await call(); } throw e; } }
 function errorTxt(e){ const c = e?.code;
   if (c==="no_mcp"||c==="not_granted"||c==="capability_disabled"||c==="capability_removed") return "Esta vista no puede consultar Morphi. Abrí la página en claude.ai con tu cuenta.";
   if (c==="needs_reauth") return "La conexión con Morphi venció. Reconectala en claude.ai → Configuración → Conectores.";
@@ -343,272 +398,367 @@ function errorTxt(e){ const c = e?.code;
   if (c==="not_in_manifest"||c==="approval_required"||c==="consent_required") return "La página necesita tu permiso para leer Morphi.";
   if (c==="blocked_by_policy") return "La política de tu organización bloquea esta consulta de Morphi.";
   if (c==="server_unavailable") return "Morphi no respondió a tiempo. Probá de nuevo en un momento.";
-  if (c==="tool_error") return "Morphi respondió con un error: " + (e.message||"").slice(0,240);
+  if (c==="tool_error") return "Morphi respondió con un error: " + String(e.message||"").slice(0,240);
   return "No se pudo consultar Morphi" + (e?.message ? ": " + String(e.message).slice(0,200) : "."); }
-function noMcpTxt(){ return mcpEstado==="cargando" ? "Conectando con Morphi…" : errorTxt({code:"no_mcp"}); }
+const noMcpTxt = () => mcpEstado==="cargando" ? "Conectando con Morphi…" : errorTxt({code:"no_mcp"});
 function bannerError(e){ const b=$("banner"); b.hidden=false; b.className="banner err"; b.replaceChildren();
   b.append(el("div",{},el("b",{text:"Ventas no disponibles. "}), el("span",{class:"fg2",text:errorTxt(e)})));
   const c=e?.code;
-  if (c==="not_in_manifest"||c==="approval_required"||c==="consent_required"||c==="server_unavailable"||c==="upstream_error") {
+  if (["not_in_manifest","approval_required","consent_required","server_unavailable","upstream_error"].includes(c)) {
     const btn = el("button",{class:"btn",text: c==="server_unavailable"||c==="upstream_error" ? "Reintentar" : "Permitir y consultar"});
-    btn.onclick = () => { b.hidden=true; run(state.fecha, true); }; b.append(btn); } }
+    btn.onclick = () => { b.hidden=true; arrancar(); }; b.append(btn); } }
 
-/* Ventas diarias de un rango (agrupadas por día). */
-async function ventasDia(desde, hasta, staleH){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(desde), hasta:dmy(hasta), agrupar:["dia"], filtros:FILTRO, limite:1000 }, staleH);
-  const out = {}; for (const f of (r.filas||[])) out[f.dia] = { imp:f.importe, tk:f.tickets, tp:f.ticket_promedio, cub:f.cubiertos, desc:f.descuentos };
-  return { dias: out, notas: r.notas||[], base: SUC }; }
-async function ventasHora(f){ const r = await morphi("ventas_por_hora", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:"fecha", sucursal_codigo:1 }, f<state.hoy?24:0.5);
-  const h = {}; for (const x of (r.por_hora||[])) h[x.hora] = { tk:x.tickets, imp:x.total };
-  return { h, mejor: r.mejor_hora }; }
-async function rubros(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["rubro"], items_de_combos:"sueltas", filtros:FILTRO, limite:8 }, f<state.hoy?24:0.5);
-  return { filas:(r.filas||[]).map(x=>({ n:x.rubro_nombre||x.rubro, imp:x.importe, u:x.unidades })), total:r.totales?.importe }; }
-async function canales(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["canal"], filtros:FILTRO }, f<state.hoy?24:0.5);
+/* Tipos de comprobante: notas de crédito y anulaciones de preticket, según la tabla de comprobantes de Morphi. */
+let CTE = null;          // Map código → "nc" | "anul"
+let CTE_ERR = null;
+async function loadComprobantes(){ if (CTE) return CTE;
+  const r = await morphi("referencias_de_ventas", { sucursal:SUC, tipo:"comprobantes" }, 72);
+  const arr = Array.isArray(r) ? r : (r.filas || r.comprobantes || []);
+  const m = new Map(); for (const x of arr) if (x.tipo === "NC") m.set(String(x.codigo), /ANULA/i.test(x.nombre||"") ? "anul" : "nc");
+  if (!arr.length) throw { code:"tool_error", message:"Morphi no devolvió la tabla de comprobantes" };
+  return CTE = m; }
+const tipoCte = c => CTE?.get(String(c)) || "venta";
+/* Suma filas agrupadas por comprobante. Tickets válidos = comprobantes de venta − notas de crédito − anulaciones. */
+function agregaCom(filas){ const o = { imp:0, cub:0, desc:0, tkVenta:0, tkMorphi:0, nc:{n:0,imp:0}, anul:{n:0,imp:0} };
+  for (const f of filas) { o.imp += +f.importe||0; o.cub += +f.cubiertos||0; o.desc += +f.descuentos||0; o.tkMorphi += +f.tickets||0;
+    const t = tipoCte(f.comprobante); if (t==="venta") o.tkVenta += +f.tickets||0; else { o[t].n += +f.tickets||0; o[t].imp += +f.importe||0; } }
+  o.tk = CTE ? Math.max(0, o.tkVenta - o.nc.n - o.anul.n) : null;
+  o.tp = o.tk ? o.imp / o.tk : null; return o; }
+const stale = f => f < state.hoy ? 72 : 0.25;
+
+async function detDia(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["comprobante"], filtros:FILTRO, limite:100 }, stale(f));
+  const filas = r.filas||[]; if (!filas.length) return { vacio:true }; return agregaCom(filas); }
+async function detHora(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["hora","comprobante"], filtros:FILTRO, limite:500 }, stale(f));
+  const g = {}; for (const x of (r.filas||[])) (g[+x.hora] ||= []).push(x);
+  const h = {}; for (const [k,v] of Object.entries(g)) h[k] = agregaCom(v);
+  return { h }; }
+async function detMozos(f){
+  const [rc, rh] = await Promise.all([
+    morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["mozo","comprobante"], filtros:FILTRO, limite:500 }, stale(f)),
+    morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["mozo","hora"], filtros:FILTRO, limite:1000 }, stale(f)) ]);
+  const g = {}; const nom = {};
+  for (const x of (rc.filas||[])) { (g[x.mozo] ||= []).push(x); nom[x.mozo] = x.mozo_nombre; }
+  const horas = {}; for (const x of (rh.filas||[])) if ((+x.importe||0) > 0 && (+x.tickets||0) > 0) (horas[x.mozo] ||= new Set()).add(+x.hora);
+  const lista = Object.entries(g).map(([cod, filas]) => { const a = agregaCom(filas); const hs = [...(horas[cod]||[])];
+    const alm = hs.filter(x=>x>=6&&x<18).sort((p,q)=>p-q), cen = hs.filter(x=>x>=18||x<6).map(x=>x<6?x+24:x).sort((p,q)=>p-q);
+    const ven = arr => arr.length ? [arr[0], arr[arr.length-1]+1] : null;
+    const vA = ven(alm), vC = ven(cen); const hsAct = (vA?vA[1]-vA[0]:0) + (vC?vC[1]-vC[0]:0);
+    const turnos = [vA?"almuerzo":null, vC?"cena":null].filter(Boolean);
+    return { cod, nombre: nombre(nom[cod]) || `Legajo ${cod}`, ...a, vA, vC, hsAct, turnos, porHora: hsAct ? a.imp/hsAct : null, activo: a.imp > 0 && (a.tk==null ? a.tkVenta>0 : a.tk>0) };
+  }).sort((p,q)=>q.imp-p.imp);
+  const act = lista.filter(m=>m.activo);
+  const tot = act.reduce((s,m)=>({ imp:s.imp+m.imp, tk:s.tk+(m.tk||0), hs:s.hs+m.hsAct, cub:s.cub+m.cub }), { imp:0, tk:0, hs:0, cub:0 });
+  return { lista, act, n: act.length, tot, nAlm: act.filter(m=>m.vA).length, nCen: act.filter(m=>m.vC).length }; }
+async function detRubros(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["rubro"], items_de_combos:"sueltas", filtros:FILTRO, limite:8 }, stale(f));
+  return { filas:(r.filas||[]).map(x=>({ n:x.rubro_nombre||x.rubro, imp:x.importe })) }; }
+async function detCanales(f){ const r = await morphi("ventas", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), agrupar:["canal"], filtros:FILTRO }, stale(f));
   return (r.filas||[]).map(x=>({ n:x.canal_nombre||x.canal, imp:x.importe, tk:x.tickets })); }
-async function notasCredito(f){ const r = await morphi("comprobantes_de_venta", { sucursal:SUC, desde:dmy(f), hasta:dmy(f), filtros:{ sucursal:["1"], tipo_comprobante:["NC"] }, limite:50 }, f<state.hoy?24:0.5);
-  return (r.comprobantes||[]).length; }
 
-/* Historial diario completo (para proyección y análisis). Morphi admite hasta dos años por consulta. */
+/* Historial diario (proyección y análisis). Morphi admite hasta dos años por consulta.
+   Tickets válidos = tickets de Morphi − 2 × notas de crédito/anulaciones (Morphi las suma como comprobante y cada una anula otro). */
 let HIST = null, HIST_P = null;
+function ventanas(desde, hasta){ const v=[]; let a = desde; while (a <= hasta) { const b0 = add(`${+a.slice(0,4)+2}${a.slice(4)}`, -1); const b = b0 < hasta ? b0 : hasta; v.push([a,b]); a = add(b,1); } return v; }
 function loadHist(){ if (HIST_P) return HIST_P;
-  const ayer = add(state.hoy,-1); const vent=[]; let a = HIST_DESDE;
-  while (a <= ayer) { const b0 = add(`${+a.slice(0,4)+2}${a.slice(4)}`, -1); const b = b0 < ayer ? b0 : ayer; vent.push([a,b]); a = add(b,1); }
-  HIST_P = Promise.all(vent.map(([a,b]) => ventasDia(a,b, b===ayer?3:72))).then(rs => { HIST = {}; for (const r of rs) Object.assign(HIST, r.dias); return HIST; });
+  const ayer = add(state.hoy,-1); const vs = ventanas(HIST_DESDE, ayer);
+  HIST_P = (async () => {
+    const codes = CTE ? [...CTE.keys()] : [];
+    const [tot, ncs] = await Promise.all([
+      Promise.all(vs.map(([a,b]) => morphi("ventas", { sucursal:SUC, desde:dmy(a), hasta:dmy(b), agrupar:["dia"], filtros:FILTRO, limite:1000 }, b===ayer?3:72))),
+      codes.length ? Promise.all(vs.map(([a,b]) => morphi("ventas", { sucursal:SUC, desde:dmy(a), hasta:dmy(b), agrupar:["dia"], filtros:{ sucursal:["1"], comprobante:codes }, limite:1000 }, b===ayer?3:72))) : Promise.resolve([]) ]);
+    const H = {}; for (const r of tot) for (const f of (r.filas||[])) H[f.dia] = { imp:+f.importe, tk:+f.tickets, cub:+f.cubiertos, nc:0 };
+    for (const r of ncs) for (const f of (r.filas||[])) if (H[f.dia]) H[f.dia].nc = +f.tickets||0;
+    for (const d of Object.values(H)) { d.tkVal = Math.max(0, d.tk - 2*d.nc); }
+    HIST = H; HIST.__ncOk = !!codes.length; return H; })();
   HIST_P.catch(()=>{ HIST_P=null; });
   return HIST_P; }
+/* Referencia de productividad: mismos días de la semana de las 12 semanas previas. */
+async function refMozos(F){ const fin = add(F < state.hoy ? F : state.hoy, -1), ini = add(fin, -83);
+  const r = await morphi("ventas", { sucursal:SUC, desde:dmy(ini), hasta:dmy(fin), agrupar:["dia","mozo"], filtros:FILTRO, limite:1000 }, 24);
+  const dias = {}; for (const x of (r.filas||[])) { if (dow(x.dia)!==dow(F)) continue; if (!esFer(F) && esFer(x.dia)) continue; const d = (dias[x.dia] ||= { n:0, imp:0, tk:0 }); d.imp += +x.importe||0; d.tk += +x.tickets||0; if ((+x.importe||0) > 0) d.n++; }
+  const L = Object.entries(dias).filter(([,d])=>d.n>0 && d.imp>0).map(([f,d])=>({ f, n:d.n, tkM:d.tk/d.n, impM: real(d.imp,f)/d.n }));
+  if (L.length < 3) return { n:L.length };
+  return { n:L.length, mozos: median(L.map(x=>x.n)), tkM: median(L.map(x=>x.tkM)), impM: median(L.map(x=>x.impM)), desde:ini, hasta:fin }; }
 
 /* ===================== Estado y flujo ===================== */
-const state = { fecha:null, hoy:hoyAR(), token:0, data:{} };
+const state = { fecha:null, hoy:hoyAR(), token:0, data:{}, medida:"imp" };
 
-async function run(fecha, force=false){
+async function run(fecha){
   state.fecha = fecha; const tk = ++state.token;
   try { localStorage.setItem("pdp-fecha", fecha); } catch {}
   const A = mismaFecha(fecha), B = mismoDiaSemana(fecha);
   const pasada = fecha < state.hoy;
   const D = { A:A.f, B, F:fecha, notaA:A.nota, pasada };
-  state.proj = null;
-  state.data = { D, dia:{}, hora:{}, rub:{}, can:{}, nc:{}, err:{} };
-  renderHeader(D); renderCards(); renderVar(); renderHours(); renderSummary(); renderCats();
-  $("proj-panel").hidden = pasada;
-  if (!pasada) renderProj();
-
+  state.proj = null; state.ref = null;
+  state.data = { D, dia:{}, hora:{}, moz:{}, rub:{}, can:{}, err:{} };
+  renderAll();
   if (!MCP) { setStatus(); return; }
-  const fechas = pasada ? [D.A, D.B, D.F] : [D.A, D.B];
-  const lo = fechas.reduce((a,b)=>a<b?a:b), hi = fechas.reduce((a,b)=>a>b?a:b);
+  try { await loadComprobantes(); } catch (e) { CTE_ERR = e; }
+  if (tk!==state.token) return;
+  const fechas = fechasActivas();
+  const ok = () => tk===state.token;
   const tareas = [];
-  // Totales diarios: si las fechas están cerca, una sola consulta.
-  const rangosDia = diff(hi,lo) <= 7 ? [[lo,hi]] : fechas.map(f=>[f,f]);
-  tareas.push(Promise.all(rangosDia.map(([a,b]) => ventasDia(a,b, b<state.hoy?24:0.5))).then(rs => { if(tk!==state.token) return;
-    for (const f of fechas) { const hit = rs.find(r=>r.dias[f]); state.data.dia[f] = hit ? hit.dias[f] : { vacio:true }; }
-    mcpEstado="ok"; renderCards(); renderVar(); renderSummary(); setStatus(); }).catch(e => { if(tk!==state.token) return; mcpEstado="error"; mcpError=e; bannerError(e); for (const f of fechas) state.data.err[f]=e; renderCards(); setStatus(); }));
   for (const f of fechas) {
-    tareas.push(ventasHora(f).then(r => { if(tk!==state.token) return; state.data.hora[f]=r; renderHours(); renderCards(); renderSummary(); }).catch(e => { if(tk!==state.token) return; state.data.hora[f]={ error:e }; renderHours(); }));
-    tareas.push(rubros(f).then(r => { if(tk!==state.token) return; state.data.rub[f]=r; renderCats(); }).catch(e => { if(tk!==state.token) return; state.data.rub[f]={ error:e }; renderCats(); }));
-    tareas.push(canales(f).then(r => { if(tk!==state.token) return; state.data.can[f]=r; renderCats(); }).catch(()=>{}));
-    tareas.push(notasCredito(f).then(n => { if(tk!==state.token) return; state.data.nc[f]=n; renderCards(); }).catch(e => { if(tk!==state.token) return; state.data.nc[f]=null; renderCards(); }));
+    tareas.push(detDia(f).then(r => { if(!ok()) return; state.data.dia[f]=r; mcpEstado="ok"; renderAll(); })
+      .catch(e => { if(!ok()) return; state.data.err[f]=e; if (["needs_reauth","server_not_connected","not_in_manifest","approval_required","consent_required","blocked_by_policy"].includes(e?.code)) { mcpEstado="error"; bannerError(e); } renderAll(); }));
+    tareas.push(detHora(f).then(r => { if(!ok()) return; state.data.hora[f]=r; renderAll(); }).catch(e => { if(!ok()) return; state.data.hora[f]={ error:e }; renderAll(); }));
+    tareas.push(detMozos(f).then(r => { if(!ok()) return; state.data.moz[f]=r; renderAll(); }).catch(e => { if(!ok()) return; state.data.moz[f]={ error:e }; renderAll(); }));
+    tareas.push(detRubros(f).then(r => { if(!ok()) return; state.data.rub[f]=r; renderCats(); }).catch(e => { if(!ok()) return; state.data.rub[f]={ error:e }; renderCats(); }));
+    tareas.push(detCanales(f).then(r => { if(!ok()) return; state.data.can[f]=r; renderCats(); }).catch(()=>{}));
   }
+  tareas.push(refMozos(fecha).then(r => { if(!ok()) return; state.ref = r; renderAll(); }).catch(() => { if(!ok()) return; state.ref = { error:true }; }));
   setStatus();
-  loadHist().then(() => { if(tk!==state.token) return; setStatus(); renderVar(); renderAnalysis(); renderSummary(); if(!pasada) renderProj(); })
-            .catch(e => { if(tk!==state.token) return; state.histErr = e; setStatus(); renderAnalysis(); if(!pasada) renderProj(); });
+  loadHist().then(() => { if(!ok()) return; renderAll(); renderAnalysis(); })
+            .catch(e => { if(!ok()) return; state.histErr = e; renderAll(); renderAnalysis(); });
   await Promise.allSettled(tareas);
 }
+function fechasActivas(){ const D = state.data.D; return D.pasada ? [D.F, D.A, D.B] : [D.A, D.B]; }
+function renderAll(){ const D = state.data.D;
+  renderHeader(D); renderCards();
+  $("proj-panel").hidden = D.pasada; if (!D.pasada) renderProj();
+  renderVar(); renderIPC(); renderMozos(); renderHours(); renderReport(); renderCats(); setStatus(); }
 
 function setStatus(){ const s=$("status"); s.replaceChildren();
-  const m = mcpEstado==="ok" ? el("span",{class:"ok",text:"● Morphi conectado (solo lectura)"}) : mcpEstado==="error" ? el("span",{class:"err",text:"● Morphi sin datos"}) : el("span",{class:"wait",text:"● Consultando Morphi…"});
-  s.append(m);
-  s.append(el("span",{text: HIST ? `Historial: ${Object.keys(HIST).length} días con ventas` : state.histErr ? "Historial no disponible" : MCP ? "Cargando historial…" : ""}));
+  s.append(mcpEstado==="ok" ? el("span",{class:"ok",text:"● Morphi conectado (solo lectura)"}) : mcpEstado==="cargando" ? el("span",{class:"wait",text:"● Consultando Morphi…"}) : el("span",{class:"err",text:"● Morphi sin datos"}));
+  if (MCP) s.append(el("span",{text: HIST ? `Historial: ${Object.keys(HIST).length-1} días con ventas` : state.histErr ? "Historial no disponible" : "Cargando historial…"}));
+  if (CTE_ERR) s.append(el("span",{class:"err",text:"Tipos de comprobante no disponibles: tickets válidos sin verificar"}));
   if (REF.clima) s.append(el("span",{text:`Clima hasta ${dmy(Object.keys(REF.clima.dias).pop())}`})); }
 
-/* ===================== Render: cabecera ===================== */
+/* ===================== Cabecera ===================== */
 function renderHeader(D){
   $("q-date").textContent = cap(largo(D.F));
-  $("q-eyebrow").textContent = D.F === state.hoy ? "Fecha consultada · hoy" : D.pasada ? "Fecha consultada · ya ocurrió" : `Fecha consultada · faltan ${diff(D.F,state.hoy)} días`;
+  $("q-eyebrow").textContent = D.F === state.hoy ? "Fecha consultada · hoy (jornada en curso)" : D.pasada ? "Fecha consultada · ya ocurrió" : `Fecha consultada · faltan ${diff(D.F,state.hoy)} días`;
   $("q-chips").replaceChildren(...chipsDia(D.F));
   const w = clima(D.F); if (w && !D.pasada) { const c = condicion(w, COMM); if (c) $("q-chips").append(el("span",{class:"chip"+(c.lluvia?" rain":""),text:`Pronóstico: ${c.t.toLowerCase()} · ${tc(w.tmin)}°/${tc(w.tmax)}°`})); }
 }
 
-/* ===================== Render: tarjetas ===================== */
-function horasVenta(f){ const h = state.data.hora[f]?.h; if(!h) return null; const hs = Object.keys(h).map(Number).filter(x=>h[x].tk>0 && x>=6).sort((a,b)=>a-b); return hs.length ? hs : null; }
-function cardFor(f, rol){
-  const D = state.data.D;
-  const meta = { A:{ t:"Misma fecha · año anterior", c:"var(--s-a)" }, B:{ t:"Mismo día de la semana · año anterior", c:"var(--s-b)" }, F:{ t:"Fecha consultada · real", c:"var(--s-d)" } }[rol];
-  const card = el("article",{class:"panel cmp",style:`--sc:${meta.c}`,id:"card-"+rol});
+/* ===================== Tarjetas ===================== */
+const ROL = { F:{ t:"Fecha consultada · real", c:"--s-d" }, A:{ t:"Misma fecha · año anterior", c:"--s-a" }, B:{ t:"Mismo día de la semana · año anterior", c:"--s-b" } };
+const rolDe = f => { const D=state.data.D; return f===D.F ? "F" : f===D.A ? "A" : "B"; };
+function horasVenta(f){ const h = state.data.hora[f]?.h; if(!h) return null; const hs = Object.keys(h).map(Number).filter(x=>h[x].tkVenta>0 && x>=6).sort((a,b)=>a-b); return hs.length ? hs : null; }
+function franjas(f){ const h = state.data.hora[f]?.h; if (!h) return null;
+  const sum = hs => hs.reduce((o,x)=>{ const v=h[x]; if(!v) return o; o.imp+=v.imp; o.tk+=(v.tk||0); return o; }, { imp:0, tk:0 });
+  const hrs = Object.keys(h).map(Number);
+  return { alm: sum(hrs.filter(x=>x>=6&&x<18)), cen: sum(hrs.filter(x=>x>=18||x<6)), almH: hrs.filter(x=>x>=6&&x<18&&h[x].tkVenta>0).sort((a,b)=>a-b), cenH: hrs.filter(x=>x>=18&&h[x].tkVenta>0).sort((a,b)=>a-b) }; }
+function picoDe(f){ const h = state.data.hora[f]?.h; if (!h) return null; const e = Object.entries(h).sort((a,b)=>b[1].imp-a[1].imp)[0]; return e ? +e[0] : null; }
+function cardFor(f){
+  const D = state.data.D, rol = rolDe(f), meta = ROL[rol];
+  const card = el("article",{class:"panel cmp",style:`--sc:var(${meta.c})`,id:"card-"+rol});
   card.append(el("div",{class:"k"}, el("span",{class:"swatch"}), el("span",{class:"eyebrow",text:meta.t})));
   const head = el("div",{style:"display:flex;flex-direction:column;gap:6px"}, el("div",{class:"when",text:cap(corto(f))}), el("div",{class:"chips"}, chipsDia(f)));
   if (rol==="A" && D.notaA) head.append(el("span",{class:"src",text:D.notaA}));
   if (rol==="A" && dow(f)!==dow(D.F)) head.append(el("span",{class:"src",text:`Cayó ${DIAS[dow(f)]}; la fecha consultada es ${DIAS[dow(D.F)]}.`}));
   card.append(head);
   const d = state.data.dia[f], err = state.data.err[f];
-  const ventas = el("div",{style:"display:flex;flex-direction:column;gap:4px"});
-  ventas.append(el("span",{class:"eyebrow",text:"Facturación (bruta, con IVA)"}));
+  const ventas = el("div",{style:"display:flex;flex-direction:column;gap:4px"}, el("span",{class:"eyebrow",text:"Facturación total (bruta, con IVA)"}));
   if (err) ventas.append(el("div",{class:"empty",text: errorTxt(err)}));
   else if (!MCP) ventas.append(el("div",{class:"empty",text: noMcpTxt()}));
   else if (!d) ventas.append(el("div",{class:"big"}, el("span",{class:"skel"})));
   else if (d.vacio) ventas.append(el("div",{class:"big muted",text:"Sin ventas"}), el("span",{class:"src",text:"Morphi no registra comprobantes ese día (local cerrado o sin operación)."}));
   else { ventas.append(el("div",{class:"big",text:money(d.imp)}));
     const r = real(d.imp, f), ip = ipcDe(f);
-    if (r && f.slice(0,7)!==REF.ipcBase) ventas.append(el("span",{class:"src",text:`≈ ${money(r)} en pesos de ${mesTxt(REF.ipcBase)} (IPC INDEC${ip?.est?", mes estimado con el último IPC":""})`})); }
+    if (r && f.slice(0,7)!==REF.ipcBase) ventas.append(el("span",{class:"src",text:`≈ ${money(r)} en pesos de ${mesTxt(REF.ipcBase)}${ip?.est?" (IPC del mes no publicado: provisorio)":""}`})); }
   card.append(ventas);
   if (d && !d.vacio) {
-    const hv = state.data.hora[f]; let pico = "—";
-    if (hv?.h) { const hs = Object.entries(hv.h).sort((a,b)=>b[1].imp-a[1].imp); if (hs.length) pico = `${String(hs[0][0]).padStart(2,"0")} h`; }
-    const nc = state.data.nc[f];
+    const pk = picoDe(f), mz = state.data.moz[f];
     card.append(el("div",{class:"kpis"},
-      el("div",{class:"kpi"}, el("span",{class:"v",text:int(d.tk)}), el("span",{class:"l",text:"Tickets"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: d.tk==null ? "—" : int(d.tk)}), el("span",{class:"l",text:"Tickets válidos"})),
       el("div",{class:"kpi"}, el("span",{class:"v",text:money(d.tp)}), el("span",{class:"l",text:"Ticket promedio"})),
       el("div",{class:"kpi"}, el("span",{class:"v",text:int(d.cub)}), el("span",{class:"l",text:"Cubiertos"})),
-      el("div",{class:"kpi"}, el("span",{class:"v",text:pico}), el("span",{class:"l",text:"Hora pico"})),
-      el("div",{class:"kpi"}, el("span",{class:"v",text:money(d.desc)}), el("span",{class:"l",text:"Descuentos"})),
-      el("div",{class:"kpi"}, el("span",{class:"v",text: nc==null ? "—" : int(nc)}), el("span",{class:"l",text:"Notas de crédito"}))));
+      el("div",{class:"kpi"}, el("span",{class:"v",text: pk==null ? "—" : `${hh(pk)} h`}), el("span",{class:"l",text:"Hora pico"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: CTE ? `${d.nc.n} · ${money(d.nc.imp)}` : "—"}), el("span",{class:"l",text:"Notas de crédito"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: CTE ? `${d.anul.n} · ${money(d.anul.imp)}` : "—"}), el("span",{class:"l",text:"Anulaciones preticket"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: mz?.lista ? int(mz.n) : mz?.error ? "—" : "…"}), el("span",{class:"l",text:"Mozos con ventas"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: mz?.lista && mz.n ? money(d.imp/mz.n) : "—"}), el("span",{class:"l",text:"Facturación por mozo"})),
+      el("div",{class:"kpi"}, el("span",{class:"v",text: mz?.lista && mz.n && d.tk!=null ? dec(d.tk/mz.n) : "—"}), el("span",{class:"l",text:"Tickets por mozo"}))));
+    if (CTE && (d.nc.n || d.anul.n)) card.append(el("span",{class:"src",text:`Morphi informa ${d.tkMorphi} comprobantes; se descuentan ${d.nc.n + d.anul.n} notas de crédito/anulaciones y los ${d.nc.n + d.anul.n} comprobantes que anulan, para no duplicar.`}));
+    const fr = franjas(f);
+    if (fr) card.append(el("div",{class:"shifts"},
+      el("div",{class:"shift"}, el("span",{class:"l",text:"Almuerzo (hasta 18 h)"}), el("span",{class:"v",text:money(fr.alm.imp)}), el("span",{class:"w",text:`${int(fr.alm.tk)} tickets · ${fr.alm.tk?money(fr.alm.imp/fr.alm.tk):"—"} promedio`})),
+      el("div",{class:"shift"}, el("span",{class:"l",text:"Cena (desde 18 h)"}), el("span",{class:"v",text:money(fr.cen.imp)}), el("span",{class:"w",text:`${int(fr.cen.tk)} tickets · ${fr.cen.tk?money(fr.cen.imp/fr.cen.tk):"—"} promedio`}))));
   }
-  card.append(wxBlock(f, horasVenta(f)));
+  card.append(wxBlock(f));
   return card; }
 
-function wxBlock(f, hv){
+function wxBlock(f){
   const box = el("div",{class:"wx"}); const w = clima(f);
   if (!w) { box.append(el("div",{class:"cond"}, el("span",{class:"muted",text: REF.clima ? (f > state.hoy ? "Sin pronóstico para esta fecha (más de 15 días o archivo desactualizado)." : "Sin datos de clima para esta fecha en el archivo.") : "Clima no disponible."}))); return box; }
-  const horas = hv || COMM; const cDia = condicion(w), cCom = condicion(w, horas);
-  const llHoras = horasConLluvia(w.h, [...Array(24).keys()]);
-  const llCom = horasConLluvia(w.h, horas);
+  const cDia = condicion(w); const llHoras = horasConLluvia(w.h, [...Array(24).keys()]);
   const fuente = w.f==="reanalisis" ? "Reanálisis ERA5 · modelo" : w.f==="pronostico" ? "Pronóstico Open-Meteo" : "Modelo archivado";
   box.append(el("div",{class:"cond"}, el("b",{text:cDia.t}), el("span",{class:"fg2",text:`· ${WMO[w.cod]||"código "+w.cod}`}), el("span",{class:"tag",text:fuente})));
   const it = (v,l) => el("div",{class:"kpi"}, el("span",{class:"v",text:v}), el("span",{class:"l",text:l}));
-  box.append(it(`${tc(w.tmin)}° / ${tc(w.tmax)}°`,"Mín. / máx."), it(`${(w.pp??0).toLocaleString("es-AR",{maximumFractionDigits:1})} mm`,"Precipitación"),
-    it(rangos(llHoras),"Horas con lluvia"),
-    it(cCom.mm>=0.1 ? `${cCom.mm.toLocaleString("es-AR",{maximumFractionDigits:1})} mm` : "Sin lluvia", hv ? "En horas con ventas" : "En horario comercial"),
-    it(`${Math.round(w.vmax)} km/h`,"Viento máx."), it(w.sol!=null ? `${w.sol} h` : "—","Horas de sol (est.)"));
-  box.append(el("span",{class:"src",style:"grid-column:1/-1",text: (hv ? `Horario comercial = horas con ventas ese día (${rangos(hv)}). ` : "Horario comercial de referencia: 12–17 h y 20–24 h. ") + (llCom.length ? `Llovió en ${rangos(llCom)} dentro de ese horario.` : "No hubo lluvia medible dentro de ese horario.") + (w.f!=="pronostico" ? " Dato de modelo para la zona del puerto, no medido en el local." : ` Pronóstico generado el ${REF.clima.generado.slice(0,10)}.`)}));
+  box.append(it(`${tc(w.tmin)}° / ${tc(w.tmax)}°`,"Mín. / máx."), it(`${dec(w.pp??0)} mm`,"Precipitación"), it(rangos(llHoras),"Horas con lluvia"),
+    it(`${Math.round(w.vmax)} km/h`,"Viento máx."), it(w.rmax!=null?`${Math.round(w.rmax)} km/h`:"—","Ráfagas"), it(w.sol!=null ? `${dec(w.sol)} h` : "—","Horas de sol (est.)"));
+  const fr = franjas(f);
+  const shift = (lbl, hs) => { const c = franjaClima(w, hs); if (!c) return null;
+    return el("div",{class:"shift"}, el("span",{class:"l",text:`${lbl} · ${rangos(c.horas)}`}), el("span",{class:"v",style:"font-family:var(--f-body);font-size:.95rem",text:c.t}),
+      el("span",{class:"w",text:`${tc(c.tmin)}–${tc(c.tmax)}° · ${c.mm>=0.1?dec(c.mm)+" mm":"sin lluvia"} · viento ${Math.round(c.vmax)} km/h`})); };
+  box.append(el("div",{class:"shifts",style:"grid-column:1/-1"}, shift("Almuerzo", fr?.almH?.length ? fr.almH : ALM), shift("Cena", fr?.cenH?.length ? fr.cenH : CEN)));
+  box.append(el("span",{class:"src",style:"grid-column:1/-1",text: (fr?.almH?.length||fr?.cenH?.length ? "Franjas = horas con ventas ese día. " : "Franjas de referencia: 12–17 h y 20–24 h. ") + (w.f!=="pronostico" ? "Dato de modelo para la zona del puerto, no medido en el local." : `Pronóstico generado el ${REF.clima.generado.slice(0,10)}.`)}));
   return box; }
 
-function renderCards(){ const D = state.data.D; const c=$("cards"); c.replaceChildren();
-  if (D.pasada) c.append(cardFor(D.F,"F"));
-  c.append(cardFor(D.A,"A"), cardFor(D.B,"B"));
-  c.className = D.pasada ? "grid-3" : "grid-2"; }
+function renderCards(){ const c=$("cards"); c.replaceChildren(...fechasActivas().map(cardFor)); c.className = state.data.D.pasada ? "grid-3" : "grid-2"; }
 
-/* ===================== Render: variaciones ===================== */
-function renderVar(){ const D = state.data.D; const t=$("var-tbl"); t.replaceChildren();
-  const g = f => { const d = state.data.dia[f]; return d && !d.vacio ? d : null; };
-  const a = g(D.A), b = g(D.B);
-  let base = null, baseLbl;
-  if (D.pasada) { base = g(D.F); baseLbl = "Fecha consultada (real)"; }
-  else { const p = state.proj; if (p) { base = { imp:p.imp, tk:p.tk, tp:p.imp/p.tk, cub:null, proj:true, real:true }; baseLbl = "Proyección (punto medio)"; } }
-  const filas = [];
-  if (base) { filas.push([`${baseLbl} vs. misma fecha (${dmy(D.A)})`, base, a, D.F, D.A]); filas.push([`${baseLbl} vs. mismo día semanal (${dmy(D.B)})`, base, b, D.F, D.B]); }
-  filas.push([`Mismo día semanal (${dmy(D.B)}) vs. misma fecha (${dmy(D.A)})`, b, a, D.B, D.A]);
-  t.append(el("thead",{}, el("tr",{}, el("th",{text:"Comparación"}), el("th",{text:"Facturación nominal"}), el("th",{text:"Facturación real (IPC)"}), el("th",{text:"Tickets"}), el("th",{text:"Ticket promedio"}), el("th",{text:"Ticket prom. real"}))));
+/* ===================== Comparaciones ===================== */
+function pares(){ const D=state.data.D; const out=[];
+  if (D.pasada) out.push({ x:D.F, y:D.A, lbl:`Consultada vs. misma fecha`, }, { x:D.F, y:D.B, lbl:`Consultada vs. mismo día semanal` });
+  else if (state.proj) out.push({ x:"P", y:D.A, lbl:"Proyección vs. misma fecha" }, { x:"P", y:D.B, lbl:"Proyección vs. mismo día semanal" });
+  out.push({ x:D.B, y:D.A, lbl:"Mismo día semanal vs. misma fecha" });
+  return out; }
+function valDia(f){ if (f==="P") { const p=state.proj; return p ? { imp:p.imp, tk:p.tk, tp:p.imp/p.tk, proj:true } : null; } const d = state.data.dia[f]; return d && !d.vacio ? d : null; }
+const etq = f => f==="P" ? "Proyección" : dmy(f);
+
+function renderVar(){ const t=$("var-tbl"); t.replaceChildren();
+  t.append(el("thead",{}, el("tr",{}, ...["Comparación","Facturación","Referencia","Diferencia $","Diferencia %","Tickets","Dif. tickets","Ticket prom.","Dif. ticket prom."].map((h,i)=>el("th",{class:i===0?"l":null,text:h})))));
   const tb = el("tbody"); t.append(tb);
-  for (const [lbl, x, y, fx, fy] of filas) {
-    const tr = el("tr",{}, el("td",{text:lbl}));
-    if (!x || !y) { tr.append(el("td",{class:"num muted",colspan:"5",text: (state.data.dia[fx]?.vacio||state.data.dia[fy]?.vacio) ? "Un día sin ventas: no se compara" : "Esperando datos…"})); tb.append(tr); continue; }
-    const rx = x.real ? x.imp : real(x.imp,fx), ry = real(y.imp,fy);
-    const nom = x.proj ? null : dlt(x.imp,y.imp), rr = dlt(rx,ry), dt = dlt(x.tk,y.tk), dtp = x.proj ? null : dlt(x.tp,y.tp);
-    const dtpr = dlt(rx/x.tk, ry/y.tk);
-    for (const v of [nom, rr, dt, dtp, dtpr]) tr.append(el("td",{class:"num "+cls(v),text: v==null ? (x.proj?"n/c":"—") : pct(v)}));
+  for (const p of pares()) {
+    const x = valDia(p.x), y = valDia(p.y); const tr = el("tr",{}, el("td",{class:"l"}, p.lbl, el("div",{class:"sm",text:`${etq(p.x)} vs. ${etq(p.y)}`})));
+    if (!x || !y) { tr.append(el("td",{class:"num muted",colspan:"8",text: (state.data.dia[p.x]?.vacio||state.data.dia[p.y]?.vacio) ? "Un día sin ventas: no se compara" : !MCP ? noMcpTxt() : "Esperando datos…"})); tb.append(tr); continue; }
+    if (x.proj) { const yr = real(y.imp,p.y);
+      tr.append(el("td",{class:"num",text:money(x.imp)}), el("td",{class:"num",text:money(yr)}), el("td",{class:"num "+cls(x.imp-yr),text:moneyS(x.imp-yr)}), el("td",{class:"num "+cls(dlt(x.imp,yr)),text:pct(dlt(x.imp,yr))}),
+        el("td",{class:"num",text:int(Math.round(x.tk))}), el("td",{class:"num "+cls(dlt(x.tk,y.tk)),text:`${intS(Math.round(x.tk-y.tk))} (${pct(dlt(x.tk,y.tk))})`}), el("td",{class:"num",text:money(x.tp)}), el("td",{class:"num "+cls(dlt(x.tp,yr/y.tk)),text:pct(dlt(x.tp, y.tk?yr/y.tk:null))}));
+      tb.append(tr); continue; }
+    tr.append(el("td",{class:"num",text:money(x.imp)}), el("td",{class:"num",text:money(y.imp)}), el("td",{class:"num "+cls(x.imp-y.imp),text:moneyS(x.imp-y.imp)}), el("td",{class:"num "+cls(dlt(x.imp,y.imp)),text:pct(dlt(x.imp,y.imp))}),
+      el("td",{class:"num",text:int(x.tk)}), el("td",{class:"num "+cls(dlt(x.tk,y.tk)),text: x.tk==null||y.tk==null ? "—" : `${intS(x.tk-y.tk)} (${pct(dlt(x.tk,y.tk))})`}), el("td",{class:"num",text:money(x.tp)}), el("td",{class:"num "+cls(dlt(x.tp,y.tp)),text:pct(dlt(x.tp,y.tp))}));
     tb.append(tr); }
-  $("var-src").textContent = "Morphi · base PUERTO DE PALOS · PUERTO, sucursal 1";
-  const misma = D.A.slice(0,7)===D.B.slice(0,7);
-  $("var-note").textContent = `Las cifras nominales de distintos años están distorsionadas por la inflación. «Real (IPC)» lleva cada importe a pesos de ${mesTxt(REF.ipcBase)} con el IPC Nacional de INDEC (importe × IPC del mes base ÷ IPC del mes de la venta).` + (misma ? " Las dos fechas del año anterior caen en el mismo mes, así que entre ellas real y nominal coinciden." : "") + (D.pasada ? "" : " La proyección ya está expresada en moneda constante, por eso no tiene variación nominal (n/c).");
-}
+  $("var-note").textContent = "Importes nominales (pesos de cada fecha). Las filas de la proyección comparan contra la referencia llevada a pesos de " + mesTxt(REF.ipcBase) + ", porque la proyección ya está en moneda constante. La variación real de las fechas está en el bloque de inflación."; }
+
+/* Inflación acumulada entre dos fechas con niveles del IPC (no suma de tasas). */
+function inflacion(desde, hasta){ const a = ipcDe(desde), b = hasta==="P" ? (REF.ipcBase ? { v:REF.ipc.serie[REF.ipcBase], mes:REF.ipcBase, est:false } : null) : ipcDe(hasta);
+  if (!a || !b) return null; return { a, b, acum: b.v/a.v - 1, prov: a.est || b.est }; }
+function renderIPC(){ const t=$("ipc-tbl"); t.replaceChildren();
+  if (!REF.ipc) { t.append(el("tbody",{}, el("tr",{}, el("td",{class:"l muted",text:"No se pudo leer la serie del IPC publicada con la página."})))); return; }
+  t.append(el("thead",{}, el("tr",{}, ...["Comparación","IPC inicial","IPC final","Inflación acumulada","Referencia nominal","Referencia ajustada","Facturación","Variación real","Var. real ticket prom."].map((h,i)=>el("th",{class:i===0?"l":null,text:h})))));
+  const tb = el("tbody"); t.append(tb); let hayProv = false;
+  for (const p of pares()) {
+    const x = valDia(p.x), y = valDia(p.y), inf = inflacion(p.y, p.x);
+    const tr = el("tr",{}, el("td",{class:"l"}, p.lbl, el("div",{class:"sm",text:`${etq(p.x)} vs. ${etq(p.y)}`})));
+    if (!inf) { tr.append(el("td",{class:"num muted",colspan:"8",text:"IPC no disponible para estas fechas"})); tb.append(tr); continue; }
+    if (inf.prov) hayProv = true;
+    const ipcTxt = (i) => `${dec(i.v,1)} · ${MES_C[+i.mes.slice(5,7)-1]} ${i.mes.slice(2,4)}` + (i.est ? " *" : "");
+    tr.append(el("td",{class:"num",text:ipcTxt(inf.a)}), el("td",{class:"num",text:ipcTxt(inf.b)}), el("td",{class:"num",text: pct(inf.acum) + (inf.prov?" *":"")}));
+    if (!x || !y) { tr.append(el("td",{class:"num muted",colspan:"5",text: !MCP ? noMcpTxt() : "Esperando datos…"})); tb.append(tr); continue; }
+    const yAj = y.imp * (1+inf.acum), vr = dlt(x.imp, yAj), vtp = x.tk && y.tk ? dlt(x.imp/x.tk, (y.imp/y.tk)*(1+inf.acum)) : null;
+    tr.append(el("td",{class:"num",text:money(y.imp)}), el("td",{class:"num",text:money(yAj)}), el("td",{class:"num",text:money(x.imp)}),
+      el("td",{class:"num "+cls(vr),text:pct(vr)+(inf.prov?" *":"")}), el("td",{class:"num "+cls(vtp),text:pct(vtp)+(inf.prov?" *":"")}));
+    tb.append(tr); }
+  $("ipc-note").textContent = `Inflación acumulada = IPC del mes final ÷ IPC del mes inicial − 1 (niveles mensuales, base dic-2016 = 100). Referencia ajustada = facturación de referencia × (1 + inflación acumulada). Variación real = facturación ÷ referencia ajustada − 1. El ticket promedio real se ajusta igual.` + (hayProv ? ` * Provisorio: el IPC del mes de la fecha consultada todavía no fue publicado; se usa el último disponible (${mesTxt(REF.ipcBase)}). El ajuste exacto queda pendiente hasta que INDEC publique ese mes.` : "") + (state.data.D.pasada ? "" : " La proyección ya está expresada en pesos del último mes publicado."); }
+
+/* ===================== Mozos ===================== */
+function renderMozos(){ const D=state.data.D; const t=$("prod-tbl"), box=$("mozos"); t.replaceChildren(); box.replaceChildren();
+  t.append(el("thead",{}, el("tr",{}, ...["Jornada","Mozos con ventas","Almuerzo / cena","Tickets por mozo","Facturación por mozo","Fact. real por mozo","Fact. por hora-mozo con ventas","Cubiertos por mozo"].map((h,i)=>el("th",{class:i===0?"l":null,text:h})))));
+  const tb = el("tbody"); t.append(tb);
+  for (const f of fechasActivas()) { const m = state.data.moz[f], d = state.data.dia[f];
+    const tr = el("tr",{}, el("td",{class:"l"}, el("span",{style:`display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px;background:var(${ROL[rolDe(f)].c})`}), cap(corto(f))));
+    if (!MCP) { tr.append(el("td",{class:"muted",colspan:"7",text:noMcpTxt()})); tb.append(tr); continue; }
+    if (!m) { tr.append(el("td",{class:"muted",colspan:"7",text:"Cargando…"})); tb.append(tr); continue; }
+    if (m.error) { tr.append(el("td",{class:"muted",colspan:"7",text:errorTxt(m.error)})); tb.append(tr); continue; }
+    if (!m.n) { tr.append(el("td",{class:"muted",colspan:"7",text:"Sin mozos con ventas registradas."})); tb.append(tr); continue; }
+    const imp = d && !d.vacio ? d.imp : m.tot.imp, tk = d && !d.vacio && d.tk!=null ? d.tk : m.tot.tk;
+    tr.append(el("td",{class:"num",text:int(m.n)}), el("td",{class:"num",text:`${m.nAlm} / ${m.nCen}`}), el("td",{class:"num",text:dec(tk/m.n)}), el("td",{class:"num",text:money(imp/m.n)}), el("td",{class:"num",text:money(real(imp,f)/m.n)}),
+      el("td",{class:"num",text: m.tot.hs ? money(m.tot.imp/m.tot.hs) : "—"}), el("td",{class:"num",text:dec((d?.cub??m.tot.cub)/m.n)}));
+    tb.append(tr); }
+  const r = state.ref;
+  const tr = el("tr",{}, el("td",{class:"l"}, "Referencia", el("div",{class:"sm",text:`Mediana de los ${plural(dow(D.F))} de las 12 semanas previas`})));
+  if (!r || r.error || !r.mozos) tr.append(el("td",{class:"muted",colspan:"7",text: !MCP ? noMcpTxt() : !r ? "Cargando…" : r.error ? "No disponible" : `Pocas jornadas comparables (${r.n}).`}));
+  else tr.append(el("td",{class:"num",text:dec(r.mozos)}), el("td",{class:"num muted",text:"—"}), el("td",{class:"num",text:dec(r.tkM)}), el("td",{class:"num muted",text:"—"}), el("td",{class:"num",text:money(r.impM)}), el("td",{class:"num muted",text:"—"}), el("td",{class:"num muted",text:"—"}));
+  tb.append(tr);
+  $("prod-note").textContent = `«Mozos con ventas»: mozos con comprobantes por importe mayor a cero ese día. Facturación por hora-mozo: facturación de esos mozos ÷ suma de sus ventanas con ventas (no son horas fichadas). La referencia usa ${r?.n||0} jornadas (${r?.desde?dmy(r.desde)+" a "+dmy(r.hasta):"—"}); allí los tickets por mozo son los comprobantes que informa Morphi y pueden incluir alguna nota de crédito.`;
+  for (const f of fechasActivas()) { const m = state.data.moz[f]; if (!m?.lista) continue;
+    const sec = el("div");
+    sec.append(el("div",{class:"mz-h"}, el("span",{class:"swatch",style:`background:var(${ROL[rolDe(f)].c})`}), el("h3",{text:`Detalle por mozo · ${cap(corto(f))}`})));
+    const tt = el("table"); tt.append(el("thead",{}, el("tr",{}, ...["Mozo","Turno (según ventas)","Ventana con ventas","Tickets","Facturación","Fact. por hora con ventas","Ticket prom.","Cubiertos","NC / anul."].map((h,i)=>el("th",{class:i<3?"l":null,text:h})))));
+    const b = el("tbody"); tt.append(b);
+    for (const z of m.lista) { const ven = [z.vA?`${hh(z.vA[0])}–${hh(z.vA[1])} h`:null, z.vC?`${hh(z.vC[0]%24)}–${hh(z.vC[1]%24||24)} h`:null].filter(Boolean).join(" · ");
+      b.append(el("tr",{class: z.activo ? null : "muted"}, el("td",{class:"l",text:z.nombre + (z.activo ? "" : " (sin ventas efectivas)")}), el("td",{class:"l",text: z.turnos.length ? z.turnos.join(" y ") : "—"}), el("td",{class:"l num",text: ven || "—"}),
+        el("td",{class:"num",text:z.tk==null?"—":int(z.tk)}), el("td",{class:"num",text:money(z.imp)}), el("td",{class:"num",text:z.porHora?money(z.porHora):"—"}), el("td",{class:"num",text:z.tk?money(z.imp/z.tk):"—"}), el("td",{class:"num",text:int(z.cub)}),
+        el("td",{class:"num",text: CTE ? `${z.nc.n} / ${z.anul.n}` : "—"}))); }
+    sec.append(el("div",{class:"tbl-wrap"}, tt)); box.append(sec); } }
 
 /* ===================== Gráfico por hora ===================== */
-function seriesHora(){ const D = state.data.D; const s = [];
-  if (D.pasada) s.push({ k:"F", f:D.F, c:"var(--s-d)", n:`Consultada ${dmy(D.F)}` });
-  s.push({ k:"A", f:D.A, c:"var(--s-a)", n:`Misma fecha ${dmy(D.A)}` }, { k:"B", f:D.B, c:"var(--s-b)", n:`Mismo día semanal ${dmy(D.B)}` });
-  return s; }
-function ordenHora(h){ return h < 6 ? h + 24 : h; }
+function seriesHora(){ return fechasActivas().map(f => ({ f, c:`var(${ROL[rolDe(f)].c})`, cv: css(ROL[rolDe(f)].c), n: `${rolDe(f)==="F"?"Consultada":rolDe(f)==="A"?"Misma fecha":"Mismo día semanal"} ${dmy(f)}` })); }
+const ordenHora = h => h < 6 ? h + 24 : h;
+function niceMax(v){ if (v<=0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const k of [1,1.5,2,2.5,3,4,5,6,8,10]) if (k*p >= v) return k*p; return 10*p; }
+function svgEl(tag, at){ const e=document.createElementNS("http://www.w3.org/2000/svg",tag); for (const k in at) e.setAttribute(k,at[k]); return e; }
+const barPath = (x,y,w,base) => { const hgt = base-y, r = Math.min(4, w/2, hgt); return `M${x},${base} V${y+r} Q${x},${y} ${x+r},${y} H${x+w-r} Q${x+w},${y} ${x+w},${y+r} V${base} Z`; };
 function renderHours(){
-  const S = seriesHora(); const box=$("hour-chart"), rbox=$("rain-chart"); box.replaceChildren(); rbox.replaceChildren();
+  const S = seriesHora(), M = state.medida; const box=$("hour-chart"), rbox=$("rain-chart"); box.replaceChildren(); rbox.replaceChildren();
   $("hour-legend").replaceChildren(...S.map(s => el("span",{}, el("i",{style:`background:${s.c}`}), s.n)));
+  const val = (f,h) => { const v = state.data.hora[f]?.h?.[h]; if (!v) return 0; return M==="imp" ? v.imp : (v.tk ?? v.tkVenta); };
   const hrs = new Set(); let max = 0, any = false, errs = 0;
-  for (const s of S) { const r = state.data.hora[s.f]; if (r?.error) errs++; if (!r?.h) continue; any = true; for (const [h,v] of Object.entries(r.h)) { if (v.imp>0) { hrs.add(+h); max = Math.max(max, v.imp); } } }
-  if (!any) { box.append(el("div",{class:"empty",text: !MCP ? noMcpTxt() : errs ? "Morphi no devolvió el detalle por hora para estas fechas." : "Cargando ventas por hora…"})); drawRain(rbox, S, [12,13,14,15,16,20,21,22,23]); return; }
-  let H = [...hrs].sort((a,b)=>ordenHora(a)-ordenHora(b));
-  const lo = ordenHora(H[0]), hi = ordenHora(H[H.length-1]); H = []; for (let x=lo; x<=hi; x++) H.push(x%24);
+  for (const s of S) { const r = state.data.hora[s.f]; if (r?.error) errs++; if (!r?.h) continue; any = true; for (const h of Object.keys(r.h)) { const v = val(s.f,+h); if (r.h[h].tkVenta>0) hrs.add(+h); max = Math.max(max, v); } }
+  if (!any) { box.append(el("div",{class:"empty",text: !MCP ? noMcpTxt() : errs ? "Morphi no devolvió el detalle por hora para estas fechas." : "Cargando ventas por hora…"})); drawRain(rbox, S, COMM); return; }
+  let H = [...hrs].sort((a,b)=>ordenHora(a)-ordenHora(b)); const lo = ordenHora(H[0]), hi = ordenHora(H[H.length-1]); H = []; for (let x=lo; x<=hi; x++) H.push(x%24);
   const W = Math.max(320, box.clientWidth||700), Ht = 260, m = { l:56, r:8, t:10, b:26 };
   const iw = W-m.l-m.r, ih = Ht-m.t-m.b, gw = iw/H.length, bw = Math.max(3, Math.min(18, (gw-6)/S.length - 2));
-  const nice = niceMax(max), y = v => m.t + ih - (v/nice)*ih;
-  const NS = "http://www.w3.org/2000/svg"; const svg = document.createElementNS(NS,"svg"); svg.setAttribute("viewBox",`0 0 ${W} ${Ht}`); svg.setAttribute("role","img"); svg.setAttribute("aria-label","Facturación por hora");
-  const g = (tag, at) => { const e=document.createElementNS(NS,tag); for (const k in at) e.setAttribute(k,at[k]); return e; };
-  const grid = g("g",{class:"grid"}), ax = g("g",{class:"axis"});
-  for (let i=0;i<=4;i++){ const v=nice*i/4, yy=y(v); grid.append(g("line",{x1:m.l,x2:W-m.r,y1:yy,y2:yy,"stroke-width":1})); const t=g("text",{x:m.l-8,y:yy+4,"text-anchor":"end"}); t.textContent=moneyK(v).replace("$ ",""); ax.append(t); }
+  const nice = niceMax(max), y = v => m.t + ih - (Math.max(0,v)/nice)*ih;
+  const svg = svgEl("svg",{viewBox:`0 0 ${W} ${Ht}`, role:"img", "aria-label": M==="imp"?"Facturación por hora":"Tickets válidos por hora"});
+  const grid = svgEl("g",{class:"grid"}), ax = svgEl("g",{class:"axis"});
+  for (let i=0;i<=4;i++){ const v=nice*i/4, yy=y(v); grid.append(svgEl("line",{x1:m.l,x2:W-m.r,y1:yy,y2:yy})); const t=svgEl("text",{x:m.l-8,y:yy+4,"text-anchor":"end"}); t.textContent = M==="imp" ? moneyK(v).replace("$ ","") : dec(v,0); ax.append(t); }
   svg.append(grid);
-  H.forEach((h,i) => { const cx = m.l + gw*i + gw/2; const t=g("text",{x:cx,y:Ht-8,"text-anchor":"middle"}); t.textContent=String(h).padStart(2,"0"); if (H.length>14 && i%2) t.setAttribute("opacity",".0"); ax.append(t);
-    const tot = S.length*(bw+2)-2; S.forEach((s,j) => { const v = state.data.hora[s.f]?.h?.[h]?.imp || 0; if (v<=0) return; const x = cx - tot/2 + j*(bw+2), yy=y(v), hh = m.t+ih-yy;
-      const r = Math.min(4, bw/2, hh); const p = `M${x},${m.t+ih} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+bw-r} Q${x+bw},${yy} ${x+bw},${yy+r} V${m.t+ih} Z`;
-      svg.append(g("path",{d:p,fill:s.c.startsWith("var")?getComputedStyle(document.documentElement).getPropertyValue(s.c.slice(4,-1)).trim():s.c})); });
-    const hit = g("rect",{x:m.l+gw*i,y:m.t,width:gw,height:ih,fill:"transparent",style:"cursor:crosshair"});
-    hit.addEventListener("pointerenter", ev => tip(box, ev, h, S)); hit.addEventListener("pointermove", ev => tip(box, ev, h, S)); hit.addEventListener("pointerleave", () => hideTip(box));
+  H.forEach((h,i) => { const cx = m.l + gw*i + gw/2; const t=svgEl("text",{x:cx,y:Ht-8,"text-anchor":"middle"}); t.textContent=hh(h); if (H.length>14 && i%2) t.setAttribute("opacity","0"); ax.append(t);
+    const tot = S.length*(bw+2)-2; S.forEach((s,j) => { const v = val(s.f,h); if (v<=0) return; const x = cx - tot/2 + j*(bw+2); svg.append(svgEl("path",{d:barPath(x,y(v),bw,m.t+ih),fill:s.cv})); });
+    const hit = svgEl("rect",{x:m.l+gw*i,y:m.t,width:gw,height:ih,fill:"transparent",style:"cursor:crosshair"});
+    const show = ev => tip(box, ev, h, S); hit.addEventListener("pointerenter", show); hit.addEventListener("pointermove", show); hit.addEventListener("pointerleave", () => hideTip(box));
     svg.append(hit); });
-  svg.append(g("line",{x1:m.l,x2:W-m.r,y1:m.t+ih,y2:m.t+ih,stroke:"var(--line-2)"}));
+  svg.append(svgEl("line",{x1:m.l,x2:W-m.r,y1:m.t+ih,y2:m.t+ih,stroke:css("--line-2")}));
   svg.append(ax); box.append(svg);
-  drawRain(rbox, S, H, W, m, gw);
-}
-function niceMax(v){ if (v<=0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const k of [1,1.5,2,2.5,3,4,5,6,8,10]) if (k*p >= v) return k*p; return 10*p; }
+  drawRain(rbox, S, H, W, m, gw); }
 function tip(box, ev, h, S){ hideTip(box); const r = box.getBoundingClientRect(); const t = el("div",{class:"tip"});
-  t.append(el("b",{text:`${String(h).padStart(2,"0")}:00 – ${String((h+1)%24).padStart(2,"0")}:00`}));
-  for (const s of S) { const v = state.data.hora[s.f]?.h?.[h]; const w = clima(s.f); const pp = w ? (w.h.pp[h]||0)/10 : null;
-    t.append(el("div",{class:"r"}, el("span",{style:`color:${getComputedStyle(document.documentElement).getPropertyValue(s.c.slice(4,-1))}`,text:"■ "+dmy(s.f)}), el("span",{class:"num",text: v ? `${money(v.imp)} · ${v.tk} tk` : "sin ventas"})));
-    if (pp!=null) t.append(el("div",{class:"r muted"}, el("span",{text:"   lluvia"}), el("span",{class:"num",text: pp>0 ? pp.toLocaleString("es-AR",{maximumFractionDigits:1})+" mm" : "0 mm"}))); }
-  box.append(t); const x = ev.clientX - r.left, y = ev.clientY - r.top; const tw = t.offsetWidth;
-  t.style.left = Math.max(0, Math.min(x + 14, r.width - tw)) + "px"; t.style.top = Math.max(0, y - t.offsetHeight - 10) + "px"; }
-function hideTip(box){ box.querySelectorAll(".tip").forEach(x=>x.remove()); }
+  t.append(el("b",{text:`${hh(h)}:00 – ${hh((h+1)%24)}:00`}));
+  for (const s of S) { const v = state.data.hora[s.f]?.h?.[h]; const w = clima(s.f); const pp = w && h>=6 ? (w.h.pp[h]||0)/10 : null;
+    t.append(el("div",{class:"r"}, el("span",{style:`color:${s.cv}`,text:"■ "+dmy(s.f)}), el("span",{class:"num",text: v ? `${money(v.imp)} · ${v.tk ?? v.tkVenta} tk` : "sin ventas"})));
+    if (pp!=null) t.append(el("div",{class:"r muted"}, el("span",{text:"lluvia"}), el("span",{class:"num",text: dec(pp)+" mm"}))); }
+  box.append(t); const x = ev.clientX - r.left, y = ev.clientY - r.top;
+  t.style.left = Math.max(0, Math.min(x + 14, r.width - t.offsetWidth)) + "px"; t.style.top = Math.max(0, y - t.offsetHeight - 10) + "px"; }
+const hideTip = box => box.querySelectorAll(".tip").forEach(x=>x.remove());
 function drawRain(box, S, H, W, m, gw){
   W = W || Math.max(320, box.clientWidth||700); m = m || { l:56, r:8 }; gw = gw || (W-m.l-m.r)/H.length;
   const filas = S.filter(s => clima(s.f)); if (!filas.length) return;
-  const rowH = 18, Ht = filas.length*(rowH+6)+16; const NS="http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(NS,"svg"); svg.setAttribute("viewBox",`0 0 ${W} ${Ht}`); svg.setAttribute("aria-label","Lluvia por hora");
-  const g=(tag,at)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);return e;};
-  const t0=g("text",{x:0,y:10,fill:"var(--muted)","font-size":"11"}); t0.textContent="Lluvia por hora (mm, modelo)"; svg.append(t0);
+  const rowH = 18, Ht = filas.length*(rowH+6)+16;
+  const svg = svgEl("svg",{viewBox:`0 0 ${W} ${Ht}`,"aria-label":"Lluvia por hora"});
+  const t0=svgEl("text",{x:0,y:10,fill:css("--muted"),"font-size":"11"}); t0.textContent="Lluvia por hora (mm, modelo)"; svg.append(t0);
   filas.forEach((s,i) => { const w = clima(s.f), y0 = 16 + i*(rowH+6);
-    const lb = g("text",{x:m.l-8,y:y0+rowH-5,"text-anchor":"end",fill:"var(--fg-2)","font-size":"11","font-family":"IBM Plex Mono, monospace"}); lb.textContent = dmy(s.f).slice(0,5); svg.append(lb);
-    svg.append(g("rect",{x:m.l-4,y:y0+rowH/2-4,width:3,height:8,rx:1.5,fill:getComputedStyle(document.documentElement).getPropertyValue(s.c.slice(4,-1)).trim()}));
-    H.forEach((h,j) => { const pp=(w.h.pp[h]||0)/10; const x=m.l+gw*j+1;
-      const a = pp<=0 ? 0 : Math.min(1, .25 + pp/4);
-      svg.append(g("rect",{x, y:y0, width:Math.max(2,gw-2), height:rowH, rx:3, fill: pp>0 ? "var(--rain)" : "var(--panel-2)", "fill-opacity": pp>0 ? a : 1}));
-      if (pp>=0.5 && gw>=26) { const tt=g("text",{x:x+(gw-2)/2,y:y0+rowH-5,"text-anchor":"middle",fill:"#0b0c0d","font-size":"10","font-family":"IBM Plex Mono, monospace"}); tt.textContent = pp.toLocaleString("es-AR",{maximumFractionDigits:1}); svg.append(tt); } }); });
+    const lb = svgEl("text",{x:m.l-8,y:y0+rowH-5,"text-anchor":"end",fill:css("--fg-2"),"font-size":"11","font-family":"IBM Plex Mono, monospace"}); lb.textContent = dmy(s.f).slice(0,5); svg.append(lb);
+    svg.append(svgEl("rect",{x:m.l-4,y:y0+rowH/2-4,width:3,height:8,rx:1.5,fill:s.cv}));
+    H.forEach((h,j) => { const pp = h>=6 ? (w.h.pp[h]||0)/10 : 0; const x=m.l+gw*j+1;
+      svg.append(svgEl("rect",{x, y:y0, width:Math.max(2,gw-2), height:rowH, rx:3, fill: pp>0 ? css("--rain") : css("--panel-2"), "fill-opacity": pp>0 ? Math.min(1,.25+pp/4) : 1}));
+      if (pp>=0.5 && gw>=26) { const tt=svgEl("text",{x:x+(gw-2)/2,y:y0+rowH-5,"text-anchor":"middle",fill:"#0b0c0d","font-size":"10","font-family":"IBM Plex Mono, monospace"}); tt.textContent = dec(pp); svg.append(tt); } }); });
   box.append(svg); }
 
 /* ===================== Proyección ===================== */
-function esLluviaCom(f){ const w = REF.clima?.dias?.[f]; if (!w) return null; return mmEn(w.h, COMM) >= 2; }
+const esLluviaCom = f => { const w = REF.clima?.dias?.[f]; if (!w) return null; return mmEn(w.h, COMM) >= 2; };
 function baseVecinos(f, excluir){ const vals = [];
-  for (const k of [-21,-14,-7,7,14,21]) { const x = add(f,k); const d = HIST[x]; if (!d || d.imp<=0) continue; if (esFer(x)) continue; if (excluir && excluir(x)) continue; const r = real(d.imp,x); if (r) vals.push({ r, tk:d.tk }); }
+  for (const k of [-21,-14,-7,7,14,21]) { const x = add(f,k); const d = HIST[x]; if (!d || d.imp<=0) continue; if (esFer(x)) continue; if (excluir && excluir(x)) continue; const r = real(d.imp,x); if (r) vals.push({ r, tk:d.tkVal }); }
   return vals.length >= 3 ? { r: median(vals.map(v=>v.r)), tk: median(vals.map(v=>v.tk)), n: vals.length } : null; }
-/* Efecto observado (no causal): ventas reales de días con la condición ÷ mediana de mismos días de la semana cercanos sin la condición. */
-function efecto(cond, excl, desde){ const ratios = [], ratiosTk=[]; const dias = [];
-  for (const [f,d] of Object.entries(HIST)) { if (desde && f < desde) continue; if (!cond(f) || d.imp<=0) continue; const b = baseVecinos(f, excl); if (!b) continue; const r = real(d.imp,f); if (!r) continue; ratios.push(r/b.r); ratiosTk.push(d.tk/b.tk); dias.push(f); }
-  return ratios.length ? { med: median(ratios), q1: quant(ratios,.25), q3: quant(ratios,.75), tk: median(ratiosTk), n: ratios.length, dias } : { n:0 }; }
-function rainEffect(){ if (state._rain) return state._rain; return state._rain = efecto(f => esLluviaCom(f)===true && !esFer(f), x => esLluviaCom(x)!==false); }
-function ferEffect(){ if (state._fer) return state._fer; return state._fer = efecto(f => !!esFer(f), null); }
-
+/* Efecto observado (no causal): días con la condición ÷ mediana de mismos días de la semana cercanos sin la condición. */
+function efecto(cond, excl){ const ratios = [], ratiosTk=[];
+  for (const [f,d] of Object.entries(HIST)) { if (f.startsWith("__") || !cond(f) || d.imp<=0) continue; const b = baseVecinos(f, excl); if (!b) continue; const r = real(d.imp,f); if (!r) continue; ratios.push(r/b.r); if (b.tk) ratiosTk.push(d.tkVal/b.tk); }
+  return ratios.length ? { med: median(ratios), q1: quant(ratios,.25), q3: quant(ratios,.75), tk: median(ratiosTk), n: ratios.length } : { n:0 }; }
+const rainEffect = () => state._rain ||= efecto(f => esLluviaCom(f)===true && !esFer(f), x => esLluviaCom(x)!==false);
+const ferEffect = () => state._fer ||= efecto(f => !!esFer(f), null);
 function proyectar(F){
-  if (!HIST) return null;
-  const ayer = add(state.hoy,-1), fer = !!esFer(F);
-  // Ventana de comparables: mismo día de la semana ±3 semanas alrededor del aniversario (52·k semanas antes).
-  const ests = [], resid = [], resTk = [], usados = [];
+  if (!HIST) return null; const ayer = add(state.hoy,-1), fer = !!esFer(F);
+  const ests = [], resid = [], resTk = [];
   for (let k=1;k<=3;k++) {
     const c = add(F, -364*k); const vals = [];
-    for (let j=-3;j<=3;j++) { const x = add(c, 7*j); const d = HIST[x]; if (!d || d.imp<=0 || x > ayer) continue; if (!fer && esFer(x)) continue; if (fer && j!==0 && esFer(x)) continue; const r = real(d.imp,x); if (!r) continue; vals.push({ x, r, tk:d.tk }); }
+    for (let j=-3;j<=3;j++) { const x = add(c, 7*j); const d = HIST[x]; if (!d || d.imp<=0 || x > ayer) continue; if (!fer && esFer(x)) continue; if (fer && j!==0 && esFer(x)) continue; const r = real(d.imp,x); if (!r) continue; vals.push({ x, r, tk:d.tkVal }); }
     if (vals.length < 3) continue;
     const mr = median(vals.map(v=>v.r)), mt = median(vals.map(v=>v.tk));
-    // Tendencia: últimos 56 días (real) contra los mismos 56 días 52·k semanas antes.
     let rec=0, ago=0, recT=0, agoT=0, nn=0;
-    for (let i=1;i<=56;i++) { const x = add(state.hoy,-i), y = add(x,-364*k); const dx=HIST[x], dy=HIST[y]; if (!dx||!dy) continue; const rx=real(dx.imp,x), ry=real(dy.imp,y); if(!rx||!ry) continue; rec+=rx; ago+=ry; recT+=dx.tk; agoT+=dy.tk; nn++; }
+    for (let i=1;i<=56;i++) { const x = add(state.hoy,-i), y = add(x,-364*k); const dx=HIST[x], dy=HIST[y]; if (!dx||!dy) continue; const rx=real(dx.imp,x), ry=real(dy.imp,y); if(!rx||!ry) continue; rec+=rx; ago+=ry; recT+=dx.tkVal; agoT+=dy.tkVal; nn++; }
     const tr = nn>=28 && ago>0 ? Math.min(1.6, Math.max(0.6, rec/ago)) : 1, trT = nn>=28 && agoT>0 ? Math.min(1.6, Math.max(0.6, recT/agoT)) : 1;
     ests.push({ k, imp: mr*tr, tk: mt*trT, tr, n: vals.length, peso: {1:.6,2:.25,3:.15}[k], centro:c });
-    for (const v of vals) { resid.push(v.r/mr); resTk.push(v.tk/mt); usados.push(v.x); }
-  }
+    for (const v of vals) { resid.push(v.r/mr); resTk.push(v.tk/mt); } }
   if (!ests.length) return { sinDatos:true };
   const pw = ests.reduce((a,e)=>a+e.peso,0);
   let imp = ests.reduce((a,e)=>a+e.imp*e.peso,0)/pw, tk = ests.reduce((a,e)=>a+e.tk*e.peso,0)/pw;
   const ajustes = [];
-  // Feriado: si los comparables no lo son, se aplica el efecto observado de feriados (si hay muestra suficiente).
   if (fer) { const fe = ferEffect(); const compFer = ests.some(e => esFer(e.centro));
-    if (!compFer && fe.n >= 6) { imp *= fe.med; tk *= fe.tk; ajustes.push(`Feriado: ×${fe.med.toFixed(2)} (efecto mediano observado en ${fe.n} feriados frente a días similares).`); }
+    if (!compFer && fe.n >= 6) { imp *= fe.med; tk *= fe.tk; ajustes.push(`Feriado: ×${dec(fe.med,2)} (efecto mediano observado en ${fe.n} feriados frente a días similares).`); }
     else if (!compFer) ajustes.push("Es feriado, pero hay pocos feriados en el historial para estimar su efecto: no se ajustó."); }
-  const lo = quant(resid,.1), hi = quant(resid,.9), spread = Math.max(...ests.map(e=>e.imp))/Math.min(...ests.map(e=>e.imp));
-  let iLo = imp*Math.min(lo, 1/Math.sqrt(spread)), iHi = imp*Math.max(hi, Math.sqrt(spread));
-  const cv = (quant(resid,.75)-quant(resid,.25))/1.35;
-  const horizonte = diff(F, state.hoy);
-  // Clima pronosticado (solo hasta ~15 días)
+  const spread = Math.max(...ests.map(e=>e.imp))/Math.min(...ests.map(e=>e.imp));
+  const iLo = imp*Math.min(quant(resid,.1), 1/Math.sqrt(spread)), iHi = imp*Math.max(quant(resid,.9), Math.sqrt(spread));
+  const cv = (quant(resid,.75)-quant(resid,.25))/1.35, horizonte = diff(F, state.hoy);
   let escLluvia = null; const w = REF.clima?.pronostico?.[F];
   if (w) { const mm = mmEn(w.h, COMM); const re = rainEffect(); if (mm >= 2 && re.n >= 8) escLluvia = { mm, imp: imp*re.med, tk: tk*re.tk, re }; }
   let score = 0; const motivos = [];
@@ -618,34 +768,31 @@ function proyectar(F){
   if (ests.some(e=>e.k===1)) score++; else motivos.push("no hay comparables del último año");
   if (fer && !ests.some(e=>esFer(e.centro))) { score--; motivos.push("feriado sin comparables directos"); }
   const nivel = score >= 4 ? "Alta" : score >= 2 ? "Media" : "Baja";
-  return { imp, tk, iLo, iHi, tkLo: tk*quant(resTk,.1), tkHi: tk*quant(resTk,.9), ests, n:resid.length, nivel, motivos, ajustes, escLluvia, usados, w, horizonte, cv }; }
+  return { imp, tk, iLo, iHi, tkLo: tk*quant(resTk,.1), tkHi: tk*quant(resTk,.9), ests, n:resid.length, nivel, motivos, ajustes, escLluvia, w, horizonte }; }
 
 function renderProj(){ const D = state.data.D; const body=$("proj-body"); body.replaceChildren();
   if (!MCP) { body.append(el("div",{class:"empty",text:noMcpTxt()})); return; }
   if (!HIST) { body.append(el("div",{class:"empty",text: state.histErr ? "No se pudo cargar el historial de Morphi: " + errorTxt(state.histErr) : "Cargando el historial diario de Morphi para estimar…"})); return; }
   const p = proyectar(D.F); state.proj = p && !p.sinDatos ? p : null;
-  if (!p || p.sinDatos) { body.append(el("div",{class:"empty",text:"No hay suficientes días comparables en el historial para estimar esta fecha."})); renderVar(); return; }
-  const g = el("div",{class:"proj"});
-  const L = el("div",{style:"display:flex;flex-direction:column;gap:14px;min-width:0"});
-  L.append(el("span",{class:"eyebrow",text:`Facturación estimada · pesos de ${mesTxt(REF.ipcBase)}`}));
-  L.append(el("div",{class:"big",style:"color:var(--fg)",text:money(p.imp)}));
-  L.append(el("div",{class:"fg2",text:`Intervalo probable (80 %): ${money(p.iLo)} – ${money(p.iHi)}`}));
-  // Barra de rango con referencias A y B (en moneda constante)
+  if (!state.proj) { body.append(el("div",{class:"empty",text:"No hay suficientes días comparables en el historial para estimar esta fecha."})); return; }
+  const g = el("div",{class:"proj"}), L = el("div",{style:"display:flex;flex-direction:column;gap:14px;min-width:0"});
+  L.append(el("span",{class:"eyebrow",text:`Facturación estimada · pesos de ${mesTxt(REF.ipcBase)}`}), el("div",{class:"big",text:money(p.imp)}), el("div",{class:"fg2",text:`Intervalo probable (80 %): ${money(p.iLo)} – ${money(p.iHi)}`}));
   const a = state.data.dia[D.A], b = state.data.dia[D.B]; const ra = a&&!a.vacio ? real(a.imp,D.A) : null, rb = b&&!b.vacio ? real(b.imp,D.B) : null;
   const vals = [p.iLo,p.iHi,p.imp,ra,rb].filter(v=>v); const mn = Math.min(...vals)*0.9, mx = Math.max(...vals)*1.05; const X = v => ((v-mn)/(mx-mn)*100).toFixed(2)+"%";
   const rg = el("div",{class:"range",role:"img","aria-label":"Intervalo de la proyección"}, el("div",{class:"bar"}), el("div",{class:"band",style:`left:${X(p.iLo)};width:calc(${X(p.iHi)} - ${X(p.iLo)})`}), el("div",{class:"pt",style:`left:${X(p.imp)}`}));
-  if (ra) rg.append(el("div",{class:"ref",style:`left:${X(ra)};background:var(--s-a)`,title:"Misma fecha"}));
-  if (rb) rg.append(el("div",{class:"ref",style:`left:${X(rb)};background:var(--s-b)`,title:"Mismo día semanal"}));
+  if (ra) rg.append(el("div",{class:"ref",style:`left:${X(ra)};background:var(--s-a)`}));
+  if (rb) rg.append(el("div",{class:"ref",style:`left:${X(rb)};background:var(--s-b)`}));
   L.append(rg, el("div",{class:"legend"}, el("span",{}, el("i",{style:"background:var(--s-d)"}),"Proyección e intervalo"), ra?el("span",{}, el("i",{style:"background:var(--s-a)"}),`Misma fecha (${moneyK(ra)})`):null, rb?el("span",{}, el("i",{style:"background:var(--s-b)"}),`Mismo día semanal (${moneyK(rb)})`):null));
+  const r = state.ref; const mozNec = r?.tkM ? p.tk / r.tkM : null;
   L.append(el("div",{class:"kpis"},
     el("div",{class:"kpi"}, el("span",{class:"v",text:int(Math.round(p.tk))}), el("span",{class:"l",text:`Tickets probables (${int(Math.round(p.tkLo))}–${int(Math.round(p.tkHi))})`})),
     el("div",{class:"kpi"}, el("span",{class:"v",text:money(p.imp/p.tk)}), el("span",{class:"l",text:"Ticket promedio implícito"})),
     el("div",{class:"kpi"}, el("span",{class:"v conf"}, el("i",{style:`background:${p.nivel==="Alta"?"var(--good)":p.nivel==="Media"?"var(--warn)":"var(--bad)"}`}), p.nivel), el("span",{class:"l",text:"Confianza"}))));
+  if (mozNec) L.append(el("p",{class:"note",text:`Hipótesis de dotación: con ${dec(r.tkM)} tickets por mozo (mediana de los ${plural(dow(D.F))} recientes), ${int(Math.round(p.tk))} tickets equivalen a unos ${dec(mozNec)} mozos con ventas. Es una referencia de carga, no un cálculo de personal necesario.`}));
   g.append(L);
-  const R = el("div",{style:"display:flex;flex-direction:column;gap:12px;min-width:0"});
-  R.append(el("h3",{text:"Qué podría modificar la proyección"}));
+  const R = el("div",{style:"display:flex;flex-direction:column;gap:12px;min-width:0"}, el("h3",{text:"Qué podría modificar la proyección"}));
   const ul = el("ul",{class:"factors"});
-  if (p.escLluvia) ul.append(el("li",{text:`El pronóstico marca ${p.escLluvia.mm.toLocaleString("es-AR",{maximumFractionDigits:1})} mm en horario comercial. En ${p.escLluvia.re.n} días históricos con lluvia comparable la facturación fue en mediana ${pct(p.escLluvia.re.med-1)} frente a días similares sin lluvia: escenario ${money(p.escLluvia.imp)}. Es una correlación, no un efecto demostrado.`}));
+  if (p.escLluvia) ul.append(el("li",{text:`El pronóstico marca ${dec(p.escLluvia.mm)} mm en horario comercial. En ${p.escLluvia.re.n} días históricos con lluvia comparable la facturación fue en mediana ${pct(p.escLluvia.re.med-1)} frente a días similares sin lluvia: escenario ${money(p.escLluvia.imp)}. Es una correlación, no un efecto demostrado.`}));
   else if (p.w) ul.append(el("li",{text:`Pronóstico (${REF.clima.generado.slice(0,10)}): ${condicion(p.w,COMM).t.toLowerCase()}, ${tc(p.w.tmin)}°/${tc(p.w.tmax)}°. Sin lluvia significativa prevista en horario comercial.`}));
   else ul.append(el("li",{text:"No hay pronóstico para esta fecha: la lluvia en horario comercial podría alejar el resultado del punto medio."}));
   for (const x of p.ajustes) ul.append(el("li",{text:x}));
@@ -655,10 +802,71 @@ function renderProj(){ const D = state.data.D; const body=$("proj-body"); body.r
   if (p.motivos.length) ul.append(el("li",{text:"Incertidumbre: " + p.motivos.join("; ") + "."}));
   R.append(ul);
   const det = el("details",{}, el("summary",{text:"Cómo se calcula"}));
-  det.append(el("p",{text:`Se toman los mismos días de la semana (±3 semanas) alrededor de la fecha equivalente de hasta 3 años anteriores (52 semanas por año), sin feriados, llevados a pesos de ${mesTxt(REF.ipcBase)} con el IPC. A la mediana de cada año se le aplica la tendencia real reciente (últimos 56 días contra los mismos 56 días de ese año). Se ponderan 60 % / 25 % / 15 %. El intervalo usa la dispersión de los ${p.n} días comparables (percentiles 10 y 90).`}));
-  det.append(el("ul",{}, p.ests.map(e => el("li",{text:`Hace ${e.k} año${e.k>1?"s":""} (alrededor de ${dmy(e.centro)}): ${e.n} días · mediana ajustada ${money(e.imp)} · tendencia ×${e.tr.toFixed(2)}`}))));
-  R.append(det); g.append(R); body.append(g);
-  renderVar(); }
+  det.append(el("p",{text:`Mismos días de la semana (±3 semanas) alrededor de la fecha equivalente de hasta 3 años anteriores (52 semanas por año), sin feriados, llevados a pesos de ${mesTxt(REF.ipcBase)} con el IPC. A la mediana de cada año se le aplica la tendencia real reciente (últimos 56 días contra los mismos 56 días de ese año). Ponderación 60 % / 25 % / 15 %. El intervalo usa la dispersión de los ${p.n} días comparables (percentiles 10 y 90). Tickets: tickets válidos (sin notas de crédito ni anulaciones).`}));
+  det.append(el("ul",{}, p.ests.map(e => el("li",{text:`Hace ${e.k} año${e.k>1?"s":""} (alrededor de ${dmy(e.centro)}): ${e.n} días · mediana ajustada ${money(e.imp)} · tendencia ×${dec(e.tr,2)}`}))));
+  R.append(det); g.append(R); body.append(g); }
+
+/* ===================== Informe gerencial ===================== */
+function renderReport(){ const D=state.data.D, box=$("report"); box.replaceChildren();
+  const Q = (titulo, ...ps) => { const q = el("div",{class:"q"}, el("h3",{text:titulo})); for (const [lbl, txt] of ps.filter(Boolean)) { const p = el("p"); if (lbl) p.append(el("span",{class:"lbl "+lbl,text:{hecho:"Hecho",hip:"Hipótesis",corr:"Correlación",pend:"Pendiente"}[lbl]})); p.append(txt); q.append(p); } box.append(q); };
+  // Contexto
+  const wA = dow(D.A), wF = dow(D.F);
+  let ctx = `El día consultado corresponde a un ${DIAS[wF]}. ` + (wA===wF ? `La misma fecha del año anterior también cayó ${DIAS[wA]}. ` : `La misma fecha del año anterior cayó ${DIAS[wA]}. Para una comparación comercial más representativa también se incluye el ${DIAS[wF]} equivalente de ${D.B.slice(0,4)} (${dmy(D.B)}). `);
+  if (D.notaA) ctx += D.notaA + " ";
+  for (const [f,l] of [[D.F,"La fecha consultada"],[D.A,`El ${dmy(D.A)}`],[D.B,`El ${dmy(D.B)}`]]) { const x = esFer(f); if (x) ctx += `${l} ${f===D.F && !D.pasada ? "es" : "fue"} feriado (${x.nombre}). `; }
+  box.append(el("p",{class:"fg2",style:"font-size:.98rem;line-height:1.65",text:ctx}));
+  if (!MCP) { box.append(el("p",{class:"muted",text:noMcpTxt()})); return; }
+  const x = D.pasada ? valDia(D.F) : null, b = valDia(D.B), a = valDia(D.A);
+  const enCurso = D.F === state.hoy;
+  // 1. Términos reales
+  if (D.pasada) {
+    if (!x || !b) Q("¿Se vendió más o menos en términos reales?", ["pend", state.data.dia[D.F]?.vacio ? "La fecha consultada no tiene ventas registradas." : "Esperando datos de Morphi…"]);
+    else { const iB = inflacion(D.B, D.F), vB = dlt(x.imp, b.imp*(1+iB.acum)); const iA = a ? inflacion(D.A, D.F) : null, vA = a ? dlt(x.imp, a.imp*(1+iA.acum)) : null;
+      Q("¿Se vendió más o menos en términos reales?", ["hecho", `Se vendió ${vB>=0?"más":"menos"}: ${pct(vB)} real contra el ${corto(D.B)} (nominal ${pct(dlt(x.imp,b.imp))}, inflación acumulada ${pct(iB.acum)}).` + (vA!=null ? ` Contra la misma fecha (${corto(D.A)}): ${pct(vA)} real.` : "") + (iB.prov ? ` El IPC de ${mesTxt(D.F.slice(0,7))} no está publicado: cálculo provisorio con ${mesTxt(REF.ipcBase)}; el ajuste exacto queda pendiente.` : "")]); }
+  } else {
+    const p = state.proj;
+    Q("¿Se vendió más o menos en términos reales?", ["pend", enCurso ? "La jornada de hoy está en curso: todavía no hay un total cerrado para comparar." : "La fecha todavía no ocurrió: no hay ventas para comparar."],
+      p ? ["hip", `La proyección (${money(p.imp)}, pesos de ${mesTxt(REF.ipcBase)}) quedaría ${pct(dlt(p.imp, b ? real(b.imp,D.B) : null))} contra el mismo día semanal del año anterior en términos reales.`] : null,
+      (a && b) ? ["hecho", `Entre las referencias: el ${corto(D.B)} facturó ${money(b.imp)} y el ${corto(D.A)}, ${money(a.imp)} (${pct(dlt(b.imp,a.imp))}).`] : null);
+  }
+  // 2. Tickets
+  if (D.pasada && x && b && x.tk!=null && b.tk!=null) Q("¿Se emitieron más o menos tickets?", ["hecho", `${int(x.tk)} tickets válidos contra ${int(b.tk)} del ${corto(D.B)} (${intS(x.tk-b.tk)}, ${pct(dlt(x.tk,b.tk))})` + (a?.tk!=null ? ` y ${int(a.tk)} de la misma fecha (${pct(dlt(x.tk,a.tk))}).` : ".") + (x.nc.n+x.anul.n ? ` Se descontaron ${x.nc.n} notas de crédito y ${x.anul.n} anulaciones.` : " No hubo notas de crédito ni anulaciones.")]);
+  else if (!D.pasada && state.proj && b?.tk!=null) Q("¿Se emitieron más o menos tickets?", ["hip", `Se estiman unos ${int(Math.round(state.proj.tk))} tickets (${int(Math.round(state.proj.tkLo))}–${int(Math.round(state.proj.tkHi))}), contra ${int(b.tk)} del ${corto(D.B)}.`]);
+  else Q("¿Se emitieron más o menos tickets?", ["pend", CTE_ERR ? "No se pudo leer la tabla de comprobantes de Morphi: los tickets válidos no están verificados." : "Esperando datos…"]);
+  // 3. Descomposición
+  const descomp = (X, fX, Y, fY) => { const i = inflacion(fY, fX); const rX = X.imp, rY = Y.imp*(1+i.acum); const tot = Math.log(rX/rY), lt = Math.log(X.tk/Y.tk), lp = Math.log((rX/X.tk)/(rY/Y.tk));
+    const vt = dlt(X.tk,Y.tk), vp = dlt(rX/X.tk, rY/Y.tk);
+    let txt = `Variación real ${pct(Math.exp(tot)-1)} = tickets ${pct(vt)} × ticket promedio real ${pct(vp)}. `;
+    if (Math.sign(lt)===Math.sign(lp) || Math.abs(lt)<0.005 || Math.abs(lp)<0.005) { const sh = Math.abs(lt)/(Math.abs(lt)+Math.abs(lp)||1); txt += sh>0.6 ? "El cambio vino sobre todo de la cantidad de tickets." : sh<0.4 ? "El cambio vino sobre todo del ticket promedio." : "Pesaron parecido la cantidad de tickets y el ticket promedio."; }
+    else txt += lt>0 ? "Hubo más tickets, pero el ticket promedio real bajó." : "Hubo menos tickets, pero el ticket promedio real subió.";
+    return txt + (i.prov ? " (IPC provisorio)" : ""); };
+  if (D.pasada && x && b && x.tk && b.tk) Q("¿El cambio vino de más tickets o de un ticket promedio mayor?", ["hecho", descomp(x, D.F, b, D.B)]);
+  else if (!D.pasada && a && b && a.tk && b.tk) Q("¿El cambio vino de más tickets o de un ticket promedio mayor?", ["hecho", `Entre las referencias (${dmy(D.B)} vs. ${dmy(D.A)}): ` + descomp(b, D.B, a, D.A)]);
+  else Q("¿El cambio vino de más tickets o de un ticket promedio mayor?", ["pend","Esperando datos…"]);
+  // 4. Mozos
+  const mz = f => { const m = state.data.moz[f]; if (!m?.lista) return null; const d = valDia(f); if (!m.n) return `${cap(corto(f))}: sin mozos con ventas registradas`;
+    return `${cap(corto(f))}: ${m.n} mozos con ventas (${m.act.map(z=>z.nombre).join(", ")}), ${d?.tk!=null?dec(d.tk/m.n):"—"} tickets y ${money((d?.imp??m.tot.imp)/m.n)} por mozo, ${m.tot.hs?money(m.tot.imp/m.tot.hs):"—"} por hora-mozo con ventas`; };
+  const ls = fechasActivas().map(mz).filter(Boolean);
+  Q("¿Cuántos mozos trabajaron y cuál fue su productividad?", ls.length ? ["hecho", ls.join(". ") + "."] : ["pend","Esperando datos de mozos…"], ["pend","Dotación real no verificada: Morphi no expone fichadas ni horarios. Los conteos son de mozos con comprobantes asignados; puede haber personal que trabajó sin facturar y las ventanas no son horas fichadas."]);
+  // 5. Clima
+  const climaTxt = f => { const w = clima(f); if (!w) return null; const fr = franjas(f); const ca = franjaClima(w, fr?.almH?.length?fr.almH:ALM), cc = franjaClima(w, fr?.cenH?.length?fr.cenH:CEN);
+    return { f, w, ca, cc, txt: `${dmy(f)}: almuerzo ${ca?ca.t.toLowerCase()+", "+tc(ca.tmin)+"–"+tc(ca.tmax)+"°, "+(ca.mm>=0.1?dec(ca.mm)+" mm":"sin lluvia"):"—"}; cena ${cc?cc.t.toLowerCase()+", "+tc(cc.tmin)+"–"+tc(cc.tmax)+"°, "+(cc.mm>=0.1?dec(cc.mm)+" mm":"sin lluvia"):"—"}; viento máx. ${Math.round(w.vmax)} km/h` }; };
+  const cs = fechasActivas().map(climaTxt).filter(Boolean);
+  if (cs.length) { const base = cs[0], otros = cs.slice(1); const rel = [];
+    for (const o of otros) { const dm = ((base.ca?.mm||0)+(base.cc?.mm||0)) - ((o.ca?.mm||0)+(o.cc?.mm||0)); const dt = base.w.tmax - o.w.tmax; const dv = base.w.vmax - o.w.vmax;
+      const r = []; if (Math.abs(dm) >= 2) r.push(`${dm>0?"más":"menos"} lluvia en horario comercial (${dec(Math.abs(dm))} mm de diferencia)`); if (Math.abs(dt) >= 5) r.push(`${dt>0?"más":"menos"} calor (${dec(Math.abs(dt))}° de máxima)`); if (Math.abs(dv) >= 15) r.push(`${dv>0?"más":"menos"} viento (${Math.round(Math.abs(dv))} km/h)`);
+      rel.push(r.length ? `Frente al ${dmy(o.f)}: ${r.join(", ")}.` : `Frente al ${dmy(o.f)}: sin diferencias climáticas relevantes.`); }
+    Q("¿Hubo diferencias climáticas relevantes?", ["hecho", cs.map(c=>c.txt).join(". ") + ". Datos de modelo para la zona del puerto."], ["hecho", rel.join(" ")],
+      rel.some(r=>r.includes("lluvia")) && HIST && rainEffect().n>=8 ? ["corr", `En el historial, los días con lluvia en horario comercial facturaron en mediana ${pct(rainEffect().med-1)} frente a días similares sin lluvia (${rainEffect().n} casos). No prueba que la lluvia explique la diferencia de estas jornadas.`] : null); }
+  else Q("¿Hubo diferencias climáticas relevantes?", ["pend","Sin datos de clima para estas fechas."]);
+  // 6. Dotación
+  const r = state.ref; const fx = D.pasada ? D.F : D.B; const m = state.data.moz[fx], d = valDia(fx);
+  if (r?.tkM && m?.n && d?.tk!=null) { const carga = d.tk/m.n, v = carga/r.tkM - 1;
+    const juicio = v > 0.25 ? "una carga por mozo bastante mayor que la habitual: la dotación pudo haber quedado ajustada para ese nivel de actividad" : v < -0.25 ? "una carga por mozo menor que la habitual: pudo haber más dotación de la necesaria para ese nivel de actividad" : "una carga por mozo en línea con la habitual: la dotación pareció acorde al nivel de actividad";
+    Q("¿La dotación pareció adecuada para el nivel de actividad?", ["hecho", `${cap(corto(fx))}: ${dec(carga)} tickets por mozo con ventas, contra una mediana de ${dec(r.tkM)} en los ${plural(dow(D.F))} de las 12 semanas previas (${pct(v)}).`], ["hip", `Sugiere ${juicio}. Sin fichadas no se puede confirmar cuántas personas estuvieron realmente en el salón.`]); }
+  if (!D.pasada && r?.tkM && state.proj) { const n = state.proj.tk / r.tkM; box.lastChild.append(el("p",{}, el("span",{class:"lbl hip",text:"Hipótesis"}), `Para la fecha consultada: con la carga habitual reciente (${dec(r.tkM)} tickets por mozo), los ${int(Math.round(state.proj.tk))} tickets proyectados equivalen a unos ${dec(n)} mozos con ventas.`)); }
+  if (!(r?.tkM && m?.n && d?.tk!=null)) Q("¿La dotación pareció adecuada para el nivel de actividad?", ["pend", r?.n!=null && !r.tkM ? `Pocas jornadas comparables para la referencia (${r.n}).` : "Esperando datos…"], ["pend","Dotación real no verificada."]);
+}
 
 /* ===================== Análisis ===================== */
 function renderAnalysis(){
@@ -667,17 +875,15 @@ function renderAnalysis(){
   const r = rainEffect();
   if (r.n >= 5) {
     re.append(el("div",{class:"big "+cls(r.med-1),text:pct(r.med-1)}));
-    re.append(el("p",{class:"fg2",style:"margin-top:8px",text:`Mediana de la facturación real en ${r.n} días con 2 mm o más de lluvia en horario comercial (12–17 y 20–24 h), frente a los mismos días de la semana de las 3 semanas anteriores y posteriores sin lluvia. Rango intercuartil: ${pct(r.q1-1)} a ${pct(r.q3-1)}. Tickets: ${pct(r.tk-1)}.`}));
+    re.append(el("p",{class:"fg2",style:"margin-top:8px",text:`Mediana de la facturación real en ${r.n} días con 2 mm o más de lluvia en horario comercial (12–17 y 20–24 h), frente a los mismos días de la semana de las 3 semanas anteriores y posteriores sin lluvia. Rango intercuartil: ${pct(r.q1-1)} a ${pct(r.q3-1)}. Tickets válidos: ${pct(r.tk-1)}.`}));
     re.append(el("p",{class:"note",text:"Es una asociación estadística: la lluvia coincide con otros factores (temporada, frío, eventos). No prueba que la lluvia cause la diferencia. Los datos de lluvia son de modelo (reanálisis), no medidos en el local."}));
   } else re.append(el("div",{class:"empty",text:"Muy pocos días con lluvia en horario comercial y comparables válidos para medir una asociación."}));
-  // Tipos de día: últimos 365 días, mediana real
   const desde = add(state.hoy,-365); const grupos = { "Lunes a jueves":[], "Viernes":[], "Sábado":[], "Domingo":[], "Feriado":[] };
-  for (const [f,d] of Object.entries(HIST)) { if (f < desde || d.imp<=0) continue; const r = real(d.imp,f); if (!r) continue; const w = dow(f);
-    const k = esFer(f) ? "Feriado" : w===0 ? "Domingo" : w===6 ? "Sábado" : w===5 ? "Viernes" : "Lunes a jueves"; grupos[k].push(r); }
+  for (const [f,d] of Object.entries(HIST)) { if (f.startsWith("__") || f < desde || d.imp<=0) continue; const r = real(d.imp,f); if (!r) continue; const w = dow(f);
+    grupos[esFer(f) ? "Feriado" : w===0 ? "Domingo" : w===6 ? "Sábado" : w===5 ? "Viernes" : "Lunes a jueves"].push(r); }
   const filas = Object.entries(grupos).filter(([,v])=>v.length).map(([k,v])=>({ k, m:median(v), n:v.length }));
-  const mx = Math.max(...filas.map(x=>x.m));
-  const tipoF = tipoDia(state.data.D.F), wF = dow(state.data.D.F);
-  const actual = tipoF==="feriado" ? "Feriado" : wF===0 ? "Domingo" : wF===6 ? "Sábado" : wF===5 ? "Viernes" : "Lunes a jueves";
+  const mx = Math.max(...filas.map(x=>x.m)); const F = state.data.D.F, wF = dow(F);
+  const actual = esFer(F) ? "Feriado" : wF===0 ? "Domingo" : wF===6 ? "Sábado" : wF===5 ? "Viernes" : "Lunes a jueves";
   const hb = el("div",{class:"hbars"});
   for (const x of filas) hb.append(el("div",{class:"hb"}, el("span",{class:"n",text:`${x.k} (${x.n})`}), el("span",{class:"t"}, el("i",{style:`width:${(x.m/mx*100).toFixed(1)}%;background:${x.k===actual?"var(--accent)":"var(--line-2)"}`})), el("span",{class:"v",text:moneyK(x.m)})));
   dt.append(hb, el("p",{class:"note",text:`Mediana diaria de los últimos 365 días con ventas, en pesos de ${mesTxt(REF.ipcBase)}. Resaltado: el tipo de la fecha consultada. Entre paréntesis, cantidad de días.`}));
@@ -686,36 +892,30 @@ function renderAnalysis(){
 
 function drawSeason(){ const box=$("season-chart"); box.replaceChildren();
   if (!HIST) { box.append(el("div",{class:"empty",text: state.histErr ? "Historial no disponible." : "Cargando historial…"})); return; }
-  // Promedio diario real por mes y año; índice = promedio de cada mes ÷ promedio de todos los meses (años completos con datos).
-  const acc = {}; for (const [f,d] of Object.entries(HIST)) { const r = real(d.imp,f); if (!r) continue; const k=f.slice(0,7); (acc[k] ||= { s:0, n:0 }); acc[k].s += r; acc[k].n++; }
+  const acc = {}; for (const [f,d] of Object.entries(HIST)) { if (f.startsWith("__")) continue; const r = real(d.imp,f); if (!r) continue; const k=f.slice(0,7); (acc[k] ||= { s:0 }); acc[k].s += r; }
   const porMes = Array.from({length:12},()=>[]);
-  for (const [k,v] of Object.entries(acc)) { const dim = new Date(Date.UTC(+k.slice(0,4), +k.slice(5,7), 0)).getUTCDate(); if (k===state.hoy.slice(0,7)) continue; porMes[+k.slice(5,7)-1].push(v.s/dim); }
+  for (const [k,v] of Object.entries(acc)) { if (k===state.hoy.slice(0,7)) continue; const dim = new Date(Date.UTC(+k.slice(0,4), +k.slice(5,7), 0)).getUTCDate(); porMes[+k.slice(5,7)-1].push(v.s/dim); }
   const prom = porMes.map(a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : null);
   const mesF = +state.data.D.F.slice(5,7)-1;
   const W = Math.max(320, box.clientWidth||700), Ht = 220, m = { l:56, r:8, t:18, b:26 }; const iw=W-m.l-m.r, ih=Ht-m.t-m.b, gw=iw/12, bw=Math.min(34, gw-8);
   const mx = niceMax(Math.max(...prom.filter(Boolean))); const y = v => m.t+ih-(v/mx)*ih;
-  const NS="http://www.w3.org/2000/svg"; const svg=document.createElementNS(NS,"svg"); svg.setAttribute("viewBox",`0 0 ${W} ${Ht}`); svg.setAttribute("role","img"); svg.setAttribute("aria-label","Estacionalidad mensual");
-  const g=(tag,at)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);return e;};
-  const ax=g("g",{class:"axis"}), gr=g("g",{class:"grid"});
-  for (let i=0;i<=4;i++){ const v=mx*i/4, yy=y(v); gr.append(g("line",{x1:m.l,x2:W-m.r,y1:yy,y2:yy})); const t=g("text",{x:m.l-8,y:yy+4,"text-anchor":"end"}); t.textContent=moneyK(v).replace("$ ",""); ax.append(t); }
+  const svg = svgEl("svg",{viewBox:`0 0 ${W} ${Ht}`, role:"img", "aria-label":"Estacionalidad mensual"});
+  const ax=svgEl("g",{class:"axis"}), gr=svgEl("g",{class:"grid"});
+  for (let i=0;i<=4;i++){ const v=mx*i/4, yy=y(v); gr.append(svgEl("line",{x1:m.l,x2:W-m.r,y1:yy,y2:yy})); const t=svgEl("text",{x:m.l-8,y:yy+4,"text-anchor":"end"}); t.textContent=moneyK(v).replace("$ ",""); ax.append(t); }
   svg.append(gr);
-  const cs = getComputedStyle(document.documentElement);
-  prom.forEach((v,i) => { const cx=m.l+gw*i+gw/2; const t=g("text",{x:cx,y:Ht-8,"text-anchor":"middle"}); t.textContent=MES_C[i]; ax.append(t); if (!v) return;
-    const yy=y(v), x=cx-bw/2, r=Math.min(4,bw/2);
-    svg.append(g("path",{d:`M${x},${m.t+ih} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+bw-r} Q${x+bw},${yy} ${x+bw},${yy+r} V${m.t+ih} Z`, fill: i===mesF ? cs.getPropertyValue("--accent").trim() : cs.getPropertyValue("--line-2").trim()}));
-    if (i===mesF) { const tt=g("text",{x:cx,y:yy-6,"text-anchor":"middle",fill:"var(--fg)","font-size":"11","font-family":"IBM Plex Mono, monospace"}); tt.textContent=moneyK(v); svg.append(tt); }
-    const hit=g("rect",{x:m.l+gw*i,y:m.t,width:gw,height:ih,fill:"transparent"});
-    hit.addEventListener("pointerenter",ev=>{ hideTip(box); const r=box.getBoundingClientRect(); const tp=el("div",{class:"tip"}, el("b",{text:MESES[i]}), el("div",{class:"r"}, el("span",{text:"Promedio diario"}), el("span",{class:"num",text:money(v)})), el("div",{class:"r muted"}, el("span",{text:"Años con datos"}), el("span",{class:"num",text:porMes[i].length}))); box.append(tp); tp.style.left=Math.max(0,Math.min(ev.clientX-r.left+12, r.width-tp.offsetWidth))+"px"; tp.style.top=Math.max(0,ev.clientY-r.top-tp.offsetHeight-8)+"px"; });
+  prom.forEach((v,i) => { const cx=m.l+gw*i+gw/2; const t=svgEl("text",{x:cx,y:Ht-8,"text-anchor":"middle"}); t.textContent=MES_C[i]; ax.append(t); if (!v) return;
+    svg.append(svgEl("path",{d:barPath(cx-bw/2,y(v),bw,m.t+ih), fill: i===mesF ? css("--accent") : css("--line-2")}));
+    if (i===mesF) { const tt=svgEl("text",{x:cx,y:y(v)-6,"text-anchor":"middle",fill:css("--fg"),"font-size":"11","font-family":"IBM Plex Mono, monospace"}); tt.textContent=moneyK(v); svg.append(tt); }
+    const hit=svgEl("rect",{x:m.l+gw*i,y:m.t,width:gw,height:ih,fill:"transparent"});
+    hit.addEventListener("pointerenter",ev=>{ hideTip(box); const r=box.getBoundingClientRect(); const tp=el("div",{class:"tip"}, el("b",{text:cap(MESES[i])}), el("div",{class:"r"}, el("span",{text:"Promedio diario"}), el("span",{class:"num",text:money(v)})), el("div",{class:"r muted"}, el("span",{text:"Años con datos"}), el("span",{class:"num",text:porMes[i].length}))); box.append(tp); tp.style.left=Math.max(0,Math.min(ev.clientX-r.left+12, r.width-tp.offsetWidth))+"px"; tp.style.top=Math.max(0,ev.clientY-r.top-tp.offsetHeight-8)+"px"; });
     hit.addEventListener("pointerleave",()=>hideTip(box)); svg.append(hit); });
   svg.append(ax); box.append(svg);
-  const vv = prom.filter(Boolean), media = vv.reduce((a,b)=>a+b,0)/vv.length;
-  const top = prom.map((v,i)=>({v,i})).filter(x=>x.v).sort((a,b)=>b.v-a.v);
-  $("season-note").textContent = `${MESES[mesF][0].toUpperCase()+MESES[mesF].slice(1)} rinde en promedio ${pct(prom[mesF]/media-1,0)} respecto del mes típico. Meses más fuertes: ${top.slice(0,2).map(x=>MESES[x.i]).join(" y ")}; más flojo: ${MESES[top[top.length-1].i]}. Pesos de ${mesTxt(REF.ipcBase)}; el mes en curso no se incluye por estar incompleto.`; }
+  const vv = prom.filter(Boolean), media = vv.reduce((a,b)=>a+b,0)/vv.length; const top = prom.map((v,i)=>({v,i})).filter(x=>x.v).sort((a,b)=>b.v-a.v);
+  $("season-note").textContent = `${cap(MESES[mesF])} rinde en promedio ${pct(prom[mesF]/media-1,0)} respecto del mes típico. Meses más fuertes: ${top.slice(0,2).map(x=>MESES[x.i]).join(" y ")}; más flojo: ${MESES[top[top.length-1].i]}. Pesos de ${mesTxt(REF.ipcBase)}; el mes en curso no se incluye por estar incompleto.`; }
 
 /* ===================== Rubros y canales ===================== */
-function renderCats(){ const D=state.data.D; const box=$("cats"); box.replaceChildren();
-  const S = seriesHora();
-  for (const s of S.filter(x=>x.k!=="F" || D.pasada)) {
+function renderCats(){ const box=$("cats"); box.replaceChildren();
+  for (const s of seriesHora()) {
     const p = el("div",{class:"panel"}); p.append(el("div",{class:"panel-h"}, el("h3",{text:`Ventas por rubro · ${dmy(s.f)}`}), el("span",{class:"src",text:"Productos vendidos sueltos"})));
     const r = state.data.rub[s.f];
     if (!MCP) p.append(el("div",{class:"empty",text:noMcpTxt()}));
@@ -723,74 +923,29 @@ function renderCats(){ const D=state.data.D; const box=$("cats"); box.replaceChi
     else if (r.error) p.append(el("div",{class:"empty",text:errorTxt(r.error)}));
     else if (!r.filas.length) p.append(el("div",{class:"empty",text:"Sin ventas por rubro ese día."}));
     else { const mx = Math.max(...r.filas.map(x=>x.imp)); const hb=el("div",{class:"hbars"});
-      const col = getComputedStyle(document.documentElement).getPropertyValue(s.c.slice(4,-1)).trim();
-      for (const x of r.filas) hb.append(el("div",{class:"hb"}, el("span",{class:"n",title:x.n,text:x.n.toLowerCase()}), el("span",{class:"t"}, el("i",{style:`width:${(x.imp/mx*100).toFixed(1)}%;background:${col}`})), el("span",{class:"v",text:moneyK(x.imp)})));
+      for (const x of r.filas) hb.append(el("div",{class:"hb"}, el("span",{class:"n",title:x.n,text:String(x.n).toLowerCase()}), el("span",{class:"t"}, el("i",{style:`width:${(Math.max(0,x.imp)/mx*100).toFixed(1)}%;background:${s.cv}`})), el("span",{class:"v",text:moneyK(x.imp)})));
       p.append(hb); }
     const c = state.data.can[s.f];
-    if (c && c.length) p.append(el("p",{class:"note",text:"Canales: " + c.map(x=>`${x.n} ${money(x.imp)} (${x.tk} tickets)`).join(" · ") + ". Por rubro no se restan los descuentos generales del ticket, por eso la suma puede superar levemente el total del día."}));
-    box.append(p); }
-  const p2 = el("p",{class:"note",style:"grid-column:1/-1",text:"Anulaciones: Morphi no expone las anulaciones como un dato separado en estas consultas; los tickets anulados no suman en la facturación. Las devoluciones se registran como notas de crédito (se muestran en cada tarjeta)."});
-  box.append(p2); }
-
-/* ===================== Resumen escrito ===================== */
-function renderSummary(){ const D=state.data.D; const box=$("summary"); box.replaceChildren();
-  const P = (lbl, txt) => { const p=el("p"); if (lbl) p.append(el("span",{class:"lbl "+lbl,text:{dato:"Dato",corr:"Correlación",hip:"Hipótesis"}[lbl]})); p.append(txt); box.append(p); };
-  const wA = dow(D.A), wF = dow(D.F);
-  let t = `El día consultado corresponde a un ${DIAS[wF]}. `;
-  t += wA===wF ? `La misma fecha del año anterior también cayó ${DIAS[wA]}. ` : `La misma fecha del año anterior cayó ${DIAS[wA]}. Para una comparación comercial más representativa también se incluye el ${DIAS[wF]} equivalente de ${D.B.slice(0,4)} (${dmy(D.B)}). `;
-  if (D.notaA) t += D.notaA + " ";
-  const fF = esFer(D.F), fA = esFer(D.A), fB = esFer(D.B);
-  if (fF) t += `La fecha consultada es feriado (${fF.nombre}). `;
-  if (fA) t += `El ${dmy(D.A)} fue feriado (${fA.nombre}). `;
-  if (fB) t += `El ${dmy(D.B)} fue feriado (${fB.nombre}). `;
-  P(null, t);
-  const a = state.data.dia[D.A], b = state.data.dia[D.B];
-  if (!MCP) { P(null, noMcpTxt()); return; }
-  if (!a || !b) { P(null, "Consultando Morphi…"); return; }
-  const frase = (f, d) => d.vacio ? `el ${corto(f)} no tuvo ventas registradas` : `el ${corto(f)} se facturaron ${money(d.imp)} en ${int(d.tk)} tickets (promedio ${money(d.tp)})`;
-  P("dato", `En Morphi, ${frase(D.A,a)}; ${frase(D.B,b)}.` + (D.pasada && state.data.dia[D.F] ? ` La fecha consultada, ${frase(D.F,state.data.dia[D.F])}.` : ""));
-  if (!a.vacio && !b.vacio) { const v = dlt(b.imp,a.imp);
-    if (Math.abs(v) >= 0.1) P("dato", `Entre las dos referencias hay una diferencia de ${pct(v)} en facturación y ${pct(dlt(b.tk,a.tk))} en tickets: ${Math.abs(v)>=0.25 ? "elegir una sola como base llevaría a conclusiones distintas" : "conviene mirar ambas"}.`); }
-  // Clima de cada referencia
-  const wtxt = f => { const w = clima(f); if (!w) return null; const hv = horasVenta(f) || COMM; const c = condicion(w), cc = condicion(w, hv);
-    const ll = horasConLluvia(w.h, [...Array(24).keys()]);
-    return `${dmy(f)}: ${c.t.toLowerCase()}, ${tc(w.tmin)}°/${tc(w.tmax)}°, ${(w.pp??0).toLocaleString("es-AR",{maximumFractionDigits:1})} mm` + (ll.length ? ` (lluvia en ${rangos(ll)})` : "") + (cc.mm >= 0.1 ? `; ${cc.mm.toLocaleString("es-AR",{maximumFractionDigits:1})} mm dentro del horario comercial` : "; sin lluvia en horario comercial"); };
-  const ws = [wtxt(D.A), wtxt(D.B)].filter(Boolean); if (ws.length) P("dato", "Clima (modelo de reanálisis): " + ws.join(". ") + ".");
-  // Lluvia: solo correlación con respaldo
-  const lA = REF.clima?.dias?.[D.A] && condicion(REF.clima.dias[D.A], horasVenta(D.A)||COMM).mm >= 2, lB = REF.clima?.dias?.[D.B] && condicion(REF.clima.dias[D.B], horasVenta(D.B)||COMM).mm >= 2;
-  if (HIST) { const r = rainEffect();
-    if ((lA || lB) && r.n >= 8) P("corr", `${lA&&lB?"Ambas referencias tuvieron":"Una de las referencias tuvo"} lluvia en horario comercial. En el historial, los días así facturaron en mediana ${pct(r.med-1)} frente a días similares sin lluvia (${r.n} casos). Sirve como contexto; no demuestra que la lluvia explique la diferencia de este día.`);
-    else if (!lA && !lB && REF.clima?.dias?.[D.A]) P(null, "Ninguna de las dos referencias tuvo lluvia relevante en horario comercial, así que el clima no aparece como factor diferencial entre ellas.");
-  }
-  // Horas pico
-  const pk = f => { const h = state.data.hora[f]?.h; if (!h) return null; const e = Object.entries(h).sort((x,y)=>y[1].imp-x[1].imp)[0]; if (!e) return null; const tot = Object.values(h).reduce((s,x)=>s+x.imp,0); const med = [12,13,14,15,16].reduce((s,x)=>s+(h[x]?.imp||0),0)/tot; return { h:+e[0], med }; };
-  const pa = pk(D.A), pb = pk(D.B);
-  if (pa && pb) P("dato", `Hora de mayor facturación: ${String(pa.h).padStart(2,"0")} h el ${dmy(D.A)} y ${String(pb.h).padStart(2,"0")} h el ${dmy(D.B)}. El mediodía (12–17 h) explicó ${pct(pa.med,0).replace("+","")} y ${pct(pb.med,0).replace("+","")} de cada día.`);
-  // Proyección
-  if (!D.pasada && state.proj) { const p = state.proj; const ra = !a.vacio ? real(a.imp,D.A) : null, rb = !b.vacio ? real(b.imp,D.B) : null;
-    P("hip", `Proyección orientativa para el ${dmy(D.F)}: ${money(p.imp)} (intervalo ${money(p.iLo)}–${money(p.iHi)}), unos ${int(Math.round(p.tk))} tickets, confianza ${p.nivel.toLowerCase()}. ` + (rb ? `Equivale a ${pct(dlt(p.imp,rb))} real contra el mismo día semanal del año anterior.` : "") + " Es una estimación basada en días comparables, no una venta confirmada."); }
-  if (D.pasada && state.data.dia[D.F] && !state.data.dia[D.F].vacio && !b.vacio) { const d = state.data.dia[D.F];
-    P("dato", `Contra el mismo día semanal del año anterior: ${pct(dlt(d.imp,b.imp))} nominal y ${pct(dlt(real(d.imp,D.F), real(b.imp,D.B)))} en moneda constante; tickets ${pct(dlt(d.tk,b.tk))}.`); }
-  if (D.A.slice(0,4) !== D.F.slice(0,4)) P(null, `Las comparaciones nominales entre ${D.A.slice(0,4)} y ${D.F.slice(0,4)} están afectadas por la inflación; usá las columnas en moneda constante de la tabla de variaciones.`);
-}
+    if (c && c.length) p.append(el("p",{class:"note",text:"Canales: " + c.map(x=>`${x.n} ${money(x.imp)}`).join(" · ") + ". Por rubro no se restan los descuentos generales del ticket, por eso la suma puede superar levemente el total del día."}));
+    box.append(p); } }
 
 /* ===================== Inicio ===================== */
 function setFecha(f){ $("fecha").value = f; run(f); }
 $("fecha").addEventListener("change", e => { if (e.target.value) run(e.target.value); });
 $("prev").onclick = () => setFecha(add($("fecha").value || state.hoy, -1));
 $("next").onclick = () => setFecha(add($("fecha").value || state.hoy, 1));
+for (const [id, m] of [["m-imp","imp"],["m-tk","tk"]]) $(id).onclick = () => { state.medida = m; $("m-imp").setAttribute("aria-pressed", m==="imp"); $("m-tk").setAttribute("aria-pressed", m==="tk"); renderHours(); };
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { renderHours(); drawSeason(); }, 150); });
+function arrancar(){ mcpEstado = "cargando"; run(state.fecha); }
 
 (async function boot(){
   let f = state.hoy; try { const s = localStorage.getItem("pdp-fecha"); if (s && /^\d{4}-\d{2}-\d{2}$/.test(s)) f = s; } catch {}
-  $("fecha").value = f;
-  await loadRef();
-  state.fecha = f;
-  // Primer cuadro: estructura y clima mientras responde Morphi.
+  $("fecha").value = f; state.fecha = f;
   const usePromise = window.claude?.use ? window.claude.use("mcp") : Promise.resolve(null);
+  await loadRef();
   run(f);
   MCP = await usePromise.catch(()=>null);
-  if (!MCP) { mcpEstado = "sin_mcp"; const b=$("banner"); b.hidden=false; b.className="banner"; b.replaceChildren(el("div",{},el("b",{text:"Morphi no está disponible en esta vista. "}), el("span",{class:"fg2",text:"Las ventas se consultan en vivo con tu conector Morphi cuando abrís la página en claude.ai. El clima y los feriados se muestran igual."}))); setStatus(); renderCards(); renderHours(); renderCats(); renderAnalysis(); renderSummary(); return; }
+  if (!MCP) { mcpEstado = "sin_mcp"; const b=$("banner"); b.hidden=false; b.className="banner"; b.replaceChildren(el("div",{},el("b",{text:"Morphi no está disponible en esta vista. "}), el("span",{class:"fg2",text:"Las ventas se consultan en vivo con tu conector Morphi cuando abrís la página en claude.ai. El clima, los feriados y el IPC se muestran igual."}))); renderAll(); renderAnalysis(); return; }
   run(f);
 })();
 </script>

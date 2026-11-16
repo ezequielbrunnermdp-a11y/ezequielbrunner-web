@@ -1,0 +1,24 @@
+/* Módulo de productividad e informe */
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;border:0;padding:6px 12px;font-size:.8rem;color:var(--fg-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel-2);color:var(--fg)}
+.shifts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.shift{display:flex;flex-direction:column;gap:3px;min-width:0}
+.shift .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:1.02rem}
+.shift .l{font-size:.72rem;color:var(--muted);letter-spacing:.04em}
+.shift .w{font-size:.78rem;color:var(--fg-2)}
+.warnbox{display:flex;gap:12px;align-items:flex-start;border:1px solid color-mix(in srgb,var(--warn) 55%,transparent);background:color-mix(in srgb,var(--warn) 8%,var(--panel));border-radius:10px;padding:12px 14px;margin-bottom:16px}
+.warnbox b{color:var(--warn);font-family:var(--f-display);font-weight:600;white-space:nowrap}
+.warnbox p{font-size:.86rem;color:var(--fg-2)}
+.mozos{display:flex;flex-direction:column;gap:18px}
+.mz-h{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-bottom:8px}
+.mz-h .swatch{width:10px;height:10px;border-radius:3px}
+td.l,th.l{text-align:left}
+.sm{font-size:.76rem;color:var(--muted)}
+.report{display:flex;flex-direction:column;gap:14px;max-width:84ch}
+.q{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0}
+.q h3{font-family:var(--f-body);font-size:.82rem;font-weight:600;color:var(--accent);letter-spacing:.02em}
+.q p{font-size:.98rem;line-height:1.65}
+.lbl.hecho{color:var(--good);border-color:color-mix(in srgb,var(--good) 50%,transparent)}
+.lbl.pend{color:var(--muted);border-color:var(--line-2)}
