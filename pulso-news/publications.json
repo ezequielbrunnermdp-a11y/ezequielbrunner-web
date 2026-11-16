@@ -476,6 +476,14 @@
       "created_by": "Windsor.ai",
       "published_at": "2026-11-16T16:52:06.931Z",
       "story_id": "18414102616091803"
+    },
+    {
+      "date": "2026-11-16",
+      "slug": "pronostico-mdp-lunes-16-tormentas",
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "post_id": "17887197660652583",
+      "post_published_at": "2026-11-16T16:53:32.328Z"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
