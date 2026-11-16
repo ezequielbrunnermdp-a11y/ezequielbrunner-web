@@ -27,6 +27,13 @@ def wrap(draw,text,f,maxwidth):
  if cur:lines.append(cur)
  return lines
 def render(article,typ):
+ path=OUT/article['date']/f"{article['slug']}-{typ}.jpg"
+ # Conservar diseños ya aprobados y generar únicamente los archivos faltantes.
+ if path.exists():
+  with Image.open(path) as existing:
+   existing.verify()
+  print('EXISTS',path)
+  return
  W=1080;H=1350 if typ=='feed' else 1920
  canvas=Image.new('RGB',(W,H),'#152a33')
  if article.get('photo_urls'):
@@ -56,7 +63,7 @@ def render(article,typ):
  from datetime import datetime
  d.text((W-72,88),datetime.strptime(article['date'],'%Y-%m-%d').strftime('%d %b %Y').upper(),font=font(21,False),fill='#E1E1E1',anchor='ra')
  # Texto dentro de zona segura: ninguna línea ni bajada puede cortarse.
- label=article['category'].upper()
+ label=str(article.get('category') or 'ACTUALIDAD').upper()
  title=article['headline']
  subtitle=article.get('subtitle','')
  safe_bottom=H-175 if typ=='feed' else H-335
@@ -97,5 +104,13 @@ def render(article,typ):
  path.parent.mkdir(parents=True,exist_ok=True)
  canvas.save(path,'JPEG',quality=90,subsampling=0,optimize=True,progressive=True)
  print('CREATED',path, path.stat().st_size)
+failures=[]
 for a in D['articles']:
- for fmt in ('feed','story'): render(a,fmt)
+ for fmt in ('feed','story'):
+  try:
+   render(a,fmt)
+  except Exception as exc:
+   failures.append(f"{a.get('date', '?')}/{a.get('slug', '?')} {fmt}: {exc}")
+   print('RENDER ERROR',failures[-1],flush=True)
+if failures:
+ raise RuntimeError('Fallaron algunas placas; se conservan las restantes: ' + '; '.join(failures))
