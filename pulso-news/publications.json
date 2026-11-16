@@ -476,7 +476,8 @@
       "created_by": "Windsor.ai",
       "published_at": "2026-11-16T16:52:06.931Z",
       "story_id": "18414102616091803",
-      "post_permalink": "https://www.instagram.com/p/Dfz070uCPvo/"
+      "post_permalink": "https://www.instagram.com/p/Dfz070uCPvo/",
+      "story_permalink": "https://www.instagram.com/stories/pulsoinformativoweb/4031799213813466786"
     },
     {
       "date": "2026-11-16",
@@ -487,7 +488,8 @@
       "post_published_at": "2026-11-16T16:53:32.328Z",
       "story_id": "17913379263478220",
       "story_published_at": "2026-11-16T16:53:41.584Z",
-      "post_permalink": "https://www.instagram.com/p/Dfz1IapjKKY/"
+      "post_permalink": "https://www.instagram.com/p/Dfz1IapjKKY/",
+      "story_permalink": "https://www.instagram.com/stories/pulsoinformativoweb/4031799838110570318"
     },
     {
       "date": "2026-11-16",
@@ -498,7 +500,8 @@
       "post_published_at": "2026-11-16T16:54:04.679Z",
       "story_id": "18145572673715927",
       "story_published_at": "2026-11-16T16:54:20.793Z",
-      "post_permalink": "https://www.instagram.com/p/Dfz1KwLiKPZ/"
+      "post_permalink": "https://www.instagram.com/p/Dfz1KwLiKPZ/",
+      "story_permalink": "https://www.instagram.com/stories/pulsoinformativoweb/4031800108517243875"
     },
     {
       "date": "2026-11-16",
@@ -509,7 +512,8 @@
       "post_published_at": "2026-11-16T16:54:38.186Z",
       "story_id": "17914084131657412",
       "story_published_at": "2026-11-16T16:55:01.130Z",
-      "post_permalink": "https://www.instagram.com/p/Dfz1Ph5kfCQ/"
+      "post_permalink": "https://www.instagram.com/p/Dfz1Ph5kfCQ/",
+      "story_permalink": "https://www.instagram.com/stories/pulsoinformativoweb/4031800407822070038"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
