@@ -1,6 +1,7 @@
 # Puerto de Palos · Inteligencia de ventas y clima
 
-Página (Artifact de claude.ai) que, al elegir una fecha, compara la facturación de
+Página (Artifact de claude.ai) con dos modos: **Un día** o **Período** (fecha desde – hasta, hasta 366 días cerrados).
+Al elegir una fecha o un período, compara la facturación de
 **Puerto de Palos – Puerto** con:
 
 - **A. Misma fecha del año anterior** (el 29/02 pasa al 28/02).

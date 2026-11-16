@@ -22,3 +22,10 @@ td.l,th.l{text-align:left}
 .q p{font-size:.98rem;line-height:1.65}
 .lbl.hecho{color:var(--good);border-color:color-mix(in srgb,var(--good) 50%,transparent)}
 .lbl.pend{color:var(--muted);border-color:var(--line-2)}
+.stack{display:flex;flex-direction:column;gap:28px}
+.stack[hidden]{display:none}
+.picker{align-items:flex-start}
+.pick{display:flex;flex-direction:column;gap:8px}
+.picker .row .pick input{width:170px}
+@media (max-width:520px){.picker .row .pick input{width:100%}.picker .row{flex-wrap:wrap}}
+.pick[hidden],.stack[hidden]{display:none!important}
