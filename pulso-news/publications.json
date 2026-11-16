@@ -483,7 +483,9 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "post_id": "17887197660652583",
-      "post_published_at": "2026-11-16T16:53:32.328Z"
+      "post_published_at": "2026-11-16T16:53:32.328Z",
+      "story_id": "17913379263478220",
+      "story_published_at": "2026-11-16T16:53:41.584Z"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
