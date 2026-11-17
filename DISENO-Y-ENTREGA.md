@@ -408,7 +408,7 @@ El LCP es ahora un texto y queda en el orden de los 2,5 s. Lo que falta para baj
 
 ## 9. Rediseño cinematográfico (15 de noviembre de 2026)
 
-Este punto describe la versión vigente. Donde contradice a los anteriores (en especial la portada del punto 8), vale este.
+La portada y la navegación de este punto fueron reemplazadas por el punto 10; el lenguaje visual y el retrato siguen vigentes.
 
 **Referencia.** La imagen de referencia que menciona el pedido no llegó adjunta. Se trabajó con su descripción escrita:
 
@@ -527,6 +527,193 @@ Buenas prácticas y SEO: 100 en las cuatro páginas, en las dos versiones.
   - sin `backdrop-filter`, los paneles se ven translúcidos sin desenfoque, igual de legibles;
   - Firefox navega sin transición.
 - **Dispositivos:** no hubo pruebas en dispositivos físicos. La vista previa de Netlify sirve para revisarlo en celulares reales.
+
+## 10. Web Experience 2.0 (17 de noviembre de 2026)
+
+Este punto describe la versión vigente. Donde contradice a los anteriores, vale este.
+
+### Auditoría (fase 1)
+
+- **Lo publicado coincide con `main`.**
+  - Según la API de Netlify, ezequielbrunner.com sirve el despliegue `6af9be6e…`, del commit 15633d5.
+  - Desde entonces, `main` solo sumó cambios de Pulso Informativo.
+  - El dominio no se pudo abrir desde el entorno de trabajo, porque la red lo bloquea.
+- **Arquitectura:**
+  - un generador propio en Python (`tools/sitegen/`) escribe páginas estáticas;
+  - cada página tiene su CSS y su JavaScript;
+  - GSAP, ScrollTrigger, SplitText y Lenis son locales;
+  - las fuentes son propias y las imágenes van en AVIF y WebP;
+  - Netlify publica sin paso de compilación.
+- **Rendimiento de partida** (mismo código, medido el 15 de noviembre): 96 a 99 en celular y 100 de accesibilidad.
+- **Problemas detectados:**
+  1. La navegación cambiaba según la página: en la portada, las áreas; en cada área, sus secciones y «Cambiar de área».
+  2. La trayectoria no tenía página propia. Estaba repartida, con datos repetidos, entre la portada, Gastronomía e IA.
+  3. La portada no tenía una pieza visual que explicara la relación entre la operación y la tecnología.
+  4. Gastronomía estaba organizada por categorías de servicio y repetía el contenido entre la narrativa y el índice de servicios.
+  5. La demostración de IA mostraba un solo proceso.
+- **Se conservó:**
+  - todo el contenido real, las direcciones, los formularios, WhatsApp y el email;
+  - las 31 publicaciones, las fuentes y los colores;
+  - las transiciones entre páginas y el dibujo en hilos aparte;
+  - el movimiento reducido y la regla de Netlify para Pulso Informativo.
+
+### Dirección artística (fase 2)
+
+- **Base:** negro profundo y grafito, Fraunces en gran escala para los títulos, Inter para el texto, composiciones asimétricas y mucho espacio negativo.
+- **Paleta:**
+  - identidad: negro, blanco cálido y champagne;
+  - Gastronomía: cobre y ámbar;
+  - IA: turquesa y azul petróleo.
+- **Luz:** de cine, cobre sobre la operación y turquesa sobre la información. Sin neón ni estética de videojuego.
+
+### Portada: la escena 3D (fase 3)
+
+- **Concepto: «la operación y su capa de información».**
+  - Una maqueta de una operación gastronómica: depósito, cocina, barra, salón y caja.
+  - Por el piso circulan pedidos, servicio, abastecimiento y cobros, en cobre.
+  - Encima, la capa de información: los datos suben desde cada sector y viajan en arcos hasta el procesamiento.
+  - Cuando algo se desvía, una alerta baja al escritorio de la caja, donde decide una persona (luz blanca cálida).
+  - Una leyenda lo resume: «Operación · Información · Decisión humana».
+- **Interacción:**
+  - el cursor mueve la cámara con inercia;
+  - cerca de Gastronomía, la escena se vuelve cálida y la operación gana protagonismo;
+  - cerca de Automatización & IA, se vuelve fría, la capa de información se enciende y los datos circulan más rápido;
+  - en Android, inclinar el teléfono mueve la cámara; en iOS haría falta pedir permiso, así que la escena se mueve sola;
+  - al bajar, la cámara se eleva y la maqueta se aleja.
+- **Tecnología: WebGL2 y shaders GLSL propios, sin Three.js.**
+  - Three.js pesa unos 150 KB comprimidos y se compila en el hilo principal, lo que traba celulares medios.
+  - El motor propio pesa 9 KB comprimidos y dibuja en un hilo aparte (Worker con OffscreenCanvas): la página nunca espera al dibujo.
+  - Cuando un navegador no lo permite, dibuja en la página después de la carga.
+- **Encuadre:** el CSS define el rectángulo donde va la maqueta (a la derecha en escritorio, arriba en tablet y celular). El motor busca la distancia de cámara y corre la lente hasta ese lugar.
+- **Batería y equipos modestos:**
+  - 30 cuadros por segundo en celulares y equipos de 4 núcleos o menos;
+  - resolución acotada y tope de píxeles en pantallas grandes;
+  - pausa fuera de pantalla y con la pestaña oculta.
+- **Respaldo:**
+  - sin WebGL2, una imagen fija de la misma escena (21 KB en escritorio y 8 KB en celular, en AVIF);
+  - con movimiento reducido o ahorro de datos, un solo cuadro quieto;
+  - sin JavaScript, la portada se lee completa.
+- **Composición:**
+  - el nombre en gran escala, con sangría asimétrica;
+  - la propuesta: «Operaciones reales. / Tecnología que resuelve.»;
+  - dos accesos editoriales con una línea de luz;
+  - credenciales comprobables: 15+ años en operaciones gastronómicas, doctrina en SAIJ y automatizaciones propias en uso.
+- **El retrato real** pasa a «Quién soy», justo debajo, con su luz de borde.
+- **Celular:** la escena arriba y el texto abajo. Los dos accesos se ven completos en la primera pantalla, también con las barras de Safari (390 × 664).
+
+### Navegación y simplificación (fase 9)
+
+- **Igual en todas las páginas:** Inicio (el nombre), Gastronomía, Automatización & IA, Trayectoria, Publicaciones y Contacto. La página actual queda marcada.
+- **En las áreas:** un índice «En esta página» queda a mano al bajar y marca la sección que se está leyendo. En el celular, esas secciones también están en el menú.
+- **Se retiró «Cambiar de área»:** la navegación global lo reemplaza.
+- **Una pregunta por pantalla en la portada:**
+  - ¿quién es y qué hace? (escena, nombre, propuesta y accesos);
+  - ¿por qué confiar? (retrato, manifiesto y tres capítulos);
+  - ¿qué experiencia tiene? (cifras comprobables);
+  - ¿qué publicó? (destacados);
+  - ¿cómo lo contacto?
+
+### Trayectoria: página nueva (fase 6)
+
+- **Una sola página** (`/trayectoria`) reúne, con fotos reales:
+  - la dirección gastronómica, con una línea de tiempo que se completa al bajar;
+  - la formación, agrupada en universidad, tecnología, gastronomía y formación internacional;
+  - la investigación y el desarrollo tecnológico: perfil, enfoque y las dos automatizaciones propias en uso;
+  - las publicaciones destacadas y las apariciones en medios, con sus enlaces originales.
+- **En la portada, Gastronomía e IA** queda un resumen con enlace. Los enlaces viejos (`gastronomia#formacion`, `inteligencia-artificial#sobre-mi` y `#formacion`) llevan a la sección nueva.
+- **Datos estructurados:** `ProfilePage`.
+- **Información:** solo la acreditada en el sitio. Se mantiene la aclaración «No ejerzo como abogado matriculado».
+
+### Gastronomía: los siete ejes (fase 4)
+
+- **Los ejes:**
+  1. Dirección gastronómica
+  2. Establecimientos y sucursales
+  3. Liderazgo de equipos
+  4. Costos y rentabilidad
+  5. Optimización de procesos
+  6. Experiencia del cliente
+  7. Aperturas y desarrollo
+- **Narrativa progresiva:** un índice fijo marca el eje que se lee y su línea avanza al bajar.
+- **Cada eje trae:** qué incluye, qué se entrega, la experiencia acreditada y un visual que se dibuja al entrar en pantalla:
+  - el ciclo de gestión;
+  - las unidades conectadas a un tablero;
+  - la foto real del equipo;
+  - una calculadora de costo de un plato;
+  - la rutina de cada turno;
+  - el recorrido del cliente;
+  - el plan de apertura.
+- **Calculadora orientativa:** el visitante carga el precio y el costo de los ingredientes y obtiene el costo sobre la venta (sin IVA) y el margen. No se publican porcentajes de referencia.
+- **Reemplaza** a la narrativa de cuatro pilares y al índice de servicios, que repetían el mismo contenido. Los 15 servicios siguen publicados y las anclas viejas siguen funcionando.
+
+### Automatización & IA: demostración con procesos (fase 5)
+
+- **Cuatro procesos para elegir:** reposición de stock, facturas de proveedores, cobertura de turnos y cierre de caja.
+- **En cada uno:**
+  - primero, el problema que resuelve;
+  - después, cinco etapas: ingreso, registro, procesamiento, alerta y decisión humana;
+  - en cada etapa, qué hace la tecnología, cómo era sin automatización y qué hace la persona;
+  - al final decide el visitante, y la decisión queda registrada.
+- **Identificada como ficticia, con datos de muestra.** Se usa con el teclado (flechas, Inicio y Fin) y respeta el movimiento reducido.
+
+### Rendimiento
+
+Mediana de 3 corridas por página. Lighthouse 12.6.1, perfil móvil (4G lenta simulada y CPU ×4), mismo servidor local. «Publicado» es el código que hoy está en ezequielbrunner.com (medido el 15 de noviembre); la flecha lleva a esta versión.
+
+| Página | Rendimiento | LCP | TBT | CLS | Peso | Accesibilidad |
+| --- | --- | --- | --- | --- | --- | --- |
+| Inicio | 96 → **98** | 2,81 → **2,39 s** | 0 → 18 ms | 0 → 0 | 300 → **254 KB** | 100 → 100 |
+| Gastronomía | 97 → 96 | 2,61 → 2,66 s | 20 → 118 ms | 0 → 0 | 301 → **253 KB** | 100 → 100 |
+| Automatización & IA | 97 → 96 | 2,61 → 2,80 s | 2 → 22 ms | 0 → 0 | 256 → 262 KB | 100 → 100 |
+| Trayectoria (nueva) | — → 98 | — → 2,36 s | — → 3 ms | — → 0,004 | — → 263 KB | — → 100 |
+| Publicaciones | 99 → 99 | 2,15 → 2,15 s | 0 → 0 ms | 0 → 0 | 201 → 203 KB | 100 → 100 |
+
+- Buenas prácticas y SEO: 100 en todas las páginas.
+- **Inicio:** la escena 3D se dibuja en un hilo aparte, así que no suma bloqueos. El contenido principal vuelve a ser un texto (el subtítulo) y la página pesa menos que la anterior.
+- **Gastronomía:** el bloqueo de 118 ms viene de las bibliotecas de animación que ya usaba la página. Sigue en el rango bueno (menos de 200 ms).
+- **IA:** la página suma los datos de los cuatro procesos de la demostración, unos 3 KB comprimidos.
+
+### Accesibilidad y pruebas
+
+- **84 pruebas de comportamiento, todas superadas:**
+  - portada: textos exactos, escena, leyenda, respuesta a cursor y teclado, elección, última visita, WhatsApp y celular;
+  - navegación global en las cinco páginas;
+  - enlaces viejos y redirecciones;
+  - anclas sin duplicados;
+  - formularios por WhatsApp, email y Netlify Forms;
+  - demostración con los cuatro procesos;
+  - los siete ejes y la calculadora;
+  - publicaciones;
+  - movimiento reducido.
+- **Matriz de accesibilidad y maquetación** (13 tamaños × 6 páginas), sin observaciones:
+  - sin desplazamiento horizontal;
+  - sin textos que se pisen;
+  - controles con nombre;
+  - un h1 por página;
+  - objetivos táctiles de al menos 24 × 24 px.
+- **Respaldo sin WebGL** probado con un navegador sin aceleración: aparece la imagen fija de la escena, sin errores.
+
+### Archivos
+
+- **Nuevos:**
+  - `assets/js/scene-engine.js`, `scene-worker.js` y `scene.js` (la escena 3D);
+  - `assets/css/trayectoria.css` y `trayectoria.html`;
+  - `assets/img/escena*.avif|webp` (respaldo).
+- **Cambiados:**
+  - `home.css` (reescrito), `main.css` y `areas.css`;
+  - `home.js`, `gastronomia.js`, `ia.js` y `main.js`;
+  - el generador y `sitemap.xml`.
+- **Sin cambios:**
+  - `netlify.toml` y `_redirects`;
+  - `pulso-news/`, `public/pulso-informativo/` y las automatizaciones de GitHub Actions;
+  - el envío de los formularios.
+
+### Limitaciones
+
+- **Dispositivos:** se probó en Chromium automatizado, con WebGL por software. No hubo pruebas en iPhone ni Android físicos, ni en Safari real; la vista previa de Netlify sirve para revisarlo en el teléfono.
+- **iOS:** la inclinación del teléfono no mueve la escena, porque requiere un permiso explícito. La escena se mueve sola.
+- **Fotos:** hay tres fotos reales (retrato, coordinación y equipo). Para Gastronomía convendría sumar fotos propias de cocina, salón y capacitación.
+- **Lighthouse:** mide una visita única en laboratorio. No hay datos de usuarios reales.
 
 ## Operación del sitio
 

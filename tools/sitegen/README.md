@@ -1,10 +1,10 @@
 # Generador del sitio
 
-Las cinco páginas (`index.html`, `gastronomia.html`, `inteligencia-artificial.html`, `publicaciones.html` y `404.html`) se generan con este generador. Así comparten encabezado, menú, pie, formularios y datos estructurados sin copias a mano. El HTML generado se guarda en el repositorio y Netlify lo publica tal cual: no hay un paso de compilación en Netlify.
+Las seis páginas (`index.html`, `gastronomia.html`, `inteligencia-artificial.html`, `trayectoria.html`, `publicaciones.html` y `404.html`) se generan con este generador. Así comparten encabezado, menú, pie, formularios y datos estructurados sin copias a mano. El HTML generado se guarda en el repositorio y Netlify lo publica tal cual: no hay un paso de compilación en Netlify.
 
 ## Cómo cambiar un texto
 
-1. Editá `content.py`. Ahí están los textos, los servicios, la trayectoria, las preguntas frecuentes, la narrativa de Gastronomía, la demostración de IA y los servicios por área.
+1. Editá `content.py`. Ahí están los textos, los servicios, la trayectoria, las preguntas frecuentes, los siete ejes de Gastronomía (`AXES`), los procesos de la demostración de IA (`DEMO`) y los servicios por área.
 2. Para las publicaciones, editá `data/publicaciones.json` (doctrina, dossier, artículos y notas, con sus enlaces originales).
 3. Generá las páginas:
 
@@ -27,15 +27,17 @@ Necesita Python 3.12 o posterior, sin dependencias externas. Después revisá el
 
 | Archivo | Uso |
 | --- | --- |
-| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, encabezado, menú, pie, apariciones, publicaciones como índice y el lenguaje cinematográfico (luz de color, vidrio) |
-| `css/home.css` | Portada: escena con el retrato, accesos de vidrio, franja inferior; quién soy, trayectoria, publicaciones destacadas y contacto |
-| `css/areas.css` | Gastronomía e IA: portada, narrativa, servicios, demostración, casos, método, trayectoria, contacto |
+| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, navegación global, menú, pie, apariciones, publicaciones como índice, lenguaje cinematográfico (luz de color, vidrio) y el retrato con luz de borde |
+| `css/home.css` | Portada: escena 3D, nombre, propuesta y accesos; quién soy (retrato), trayectoria resumida, publicaciones destacadas y contacto |
+| `css/trayectoria.css` | Trayectoria: dirección gastronómica con línea de tiempo, formación, investigación, publicaciones y medios |
+| `css/areas.css` | Gastronomía e IA: portada, índice de la página, los siete ejes y la calculadora, demostración con procesos, casos, método, contacto |
 | `css/publicaciones.css` | Biblioteca de publicaciones |
 | `js/main.js` | Común: menú, desplazamiento suave, apariciones, formularios, pestañas, filtros, barra inferior |
-| `js/home.js` | Portada: luz y profundidad que siguen al cursor, acceso activo (mouse o teclado), elección del área, última visita y transición |
-| `js/lines.js`, `lines-engine.js`, `lines-worker.js` | Líneas de datos con red de nodos (portada de IA) y líneas de luz que unen los dos accesos de la portada (`ConnectEngine`). Corren en un hilo aparte cuando el navegador lo permite |
-| `js/gastronomia.js` | «Detrás de cada servicio hay una operación» |
-| `js/ia.js` | Demostración interactiva |
+| `js/home.js` | Portada: los accesos le avisan a la escena (cálido o frío), elección del área, última visita y transición |
+| `js/scene.js`, `scene-engine.js`, `scene-worker.js` | Escena 3D de la portada («la operación y su capa de información»): WebGL2 y GLSL propios, en un hilo aparte cuando el navegador lo permite; imagen fija sin WebGL2 (`assets/img/escena*.avif\|webp`). El encuadre lo define el CSS con `--scene-l/r/t/b` |
+| `js/lines.js`, `lines-engine.js`, `lines-worker.js` | Líneas de datos con red de nodos (portada de IA). Corren en un hilo aparte cuando el navegador lo permite |
+| `js/gastronomia.js` | Los siete ejes: índice que sigue la lectura, visuales que se dibujan y calculadora de costo de un plato |
+| `js/ia.js` | Demostración interactiva: cuatro procesos y cinco etapas |
 
 ## Retrato de la portada
 
@@ -44,7 +46,7 @@ El retrato es la foto real (`assets/profile.jpeg`), recortada en el equipo con O
 ```bash
 pip install opencv-python-headless pillow
 python3 tools/imagenes/recorte-retrato.py             # deja el recorte y dos vistas de control en tools/imagenes/
-python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp
+python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp y la silueta de main.css
 ```
 
 Si se cambia la foto, hay que revisar las zonas marcadas a mano en el script (el mueble junto al hombro derecho). Los PNG y JPG de control no se guardan en el repositorio.

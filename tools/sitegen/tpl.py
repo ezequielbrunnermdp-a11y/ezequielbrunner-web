@@ -3,12 +3,10 @@ import json
 from urllib.parse import quote
 from content import esc, SITE, EMAIL, LINKEDIN, ABOUTME, GAS, IA, WA_URL, WA_DISPLAY
 
-V = '20261115b'
+V = '20261117'
 
 ARR = '<span class="arr" aria-hidden="true">→</span>'
 EXT = '<span class="arr ext" aria-hidden="true">↗</span>'
-SWITCH_ICON = ('<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
-               '<path d="M4 8h13m0 0-3.5-3.5M17 8l-3.5 3.5M20 16H7m0 0 3.5-3.5M7 16l3.5 3.5"/></svg>')
 
 WA_ICON = ('<svg class="ico ico-wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>')
 
@@ -102,19 +100,25 @@ def area_of(key):
     return GAS if key == 'gastronomia' else IA
 
 
-def header(area_key, nav, cta=None, home=False):
-    """Encabezado de las áreas y de publicaciones. area_key: gastronomia | automatizacion | None."""
-    area = area_of(area_key) if area_key else None
-    tag = esc(area['label']) if area else ('' if home else 'Publicaciones')
-    links = ''.join(f'<a href="{h}"{" data-sec" if h.startswith("#") else ""}>{esc(t)}</a>' for h, t in nav)
+GLOBAL_NAV = [('gastronomia.html', 'Gastronomía', 'gastronomia'), ('inteligencia-artificial.html', 'Automatización & IA', 'automatizacion'),
+              ('trayectoria.html', 'Trayectoria', 'trayectoria'), ('publicaciones.html', 'Publicaciones', 'publicaciones')]
+
+
+def _cur(k, current):
+    return ' aria-current="page"' if k == current else ''
+
+
+def header(current=None, cta=None):
+    """Encabezado común. current: inicio | gastronomia | automatizacion | trayectoria | publicaciones | None."""
+    links = ''.join(f'<a href="{h}"{_cur(k, current)}>{esc(t)}</a>' for h, t, k in GLOBAL_NAV)
+    area = area_of(current) if current in ('gastronomia', 'automatizacion') else None
     cta = cta or ((area['cta'], '#contacto') if area else ('Contacto', '#contacto'))
     return f"""<a class="skip" href="#contenido">Saltar al contenido</a>
 <header class="hdr" data-hdr>
 <div class="hdr-in">
-<a class="brand" href="index.html#elegir"><span class="brand-name">Ezequiel Brunner</span>{f'<span class="brand-area">{tag}</span>' if tag else ''}<span class="sr"> · volver a la portada</span></a>
-<nav class="nav" aria-label="Secciones">{links}</nav>
+<a class="brand" href="index.html"{_cur('inicio', current)}><span class="brand-name">Ezequiel Brunner</span><span class="sr"> · inicio</span></a>
+<nav class="nav" aria-label="Principal">{links}</nav>
 <div class="hdr-act">
-{'' if home else f'<a class="switch" href="index.html#elegir" aria-label="Cambiar de área" data-switch>{SWITCH_ICON}<span class="switch-t">Cambiar de área</span></a>'}
 <a class="btn btn-sm hdr-cta" href="{cta[1]}">{esc(cta[0])}</a>
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn><span class="mb-lines" aria-hidden="true"><i></i><i></i></span><span class="sr">Abrir menú</span></button>
 </div>
@@ -122,33 +126,41 @@ def header(area_key, nav, cta=None, home=False):
 </header>"""
 
 
-def menu(area_key, nav, cta=None, home=False):
-    area = area_of(area_key) if area_key else None
-    other = (IA if area is GAS else GAS) if area else None
-    items = ''.join(f'<li><a href="{h}"><span class="mi-n">{i + 1:02d}</span>{esc(t)}</a></li>' for i, (h, t) in enumerate(nav))
+def menu(current=None, sub=None, cta=None):
+    """Menú del celular: los destinos del sitio y, en las áreas, las secciones de la página."""
+    area = area_of(current) if current in ('gastronomia', 'automatizacion') else None
+    nav = [('index.html', 'Inicio', 'inicio')] + GLOBAL_NAV
+    items = ''.join(f'<li><a href="{h}"{_cur(k, current)}><span class="mi-n">{i + 1:02d}</span>{esc(t)}</a></li>' for i, (h, t, k) in enumerate(nav))
     cta = cta or ((area['cta'], '#contacto') if area else ('Contacto', '#contacto'))
-    switch = '' if home else (f'<a class="menu-switch" href="index.html#elegir">{SWITCH_ICON}<span>Cambiar de área</span></a>'
-                              + (f'<a class="menu-other" href="{other["href"]}">Ir a {esc(other["label"])} {ARR}</a>' if other else ''))
+    here = ''
+    if sub:
+        here = ('<nav class="menu-here" aria-label="En esta página"><p class="label">En esta página</p><ul>'
+                + ''.join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in sub) + '</ul></nav>')
     return f"""<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú" hidden data-menu>
 <div class="menu-in">
 <nav aria-label="Menú principal"><ol>{items}</ol></nav>
+{here}
 <div class="menu-foot">
 <a class="btn" href="{cta[1]}">{esc(cta[0])} {ARR}</a>
 <a class="menu-wa" href="{wa_link(area['label'] if area else '')}" target="_blank" rel="noopener noreferrer">{WA_ICON}<span>WhatsApp · {WA_DISPLAY}</span></a>
-{f'<div class="menu-sw">{switch}</div>' if switch else ''}
 <a class="menu-mail" href="mailto:{EMAIL}">{EMAIL}</a>
 </div>
 </div>
 </div>"""
 
 
+def subnav(items):
+    """Índice de la página (áreas): queda a mano al bajar y marca la sección que se está leyendo."""
+    links = ''.join(f'<a href="{h}" data-sec>{esc(t)}</a>' for h, t in items)
+    return f'<nav class="subnav" aria-label="En esta página"><div class="wrap subnav-in"><span class="subnav-k" aria-hidden="true">En esta página</span>{links}</div></nav>'
+
+
 def dock(area_key):
-    """Barra inferior en el celular: acción principal, WhatsApp y cambio de área, siempre a mano."""
+    """Barra inferior en el celular: la acción principal y WhatsApp, siempre a mano."""
     area = area_of(area_key)
     return f"""<div class="dock" data-dock aria-hidden="true">
 <a class="btn dock-cta" href="#contacto" tabindex="-1">{esc(area['cta'])} {ARR}</a>
 <a class="dock-ico dock-wa" href="{wa_link(area['label'])}" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="WhatsApp">{WA_ICON}</a>
-<a class="dock-ico dock-sw" href="index.html#elegir" tabindex="-1" aria-label="Cambiar de área">{SWITCH_ICON}</a>
 </div>"""
 
 
@@ -159,12 +171,12 @@ def footer(area_key=None):
 <div class="ftr-brand">
 <p class="ftr-name">Ezequiel Brunner</p>
 <p class="ftr-desc">Asesoramiento gastronómico y automatización con inteligencia artificial para empresas. Mar del Plata, Argentina.</p>
-<a class="switch switch-ftr" href="index.html#elegir">{SWITCH_ICON}<span>Cambiar de área</span></a>
 </div>
 <nav class="ftr-col" aria-label="Áreas">
 <p class="label">Áreas</p>
 <a href="gastronomia.html">Asesoramiento gastronómico</a>
 <a href="inteligencia-artificial.html">Automatización &amp; IA</a>
+<a href="trayectoria.html">Trayectoria</a>
 <a href="gastronomia.html#trabaja-conmigo">Trabajá conmigo</a>
 </nav>
 <nav class="ftr-col" aria-label="Publicaciones">
