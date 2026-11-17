@@ -599,6 +599,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "17924542953258622"
+    },
+    {
+      "date": "2026-11-17",
+      "slug": "mesa-politica-nacional-extraordinarias-paso-17",
+      "post_id": "18119153245825246",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
