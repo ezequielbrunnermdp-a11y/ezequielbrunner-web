@@ -562,6 +562,13 @@
       "created_by": "Windsor.ai",
       "post_id": "18122023448074105",
       "story_id": "18063242663576908"
+    },
+    {
+      "date": "2026-11-17",
+      "slug": "alerta-amarilla-tormentas-caba-17",
+      "status": "partial",
+      "created_by": "Windsor.ai",
+      "post_id": "18121722665519069"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
