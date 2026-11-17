@@ -626,6 +626,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18200609323393793"
+    },
+    {
+      "date": "2026-11-17",
+      "slug": "festival-etcetera-villa-victoria-sabado-21",
+      "post_id": "17972671977195912",
+      "status": "feed_published_story_pending",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
