@@ -29,7 +29,7 @@ PERSON = {
     'name': 'Ezequiel Brunner',
     'place': 'Mar del Plata, Argentina',
     'about_h2': 'Una mirada construida en la operación.',
-    'about': 'Trayectoria en dirección y gestión gastronómica, liderazgo de equipos, implementación de tecnología y optimización de procesos. Estudiante avanzado de Abogacía; no ejerzo como abogado matriculado.',
+    'about': 'Trayectoria en dirección y gestión gastronómica, liderazgo de equipos, implementación de tecnología y optimización de procesos. Estudiante avanzado de Abogacía.',
     'manifesto': ['Vengo de la operación: salones, cocinas, sucursales y equipos. Por eso uso la tecnología donde le ',
                   ('em', 'simplifica el trabajo a las personas'), ', y no donde suma complejidad. Sin promesas mágicas.'],
     'lead': 'Inteligencia artificial, gestión gastronómica y organización de equipos. Transformo procesos complejos en operaciones más eficientes.',
@@ -469,7 +469,6 @@ ABOUT = {
         ('02', 'Tecnología', 'Formación en análisis de sistemas y automatizaciones propias que hoy ordenan información en operaciones gastronómicas.'),
         ('03', 'Derecho', 'Estudiante de Abogacía en la Universidad Kennedy. Doctrina publicada en SAIJ sobre transparencia algorítmica y Derecho Laboral.'),
     ],
-    'note': 'No ejerzo como abogado matriculado.',
 }
 
 # ---------------------------------------------------------------- gastronomía: «Detrás de cada servicio hay una operación»

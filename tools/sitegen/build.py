@@ -165,7 +165,6 @@ def home():
 <h2 class="h2 h2-xl" id="about-t">{ABOUT['h2']}</h2>
 <p class="manifesto">{ABOUT['manifesto']}</p>
 <ol class="chapters">{chapters}</ol>
-<p class="about-note">{esc(ABOUT['note'])}</p>
 </div>
 </div>
 </section>
@@ -888,7 +887,6 @@ def trayectoria():
 <div class="wrap">
 <div class="t-head">{sec_head('Formación', 'Sistemas, gastronomía <em>y Derecho.</em>', 'Formación universitaria en curso, formación técnica en sistemas y redes, cursos de gestión gastronómica y capacitaciones internacionales.', num='02', h2_id='tf-t')}</div>
 <div class="tf-grid">{groups}</div>
-<p class="note">{esc(ABOUT['note'])}</p>
 </div>
 </section>
 

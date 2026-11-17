@@ -622,7 +622,7 @@ Este punto describe la versión vigente. Donde contradice a los anteriores, vale
   - las publicaciones destacadas y las apariciones en medios, con sus enlaces originales.
 - **En la portada, Gastronomía e IA** queda un resumen con enlace. Los enlaces viejos (`gastronomia#formacion`, `inteligencia-artificial#sobre-mi` y `#formacion`) llevan a la sección nueva.
 - **Datos estructurados:** `ProfilePage`.
-- **Información:** solo la acreditada en el sitio. Se mantiene la aclaración «No ejerzo como abogado matriculado».
+- **Información:** solo la acreditada en el sitio. A pedido del titular, se quitó la aclaración «No ejerzo como abogado matriculado»; el sitio lo presenta como estudiante de Abogacía.
 
 ### Gastronomía: los siete ejes (fase 4)
 
