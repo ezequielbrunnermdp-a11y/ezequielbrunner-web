@@ -589,7 +589,8 @@
       "slug": "minella-stadium-perfeta-875-autorizacion",
       "post_id": "18115878224611042",
       "status": "published",
-      "created_by": "Windsor.ai"
+      "created_by": "Windsor.ai",
+      "story_id": "18038460515891158"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
