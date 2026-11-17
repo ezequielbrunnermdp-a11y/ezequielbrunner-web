@@ -583,6 +583,13 @@
       "post_id": "18078006389472215",
       "story_id": "17916838299511797",
       "post_permalink": "https://www.instagram.com/p/Df1yGLyDQc9/"
+    },
+    {
+      "date": "2026-11-17",
+      "slug": "minella-stadium-perfeta-875-autorizacion",
+      "post_id": "18115878224611042",
+      "status": "published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
