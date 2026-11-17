@@ -542,9 +542,10 @@
     {
       "date": "2026-11-17",
       "slug": "exposurf-paseo-aldrey-17-22",
-      "status": "partial",
+      "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18149262013597715"
+      "post_id": "18149262013597715",
+      "story_id": "18134850814825326"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
