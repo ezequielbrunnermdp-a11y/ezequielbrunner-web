@@ -558,9 +558,10 @@
     {
       "date": "2026-11-17",
       "slug": "penarol-quilmes-liga-femenina-61-48",
-      "status": "partial",
+      "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18122023448074105"
+      "post_id": "18122023448074105",
+      "story_id": "18063242663576908"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
