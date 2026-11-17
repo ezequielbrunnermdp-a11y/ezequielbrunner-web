@@ -129,13 +129,13 @@
   W.addEventListener('pageswap', function () { H.classList.remove('from-home'); });
 
   /* ------------------------------------------------ portada: el botón de WhatsApp aparece después de la elección */
-  var splitEl = $('[data-split], [data-cine]');
+  var splitEl = $('[data-split], [data-cine], [data-stage]');
   if (splitEl && 'IntersectionObserver' in W) {
     new IntersectionObserver(function (es) { H.classList.toggle('split-in-view', es[0].intersectionRatio > 0.35); }, { threshold: [0, 0.35, 1] }).observe(splitEl);
   }
 
   /* ------------------------------------------------ sección activa en el menú */
-  var navLinks = $$('.nav a[data-sec]');
+  var navLinks = $$('a[data-sec]');
   if (navLinks.length && 'IntersectionObserver' in W) {
     var secMap = {};
     navLinks.forEach(function (a) { var s = D.getElementById(a.getAttribute('href').slice(1)); if (s) secMap[s.id] = a; });

@@ -3,7 +3,7 @@
 # No se generan ni se modifican píxeles del rostro o la ropa; el borde se suaviza para integrarlo sobre negro.
 # Sin --exportar deja retrato-recorte.png y dos vistas de control junto a este script (no se guardan en el repositorio).
 # Con --exportar, además escribe assets/img/retrato-recorte(.avif|.webp) y retrato-recorte-480(.avif|.webp), con transparencia,
-# y actualiza en assets/css/home.css la silueta vectorial (--sil) que usan como máscara las luces de borde y el tono.
+# y actualiza en assets/css/main.css la silueta vectorial (--sil) que usan como máscara las luces de borde y el tono.
 import cv2, numpy as np, sys, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -93,8 +93,8 @@ if '--exportar' in sys.argv:
     ap = cv2.approxPolyDP(max(cs, key=cv2.contourArea), 0.8, True).reshape(-1, 2)
     d = 'M' + ' '.join(f'{x} {y}' for x, y in ap) + 'Z'
     sil = f"url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {w} {h}'><path d='{d}'/></svg>\")"
-    css_path = os.path.join(ROOT, 'assets', 'css', 'home.css')
+    css_path = os.path.join(ROOT, 'assets', 'css', 'main.css')
     css = open(css_path, encoding='utf8').read()
     css, n = re.subn(r'^(\s*--sil: ).*;$', lambda mo: mo.group(1) + sil + ';', css, count=1, flags=re.M)
     open(css_path, 'w', encoding='utf8').write(css)
-    print('silueta:', len(ap), 'puntos ·', 'home.css actualizado' if n else 'no se encontró --sil en home.css')
+    print('silueta:', len(ap), 'puntos ·', 'main.css actualizado' if n else 'no se encontró --sil en main.css')
