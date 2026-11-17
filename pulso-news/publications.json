@@ -514,6 +514,13 @@
       "story_published_at": "2026-11-16T16:55:01.130Z",
       "post_permalink": "https://www.instagram.com/p/Dfz1Ph5kfCQ/",
       "story_permalink": "https://www.instagram.com/stories/pulsoinformativoweb/4031800407822070038"
+    },
+    {
+      "date": "2026-11-16",
+      "slug": "punto-verde-esquiu-19-noviembre",
+      "post_id": "18399192154162372",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
