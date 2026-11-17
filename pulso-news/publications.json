@@ -597,7 +597,8 @@
       "slug": "incaa-plataforma-film-commission-mdp",
       "post_id": "18102408212448928",
       "status": "published",
-      "created_by": "Windsor.ai"
+      "created_by": "Windsor.ai",
+      "story_id": "17924542953258622"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
