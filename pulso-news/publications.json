@@ -639,8 +639,9 @@
       "date": "2026-11-17",
       "slug": "hoteles-antartida-tierra-fuego-riesgo-empleos",
       "post_id": "17902640931679002",
-      "status": "feed_published_story_pending",
-      "created_by": "Windsor.ai"
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "story_id": "18111015358942642"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
