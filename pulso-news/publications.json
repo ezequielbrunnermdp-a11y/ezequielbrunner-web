@@ -642,6 +642,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18111015358942642"
+    },
+    {
+      "date": "2026-11-17",
+      "slug": "las-dalias-autos-quemados-reclamo-vecinal",
+      "post_id": "18340767328277136",
+      "status": "feed_published_story_pending",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
