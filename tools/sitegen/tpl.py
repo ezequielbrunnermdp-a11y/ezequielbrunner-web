@@ -3,7 +3,7 @@ import json
 from urllib.parse import quote
 from content import esc, SITE, EMAIL, LINKEDIN, ABOUTME, GAS, IA, WA_URL, WA_DISPLAY
 
-V = '20261117'
+V = '20261118'
 
 ARR = '<span class="arr" aria-hidden="true">→</span>'
 EXT = '<span class="arr ext" aria-hidden="true">↗</span>'

@@ -3,7 +3,8 @@
 # No se generan ni se modifican píxeles del rostro o la ropa; el borde se suaviza para integrarlo sobre negro.
 # Sin --exportar deja retrato-recorte.png y dos vistas de control junto a este script (no se guardan en el repositorio).
 # Con --exportar, además escribe assets/img/retrato-recorte(.avif|.webp) y retrato-recorte-480(.avif|.webp), con transparencia,
-# y actualiza en assets/css/main.css la silueta vectorial (--sil) que usan como máscara las luces de borde y el tono.
+# (el sitio ya no usa la silueta --sil ni las luces de borde: el retrato se muestra como firma pequeña,
+# generada a partir de este recorte con tools/imagenes/firma-retrato.py).
 import cv2, numpy as np, sys, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))

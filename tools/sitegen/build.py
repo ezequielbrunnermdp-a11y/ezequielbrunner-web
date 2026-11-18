@@ -26,10 +26,6 @@ def pic(name, alt='', cls='', sizes='100vw', lazy=False, prio=False, w=1800, h=1
             f'width="{w}" height="{h}" {load}{fp}decoding="async"></picture>')
 
 
-def portrait(cls='', sizes='(max-width: 900px) 100vw, 40vw', lazy=True):
-    return pic('retrato', 'Retrato de Ezequiel Brunner', cls, sizes, lazy=lazy, w=697, h=1046, widths=(480, 697))
-
-
 def field_canvas(cls, t, mode, sizes='100vw'):
     """Relieve de líneas con red de nodos (assets/js/lines.js). Debajo, una imagen fija del mismo dibujo:
     se ve al instante, sin JavaScript y con movimiento reducido, hasta que el lienzo está listo."""
@@ -97,12 +93,12 @@ def path_link(k):
             f'<span class="path-last" aria-hidden="true">Tu última visita</span></a>')
 
 
-def who_portrait(sizes='(max-width: 760px) 78vw, 36vw'):
-    """El retrato real recortado, con luz de borde cobre y turquesa (sin tocar el rostro)."""
-    return (f'<figure class="who-portrait">'
-            f'<span class="rims" aria-hidden="true"><span class="rim rim-warm"></span><span class="rim rim-cool"></span></span>'
-            f'{pic("retrato-recorte", alt="Retrato de Ezequiel Brunner", cls="cp-img", sizes=sizes, lazy=True, w=697, h=1046, widths=(480, 697))}'
-            f'<span class="tint" aria-hidden="true"></span></figure>')
+def firma():
+    """Firma discreta: el retrato pequeño, en blanco y negro, junto al nombre y la ciudad
+    (imagen generada por tools/imagenes/firma-retrato.py)."""
+    return ('<figure class="firma">'
+            f'<span class="firma-ph">{pic("retrato-firma", alt="Retrato de Ezequiel Brunner", sizes="84px", lazy=True, w=192, h=192, widths=(96, 192))}</span>'
+            '<figcaption><span class="firma-n">Ezequiel Brunner</span><span class="firma-m">Mar del Plata · Argentina</span></figcaption></figure>')
 
 
 def home():
@@ -159,10 +155,12 @@ def home():
 
 <section class="sec who" id="sobre-mi" aria-labelledby="about-t">
 <div class="wrap who-grid">
-{who_portrait()}
-<div class="who-copy">
+<div class="who-head">
 <p class="label">Quién soy</p>
 <h2 class="h2 h2-xl" id="about-t">{ABOUT['h2']}</h2>
+{firma()}
+</div>
+<div class="who-copy">
 <p class="manifesto">{ABOUT['manifesto']}</p>
 <ol class="chapters">{chapters}</ol>
 </div>
@@ -860,10 +858,10 @@ def trayectoria():
 <p class="label" data-in="1">Trayectoria</p>
 <h1 class="t-title" id="t-t"><span class="ln" style="--l:0"><span>Experiencia que se</span></span> <span class="ln" style="--l:1"><span><em>puede comprobar.</em></span></span></h1>
 <p class="lead" data-in="3">{esc(C['intro'])} Formación en sistemas y Derecho, investigación sobre inteligencia artificial y automatizaciones propias en uso.</p>
+{firma()}
 <ul class="facts t-facts">{facts_html}</ul>
 <nav class="t-index" aria-label="Secciones de la trayectoria"><ol>{idx_html}</ol></nav>
 </div>
-{who_portrait('(max-width: 900px) 70vw, 34vw')}
 </div>
 </section>
 

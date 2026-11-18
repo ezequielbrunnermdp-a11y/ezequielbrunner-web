@@ -715,6 +715,23 @@ Mediana de 3 corridas por página. Lighthouse 12.6.1, perfil móvil (4G lenta si
 - **Fotos:** hay tres fotos reales (retrato, coordinación y equipo). Para Gastronomía convendría sumar fotos propias de cocina, salón y capacitación.
 - **Lighthouse:** mide una visita única en laboratorio. No hay datos de usuarios reales.
 
+## 11. Retrato discreto (18 de noviembre de 2026)
+
+A pedido del titular, el retrato deja de ser protagonista. Este punto reemplaza lo que los puntos 9 y 10 dicen del retrato grande y sus luces de borde.
+
+- **Antes:** la foto ocupaba media pantalla en «Quién soy» y en la portada de Trayectoria, con luces de borde cobre y turquesa. También llenaba la imagen para compartir de Trayectoria.
+- **Ahora:** una **firma** pequeña y en blanco y negro, junto al nombre y la ciudad:
+  - un círculo de 84 px en escritorio y 72 px en celular, sin luces ni efectos;
+  - la imagen pesa de 0,6 a 1,9 KB (antes, unos 30 KB);
+  - la genera `tools/imagenes/firma-retrato.py` a partir del recorte real (`retrato-recorte.webp`), sobre el fondo del sitio.
+- **«Quién soy»:** el titular y la firma van a la izquierda y quedan a la vista mientras se leen el manifiesto y los tres capítulos, a la derecha. En celular, la firma va debajo del titular.
+- **Trayectoria:** la portada queda con el texto, la firma y las cifras. La imagen para compartir (`assets/og/trayectoria.jpg`) se regeneró sin el retrato grande.
+- **Código:** se quitaron la silueta vectorial (`--sil`), las luces de borde y el tono del CSS común. `recorte-retrato.py` sigue sirviendo para regenerar el recorte; ya no escribe en el CSS.
+- **Verificación:**
+  - 85 de 85 pruebas de comportamiento;
+  - la matriz de accesibilidad y maquetación, sin observaciones;
+  - sin errores de consola en las 7 páginas, en escritorio y celular.
+
 ## Operación del sitio
 
 La publicación conserva el repositorio y el alojamiento actuales. Los cambios se guardan juntos para que no queden páginas con sistemas visuales distintos durante una actualización.
