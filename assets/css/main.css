@@ -350,27 +350,12 @@ html:not(.menu-open) body:has(.hdr:not(.away)) .subnav { top: var(--hdr); }
 .menu-here a { display: inline-block; padding: 8px 0; font-size: 15px; color: var(--ink-2); }
 .menu ol li a[aria-current="page"] { color: var(--accent); }
 
-/* ------------------------------------------------------------------ retrato real con luz de borde (portada y trayectoria) */
-/* silueta del recorte (trazado generado por tools/imagenes/recorte-retrato.py --exportar): máscara de las luces de borde y del tono */
-.who-portrait {
-  --sil: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 697 1046'><path d='M356 79 354 79 356 84 355 86 352 88 349 88 345 91 315 93 312 95 304 96 297 102 294 102 282 108 276 109 271 113 264 113 260 117 246 125 230 141 230 146 228 148 228 153 220 166 218 180 215 184 213 191 209 196 209 202 206 208 206 218 207 223 209 226 208 259 209 260 209 275 210 276 210 293 211 294 211 304 212 305 212 316 214 321 215 334 213 337 208 337 204 334 197 334 193 338 193 347 197 359 199 382 205 391 205 394 208 398 209 407 215 414 215 417 219 423 221 431 227 437 232 439 235 442 236 448 241 459 241 463 245 469 247 476 251 482 253 488 254 511 246 522 235 547 227 557 220 569 214 575 203 578 191 584 178 595 169 599 166 599 151 607 148 607 141 611 139 611 135 614 126 616 116 621 111 625 88 633 76 639 73 642 69 643 47 655 20 665 14 668 10 672 0 676 0 1045 696 1045 696 638 688 637 664 625 657 625 653 622 648 621 641 617 638 617 625 610 596 601 585 596 578 590 576 590 567 585 553 581 538 574 516 552 512 544 508 540 500 527 497 520 489 510 476 498 475 468 479 461 482 448 486 439 486 434 491 430 496 430 504 421 506 416 506 412 510 406 510 400 514 391 515 384 518 379 518 376 521 373 522 368 525 365 525 348 524 347 524 336 523 335 522 322 516 317 510 317 505 321 501 321 498 318 498 312 499 311 498 280 499 277 498 276 498 270 496 268 497 265 497 250 495 247 495 234 494 233 494 220 496 214 495 203 493 199 494 187 484 175 484 168 482 159 476 154 476 151 463 135 460 135 455 131 450 130 445 123 433 112 425 114 419 112 416 109 408 109 399 100 395 99 386 91 376 87 371 88 370 87 365 87 360 84Z'/></svg>");
-}
-.who-portrait { position: relative; justify-self: center; width: min(100%, 500px); aspect-ratio: 697 / 1046; margin: 0; }
-.cp-img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; filter: contrast(1.05) saturate(.9) brightness(.97);
-  /* se funde en elipse alrededor del rostro y el torso: la foto corta los hombros en línea recta y así no se nota */
-  -webkit-mask-image: radial-gradient(ellipse 74% 66% at 50% 34%, #000 56%, transparent 100%); mask-image: radial-gradient(ellipse 74% 66% at 50% 34%, #000 56%, transparent 100%); }
-/* luces de borde: cada capa toma la forma de la silueta y el contenedor las difumina (el desenfoque va después de la máscara) */
-.rims { position: absolute; inset: 0; z-index: 0; pointer-events: none; filter: blur(8px); }
-.rim { position: absolute; inset: 0; pointer-events: none;
-  -webkit-mask: var(--sil) 50% 100% / contain no-repeat, radial-gradient(ellipse 60% 44% at 50% 26%, #000 52%, transparent 100%); -webkit-mask-composite: source-in;
-  mask: var(--sil) 50% 100% / contain no-repeat, radial-gradient(ellipse 60% 44% at 50% 26%, #000 52%, transparent 100%); mask-composite: intersect; }
-.rim-warm { background: linear-gradient(90deg, rgba(238, 152, 82, 1) 0%, rgba(201, 149, 106, .5) 26%, transparent 46%); transform: translateX(-7px); opacity: .62; }
-.rim-cool { background: linear-gradient(270deg, rgba(88, 214, 198, 1) 0%, rgba(130, 176, 170, .5) 26%, transparent 46%); transform: translateX(7px); opacity: .55; }
-.tint { position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  -webkit-mask: var(--sil) 50% 100% / contain no-repeat, radial-gradient(ellipse 74% 66% at 50% 34%, #000 56%, transparent 100%); -webkit-mask-composite: source-in;
-  mask: var(--sil) 50% 100% / contain no-repeat, radial-gradient(ellipse 74% 66% at 50% 34%, #000 56%, transparent 100%); mask-composite: intersect; background: linear-gradient(90deg, rgba(225, 140, 76, .5), transparent 34%, transparent 66%, rgba(70, 196, 182, .45)); mix-blend-mode: soft-light; opacity: .8; }
-
-@media (max-width: 1023px) {
-  .rims { filter: blur(10px); }
-}
+/* ------------------------------------------------------------------ firma: el retrato pequeño y discreto (Quién soy y Trayectoria) */
+.firma { display: flex; align-items: center; gap: 16px; margin: clamp(28px, 3vw, 40px) 0 0; }
+.firma-ph { flex: none; width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--bg); box-shadow: 0 0 0 1px var(--line-2); }
+.firma-ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.firma figcaption { display: grid; gap: 5px; }
+.firma-n { font: 400 clamp(18px, 1.4vw, 21px)/1.2 var(--serif); letter-spacing: -.005em; color: var(--ink); }
+.firma-m { font: 500 11px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+@media (min-width: 901px) { .firma-ph { width: 84px; height: 84px; } }
 .choice { border-radius: 18px; background: linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02) 46%, rgba(255, 255, 255, .035)); border-color: rgba(255, 255, 255, .11); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); }

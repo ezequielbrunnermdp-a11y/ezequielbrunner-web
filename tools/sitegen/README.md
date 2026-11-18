@@ -27,8 +27,8 @@ Necesita Python 3.12 o posterior, sin dependencias externas. Después revisá el
 
 | Archivo | Uso |
 | --- | --- |
-| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, navegación global, menú, pie, apariciones, publicaciones como índice, lenguaje cinematográfico (luz de color, vidrio) y el retrato con luz de borde |
-| `css/home.css` | Portada: escena 3D, nombre, propuesta y accesos; quién soy (retrato), trayectoria resumida, publicaciones destacadas y contacto |
+| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, navegación global, menú, pie, apariciones, publicaciones como índice, lenguaje cinematográfico (luz de color, vidrio) y la firma con el retrato pequeño |
+| `css/home.css` | Portada: escena 3D, nombre, propuesta y accesos; quién soy (titular y firma), trayectoria resumida, publicaciones destacadas y contacto |
 | `css/trayectoria.css` | Trayectoria: dirección gastronómica con línea de tiempo, formación, investigación, publicaciones y medios |
 | `css/areas.css` | Gastronomía e IA: portada, índice de la página, los siete ejes y la calculadora, demostración con procesos, casos, método, contacto |
 | `css/publicaciones.css` | Biblioteca de publicaciones |
@@ -46,7 +46,8 @@ El retrato es la foto real (`assets/profile.jpeg`), recortada en el equipo con O
 ```bash
 pip install opencv-python-headless pillow
 python3 tools/imagenes/recorte-retrato.py             # deja el recorte y dos vistas de control en tools/imagenes/
-python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp y la silueta de main.css
+python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp
+python3 tools/imagenes/firma-retrato.py               # la firma discreta (96 y 192 px, blanco y negro) a partir del recorte
 ```
 
 Si se cambia la foto, hay que revisar las zonas marcadas a mano en el script (el mueble junto al hombro derecho). Los PNG y JPG de control no se guardan en el repositorio.

@@ -1,12 +1,12 @@
 /* Ezequiel Brunner — trayectoria: la experiencia, la formación, la investigación, las publicaciones y los medios en
-   una sola página editorial, con el retrato real y una línea de tiempo que se completa al bajar. */
+   una sola página editorial, con una firma discreta y una línea de tiempo que se completa al bajar. */
 
 .pg-tray { --accent: var(--champagne); }
 
 /* ------------------------------------------------------------------ portada */
 .t-hero { position: relative; isolation: isolate; overflow: clip; padding: calc(var(--hdr) + clamp(40px, 6vw, 96px)) 0 0;
   background: radial-gradient(44% 56% at 82% 62%, rgba(214, 150, 96, .1), transparent 70%), radial-gradient(34% 44% at 96% 30%, rgba(112, 196, 184, .07), transparent 72%); }
-.t-hero-in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px clamp(32px, 5vw, 96px); align-items: end; }
+.t-hero-in { display: block; }
 .t-hero-copy { padding-bottom: clamp(56px, 7vw, 112px); }
 .t-title { margin-top: 26px; font: 300 clamp(48px, 7.2vw, 124px)/.92 var(--serif); letter-spacing: -.035em; }
 .t-title em { font-style: italic; color: var(--champagne); }
@@ -18,7 +18,6 @@
 .t-index a { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 0; font: 500 11.5px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); transition: color .3s var(--ease); }
 .t-index a:hover { color: var(--ink); }
 .ti-n { font: italic 300 14px/1 var(--serif); letter-spacing: 0; color: var(--champagne); }
-.t-hero .who-portrait { width: min(100%, 470px); }
 
 /* ------------------------------------------------------------------ secciones */
 .t-sec { padding-block: clamp(80px, 9vw, 150px); }
@@ -67,8 +66,7 @@
 .ti-dev .row-links { margin-top: 28px; }
 
 @media (max-width: 900px) {
-  .t-hero-in, .tg-grid, .tf-grid, .ti-grid, .ti-cases { grid-template-columns: 1fr; }
-  .t-hero .who-portrait { order: 2; width: min(76%, 400px); }
+  .tg-grid, .tf-grid, .ti-grid, .ti-cases { grid-template-columns: 1fr; }
   .t-hero-copy { padding-bottom: 8px; }
   .tt { grid-template-columns: 1fr; }
   .tt-k, .tt-t, .tt p { grid-column: 1; grid-row: auto; }
