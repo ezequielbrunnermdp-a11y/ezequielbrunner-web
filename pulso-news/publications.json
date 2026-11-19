@@ -780,8 +780,9 @@
       "date": "2026-11-19",
       "slug": "reparito-web-playas-menos-viento-mdp",
       "post_id": "18115077476611364",
-      "status": "feed_published",
-      "created_by": "Windsor.ai"
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "story_id": "18150257764569238"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
