@@ -783,6 +783,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18150257764569238"
+    },
+    {
+      "date": "2026-11-19",
+      "slug": "banco-provincia-creditos-autos-mdp-252",
+      "post_id": "18014611068001943",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
