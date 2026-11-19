@@ -738,6 +738,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18131592304698861"
+    },
+    {
+      "date": "2026-11-19",
+      "slug": "einaval-industria-naval-provincial-19",
+      "post_id": "18115420151610148",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
