@@ -658,6 +658,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "17980030005152843"
+    },
+    {
+      "date": "2026-11-18",
+      "slug": "degustarte-torreon-monje-domingo-22",
+      "post_id": "18149959519499736",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
