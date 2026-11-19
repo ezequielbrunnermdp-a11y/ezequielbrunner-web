@@ -794,6 +794,13 @@
       "created_by": "Windsor.ai",
       "story_id": "17901395922396602",
       "post_permalink": "https://www.instagram.com/p/Df7W8ZLjWJp/"
+    },
+    {
+      "date": "2026-11-19",
+      "slug": "cortes-emvial-azopardo-acha-19-noviembre",
+      "post_id": "18497259004111080",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
