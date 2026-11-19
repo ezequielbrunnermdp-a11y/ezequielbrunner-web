@@ -751,8 +751,9 @@
       "date": "2026-11-19",
       "slug": "workshop-fenomenologia-unmdp-19",
       "post_id": "17924107704453438",
-      "status": "feed_published",
-      "created_by": "Windsor.ai"
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "story_id": "17980685430131791"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
