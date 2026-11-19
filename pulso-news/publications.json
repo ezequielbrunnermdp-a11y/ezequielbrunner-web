@@ -706,6 +706,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18344141035278072"
+    },
+    {
+      "date": "2026-11-18",
+      "slug": "tan-bionica-doble-fecha-polideportivo-noviembre",
+      "post_id": "18348818263285422",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
