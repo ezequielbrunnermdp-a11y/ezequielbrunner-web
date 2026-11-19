@@ -810,6 +810,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18123839968943959"
+    },
+    {
+      "date": "2026-11-19",
+      "slug": "indec-superavit-comercial-octubre-3394-millones",
+      "post_id": "18041641463652715",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
