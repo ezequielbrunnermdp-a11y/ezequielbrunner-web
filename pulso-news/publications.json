@@ -872,6 +872,13 @@
       "post_id": "18136674406784536",
       "status": "published",
       "story_id": "18100231667400620"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "expo-pesca-mosca-mar-chiquita-21-22",
+      "created_by": "Windsor.ai",
+      "post_id": "18147372985519385",
+      "status": "partial"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
