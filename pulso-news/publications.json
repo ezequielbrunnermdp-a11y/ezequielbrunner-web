@@ -941,8 +941,9 @@
       "date": "2026-11-20",
       "slug": "alerta-tormentas-mdp-viernes-tarde-20",
       "post_id": "18138744538678410",
-      "status": "feed_published",
-      "created_by": "Windsor.ai"
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "story_id": "18496214050105286"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
