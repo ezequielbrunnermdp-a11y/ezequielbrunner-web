@@ -928,6 +928,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18344549683279190"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "casa-arroyo-reapertura-parque-sabado-21",
+      "post_id": "17918849502533281",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
