@@ -927,7 +927,8 @@
       "post_id": "17964888126253895",
       "status": "published",
       "created_by": "Windsor.ai",
-      "story_id": "18344549683279190"
+      "story_id": "18344549683279190",
+      "post_permalink": "https://www.instagram.com/p/Df-eFK-EZE8/"
     },
     {
       "date": "2026-11-20",
@@ -935,7 +936,8 @@
       "post_id": "17918849502533281",
       "status": "published",
       "created_by": "Windsor.ai",
-      "story_id": "17929817964194049"
+      "story_id": "17929817964194049",
+      "post_permalink": "https://www.instagram.com/p/Df-eKYFlmyC/"
     },
     {
       "date": "2026-11-20",
@@ -943,7 +945,8 @@
       "post_id": "18138744538678410",
       "status": "published",
       "created_by": "Windsor.ai",
-      "story_id": "18496214050105286"
+      "story_id": "18496214050105286",
+      "post_permalink": "https://www.instagram.com/p/Df-eP3tEf4z/"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
