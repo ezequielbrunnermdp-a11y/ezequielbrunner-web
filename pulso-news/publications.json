@@ -864,6 +864,13 @@
       "post_id": "17995944756063419",
       "status": "published",
       "story_id": "18162126163493409"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "pleamar-2026-museo-mar-arte-tecnologia",
+      "created_by": "Windsor.ai",
+      "post_id": "18136674406784536",
+      "status": "partial"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
