@@ -862,7 +862,8 @@
       "slug": "tren-verano-mdp-venta-pasajes-2027",
       "created_by": "Windsor.ai",
       "post_id": "17995944756063419",
-      "status": "partial"
+      "status": "published",
+      "story_id": "18162126163493409"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
