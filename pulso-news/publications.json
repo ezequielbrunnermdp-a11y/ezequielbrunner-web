@@ -878,7 +878,8 @@
       "slug": "expo-pesca-mosca-mar-chiquita-21-22",
       "created_by": "Windsor.ai",
       "post_id": "18147372985519385",
-      "status": "partial"
+      "status": "published",
+      "story_id": "18117673457024974"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
