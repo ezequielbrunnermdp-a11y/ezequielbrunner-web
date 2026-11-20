@@ -901,6 +901,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "17916644994555200"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "catedral-concierto-gratuito-angelus-20",
+      "post_id": "18609831469069282",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
