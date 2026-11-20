@@ -829,6 +829,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18113370125525555"
+    },
+    {
+      "date": "2026-11-19",
+      "slug": "agenda-musical-mdp-viernes-20-abbey-brewhouse-tri",
+      "post_id": "18140543116760231",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
