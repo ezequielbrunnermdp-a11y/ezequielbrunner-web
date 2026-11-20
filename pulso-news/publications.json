@@ -893,6 +893,13 @@
       "status": "published",
       "story_id": "18130217509922768",
       "post_permalink": "https://www.instagram.com/p/Df9gO5vjrFw/"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "rutas-costa-restriccion-camiones-20-23",
+      "post_id": "18267912391307471",
+      "status": "feed_published",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
