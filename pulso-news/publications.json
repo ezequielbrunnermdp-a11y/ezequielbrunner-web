@@ -842,8 +842,9 @@
       "date": "2026-11-19",
       "slug": "la-plata-aniversario-144-musica-plaza-moreno",
       "post_id": "18510709705098156",
-      "status": "feed_published",
-      "created_by": "Windsor.ai"
+      "status": "published",
+      "created_by": "Windsor.ai",
+      "story_id": "18097182896672214"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
