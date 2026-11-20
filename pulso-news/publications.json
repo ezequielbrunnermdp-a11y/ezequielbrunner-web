@@ -870,7 +870,8 @@
       "slug": "pleamar-2026-museo-mar-arte-tecnologia",
       "created_by": "Windsor.ai",
       "post_id": "18136674406784536",
-      "status": "partial"
+      "status": "published",
+      "story_id": "18100231667400620"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
