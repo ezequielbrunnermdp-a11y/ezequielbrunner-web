@@ -1027,6 +1027,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18109251914639576"
+    },
+    {
+      "date": "2026-11-21",
+      "slug": "ciclista-herida-20-septiembre-san-martin-vtv",
+      "post_id": "18121248104055375",
+      "status": "partial",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
