@@ -32,7 +32,7 @@ begin
   raise notice 'OK · %', p_label;
 end $$;
 
-grant execute on all functions in schema pg_temp to authenticated;
+grant execute on all functions in schema pg_temp to app_authenticated;
 
 select pg_temp.check((select count(*) from public.branches) = 9, 'Nueve sucursales iniciales');
 select pg_temp.check((select sum(weight) from public.categories) = 100, 'Las ponderaciones suman 100');
@@ -41,7 +41,7 @@ select pg_temp.check((select role from public.profiles where email = 'intruso@pr
 
 -- Asignaciones (como administrador)
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000a1');
-set role authenticated;
+set role app_authenticated;
 update public.branches set assigned_auditor_id = '00000000-0000-0000-0000-0000000000b1' where name = 'San Luis';
 insert into public.user_branches (user_id, branch_id) select '00000000-0000-0000-0000-0000000000c1', id from public.branches where name = 'San Luis';
 insert into public.user_branches (user_id, branch_id) select '00000000-0000-0000-0000-0000000000c2', id from public.branches where name = 'Colón';
@@ -51,7 +51,7 @@ reset role;
 -- Auditor: solo sucursales asignadas
 -- ---------------------------------------------------------------------
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000b1');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.check((select count(*) from public.branches) = 1, 'El auditor ve solo su sucursal asignada');
 select pg_temp.expect_error($$insert into public.audits (branch_id, auditor_id, visit_date) values ((select id from public.branches where name = 'Colón'), auth.uid(), current_date)$$, 'Auditor no puede auditar una sucursal no asignada');
 select pg_temp.expect_error($$update public.profiles set role = 'admin' where id = auth.uid()$$, 'Un usuario no puede elevar su propio rol');
@@ -116,7 +116,7 @@ reset role;
 -- Incluso sin RLS (p. ej. clave de servicio), el trigger impide alterar una auditoría finalizada
 select pg_temp.expect_error($$update public.audit_answers set score = 5 where audit_id = '11111111-1111-1111-1111-111111111111'$$, 'Trigger de protección de respuestas finalizadas');
 select pg_temp.expect_error($$update public.audits set final_score = 99 where id = '11111111-1111-1111-1111-111111111111'$$, 'Trigger de protección del puntaje finalizado');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.expect_error($$select public.begin_audit_correction('11111111-1111-1111-1111-111111111111', 'quiero cambiar')$$, 'El auditor no puede autorizar correcciones');
 select pg_temp.check((select count(*) from public.notifications where user_id = auth.uid()) >= 1, 'El auditor asignado recibe notificaciones');
 reset role;
@@ -125,7 +125,7 @@ reset role;
 -- Franquiciados: aislamiento entre franquicias
 -- ---------------------------------------------------------------------
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000c2');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.check((select count(*) from public.audits) = 0, 'Franquiciado de Colón no ve auditorías de San Luis');
 select pg_temp.check((select count(*) from public.nonconformities) = 0, 'Franquiciado de Colón no ve incumplimientos de San Luis');
 select pg_temp.check((select count(*) from public.alerts) = 0, 'Franquiciado de Colón no ve alertas de San Luis');
@@ -133,7 +133,7 @@ select pg_temp.expect_error($$select public.franchisee_update_nc('22222222-2222-
 reset role;
 
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000c1');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.check((select count(*) from public.audits) = 1, 'Franquiciado de San Luis ve su auditoría finalizada');
 select pg_temp.check((select count(*) from public.audit_answers) = 196, 'Franquiciado ve el detalle de respuestas de su auditoría');
 select pg_temp.check((select count(*) from public.notifications where user_id = auth.uid()) >= 1, 'El franquiciado recibe la alerta al finalizar la auditoría');
@@ -152,7 +152,7 @@ reset role;
 
 -- Auditor verifica y cierra
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000b1');
-set role authenticated;
+set role app_authenticated;
 update public.nonconformities set status = 'cerrado' where id = '22222222-2222-2222-2222-222222222222';
 select pg_temp.check((select closed_at is not null and verified_by = auth.uid() from public.nonconformities where id = '22222222-2222-2222-2222-222222222222'), 'El auditor verifica y cierra');
 select pg_temp.check((select count(*) from public.nonconformity_events where nonconformity_id = '22222222-2222-2222-2222-222222222222') = 3, 'Historial de cambios del incumplimiento (alta, corregido, cerrado)');
@@ -162,7 +162,7 @@ reset role;
 -- Administración: corrección autorizada con versión anterior conservada
 -- ---------------------------------------------------------------------
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000a1');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.check((select count(*) from public.branches) = 9, 'El administrador ve todas las sucursales');
 select pg_temp.expect_error($$select public.begin_audit_correction('11111111-1111-1111-1111-111111111111', '')$$, 'La corrección exige motivo');
 select public.begin_audit_correction('11111111-1111-1111-1111-111111111111', 'Error de carga en Imagen de marca');
@@ -200,18 +200,18 @@ select pg_temp.check((select count(*) from public.branches) = 9, 'No se eliminan
 reset role;
 
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000b1');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.expect_error($$insert into public.audits (branch_id, auditor_id, visit_date) select id, auth.uid(), current_date from public.branches where name = 'San Luis'$$, 'No se audita una sucursal inactiva');
 reset role;
 
 -- Usuario sin activar no accede a nada
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000d1');
-set role authenticated;
+set role app_authenticated;
 select pg_temp.check((select count(*) from public.branches) = 0 and (select count(*) from public.questions) = 0, 'Un usuario inactivo no accede a datos');
 reset role;
 
 -- Anónimo: solo la configuración de marca
-set role anon;
+set role app_anon;
 select pg_temp.check((select count(*) from public.brand_settings) = 1, 'La marca es legible en la pantalla de ingreso');
 select pg_temp.check((select count(*) from public.audits) = 0 and (select count(*) from public.branches) = 0, 'Anónimo no accede a auditorías ni sucursales');
 select pg_temp.expect_error($$select public.finalize_audit('11111111-1111-1111-1111-111111111111')$$, 'Anónimo no ejecuta funciones de negocio');

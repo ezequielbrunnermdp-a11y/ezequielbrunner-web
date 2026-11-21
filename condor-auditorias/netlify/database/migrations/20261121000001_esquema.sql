@@ -983,125 +983,125 @@ alter table public.manual_documents enable row level security;
 alter table public.activity_log enable row level security;
 
 -- profiles
-create policy profiles_select on public.profiles for select to authenticated
+create policy profiles_select on public.profiles for select to app_authenticated
   using (id = auth.uid() or public.is_admin());
-create policy profiles_update_self on public.profiles for update to authenticated
+create policy profiles_update_self on public.profiles for update to app_authenticated
   using (id = auth.uid() or public.is_admin()) with check (id = auth.uid() or public.is_admin());
 
 -- branches
-create policy branches_select on public.branches for select to authenticated using (public.has_branch(id));
-create policy branches_admin_insert on public.branches for insert to authenticated with check (public.is_admin());
-create policy branches_admin_update on public.branches for update to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy branches_select on public.branches for select to app_authenticated using (public.has_branch(id));
+create policy branches_admin_insert on public.branches for insert to app_authenticated with check (public.is_admin());
+create policy branches_admin_update on public.branches for update to app_authenticated using (public.is_admin()) with check (public.is_admin());
 
 -- user_branches
-create policy ub_select on public.user_branches for select to authenticated using (user_id = auth.uid() or public.is_admin());
-create policy ub_admin_insert on public.user_branches for insert to authenticated with check (public.is_admin());
-create policy ub_admin_delete on public.user_branches for delete to authenticated using (public.is_admin());
+create policy ub_select on public.user_branches for select to app_authenticated using (user_id = auth.uid() or public.is_admin());
+create policy ub_admin_insert on public.user_branches for insert to app_authenticated with check (public.is_admin());
+create policy ub_admin_delete on public.user_branches for delete to app_authenticated using (public.is_admin());
 
 -- cuestionarios: lectura para usuarios activos; escritura solo admin (y solo borradores, por trigger)
-create policy qv_select on public.questionnaire_versions for select to authenticated using (public.current_role_name() is not null);
-create policy qv_admin_write on public.questionnaire_versions for all to authenticated using (public.is_admin()) with check (public.is_admin());
-create policy cat_select on public.categories for select to authenticated using (public.current_role_name() is not null);
-create policy cat_admin_write on public.categories for all to authenticated using (public.is_admin()) with check (public.is_admin());
-create policy q_select on public.questions for select to authenticated using (public.current_role_name() is not null);
-create policy q_admin_write on public.questions for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy qv_select on public.questionnaire_versions for select to app_authenticated using (public.current_role_name() is not null);
+create policy qv_admin_write on public.questionnaire_versions for all to app_authenticated using (public.is_admin()) with check (public.is_admin());
+create policy cat_select on public.categories for select to app_authenticated using (public.current_role_name() is not null);
+create policy cat_admin_write on public.categories for all to app_authenticated using (public.is_admin()) with check (public.is_admin());
+create policy q_select on public.questions for select to app_authenticated using (public.current_role_name() is not null);
+create policy q_admin_write on public.questions for all to app_authenticated using (public.is_admin()) with check (public.is_admin());
 
 -- audits
 -- Se evalúan las columnas de la fila (no una búsqueda por id) para que INSERT ... RETURNING funcione.
-create policy audits_select on public.audits for select to authenticated using (
+create policy audits_select on public.audits for select to app_authenticated using (
   public.has_branch(branch_id) and (public.is_staff() or status = 'finalizada'));
-create policy audits_insert on public.audits for insert to authenticated with check (
+create policy audits_insert on public.audits for insert to app_authenticated with check (
   public.is_staff() and public.has_branch(branch_id)
   and (auditor_id = auth.uid() or public.is_admin()) and status = 'borrador');
-create policy audits_update on public.audits for update to authenticated
+create policy audits_update on public.audits for update to app_authenticated
   using (public.can_edit_audit(id)) with check (public.has_branch(branch_id));
-create policy audits_delete on public.audits for delete to authenticated using (public.is_admin() and status = 'borrador');
+create policy audits_delete on public.audits for delete to app_authenticated using (public.is_admin() and status = 'borrador');
 
 -- answers / category states
-create policy answers_select on public.audit_answers for select to authenticated using (public.can_view_audit(audit_id));
-create policy answers_write on public.audit_answers for insert to authenticated with check (public.can_edit_audit(audit_id));
-create policy answers_update on public.audit_answers for update to authenticated using (public.can_edit_audit(audit_id)) with check (public.can_edit_audit(audit_id));
-create policy answers_delete on public.audit_answers for delete to authenticated using (public.can_edit_audit(audit_id));
-create policy cs_select on public.audit_category_states for select to authenticated using (public.can_view_audit(audit_id));
-create policy cs_insert on public.audit_category_states for insert to authenticated with check (public.can_edit_audit(audit_id));
-create policy cs_update on public.audit_category_states for update to authenticated using (public.can_edit_audit(audit_id)) with check (public.can_edit_audit(audit_id));
+create policy answers_select on public.audit_answers for select to app_authenticated using (public.can_view_audit(audit_id));
+create policy answers_write on public.audit_answers for insert to app_authenticated with check (public.can_edit_audit(audit_id));
+create policy answers_update on public.audit_answers for update to app_authenticated using (public.can_edit_audit(audit_id)) with check (public.can_edit_audit(audit_id));
+create policy answers_delete on public.audit_answers for delete to app_authenticated using (public.can_edit_audit(audit_id));
+create policy cs_select on public.audit_category_states for select to app_authenticated using (public.can_view_audit(audit_id));
+create policy cs_insert on public.audit_category_states for insert to app_authenticated with check (public.can_edit_audit(audit_id));
+create policy cs_update on public.audit_category_states for update to app_authenticated using (public.can_edit_audit(audit_id)) with check (public.can_edit_audit(audit_id));
 
-create policy revisions_select on public.audit_revisions for select to authenticated using (public.is_staff() and public.can_view_audit(audit_id));
+create policy revisions_select on public.audit_revisions for select to app_authenticated using (public.is_staff() and public.can_view_audit(audit_id));
 
 -- nonconformities: staff crea/edita; franquiciado usa franchisee_update_nc
-create policy nc_select on public.nonconformities for select to authenticated using (
+create policy nc_select on public.nonconformities for select to app_authenticated using (
   public.has_branch(branch_id) and (public.is_staff() or audit_id is null or public.can_view_audit(audit_id)));
-create policy nc_insert on public.nonconformities for insert to authenticated with check (
+create policy nc_insert on public.nonconformities for insert to app_authenticated with check (
   public.is_staff() and public.has_branch(branch_id)
   and (audit_id is null or public.can_edit_audit(audit_id) or public.is_admin()));
-create policy nc_update on public.nonconformities for update to authenticated
+create policy nc_update on public.nonconformities for update to app_authenticated
   using (public.is_staff() and public.has_branch(branch_id)) with check (public.is_staff() and public.has_branch(branch_id));
 
-create policy nce_select on public.nonconformity_events for select to authenticated using (public.can_view_nc(nonconformity_id));
-create policy nce_insert on public.nonconformity_events for insert to authenticated with check (
+create policy nce_select on public.nonconformity_events for select to app_authenticated using (public.can_view_nc(nonconformity_id));
+create policy nce_insert on public.nonconformity_events for insert to app_authenticated with check (
   public.can_view_nc(nonconformity_id) and author_id = auth.uid());
 
 -- attachments
-create policy att_select on public.attachments for select to authenticated using (
+create policy att_select on public.attachments for select to app_authenticated using (
   public.has_branch(branch_id)
   and (audit_id is null or public.can_view_audit(audit_id))
   and (nonconformity_id is null or public.can_view_nc(nonconformity_id)));
-create policy att_insert on public.attachments for insert to authenticated with check (
+create policy att_insert on public.attachments for insert to app_authenticated with check (
   uploaded_by = auth.uid() and public.has_branch(branch_id) and (
     (audit_id is not null and nonconformity_id is null and public.can_edit_audit(audit_id))
     or (nonconformity_id is not null and public.can_view_nc(nonconformity_id))
     or (audit_id is null and nonconformity_id is null and public.is_staff())));
-create policy att_delete on public.attachments for delete to authenticated using (
+create policy att_delete on public.attachments for delete to app_authenticated using (
   (uploaded_by = auth.uid() or public.is_admin())
   and (audit_id is null or public.can_edit_audit(audit_id))
   and (nonconformity_id is null or (uploaded_by = auth.uid() and exists (select 1 from public.nonconformities n where n.id = nonconformity_id and n.status <> 'cerrado'))));
 
 -- alerts / notifications
-create policy alerts_select on public.alerts for select to authenticated using (
+create policy alerts_select on public.alerts for select to app_authenticated using (
   public.has_branch(branch_id) and (audit_id is null or public.can_view_audit(audit_id)));
-create policy alerts_update on public.alerts for update to authenticated using (public.is_staff() and public.has_branch(branch_id)) with check (public.is_staff());
-create policy notif_select on public.notifications for select to authenticated using (user_id = auth.uid());
-create policy notif_update on public.notifications for update to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy alerts_update on public.alerts for update to app_authenticated using (public.is_staff() and public.has_branch(branch_id)) with check (public.is_staff());
+create policy notif_select on public.notifications for select to app_authenticated using (user_id = auth.uid());
+create policy notif_update on public.notifications for update to app_authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 
 -- reports log
-create policy reports_select on public.generated_reports for select to authenticated using (generated_by = auth.uid() or public.is_admin());
-create policy reports_insert on public.generated_reports for insert to authenticated with check (generated_by = auth.uid());
+create policy reports_select on public.generated_reports for select to app_authenticated using (generated_by = auth.uid() or public.is_admin());
+create policy reports_insert on public.generated_reports for insert to app_authenticated with check (generated_by = auth.uid());
 
 -- brand settings: lectura pública (pantalla de ingreso), escritura admin
-create policy brand_select on public.brand_settings for select to anon, authenticated using (true);
-create policy brand_update on public.brand_settings for update to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy brand_select on public.brand_settings for select to app_anon, app_authenticated using (true);
+create policy brand_update on public.brand_settings for update to app_authenticated using (public.is_admin()) with check (public.is_admin());
 
 -- commercial indicators
-create policy ci_select on public.commercial_indicators for select to authenticated using (public.has_branch(branch_id));
-create policy ci_insert on public.commercial_indicators for insert to authenticated with check (public.is_admin() or (public.is_staff() and public.has_branch(branch_id)));
-create policy ci_update on public.commercial_indicators for update to authenticated using (public.is_admin() or (public.is_staff() and public.has_branch(branch_id))) with check (public.has_branch(branch_id));
-create policy ci_delete on public.commercial_indicators for delete to authenticated using (public.is_admin());
+create policy ci_select on public.commercial_indicators for select to app_authenticated using (public.has_branch(branch_id));
+create policy ci_insert on public.commercial_indicators for insert to app_authenticated with check (public.is_admin() or (public.is_staff() and public.has_branch(branch_id)));
+create policy ci_update on public.commercial_indicators for update to app_authenticated using (public.is_admin() or (public.is_staff() and public.has_branch(branch_id))) with check (public.has_branch(branch_id));
+create policy ci_delete on public.commercial_indicators for delete to app_authenticated using (public.is_admin());
 
 -- manual
-create policy manual_select on public.manual_documents for select to authenticated using (public.current_role_name() is not null and (active or public.is_admin()));
-create policy manual_admin on public.manual_documents for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy manual_select on public.manual_documents for select to app_authenticated using (public.current_role_name() is not null and (active or public.is_admin()));
+create policy manual_admin on public.manual_documents for all to app_authenticated using (public.is_admin()) with check (public.is_admin());
 
 -- activity log: solo lectura admin; se escribe con log_activity
-create policy activity_select on public.activity_log for select to authenticated using (public.is_admin());
+create policy activity_select on public.activity_log for select to app_authenticated using (public.is_admin());
 
 -- Permisos de ejecución de funciones
-revoke all on function public.finalize_audit(uuid, text, text) from public, anon;
-revoke all on function public.begin_audit_correction(uuid, text) from public, anon;
-revoke all on function public.acknowledge_audit(uuid, text) from public, anon;
-revoke all on function public.franchisee_update_nc(uuid, public.nc_status, text, date) from public, anon;
-revoke all on function public.refresh_overdue_alerts() from public, anon;
-revoke all on function public.clone_questionnaire_version(uuid) from public, anon;
-revoke all on function public.publish_questionnaire_version(uuid) from public, anon;
-revoke all on function public.compute_audit_score(uuid) from public, anon;
-revoke all on function public.log_activity(text, text, text, jsonb) from public, anon;
-grant execute on function public.finalize_audit(uuid, text, text) to authenticated;
-grant execute on function public.begin_audit_correction(uuid, text) to authenticated;
-grant execute on function public.acknowledge_audit(uuid, text) to authenticated;
-grant execute on function public.franchisee_update_nc(uuid, public.nc_status, text, date) to authenticated;
-grant execute on function public.refresh_overdue_alerts() to authenticated;
-grant execute on function public.clone_questionnaire_version(uuid) to authenticated;
-grant execute on function public.publish_questionnaire_version(uuid) to authenticated;
-grant execute on function public.log_activity(text, text, text, jsonb) to authenticated;
+revoke all on function public.finalize_audit(uuid, text, text) from public, app_anon;
+revoke all on function public.begin_audit_correction(uuid, text) from public, app_anon;
+revoke all on function public.acknowledge_audit(uuid, text) from public, app_anon;
+revoke all on function public.franchisee_update_nc(uuid, public.nc_status, text, date) from public, app_anon;
+revoke all on function public.refresh_overdue_alerts() from public, app_anon;
+revoke all on function public.clone_questionnaire_version(uuid) from public, app_anon;
+revoke all on function public.publish_questionnaire_version(uuid) from public, app_anon;
+revoke all on function public.compute_audit_score(uuid) from public, app_anon;
+revoke all on function public.log_activity(text, text, text, jsonb) from public, app_anon;
+grant execute on function public.finalize_audit(uuid, text, text) to app_authenticated;
+grant execute on function public.begin_audit_correction(uuid, text) to app_authenticated;
+grant execute on function public.acknowledge_audit(uuid, text) to app_authenticated;
+grant execute on function public.franchisee_update_nc(uuid, public.nc_status, text, date) to app_authenticated;
+grant execute on function public.refresh_overdue_alerts() to app_authenticated;
+grant execute on function public.clone_questionnaire_version(uuid) to app_authenticated;
+grant execute on function public.publish_questionnaire_version(uuid) to app_authenticated;
+grant execute on function public.log_activity(text, text, text, jsonb) to app_authenticated;
 
 -- compute_audit_score: solo para quien puede ver la auditoría
 create or replace function public.preview_audit_score(p_audit uuid)
@@ -1110,8 +1110,8 @@ begin
   if not public.can_view_audit(p_audit) then raise exception 'No autorizado'; end if;
   return public.compute_audit_score(p_audit);
 end $$;
-revoke all on function public.preview_audit_score(uuid) from public, anon;
-grant execute on function public.preview_audit_score(uuid) to authenticated;
+revoke all on function public.preview_audit_score(uuid) from public, app_anon;
+grant execute on function public.preview_audit_score(uuid) to app_authenticated;
 
 -- =====================================================================
 -- Storage: buckets privados de evidencias y documentos; logotipo público
@@ -1119,8 +1119,8 @@ grant execute on function public.preview_audit_score(uuid) to authenticated;
 -- =====================================================================
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values
-  ('evidencias', 'evidencias', false, 15728640, array['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'application/pdf']),
-  ('manual', 'manual', false, 31457280, array['application/pdf', 'image/jpeg', 'image/png']),
+  ('evidencias', 'evidencias', false, 4194304, array['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'application/pdf']),
+  ('manual', 'manual', false, 4194304, array['application/pdf', 'image/jpeg', 'image/png']),
   ('marca', 'marca', true, 2097152, array['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
 on conflict (id) do nothing;
 
@@ -1132,23 +1132,23 @@ exception when others then
   return null;
 end $$;
 
-create policy evid_select on storage.objects for select to authenticated using (
+create policy evid_select on storage.objects for select to app_authenticated using (
   bucket_id = 'evidencias' and exists (
     select 1 from public.attachments t where t.storage_path = name
       and public.has_branch(t.branch_id)
       and (t.audit_id is null or public.can_view_audit(t.audit_id))
       and (t.nonconformity_id is null or public.can_view_nc(t.nonconformity_id))));
-create policy evid_insert on storage.objects for insert to authenticated with check (
+create policy evid_insert on storage.objects for insert to app_authenticated with check (
   bucket_id = 'evidencias' and public.has_branch(public.storage_branch_from_path(name)));
-create policy evid_delete on storage.objects for delete to authenticated using (
+create policy evid_delete on storage.objects for delete to app_authenticated using (
   bucket_id = 'evidencias' and (owner = auth.uid() or public.is_admin()));
 
-create policy manual_obj_select on storage.objects for select to authenticated using (
+create policy manual_obj_select on storage.objects for select to app_authenticated using (
   bucket_id = 'manual' and public.current_role_name() is not null);
-create policy manual_obj_write on storage.objects for insert to authenticated with check (bucket_id = 'manual' and public.is_admin());
-create policy manual_obj_delete on storage.objects for delete to authenticated using (bucket_id = 'manual' and public.is_admin());
+create policy manual_obj_write on storage.objects for insert to app_authenticated with check (bucket_id = 'manual' and public.is_admin());
+create policy manual_obj_delete on storage.objects for delete to app_authenticated using (bucket_id = 'manual' and public.is_admin());
 
-create policy marca_select on storage.objects for select to anon, authenticated using (bucket_id = 'marca');
-create policy marca_write on storage.objects for insert to authenticated with check (bucket_id = 'marca' and public.is_admin());
-create policy marca_update on storage.objects for update to authenticated using (bucket_id = 'marca' and public.is_admin());
-create policy marca_delete on storage.objects for delete to authenticated using (bucket_id = 'marca' and public.is_admin());
+create policy marca_select on storage.objects for select to app_anon, app_authenticated using (bucket_id = 'marca');
+create policy marca_write on storage.objects for insert to app_authenticated with check (bucket_id = 'marca' and public.is_admin());
+create policy marca_update on storage.objects for update to app_authenticated using (bucket_id = 'marca' and public.is_admin());
+create policy marca_delete on storage.objects for delete to app_authenticated using (bucket_id = 'marca' and public.is_admin());

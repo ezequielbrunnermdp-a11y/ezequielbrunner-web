@@ -7,6 +7,10 @@
   # Solo publica cuando cambia esta carpeta (el repositorio también contiene otro sitio).
   ignore = "[ -n \"$CACHED_COMMIT_REF\" ] && [ \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" ] && git diff --quiet \"$CACHED_COMMIT_REF\" \"$COMMIT_REF\" -- ."
 
+[functions]
+  # El driver de PostgreSQL se incluye tal cual (evita resolver su módulo nativo opcional).
+  external_node_modules = ["pg"]
+
 [build.environment]
   NODE_VERSION = "22"
 

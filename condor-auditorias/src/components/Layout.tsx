@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, ClipboardPlus, Store, FileText, AlertTriangle, ListChecks, BarChart3, BookOpen,
-  Users, SlidersHorizontal, Palette, LogOut, Bell, Menu, X, History,
+  Users, SlidersHorizontal, Palette, LogOut, Bell, Menu, X, History, KeyRound,
 } from 'lucide-react';
 import { useSession } from '../lib/session';
 import { supabase } from '../lib/supabase';
@@ -122,7 +122,10 @@ export function Layout() {
       <div className="mt-4 border-t border-crema-50/10 px-2 pt-4">
         <div className="truncate text-sm font-semibold text-crema-50">{profile.full_name || profile.email}</div>
         <div className="text-xs text-crema-200/60">{ROLE_LABEL[profile.role]}</div>
-        <button onClick={signOut} className="mt-3 flex items-center gap-2 text-sm text-crema-200/70 hover:text-crema-50">
+        <a href="/restablecer" className="mt-3 flex items-center gap-2 text-sm text-crema-200/70 hover:text-crema-50">
+          <KeyRound className="h-4 w-4" /> Cambiar contraseña
+        </a>
+        <button onClick={signOut} className="mt-2 flex items-center gap-2 text-sm text-crema-200/70 hover:text-crema-50">
           <LogOut className="h-4 w-4" /> Cerrar sesión
         </button>
       </div>

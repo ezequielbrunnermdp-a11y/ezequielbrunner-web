@@ -1,7 +1,7 @@
-// Genera la migración de datos iniciales (sucursales + cuestionario v1) desde supabase/seed/cuestionario_v1.json
+// Genera la migración de datos iniciales (sucursales + cuestionario v1) desde datos/cuestionario_v1.json
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const cats = JSON.parse(readFileSync(new URL('../supabase/seed/cuestionario_v1.json', import.meta.url), 'utf8'));
+const cats = JSON.parse(readFileSync(new URL('../datos/cuestionario_v1.json', import.meta.url), 'utf8'));
 const q = (v) => (v == null ? 'null' : `'${String(v).replace(/'/g, "''")}'`);
 const branches = ['San Luis', 'Colón', 'Alem', 'Tucumán', 'San Juan', 'Chile', 'Torreón', 'Rivadavia', 'Balcarce'];
 
@@ -43,5 +43,5 @@ ${c.questions
 sql += `  perform set_config('app.seeding', 'off', true);
 end $$;
 `;
-writeFileSync(new URL('../supabase/migrations/20261121000002_datos_iniciales.sql', import.meta.url), sql);
+writeFileSync(new URL('../netlify/database/migrations/20261121000002_datos_iniciales.sql', import.meta.url), sql);
 console.log('OK', cats.length, 'categorías');

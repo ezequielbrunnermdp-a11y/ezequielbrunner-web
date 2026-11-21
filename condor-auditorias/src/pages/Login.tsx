@@ -21,9 +21,7 @@ export default function Login() {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
       } else {
-        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: `${window.location.origin}/restablecer` });
-        if (error) throw error;
-        setMsg('Si el correo está registrado, recibirá un enlace para restablecer la contraseña.');
+        setMsg('Solicite a la administración que restablezca su contraseña desde Administración → Usuarios. Luego podrá cambiarla desde el menú «Cambiar contraseña».');
       }
     } catch (e2) {
       setErr(friendlyError(e2));
@@ -47,7 +45,7 @@ export default function Login() {
         <form onSubmit={submit} className="w-full max-w-sm fade-in">
           <div className="lg:hidden"><BrandMark /></div>
           <h1 className="mt-8 font-serif text-3xl font-semibold text-cafe-900 lg:mt-0">{mode === 'login' ? 'Ingresar' : 'Recuperar contraseña'}</h1>
-          <p className="mt-1 text-sm text-cafe-500">{mode === 'login' ? 'Acceso para administración, auditores y franquiciados.' : 'Le enviaremos un enlace a su correo.'}</p>
+          <p className="mt-1 text-sm text-cafe-500">{mode === 'login' ? 'Acceso para administración, auditores y franquiciados.' : 'La contraseña la restablece la administración.'}</p>
           <div className="mt-7 space-y-4">
             <Field label="Correo electrónico">
               <Input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -61,7 +59,7 @@ export default function Login() {
             {msg && <Notice tone="ok">{msg}</Notice>}
             <button className="btn-primary w-full py-3" disabled={busy}>
               {busy && <Spinner className="h-4 w-4 text-crema-50" />}
-              {mode === 'login' ? 'Ingresar' : 'Enviar enlace'}
+              {mode === 'login' ? 'Ingresar' : 'Continuar'}
             </button>
             <button type="button" className="w-full text-center text-sm font-medium text-brand-accent" onClick={() => { setMode(mode === 'login' ? 'recover' : 'login'); setErr(null); setMsg(null); }}>
               {mode === 'login' ? '¿Olvidó su contraseña?' : 'Volver al ingreso'}

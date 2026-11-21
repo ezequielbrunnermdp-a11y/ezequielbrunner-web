@@ -1,12 +1,14 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+// Por defecto la API corre en el mismo sitio (Netlify Functions: /rest/v1, /auth/v1, /storage/v1).
+// VITE_SUPABASE_URL permite apuntar a otro servidor compatible (por ejemplo, durante el desarrollo).
+const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || window.location.origin;
+const anon = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) || 'publica';
 
-export const isConfigured = Boolean(url && anon);
+export const isConfigured = true;
 
-// Solo la clave pública "anon": los permisos los aplica Row Level Security en la base.
-export const supabase: SupabaseClient = createClient(url || 'http://localhost', anon || 'sin-configurar', {
+// Clave pública: los permisos los aplica Row Level Security en la base de datos.
+export const supabase: SupabaseClient = createClient(url, anon, {
   auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
 });
 

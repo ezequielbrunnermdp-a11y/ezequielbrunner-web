@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { UserPlus, Pencil, Mail } from 'lucide-react';
+import { UserPlus, Pencil, KeyRound } from 'lucide-react';
 import { supabase, friendlyError } from '../../lib/supabase';
 import { useSession } from '../../lib/session';
 import { ROLE_LABEL, fmtDate } from '../../lib/format';
@@ -8,7 +8,8 @@ import { Card, ErrorBox, Field, Input, Loading, Modal, Notice, PageHeader, Selec
 
 async function callAdmin(body: Record<string, unknown>) {
   const { data } = await supabase.auth.getSession();
-  const res = await fetch('/api/admin-users', {
+  const base = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? '';
+  const res = await fetch(`${base}/api/admin-users`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.session?.access_token ?? ''}` },
     body: JSON.stringify(body),
@@ -22,7 +23,8 @@ export default function Users() {
   const { branches, profile: me } = useSession();
   const [users, setUsers] = useState<Profile[] | null>(null);
   const [assign, setAssign] = useState<Record<string, string[]>>({});
-  const [form, setForm] = useState<{ open: boolean; u: Partial<Profile> & { password?: string; mode?: 'password' | 'invite'; branch_ids?: string[] } }>({ open: false, u: {} });
+  const [form, setForm] = useState<{ open: boolean; u: Partial<Profile> & { password?: string; branch_ids?: string[] } }>({ open: false, u: {} });
+  const [reset, setReset] = useState<{ user: Profile | null; password: string }>({ user: null, password: '' });
   const [err, setErr] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -44,16 +46,26 @@ export default function Users() {
     try {
       const u = form.u;
       if (u.id) await callAdmin({ action: 'update', user_id: u.id, role: u.role, active: u.active, full_name: u.full_name, branch_ids: u.branch_ids ?? [] });
-      else await callAdmin({ action: 'create', email: u.email, full_name: u.full_name, role: u.role, mode: u.mode, password: u.password, branch_ids: u.branch_ids ?? [] });
+      else await callAdmin({ action: 'create', email: u.email, full_name: u.full_name, role: u.role, password: u.password, branch_ids: u.branch_ids ?? [] });
       setForm({ open: false, u: {} });
-      setMsg(u.id ? 'Usuario actualizado.' : u.mode === 'invite' ? 'Invitación enviada por correo.' : 'Usuario creado. Comunique la contraseña inicial por un canal seguro.');
+      setMsg(u.id ? 'Usuario actualizado.' : 'Usuario creado. Comunique la contraseña inicial por un canal seguro; el usuario puede cambiarla desde «Cambiar contraseña».');
       load();
     } catch (e) { setErr(friendlyError(e)); }
     setBusy(false);
   };
-  const sendReset = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/restablecer` });
-    setMsg(error ? friendlyError(error) : `Se envió un enlace de recuperación a ${email}.`);
+  const doReset = async () => {
+    if (!reset.user) return;
+    setErr(null); setBusy(true);
+    try {
+      await callAdmin({ action: 'reset_password', user_id: reset.user.id, password: reset.password });
+      setMsg(`Contraseña restablecida para ${reset.user.email}. Comuníquela por un canal seguro.`);
+      setReset({ user: null, password: '' });
+    } catch (e) { setErr(friendlyError(e)); }
+    setBusy(false);
+  };
+  const randomPassword = () => {
+    const a = new Uint8Array(12); crypto.getRandomValues(a);
+    return Array.from(a, (b) => 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'[b % 56]).join('');
   };
 
   if (!users) return <Loading />;
@@ -63,7 +75,7 @@ export default function Users() {
   return (
     <div className="fade-in">
       <PageHeader eyebrow="Administración" title="Usuarios y permisos" subtitle="Administradores, auditores y franquiciados. Los auditores acceden a sus sucursales asignadas; los franquiciados, solo a la suya."
-        actions={<button className="btn-primary" onClick={() => { setErr(null); setForm({ open: true, u: { role: 'auditor', mode: 'password', active: true, branch_ids: [] } }); }}><UserPlus className="h-4 w-4" /> Nuevo usuario</button>} />
+        actions={<button className="btn-primary" onClick={() => { setErr(null); setForm({ open: true, u: { role: 'auditor', active: true, branch_ids: [], password: randomPassword() } }); }}><UserPlus className="h-4 w-4" /> Nuevo usuario</button>} />
       {msg && <div className="mb-4"><Notice tone="ok">{msg}</Notice></div>}
       <Card>
         <div className="-mx-4 overflow-x-auto sm:mx-0">
@@ -80,7 +92,7 @@ export default function Users() {
                   <td className="text-xs">{fmtDate(x.created_at)}</td>
                   <td>
                     <div className="flex justify-end gap-1">
-                      <button className="btn-ghost p-2" title="Enviar enlace de recuperación" onClick={() => sendReset(x.email)}><Mail className="h-4 w-4" /></button>
+                      <button className="btn-ghost p-2" title="Restablecer contraseña" onClick={() => { setErr(null); setReset({ user: x, password: randomPassword() }); }}><KeyRound className="h-4 w-4" /></button>
                       <button className="btn-ghost p-2" title="Editar" onClick={() => { setErr(null); setForm({ open: true, u: { ...x, branch_ids: assign[x.id] ?? [] } }); }}><Pencil className="h-4 w-4" /></button>
                     </div>
                   </td>
@@ -106,11 +118,8 @@ export default function Users() {
               <Select value={u.active ? '1' : '0'} disabled={u.id === me!.id} onChange={(e) => setForm({ ...form, u: { ...u, active: e.target.value === '1' } })}><option value="1">Activo</option><option value="0">Inactivo (sin acceso)</option></Select>
             </Field>
           ) : (
-            <Field label="Alta">
-              <Select value={u.mode} onChange={(e) => setForm({ ...form, u: { ...u, mode: e.target.value as 'password' | 'invite' } })}><option value="password">Definir contraseña inicial</option><option value="invite">Enviar invitación por correo</option></Select>
-            </Field>
+            <Field label="Contraseña inicial" hint="Mínimo 10 caracteres. El usuario puede cambiarla desde «Cambiar contraseña»."><Input type="text" autoComplete="off" value={u.password ?? ''} onChange={(e) => setForm({ ...form, u: { ...u, password: e.target.value } })} /></Field>
           )}
-          {!u.id && u.mode === 'password' && <Field label="Contraseña inicial" hint="Mínimo 10 caracteres. El usuario puede cambiarla con «¿Olvidó su contraseña?»."><Input type="text" autoComplete="off" value={u.password ?? ''} onChange={(e) => setForm({ ...form, u: { ...u, password: e.target.value } })} /></Field>}
           {u.role !== 'admin' && (
             <div className="sm:col-span-2">
               <span className="label">{u.role === 'franquiciado' ? 'Sucursal del franquiciado' : 'Sucursales asignadas al auditor'}</span>
@@ -125,6 +134,15 @@ export default function Users() {
           )}
         </div>
         <div className="mt-3"><ErrorBox>{err}</ErrorBox></div>
+      </Modal>
+
+      <Modal open={!!reset.user} onClose={() => setReset({ user: null, password: '' })} title="Restablecer contraseña"
+        footer={<><button className="btn-ghost" onClick={() => setReset({ user: null, password: '' })}>Cancelar</button><button className="btn-primary" onClick={doReset} disabled={busy || reset.password.length < 10}>Restablecer</button></>}>
+        <div className="space-y-3 text-sm">
+          <p>Se asignará una nueva contraseña a <strong>{reset.user?.email}</strong> y se cerrarán sus sesiones abiertas.</p>
+          <Field label="Nueva contraseña" hint="Mínimo 10 caracteres. Comuníquela por un canal seguro."><Input value={reset.password} onChange={(e) => setReset({ ...reset, password: e.target.value })} autoComplete="off" /></Field>
+          <ErrorBox>{err}</ErrorBox>
+        </div>
       </Modal>
     </div>
   );

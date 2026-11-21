@@ -30,12 +30,12 @@ export default function ResetPassword() {
     <div className="flex min-h-dvh items-center justify-center px-5">
       <form onSubmit={submit} className="card w-full max-w-sm space-y-4 p-7">
         <BrandMark compact />
-        <h1 className="font-serif text-2xl font-semibold">Nueva contraseña</h1>
-        {!ready && <Notice tone="warn">Abra esta página desde el enlace recibido por correo.</Notice>}
+        <h1 className="font-serif text-2xl font-semibold">Cambiar contraseña</h1>
+        {!ready && <Notice tone="warn">Ingrese primero a la plataforma con su contraseña actual o la que le asignó la administración. <a href="/" className="font-semibold underline">Ir al ingreso</a></Notice>}
         {done ? (
           <>
             <Notice tone="ok">La contraseña fue actualizada.</Notice>
-            <a href="/" className="btn-primary w-full">Ir a la plataforma</a>
+            <a href="/" className="btn-primary w-full">Volver a la plataforma</a>
           </>
         ) : (
           <>
@@ -43,6 +43,7 @@ export default function ResetPassword() {
             <Field label="Repetir contraseña"><Input type="password" autoComplete="new-password" value={pw2} onChange={(e) => setPw2(e.target.value)} /></Field>
             <ErrorBox>{err}</ErrorBox>
             <button className="btn-primary w-full" disabled={!ready}>Guardar contraseña</button>
+            {ready && <a href="/" className="btn-ghost w-full">Cancelar</a>}
           </>
         )}
       </form>

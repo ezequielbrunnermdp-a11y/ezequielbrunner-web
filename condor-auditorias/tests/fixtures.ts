@@ -1,4 +1,4 @@
-import cuestionario from '../supabase/seed/cuestionario_v1.json';
+import cuestionario from '../datos/cuestionario_v1.json';
 import type { Answer, Category } from '../src/lib/types';
 
 type Q = string | { text: string; guidance?: string; critical?: boolean };
