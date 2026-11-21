@@ -89,4 +89,18 @@ writeFileSync(join(out, "manifest.webmanifest"), JSON.stringify({
   ],
 }, null, 2));
 
+// Cabeceras también como archivo, para que valgan en publicaciones sin Git (CLI / zip).
+writeFileSync(join(out, "_headers"), `/*
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cache-Control: no-cache
+
+/img/*
+  Cache-Control: public, max-age=604800
+
+/icons/*
+  Cache-Control: public, max-age=604800
+`);
+
 console.log(`[build] ${clientName} (${clientId}) · crédito $${config.initialCredit.toLocaleString("es-AR")} · build ${buildId} → ${outName}/`);
