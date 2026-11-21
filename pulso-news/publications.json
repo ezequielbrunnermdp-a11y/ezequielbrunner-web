@@ -992,8 +992,9 @@
       "date": "2026-11-21",
       "slug": "playa-varese-emder-deporte-gratis-sabado-21",
       "created_by": "Windsor.ai",
-      "status": "partial",
-      "post_id": "18498484042109799"
+      "status": "published",
+      "post_id": "18498484042109799",
+      "story_id": "18173030389482185"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
