@@ -321,7 +321,18 @@
     return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "-" + p(d.getHours()) + p(d.getMinutes());
   }
 
-  function download(name, mime, text) {
+  function download(name, mime, text, okMsg) {
+    // Dentro de una página de claude.ai las descargas pasan por la capacidad "downloads".
+    if (window.claude && typeof window.claude.use === "function") {
+      window.claude.use("downloads").then(function (d) {
+        if (!d) return toast("Exportar no está disponible en este enlace", true);
+        return d.save({ filename: name, data: text }).then(function () { toast(okMsg); });
+      }).catch(function (e) {
+        if (e && e.code === "declined") return;
+        toast("No se pudo exportar", true);
+      });
+      return;
+    }
     var blob = new Blob([text], { type: mime });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -331,11 +342,11 @@
     document.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 4000);
+    toast(okMsg);
   }
 
   function exportCsv() {
-    download("bigfun-" + CFG.clientId + "-consumos-" + stamp() + ".csv", "text/csv;charset=utf-8", Core.toCSV(state));
-    toast("CSV generado");
+    download("bigfun-" + CFG.clientId + "-consumos-" + stamp() + ".csv", "text/csv;charset=utf-8", Core.toCSV(state), "CSV generado");
   }
 
   function exportJson() {
@@ -346,8 +357,7 @@
       consumed: Core.consumed(state),
       state: state
     };
-    download("bigfun-" + CFG.clientId + "-respaldo-" + stamp() + ".json", "application/json", JSON.stringify(backup, null, 2));
-    toast("Respaldo JSON generado");
+    download("bigfun-" + CFG.clientId + "-respaldo-" + stamp() + ".json", "application/json", JSON.stringify(backup, null, 2), "Respaldo JSON generado");
   }
 
   function importJson(file) {
@@ -464,7 +474,7 @@
       }).observe($("panel"));
     }
 
-    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    if (!window.claude && "serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
       window.addEventListener("load", function () {
         navigator.serviceWorker.register("sw.js").catch(function () {});
       });
