@@ -70,8 +70,10 @@ async function step(name, fn) { await fn(); n++; console.log("  ✓ " + name); }
     if (SHOTS) await page.screenshot({ path: path.join(SHOTS, "1-inicio.png") });
   });
 
-  await step("todas las fotos cargan", async () => {
-    const broken = await page.$$eval(".card__img", async (imgs) => {
+  await step("todas las fotos cargan y las bebidas sin foto muestran el nombre", async () => {
+    assert.equal(await page.locator("img.card__img").count(), 15);
+    assert.equal(await page.textContent('.card[data-id="chandon"] .card__text'), "Chandon Extra Brut");
+    const broken = await page.$$eval("img.card__img", async (imgs) => {
       await Promise.all(imgs.map((i) => { i.loading = "eager"; return i.decode().catch(() => {}); }));
       return imgs.filter((i) => !i.naturalWidth).map((i) => i.getAttribute("src"));
     });

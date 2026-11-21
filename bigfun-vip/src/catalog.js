@@ -45,8 +45,11 @@
     { id: "speed", name: "Speed", price: 6000, category: "sin-alcohol" }
   ];
 
+  /* Productos sin fotografía: la tarjeta muestra el nombre en grande. */
+  var NO_PHOTO = ["sernova", "jwred", "jwblack", "chandon", "baronb", "agua", "gaseosa", "speed"];
+
   PRODUCTS.forEach(function (p) {
-    p.image = "img/" + p.id + ".jpg";
+    p.image = NO_PHOTO.indexOf(p.id) >= 0 ? null : "img/" + p.id + ".jpg";
   });
 
   var api = { CATEGORIES: CATEGORIES, PRODUCTS: PRODUCTS };

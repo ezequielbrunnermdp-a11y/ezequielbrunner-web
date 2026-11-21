@@ -177,7 +177,7 @@ igualmente cargarlas en el panel por si después se conecta Git.
 En cada enlace, desde el celular que se va a usar:
 
 1. Se ve **BIG FUN**, el nombre correcto del cliente y **$300.000** / **$0**.
-2. Se ven todas las fotos.
+2. Se ven las fotos (y el nombre en grande en las bebidas sin foto).
 3. Tocar Heineken → CONFIRMAR → saldo **$290.000** y "Consumo registrado".
 4. Cerrar el navegador por completo, volver a abrir el enlace → sigue en **$290.000**.
 5. Abrir el **otro** enlace → muestra el otro cliente con **$300.000** (independiente).
@@ -214,12 +214,15 @@ cliente, reinicio con doble confirmación, saldo bajo y saldo cero.
 ### Modificar el catálogo
 
 Los productos y precios están únicamente en `src/catalog.js`. Cada producto usa la foto
-`src/img/<id>.jpg` (cuadrada, 480×480). Las pruebas de `tests/core.test.js` verifican los
+`src/img/<id>.jpg` (cuadrada, 480×480). Los productos de la lista `NO_PHOTO` (Sernova,
+Johnnie Walker Red y Black, Chandon, Baron B, agua, gaseosa y Speed) no tienen foto: su
+tarjeta muestra el nombre en grande. Para agregarles foto: `scripts/foto.sh <archivo> <id>`
+y sacar el id de `NO_PHOTO`. Las pruebas de `tests/core.test.js` verifican los
 precios acordados: si se cambia un precio a propósito, actualizar también la prueba.
 
 ## Fotografías
 
-Las fotos provienen de Wikimedia Commons, con licencias libres (Creative Commons / dominio
+15 productos tienen foto; los otros 8 muestran el nombre en grande. Las fotos provienen de Wikimedia Commons, con licencias libres (Creative Commons / dominio
 público) que permiten su uso con atribución. Están descargadas y optimizadas dentro del
 proyecto, sin enlaces externos. Autor, licencia y fuente de cada una: `CREDITOS-FOTOS.md`.
 Las marcas que aparecen en las botellas pertenecen a sus respectivos dueños; se muestran solo

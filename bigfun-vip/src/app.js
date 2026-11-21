@@ -95,12 +95,18 @@
         b.className = "card";
         b.setAttribute("data-id", p.id);
         b.innerHTML =
-          '<img class="card__img" loading="lazy" decoding="async" width="400" height="400" alt="">' +
+          (p.image
+            ? '<img class="card__img" loading="lazy" decoding="async" width="400" height="400" alt="">'
+            : '<span class="card__img card__text"></span>') +
           '<span class="card__tag" hidden>SALDO INSUFICIENTE</span>' +
           '<span class="card__body"><span class="card__name"></span><span class="card__price"></span></span>';
-        var img = b.querySelector("img");
-        img.src = p.image;
-        img.alt = p.name;
+        if (p.image) {
+          var img = b.querySelector("img");
+          img.src = p.image;
+          img.alt = p.name;
+        } else {
+          b.querySelector(".card__text").textContent = p.name;
+        }
         b.querySelector(".card__name").textContent = p.name;
         b.querySelector(".card__price").textContent = money(p.price);
         b.addEventListener("click", function () { onCard(p); });
@@ -162,8 +168,8 @@
     if (bal <= 0) return toast("Crédito agotado", true);
     if (p.price > bal) return toast("Saldo insuficiente · " + p.name + " " + money(p.price), true);
     pending = { product: p, qty: 1 };
-    $("cImg").src = p.image;
-    $("cImg").alt = p.name;
+    $("cImg").hidden = !p.image;
+    if (p.image) { $("cImg").src = p.image; $("cImg").alt = p.name; }
     $("cName").textContent = p.name;
     $("cPrice").textContent = money(p.price);
     renderConfirm();

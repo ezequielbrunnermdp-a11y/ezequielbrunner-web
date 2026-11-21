@@ -20,11 +20,11 @@ Cada una conserva la licencia original indicada. Las marcas visibles pertenecen 
 | Tanqueray (`img/tanqueray.jpg`) | [Tanqueray bottle Gin.png](https://commons.wikimedia.org/wiki/File%3ATanqueray_bottle_Gin.png) | Bruce The Deus | CC BY-SA 4.0 |
 | Bombay (`img/bombay.jpg`) | [Bombay Sapphire by ny156uk.jpg](https://commons.wikimedia.org/wiki/File%3ABombay_Sapphire_by_ny156uk.jpg) | <a rel="nofollow" class="external text" href="https://www.flickr.com/photos/ny15 | CC BY-SA 2.0 |
 | Absolut Vodka (`img/absolut.jpg`) | [Absolut Vodka 01.jpg](https://commons.wikimedia.org/wiki/File%3AAbsolut_Vodka_01.jpg) | <a href="https://www.wikidata.org/wiki/Q56173187" class="extiw" title="d:Q5 | CC BY-SA 4.0 |
-| Sernova | (pendiente) | | |
-| Johnnie Walker Red Label | (pendiente) | | |
-| Johnnie Walker Black Label | (pendiente) | | |
-| Chandon Extra Brut | (pendiente) | | |
-| Baron B Extra Brut | (pendiente) | | |
-| Agua | (pendiente) | | |
-| Gaseosa | (pendiente) | | |
-| Speed | (pendiente) | | |
+| Sernova | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Johnnie Walker Red Label | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Johnnie Walker Black Label | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Chandon Extra Brut | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Baron B Extra Brut | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Agua | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Gaseosa | Sin foto: la tarjeta muestra el nombre en grande | — | — |
+| Speed | Sin foto: la tarjeta muestra el nombre en grande | — | — |
