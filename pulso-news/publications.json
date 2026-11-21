@@ -968,8 +968,9 @@
       "date": "2026-11-20",
       "slug": "unicef-hogares-ninos-no-cubren-gastos-41",
       "created_by": "Windsor.ai",
-      "status": "partial",
-      "post_id": "18130040678481082"
+      "status": "published",
+      "post_id": "18130040678481082",
+      "story_id": "18472404565184979"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
