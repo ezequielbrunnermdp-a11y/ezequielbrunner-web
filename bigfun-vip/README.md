@@ -172,6 +172,22 @@ netlify deploy --prod --dir dist --site bigfun-cliente2
 Con esta opción las variables se pasan al construir en la propia computadora; conviene
 igualmente cargarlas en el panel por si después se conecta Git.
 
+### Opción C – GitHub Pages (gratis, si Netlify no tiene créditos)
+
+El repositorio es público, así que GitHub Pages lo publica sin costo. `npm run pages`
+genera `docs/cliente1/` y `docs/cliente2/` en la raíz del repositorio (ya están generadas).
+
+1. En GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**.
+2. **Branch**: la rama que tiene la carpeta `docs/` (por ejemplo
+   `claude/bigfun-vip-tracker-86sxyc`) y carpeta **/docs** → **Save**.
+3. En uno o dos minutos quedan:
+   - Cliente 1: `https://ezequielbrunnermdp-a11y.github.io/ezequielbrunner-web/cliente1/`
+   - Cliente 2: `https://ezequielbrunnermdp-a11y.github.io/ezequielbrunner-web/cliente2/`
+
+Los dos comparten dominio, pero cada uno guarda sus datos con su propia clave
+(`bigfun-vip:v1:cliente1` / `cliente2`), así que saldos e historiales siguen independientes.
+Si se cambia algo de la app, volver a correr `npm run pages` y subir los cambios.
+
 ### Probar que funcionan (antes del evento)
 
 En cada enlace, desde el celular que se va a usar:
