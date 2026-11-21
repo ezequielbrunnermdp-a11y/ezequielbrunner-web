@@ -976,8 +976,9 @@
       "date": "2026-11-21",
       "slug": "punta-mogotes-sorteo-90-carpas-verano-2027",
       "created_by": "Windsor.ai",
-      "status": "partial",
-      "post_id": "18015170216988740"
+      "status": "published",
+      "post_id": "18015170216988740",
+      "story_id": "17901984081609698"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
