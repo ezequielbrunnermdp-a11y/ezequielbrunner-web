@@ -1035,6 +1035,13 @@
       "status": "published",
       "created_by": "Windsor.ai",
       "story_id": "18143992435760545"
+    },
+    {
+      "date": "2026-11-21",
+      "slug": "festival-gastronomia-italiana-la-plata-21-22",
+      "post_id": "18180104305444518",
+      "status": "partial",
+      "created_by": "Windsor.ai"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
