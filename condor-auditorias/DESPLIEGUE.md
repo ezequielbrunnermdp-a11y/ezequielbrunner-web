@@ -1,93 +1,63 @@
 # EL CÓNDOR | CONTROL DE FRANQUICIAS — Despliegue
 
-Sistema Integral de Auditorías y Calidad Operativa. React + TypeScript + Vite + Tailwind, Supabase (PostgreSQL, Auth, Storage) y Netlify.
+Sistema Integral de Auditorías y Calidad Operativa. React + TypeScript + Vite + Tailwind, Netlify Functions, Netlify Database (PostgreSQL) y Netlify Blobs.
 
 ## 1. Arquitectura
 
+Todo corre en **Netlify** (sin servicios externos):
+
 ```
 Navegador (celular / tablet / PC)
-  ├─ React SPA (Netlify CDN)        → interfaz, cálculo provisional, PDF (@react-pdf/renderer), cola sin conexión (IndexedDB)
-  ├─ Supabase Auth                  → ingreso, recuperación de contraseña, sesiones
-  ├─ Supabase PostgREST + RLS       → datos; permisos por perfil y sucursal en la base
-  ├─ Supabase Storage (privado)     → fotografías, evidencias y manuales (URLs firmadas temporales)
-  └─ Netlify Function /api/admin-users → alta y gestión de usuarios con la clave de servicio (solo servidor)
+  ├─ React SPA (CDN de Netlify)     → interfaz, cálculo provisional, PDF (@react-pdf/renderer), cola sin conexión (IndexedDB)
+  ├─ Función api  (/rest/v1, /auth/v1, /storage/v1)
+  │     → datos con Row Level Security, sesiones (JWT propios) y archivos; compatible con el cliente supabase-js
+  ├─ Función admin-users (/api/admin-users) → alta, edición y restablecimiento de contraseñas (solo administradores)
+  ├─ Netlify Database (PostgreSQL)  → datos; migraciones en netlify/database/migrations, aplicadas en cada despliegue
+  └─ Netlify Blobs                  → fotografías, evidencias, manuales y logotipo
 ```
 
-- **Fuente de verdad del puntaje**: `public.compute_audit_score` en PostgreSQL. `finalize_audit` valida, calcula, numera el informe y genera alertas. El navegador replica el cálculo (`src/lib/scoring.ts`) solo para mostrar el puntaje provisional; hay una prueba que verifica que ambos den lo mismo.
-- **Versionado**: cada auditoría guarda la versión del cuestionario. Las versiones publicadas son inmutables (trigger). Los PDF se regeneran siempre con la versión y las ponderaciones originales.
-- **Inmutabilidad**: una auditoría finalizada no puede modificarse (trigger, incluso con la clave de servicio). La única vía es `begin_audit_correction` (solo administración, motivo obligatorio), que guarda la versión anterior completa en `audit_revisions`.
-- **Sin conexión**: cada cambio se guarda primero en IndexedDB y se sincroniza al servidor; el indicador solo muestra "Guardado en el servidor" cuando Supabase confirmó la escritura.
+- **Permisos en la base**: cada solicitud se ejecuta con el rol `app_anon` o `app_authenticated` y el usuario en `request.jwt.claim.sub`; las políticas RLS deciden qué ve y modifica cada perfil y sucursal.
+- **Fuente de verdad del puntaje**: `public.compute_audit_score` / `finalize_audit` en PostgreSQL. El navegador replica el cálculo solo para el puntaje provisional (hay una prueba de paridad).
+- **Versionado e inmutabilidad**: cada auditoría conserva su versión de cuestionario; una auditoría finalizada solo cambia mediante `begin_audit_correction` (administración, motivo obligatorio, versión anterior guardada).
+- **Clave de sesiones**: se genera aleatoriamente dentro de la base al instalar (`auth.secrets`, no legible por los roles de la aplicación). Opcionalmente puede definirse `AUTH_JWT_SECRET` en Netlify.
+- **Sin conexión**: los cambios se guardan primero en el dispositivo y se sincronizan; "Guardado en el servidor" solo aparece cuando la base confirmó.
 
-### Tablas principales
-`profiles` (usuarios y roles), `branches`, `user_branches`, `questionnaire_versions`, `categories`, `questions`, `audits`, `audit_answers`, `audit_category_states`, `audit_revisions`, `nonconformities`, `nonconformity_events` (historial), `attachments`, `alerts`, `notifications`, `generated_reports`, `brand_settings`, `commercial_indicators`, `manual_documents`, `activity_log`.
+## 2. Sitio publicado
 
-## 2. Supabase
+- URL: **https://condor-control-franquicias.netlify.app** (proyecto Netlify `condor-control-franquicias`).
+- Para volver a publicar: desde `condor-auditorias/`, con la CLI de Netlify (`netlify deploy --prod`) o conectando el repositorio en Netlify con **Base directory** `condor-auditorias`.
+- Publicar una nueva versión **no borra datos**: las migraciones nuevas se aplican sobre la base existente y Netlify toma una instantánea antes de publicar.
+- No hace falta configurar variables de entorno.
 
-1. Cree un proyecto en <https://supabase.com> (región sugerida: São Paulo).
-2. Aplique las migraciones (en orden):
-   - Opción A, con la CLI (incluida en el proyecto):
-     ```bash
-     cd condor-auditorias
-     npx supabase login
-     npx supabase link --project-ref <REF-DEL-PROYECTO>
-     npx supabase db push
-     ```
-   - Opción B: copie y ejecute en **SQL Editor** el contenido de
-     `supabase/migrations/20261121000001_esquema.sql` y luego `20261121000002_datos_iniciales.sql`.
-   Esto crea tablas, funciones, políticas RLS, los buckets `evidencias` (privado), `manual` (privado) y `marca` (público, solo logotipo), las 9 sucursales y el cuestionario v1 (15 categorías, 196 preguntas, ponderaciones = 100).
-3. **Authentication → Providers → Email**: desactive *Allow new users to sign up* (las altas las hace la administración). Longitud mínima de contraseña sugerida: 10.
-4. **Authentication → URL Configuration**:
-   - Site URL: `https://<su-sitio>.netlify.app` (o el dominio definitivo)
-   - Redirect URLs: `https://<su-sitio>.netlify.app/restablecer`
-5. (Recomendado) Configure un SMTP propio en **Authentication → SMTP** para que los correos de invitación y recuperación no tengan el límite del servidor de prueba de Supabase.
-6. Copie de **Project Settings → API**: `Project URL`, `anon public key` y `service_role key`.
+## 3. Administrador inicial y usuarios
 
-## 3. Administrador inicial
+- La migración `20261121000003_claves_y_administrador.sql` crea el usuario **admin@condor.local** si no existe ningún administrador. La contraseña inicial se entrega por un canal privado: **cámbiela en el primer ingreso** (menú → «Cambiar contraseña»).
+- El resto de los usuarios se crean en **Administración → Usuarios** con una contraseña inicial.
+- No hay envío de correos: si alguien olvida su contraseña, un administrador la restablece desde **Usuarios** (ícono de llave) y el usuario la cambia luego.
 
-Desde una computadora de confianza (la clave de servicio nunca va al navegador ni al repositorio):
+## 4. Límites
 
-```bash
-cd condor-auditorias
-npm install
-SUPABASE_URL=https://<REF>.supabase.co SUPABASE_SERVICE_ROLE_KEY=<service_role> \
-  node scripts/crear-usuario.mjs --email gerencia@empresa.com --nombre "Nombre Apellido"
-```
-
-El script imprime una contraseña inicial aleatoria (o use `--password`). Después, el administrador crea auditores y franquiciados desde **Administración → Usuarios**.
-
-## 4. Netlify
-
-1. **Add new project → Import from Git** y elija este repositorio.
-2. **Base directory**: `condor-auditorias` (el resto lo toma de `condor-auditorias/netlify.toml`: build `npm run build`, publish `dist`, funciones `netlify/functions`, redirección SPA).
-3. **Environment variables** (Site configuration → Environment variables):
-
-| Variable | Valor | Alcance |
-|---|---|---|
-| `VITE_SUPABASE_URL` | URL del proyecto | Builds |
-| `VITE_SUPABASE_ANON_KEY` | anon public key | Builds |
-| `SUPABASE_URL` | URL del proyecto | Functions |
-| `SUPABASE_SERVICE_ROLE_KEY` | service_role key (**secreta**) | Functions |
-
-4. Deploy. Las variables `VITE_*` se incorporan en la compilación: si las cambia, vuelva a publicar.
-
-Publicar nuevas versiones **no borra datos**: todo está en Supabase; Netlify solo sirve archivos estáticos y la función.
+- Archivos de hasta 4 MB (las fotos se comprimen en el dispositivo antes de subir).
+- Netlify Database se cobra en créditos según uso; el plan del equipo debe ser de créditos.
 
 ## 5. Desarrollo local
 
 ```bash
 npm install
-cp .env.example .env.local   # completar VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY
+# PostgreSQL local: aplicar netlify/database/migrations/*.sql en una base vacía (como usuario propietario no superusuario)
+DATABASE_URL=postgres://usuario:clave@127.0.0.1:5432/condor npx vite-node scripts/servidor-local.ts   # API en :8787
+echo "VITE_SUPABASE_URL=http://localhost:8787" > .env.local
 npm run dev
 ```
 
-Supabase local completo (Docker): `npx supabase start` aplica las migraciones automáticamente.
+`scripts/crear-usuario.mjs` crea usuarios directamente en una base (`DATABASE_URL`).
 
 ## 6. Pruebas
 
 | Comando | Qué verifica |
 |---|---|
 | `npm test` | Cálculo de ponderaciones, N/A, observaciones obligatorias, redistribución, clasificación, controles críticos, paridad con el servidor, informe consolidado y generación real de PDF A4 multipágina |
-| `bash tests/db/run.sh` | Sobre PostgreSQL: migraciones, RLS entre franquicias, permisos por perfil, inmutabilidad de finalizadas, corrección autorizada con versión anterior, cuestionario versionado, alertas críticas, reiteración, vencidas, historial de incumplimientos |
+| `bash tests/db/run.sh` | Sobre PostgreSQL (mismas migraciones que producción): migraciones, RLS entre franquicias, permisos por perfil, inmutabilidad de finalizadas, corrección autorizada con versión anterior, cuestionario versionado, alertas críticas, reiteración, vencidas, historial de incumplimientos |
 | `npm run build` | Compilación TypeScript estricta y build de producción |
 
 ## 7. Integraciones futuras

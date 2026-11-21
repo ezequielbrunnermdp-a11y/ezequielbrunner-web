@@ -5,7 +5,7 @@ import { gatewayEnv } from '../lib/runtime';
 
 export default async (req: Request) => {
   try {
-    return await handle(req, gatewayEnv());
+    return await handle(req, await gatewayEnv());
   } catch (e) {
     console.error('api', e);
     return Response.json({ message: 'Servicio no disponible: revise la configuración del servidor.' }, { status: 503 });

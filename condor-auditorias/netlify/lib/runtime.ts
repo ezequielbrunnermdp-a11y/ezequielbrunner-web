@@ -5,6 +5,7 @@ import pg from 'pg';
 import type { BlobStore, GatewayEnv } from './gateway';
 
 let pool: pg.Pool | null = null;
+let secret: string | null = null;
 
 function getPool(): pg.Pool {
   if (pool) return pool;
@@ -30,8 +31,17 @@ function blobStore(): BlobStore {
   };
 }
 
-export function gatewayEnv(): GatewayEnv {
-  const jwtSecret = Netlify.env.get('AUTH_JWT_SECRET');
-  if (!jwtSecret || jwtSecret.length < 32) throw new Error('Falta configurar AUTH_JWT_SECRET (mínimo 32 caracteres)');
-  return { pool: getPool(), jwtSecret, blobs: blobStore(), initialAdmin: Netlify.env.get('INITIAL_ADMIN') ?? null };
+/** Clave de firma: variable AUTH_JWT_SECRET si existe; si no, la generada en la base al instalar. */
+async function jwtSecret(p: pg.Pool): Promise<string> {
+  if (secret) return secret;
+  const fromEnv = Netlify.env.get('AUTH_JWT_SECRET');
+  if (fromEnv && fromEnv.length >= 32) return (secret = fromEnv);
+  const { rows } = await p.query('select jwt_secret from auth.secrets where id = 1');
+  if (!rows[0]?.jwt_secret) throw new Error('Falta la clave de firma de sesiones (auth.secrets)');
+  return (secret = rows[0].jwt_secret as string);
+}
+
+export async function gatewayEnv(): Promise<GatewayEnv> {
+  const p = getPool();
+  return { pool: p, jwtSecret: await jwtSecret(p), blobs: blobStore(), initialAdmin: Netlify.env.get('INITIAL_ADMIN') ?? null };
 }

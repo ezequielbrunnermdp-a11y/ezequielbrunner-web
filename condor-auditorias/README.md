@@ -1,10 +1,12 @@
 # EL CÓNDOR | CONTROL DE FRANQUICIAS
 
+Publicado en **https://condor-control-franquicias.netlify.app**
+
 Sistema Integral de Auditorías y Calidad Operativa de El Cóndor Coffee Shop: auditorías desde el celular con puntaje 0–5 por control, cálculo ponderado sobre 100, fotografías, incumplimientos y acciones correctivas, alertas críticas, historial por sucursal, panel ejecutivo e informes PDF corporativos.
 
-- Despliegue, Supabase, administrador inicial y variables de entorno: **[DESPLIEGUE.md](DESPLIEGUE.md)**
-- Esquema y reglas de negocio: `supabase/migrations/`
-- Cuestionario inicial (fuente única): `supabase/seed/cuestionario_v1.json` → `node scripts/generar-seed.mjs`
+- Arquitectura, despliegue y administrador inicial: **[DESPLIEGUE.md](DESPLIEGUE.md)**
+- Esquema y reglas de negocio: `netlify/database/migrations/`
+- Cuestionario inicial (fuente única): `datos/cuestionario_v1.json` → `node scripts/generar-seed.mjs`
 
 ```bash
 npm install && npm run dev      # desarrollo
