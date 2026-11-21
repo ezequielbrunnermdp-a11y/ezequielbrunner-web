@@ -1,0 +1,31 @@
+# BIG FUN – Control de consumos VIP
+# Los dos sitios de Netlify (cliente 1 y cliente 2) usan este mismo código con
+# "Base directory" = bigfun-vip y sus propias variables de entorno:
+#   VIP_CLIENT_ID, VIP_CLIENT_NAME, VIP_INITIAL_CREDIT (ver README.md).
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+  # Solo se vuelve a publicar cuando cambia esta carpeta (ahorra créditos de Netlify).
+  # Una publicación pedida a mano o la primera publicación siempre se hacen.
+  ignore = "[ -n \"$CACHED_COMMIT_REF\" ] && [ \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" ] && git diff --quiet \"$CACHED_COMMIT_REF\" \"$COMMIT_REF\" -- ."
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BIG FUN">
+  <meta name="format-detection" content="telephone=no">
+  <title>BIG FUN · %%CLIENT_NAME%%</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=%%BUILD_ID%%">
+</head>
+<body>
+  <!-- Barra compacta: aparece al bajar por el catálogo -->
+  <div class="mini" id="mini" aria-hidden="true">
+    <span class="mini__brand">BIG FUN</span>
+    <span class="mini__client" data-client-name></span>
+    <span class="mini__balance" id="miniBalance">$0</span>
+  </div>
+
+  <header class="hero" id="hero">
+    <h1 class="brand">BIG FUN</h1>
+    <p class="client" data-client-name></p>
+    <div class="panel" id="panel">
+      <p class="label">SALDO DISPONIBLE</p>
+      <p class="balance" id="balance" aria-live="polite">$0</p>
+      <p class="alert" id="alert" hidden></p>
+      <div class="panel__row">
+        <div>
+          <p class="label">CONSUMIDO</p>
+          <p class="consumed" id="consumed">$0</p>
+        </div>
+        <button class="btn btn--ghost" id="openHistory" type="button">Ver consumos</button>
+      </div>
+    </div>
+    <p class="storage-warning" id="storageWarning" hidden>
+      ⚠ Este navegador no permite guardar datos (¿modo privado?). Abrí el enlace en Safari o Chrome normal.
+    </p>
+  </header>
+
+  <nav class="cats" id="cats" aria-label="Categorías"></nav>
+
+  <main id="catalog" class="catalog"></main>
+
+  <footer class="foot">
+    Los datos se guardan solo en este teléfono. Usar siempre el mismo celular y navegador.
+  </footer>
+
+  <!-- Confirmación de consumo -->
+  <div class="overlay" id="confirm" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="cName">
+      <div class="sheet__media"><img id="cImg" alt=""></div>
+      <h2 class="sheet__title" id="cName"></h2>
+      <p class="sheet__price">Precio: <strong id="cPrice"></strong></p>
+      <div class="qty" id="qtyBox">
+        <button class="qty__btn" id="qtyMinus" type="button" aria-label="Restar una unidad">−</button>
+        <div class="qty__val"><span id="qtyVal">1</span><small>cantidad</small></div>
+        <button class="qty__btn" id="qtyPlus" type="button" aria-label="Sumar una unidad">+</button>
+      </div>
+      <p class="sheet__total">Total: <strong id="cTotal"></strong></p>
+      <p class="sheet__after" id="cAfter"></p>
+      <p class="sheet__error" id="cError" hidden>Saldo insuficiente</p>
+      <p class="sheet__q" id="cQuestion">¿Agregar este consumo?</p>
+      <div class="sheet__actions">
+        <button class="btn btn--cancel" id="cCancel" type="button">CANCELAR</button>
+        <button class="btn btn--ok" id="cOk" type="button">CONFIRMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historial -->
+  <div class="overlay overlay--full" id="history" hidden>
+    <div class="hist" role="dialog" aria-modal="true" aria-labelledby="hTitle">
+      <div class="hist__head">
+        <h2 id="hTitle">Consumos · <span data-client-name></span></h2>
+        <button class="btn btn--ghost" id="closeHistory" type="button">Volver</button>
+      </div>
+      <ul class="hist__list" id="hList"></ul>
+      <div class="hist__totals">
+        <p>Total consumido: <strong id="hConsumed"></strong></p>
+        <p>Saldo disponible: <strong id="hBalance" class="green"></strong></p>
+      </div>
+      <div class="hist__tools">
+        <button class="btn btn--ghost" id="exportCsv" type="button">Exportar CSV</button>
+        <button class="btn btn--ghost" id="exportJson" type="button">Respaldo JSON</button>
+        <label class="btn btn--ghost" for="importJson">Importar respaldo</label>
+        <input type="file" id="importJson" accept="application/json,.json" hidden>
+        <button class="btn btn--danger" id="resetCredit" type="button">Reiniciar crédito</button>
+      </div>
+      <p class="hist__note">Guardado en este dispositivo. No se sincroniza con otros celulares.</p>
+    </div>
+  </div>
+
+  <!-- Diálogo genérico (anular / reiniciar / importar) -->
+  <div class="overlay overlay--top" id="ask" hidden>
+    <div class="sheet sheet--small" role="alertdialog" aria-modal="true" aria-labelledby="aTitle">
+      <h2 class="sheet__title" id="aTitle"></h2>
+      <p class="sheet__text" id="aText"></p>
+      <div class="sheet__actions">
+        <button class="btn btn--cancel" id="aCancel" type="button">CANCELAR</button>
+        <button class="btn btn--danger" id="aOk" type="button">CONFIRMAR</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="assertive" hidden></div>
+
+  <script src="config.js?v=%%BUILD_ID%%"></script>
+  <script src="catalog.js?v=%%BUILD_ID%%"></script>
+  <script src="core.js?v=%%BUILD_ID%%"></script>
+  <script src="app.js?v=%%BUILD_ID%%"></script>
+</body>
+</html>

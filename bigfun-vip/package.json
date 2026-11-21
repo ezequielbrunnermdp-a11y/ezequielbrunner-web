@@ -1,0 +1,14 @@
+{
+  "name": "bigfun-vip",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BIG FUN – Control de consumos VIP (sitio estático para Netlify)",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:1": "VIP_CLIENT_ID=cliente1 VIP_CLIENT_NAME='CLIENTE VIP 1' VIP_OUT_DIR=dist-cliente1 node build.mjs",
+    "build:2": "VIP_CLIENT_ID=cliente2 VIP_CLIENT_NAME='CLIENTE VIP 2' VIP_OUT_DIR=dist-cliente2 node build.mjs",
+    "test": "node tests/core.test.js",
+    "test:e2e": "node tests/e2e.js"
+  },
+  "engines": { "node": ">=18" }
+}
