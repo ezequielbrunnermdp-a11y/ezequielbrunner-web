@@ -1000,8 +1000,9 @@
       "date": "2026-11-21",
       "slug": "clima-mdp-sabado-21-noviembre-11-19",
       "created_by": "Windsor.ai",
-      "status": "partial",
-      "post_id": "17950819476357049"
+      "status": "published",
+      "post_id": "17950819476357049",
+      "story_id": "18353511901249661"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
