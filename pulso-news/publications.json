@@ -954,7 +954,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18287121541291057",
-      "story_id": "18134953573701290"
+      "story_id": "18134953573701290",
+      "post_permalink": "https://www.instagram.com/p/DgAFH-DCIBk/"
     },
     {
       "date": "2026-11-20",
@@ -962,7 +963,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18103502168436367",
-      "story_id": "17887310253628230"
+      "story_id": "17887310253628230",
+      "post_permalink": "https://www.instagram.com/p/DgAFNWmjlmZ/"
     },
     {
       "date": "2026-11-20",
@@ -970,7 +972,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18130040678481082",
-      "story_id": "18472404565184979"
+      "story_id": "18472404565184979",
+      "post_permalink": "https://www.instagram.com/p/DgAFR45DAth/"
     },
     {
       "date": "2026-11-21",
@@ -978,7 +981,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18015170216988740",
-      "story_id": "17901984081609698"
+      "story_id": "17901984081609698",
+      "post_permalink": "https://www.instagram.com/p/DgAFXDIEUkK/"
     },
     {
       "date": "2026-11-21",
@@ -986,7 +990,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18473208433137817",
-      "story_id": "18139081396655921"
+      "story_id": "18139081396655921",
+      "post_permalink": "https://www.instagram.com/p/DgAFbrkiIjm/"
     },
     {
       "date": "2026-11-21",
@@ -994,7 +999,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18498484042109799",
-      "story_id": "18173030389482185"
+      "story_id": "18173030389482185",
+      "post_permalink": "https://www.instagram.com/p/DgAFh0KiKp0/"
     },
     {
       "date": "2026-11-21",
@@ -1002,7 +1008,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "17950819476357049",
-      "story_id": "18353511901249661"
+      "story_id": "18353511901249661",
+      "post_permalink": "https://www.instagram.com/p/DgAFmt-EeSW/"
     },
     {
       "date": "2026-11-21",
@@ -1010,7 +1017,8 @@
       "created_by": "Windsor.ai",
       "status": "published",
       "post_id": "18289876732288302",
-      "story_id": "18231737938328876"
+      "story_id": "18231737938328876",
+      "post_permalink": "https://www.instagram.com/p/DgAFrdkjuMd/"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
