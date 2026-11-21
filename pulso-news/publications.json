@@ -952,8 +952,9 @@
       "date": "2026-11-20",
       "slug": "ocupacion-hotelera-finde-largo-58-porciento-mdp",
       "created_by": "Windsor.ai",
-      "status": "partial",
-      "post_id": "18287121541291057"
+      "status": "published",
+      "post_id": "18287121541291057",
+      "story_id": "18134953573701290"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
