@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode, type InputHTMLAttributes, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Loader2 } from 'lucide-react';
 import { classificationTone, TONE_HEX, fmtScore, SEVERITY_HEX, SEVERITY_LABEL, NC_STATUS_LABEL } from '../lib/format';
 import type { NcStatus, Severity } from '../lib/types';
@@ -91,7 +92,8 @@ export function Modal({ open, onClose, title, children, footer, wide }: { open: 
     return () => { window.removeEventListener('keydown', h); document.body.style.overflow = ''; };
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  // Portal al <body>: evita que un ancestro animado/transformado desplace la ventana.
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-cafe-900/40 backdrop-blur-[2px] sm:items-center sm:p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div role="dialog" aria-modal="true" aria-label={title} className={cx('fade-in flex max-h-[92dvh] w-full flex-col rounded-t-3xl bg-crema-50 shadow-2xl sm:rounded-3xl', wide ? 'sm:max-w-3xl' : 'sm:max-w-lg')}>
         <div className="flex items-center justify-between border-b border-cafe-800/10 px-5 py-4">
@@ -101,7 +103,8 @@ export function Modal({ open, onClose, title, children, footer, wide }: { open: 
         <div className="overflow-y-auto px-5 py-4">{children}</div>
         {footer && <div className="safe-bottom flex flex-wrap justify-end gap-2 border-t border-cafe-800/10 px-5 py-3">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

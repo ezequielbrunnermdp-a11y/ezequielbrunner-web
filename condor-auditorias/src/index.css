@@ -42,7 +42,7 @@ h1, h2, h3, .font-display { @apply font-serif tracking-tight; }
   .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-accent; }
 }
 
-.fade-in { animation: fadeIn .25s ease-out both; }
+.fade-in { animation: fadeIn .25s ease-out backwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 @media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } * { transition: none !important; } }
