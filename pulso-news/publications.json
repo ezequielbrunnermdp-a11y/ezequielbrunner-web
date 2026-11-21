@@ -955,6 +955,13 @@
       "status": "published",
       "post_id": "18287121541291057",
       "story_id": "18134953573701290"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "concierto-sinfonica-teatro-colon-sabado-21",
+      "created_by": "Windsor.ai",
+      "status": "partial",
+      "post_id": "18103502168436367"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
