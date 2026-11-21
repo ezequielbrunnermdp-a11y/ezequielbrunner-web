@@ -199,7 +199,7 @@ export default function NewAudit() {
       )}
 
       <div className="mt-5"><ErrorBox>{err}</ErrorBox></div>
-      <div className="sticky bottom-20 z-10 mt-5 lg:bottom-4">
+      <div className="sticky-actions sticky bottom-20 z-10 mt-5 lg:bottom-4">
         <button className="btn-primary w-full py-4 text-base tracking-wide shadow-lg" onClick={start} disabled={busy}>
           {busy ? <Spinner className="h-5 w-5 text-crema-50" /> : <ClipboardCheck className="h-5 w-5" />}
           COMENZAR AUDITORÍA

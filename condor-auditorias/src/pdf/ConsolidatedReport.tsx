@@ -20,6 +20,7 @@ export interface BranchStat {
 export interface ConsolidatedData {
   brand: BrandSettings;
   logo: string | null;
+  logoLight?: string | null;
   kind: 'mensual' | 'periodo' | 'consolidado' | 'evolucion';
   title: string;
   periodLabel: string;
@@ -54,7 +55,7 @@ export function ConsolidatedReport({ d }: { d: ConsolidatedData }) {
         <Footer c={c} left={footer} />
 
         <View style={{ backgroundColor: c.primary, padding: 22, marginBottom: 16, borderRadius: 4 }}>
-          {d.logo && <Image src={d.logo} style={{ height: 34, objectFit: 'contain', alignSelf: 'flex-start', marginBottom: 10 }} />}
+          {(d.logoLight ?? d.logo) && <Image src={(d.logoLight ?? d.logo)!} style={{ height: 34, objectFit: 'contain', alignSelf: 'flex-start', marginBottom: 10 }} />}
           <Text style={{ fontSize: 8, color: c.accent, letterSpacing: 2.5, textTransform: 'uppercase' }}>El Cóndor — Informe general de franquicias</Text>
           <Text style={{ fontFamily: 'Times-Bold', fontSize: 24, color: '#ffffff', marginTop: 4 }}>{d.title}</Text>
           <Text style={{ fontSize: 10, color: c.cream, marginTop: 4 }}>{d.periodLabel} · {d.scopeLabel}</Text>

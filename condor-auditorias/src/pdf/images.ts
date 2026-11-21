@@ -31,3 +31,27 @@ export async function toPdfImage(url: string, maxSide = 900, mime: 'image/jpeg' 
     return null;
   }
 }
+
+/** Misma imagen con todos sus píxeles visibles en blanco (para fondos oscuros). */
+export async function toWhiteImage(dataUrl: string | null): Promise<string | null> {
+  if (!dataUrl) return null;
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = reject;
+      i.src = dataUrl;
+    });
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth;
+    c.height = img.naturalHeight;
+    const ctx = c.getContext('2d')!;
+    ctx.drawImage(img, 0, 0);
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, c.width, c.height);
+    return c.toDataURL('image/png');
+  } catch {
+    return null;
+  }
+}

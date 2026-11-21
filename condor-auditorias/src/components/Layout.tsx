@@ -161,7 +161,7 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <nav className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-cafe-800/10 bg-white/95 backdrop-blur lg:hidden">
+      <nav className="mobile-nav safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-cafe-800/10 bg-white/95 backdrop-blur lg:hidden">
         <div className="grid" style={{ gridTemplateColumns: `repeat(${mobileItems.length + 1}, minmax(0,1fr))` }}>
           {mobileItems.map((i) => (
             <NavLink key={i.to} to={i.to} end={i.to === '/'}

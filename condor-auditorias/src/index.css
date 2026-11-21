@@ -49,3 +49,13 @@ h1, h2, h3, .font-display { @apply font-serif tracking-tight; }
 
 /* Números alineados (la serif usa por defecto cifras de estilo antiguo) */
 .font-serif, h1, h2, h3 { font-variant-numeric: lining-nums; }
+
+/* Espacio para el distintivo de Netlify (plan gratuito) en pantallas chicas */
+@media (max-width: 1023px) {
+  html.nf-badge .mobile-nav {
+    bottom: 68px; left: 10px; right: 10px; border-radius: 18px;
+    border: 1px solid rgb(46 32 22 / 0.1); box-shadow: 0 6px 24px rgb(27 19 13 / 0.12);
+  }
+  html.nf-badge main { padding-bottom: 11rem; }
+  html.nf-badge .sticky-actions { bottom: calc(5rem + 68px); }
+}

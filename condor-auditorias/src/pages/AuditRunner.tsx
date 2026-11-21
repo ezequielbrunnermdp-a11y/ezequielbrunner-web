@@ -284,7 +284,7 @@ export default function AuditRunner({ bundle, onFinalized }: { bundle: AuditBund
               onOpenNc={(n) => setNcModal({ open: true, initial: n })} />
           ))}
 
-          <div className="sticky bottom-20 z-10 grid grid-cols-2 gap-2 lg:bottom-4">
+          <div className="sticky-actions sticky bottom-20 z-10 grid grid-cols-2 gap-2 lg:bottom-4">
             <button className="btn-outline py-3.5 shadow-sm" onClick={() => (view > 0 ? goCategory(view - 1) : setView('indice'))}>
               <ArrowLeft className="h-4 w-4" /> {view > 0 ? 'Anterior' : 'Índice'}
             </button>

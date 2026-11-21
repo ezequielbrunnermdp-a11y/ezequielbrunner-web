@@ -10,6 +10,8 @@ export interface ReportPhoto { id: string; questionId: string | null; nonconform
 export interface AuditReportData {
   brand: BrandSettings;
   logo: string | null;
+  /** Logo en blanco para fondos oscuros (portada). */
+  logoLight?: string | null;
   audit: Audit;
   branch: Branch;
   versionNumber: number;
@@ -51,7 +53,7 @@ export function AuditReport({ d }: { d: AuditReportData }) {
       <Page size="A4" style={{ fontFamily: 'Helvetica', color: c.ink, backgroundColor: c.paper }}>
         <View style={{ height: 300, backgroundColor: c.primary, paddingHorizontal: 48, paddingTop: 56, justifyContent: 'space-between', paddingBottom: 36 }}>
           <View>
-            {d.logo ? <Image src={d.logo} style={{ height: 64, objectFit: 'contain', alignSelf: 'flex-start', marginBottom: 18 }} /> : null}
+            {d.logoLight ?? d.logo ? <Image src={(d.logoLight ?? d.logo)!} style={{ height: 64, objectFit: 'contain', alignSelf: 'flex-start', marginBottom: 18 }} /> : null}
             <Text style={{ fontFamily: 'Times-Bold', fontSize: 26, color: c.cream, letterSpacing: 3 }}>{d.brand.company_name}</Text>
             <View style={{ width: 54, height: 2, backgroundColor: c.accent, marginTop: 12 }} />
           </View>

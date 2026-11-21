@@ -11,15 +11,15 @@ import type { AlertRow, Audit, Branch, BrandSettings, Nonconformity, ScoreResult
 import { AuditReport, type AuditReportData, type ReportPhoto } from './AuditReport';
 import { ConsolidatedReport, NcReport, type ConsolidatedData } from './ConsolidatedReport';
 import { buildConsolidated } from './build';
-import { toPdfImage } from './images';
+import { toPdfImage, toWhiteImage } from './images';
 
 const MAX_PHOTOS = 60;
 
-async function brandAndLogo(): Promise<{ brand: BrandSettings; logo: string | null }> {
+async function brandAndLogo(): Promise<{ brand: BrandSettings; logo: string | null; logoLight: string | null }> {
   const brand = (await must(supabase.from('brand_settings').select('*').eq('id', 1).single())) as BrandSettings;
   const url = logoPublicUrl(brand.logo_path);
   const logo = url ? await toPdfImage(url, 600, 'image/png') : null;
-  return { brand, logo };
+  return { brand, logo, logoLight: await toWhiteImage(logo) };
 }
 
 async function whoAmI(): Promise<string> {
@@ -35,7 +35,7 @@ export function auditFileName(branch: string, date: string) {
 
 export async function buildAuditReportData(auditId: string): Promise<AuditReportData> {
   const b = await loadAuditBundle(auditId);
-  const [{ brand, logo }, branch, version, prev, alerts, issuedBy] = await Promise.all([
+  const [{ brand, logo, logoLight }, branch, version, prev, alerts, issuedBy] = await Promise.all([
     brandAndLogo(),
     must(supabase.from('branches').select('*').eq('id', b.audit.branch_id).single()),
     must(supabase.from('questionnaire_versions').select('number').eq('id', b.audit.version_id).single()),
@@ -67,7 +67,7 @@ export async function buildAuditReportData(auditId: string): Promise<AuditReport
     : computeScore(b.categories, b.answers, b.states);
 
   return {
-    brand, logo,
+    brand, logo, logoLight,
     audit: b.audit,
     branch: branch as Branch,
     versionNumber: (version as { number: number }).number,
@@ -101,7 +101,7 @@ export interface PeriodOptions {
 }
 
 export async function renderConsolidatedPdf(o: PeriodOptions): Promise<{ blob: Blob; fileName: string }> {
-  const [{ brand, logo }, issuedBy] = await Promise.all([brandAndLogo(), whoAmI()]);
+  const [{ brand, logo, logoLight }, issuedBy] = await Promise.all([brandAndLogo(), whoAmI()]);
   let bq = supabase.from('branches').select('*').order('name');
   if (o.branchId) bq = bq.eq('id', o.branchId);
   const allBranches = (await must(bq)) as Branch[];
@@ -134,7 +134,7 @@ export async function renderConsolidatedPdf(o: PeriodOptions): Promise<{ blob: B
     consolidado: 'Informe general de franquicias',
     evolucion: 'Reporte comparativo de evolución',
   };
-  const data: ConsolidatedData = { brand, logo, kind: o.kind, title: titles[o.kind], periodLabel, from: o.from, to: o.to, scopeLabel: scope, issuedAt: new Date().toISOString(), issuedBy, ...built };
+  const data: ConsolidatedData = { brand, logo, logoLight, kind: o.kind, title: titles[o.kind], periodLabel, from: o.from, to: o.to, scopeLabel: scope, issuedAt: new Date().toISOString(), issuedBy, ...built };
   const blob = await pdf(<ConsolidatedReport d={data} />).toBlob();
   const fileName = `El_Condor_${slug(data.title)}_${o.branchId ? slug(allBranches[0]?.name ?? '') + '_' : ''}${o.from}_${o.to}.pdf`;
   logReport(o.kind, { from: o.from, to: o.to, branchId: o.branchId ?? null }, fileName, undefined, o.branchId ?? undefined).catch(() => undefined);

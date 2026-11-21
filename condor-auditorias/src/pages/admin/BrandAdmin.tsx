@@ -66,7 +66,7 @@ export default function BrandAdmin() {
             </label>
             {f.logo_path && <button className="btn-outline" onClick={async () => { await supabase.storage.from('marca').remove([f.logo_path!]); save({ logo_path: null }); }}><Trash2 className="h-4 w-4" /> Quitar</button>}
           </div>
-          <p className="mt-2 text-xs text-cafe-500">Recomendado: PNG con fondo transparente, al menos 600 px de ancho. Máximo 2 MB.</p>
+          <p className="mt-2 text-xs text-cafe-500">Recomendado: PNG oscuro con fondo transparente. Sobre fondos oscuros la plataforma y los PDF lo muestran automáticamente en blanco. Máximo 2 MB.</p>
         </Card>
         <Card title="Vista previa">
           <div className="space-y-4">
