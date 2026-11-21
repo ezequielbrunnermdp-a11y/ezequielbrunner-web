@@ -1,0 +1,30 @@
+# EL CÓNDOR | CONTROL DE FRANQUICIAS
+# Configurar en Netlify: Base directory = condor-auditorias
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+  # Solo publica cuando cambia esta carpeta (el repositorio también contiene otro sitio).
+  ignore = "[ -n \"$CACHED_COMMIT_REF\" ] && [ \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" ] && git diff --quiet \"$CACHED_COMMIT_REF\" \"$COMMIT_REF\" -- ."
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Rutas de la SPA: recargar cualquier página devuelve la aplicación.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

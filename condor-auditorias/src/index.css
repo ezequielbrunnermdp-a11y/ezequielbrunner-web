@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: 46 32 22;
+  --brand-accent: 176 141 62;
+  --brand-bg: 247 241 231;
+  --brand-dark: 27 19 13;
+  color-scheme: light;
+}
+
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  @apply font-sans text-cafe-800 antialiased;
+  background: rgb(var(--brand-bg));
+  min-height: 100dvh;
+}
+h1, h2, h3, .font-display { @apply font-serif tracking-tight; }
+
+@layer components {
+  .card { @apply rounded-2xl bg-white/90 shadow-card ring-1 ring-cafe-800/5; }
+  .input {
+    @apply w-full rounded-xl border border-cafe-800/15 bg-white px-3.5 py-2.5 text-[15px] text-cafe-900 placeholder:text-cafe-400/70
+      outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/25 disabled:bg-crema-100 disabled:text-cafe-400;
+  }
+  .label { @apply mb-1.5 block text-[13px] font-medium text-cafe-600; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition
+      active:scale-[.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary { @apply btn bg-brand text-crema-50 hover:bg-brand/90 shadow-sm; }
+  .btn-accent { @apply btn bg-brand-accent text-white hover:bg-brand-accent/90 shadow-sm; }
+  .btn-ghost { @apply btn text-cafe-700 hover:bg-cafe-800/5; }
+  .btn-outline { @apply btn border border-cafe-800/15 bg-white text-cafe-800 hover:border-cafe-800/30; }
+  .btn-danger { @apply btn bg-[#a33b2b] text-white hover:bg-[#8e3224]; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .table-base { @apply w-full text-left text-sm; }
+  .table-base th { @apply whitespace-nowrap border-b border-cafe-800/10 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-cafe-500; }
+  .table-base td { @apply border-b border-cafe-800/5 px-3 py-3 align-middle; }
+  .section-title { @apply font-serif text-2xl font-semibold text-cafe-900 sm:text-3xl; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-accent; }
+}
+
+.fade-in { animation: fadeIn .25s ease-out both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+@media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } * { transition: none !important; } }
+
+/* Números alineados (la serif usa por defecto cifras de estilo antiguo) */
+.font-serif, h1, h2, h3 { font-variant-numeric: lining-nums; }
