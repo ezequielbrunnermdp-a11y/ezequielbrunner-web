@@ -32,21 +32,22 @@ src/
   lib/          Lógica pura: progreso y evaluaciones, fechas y moneda AR, promociones, CSV, importación de códigos, búsqueda
   storage/      Persistencia (localStorage versionado + IndexedDB para archivos) y respaldos
   styles/       Tokens de marca y estilos
-  brand.config.ts  ÚNICO punto para incorporar el logo
+  brand.config.ts  ÚNICO punto de configuración del logo
+brand-source/   Logo original y PNG transparente (no se publican)
 public/
-  brand/        Logo oficial (pendiente)
+  brand/        Logo oficial (WebP sin fondo)
   materiales/   Documentos publicados con el sitio (accesibles por URL)
   _headers      Encabezados para Cloudflare Pages
 docs/           Publicación, guiones, contenidos pendientes y matriz de contenidos
 tests/          Pruebas unitarias y verificación de punta a punta
 ```
 
-## Incorporar el logo
+## Identidad visual
 
-1. Copiá el archivo en `public/brand/` (por ejemplo `logo-el-condor.svg`).
-2. En `src/brand.config.ts`, completá `logo: 'brand/logo-el-condor.svg'` (y `logoOnDark` si hay versión clara para la barra lateral oscura).
-3. Si los colores del logo difieren de la paleta provisoria, ajustá `src/styles/tokens.css` y verificá contraste (los valores actuales están documentados en el archivo).
-4. `npm run build`.
+- **Logo:** `public/brand/logo-el-condor.webp` (portada) y `logo-el-condor-420.webp` (barra y encabezado), generados a partir del JPEG oficial quitando el fondo blanco. El original y el PNG transparente están en `brand-source/`. Para reemplazarlo, cambiá las rutas en `src/brand.config.ts`, el único punto de configuración.
+- **Paleta:** espresso `#211C18`, marfil `#F6F2EA`, superficies `#FFFDFA`, bronce `#A77C49` (solo detalles) y gris cálido `#70675F`. Para texto sobre marfil se usa el bronce oscuro `#7A5426`. Los contrastes están verificados y documentados en `src/styles/tokens.css`.
+- **Tipografía:** Fraunces (variable, con eje óptico) para títulos y Manrope para texto y controles, ambas empaquetadas localmente con alternativas de sistema.
+- **Sistema:** escala tipográfica, espaciado base de 4 px, radios, sombras y transiciones definidos como variables en `tokens.css`; componentes en `src/styles/app.css`.
 
 ## Contenido y estados
 

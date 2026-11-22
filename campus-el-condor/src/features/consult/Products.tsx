@@ -75,14 +75,14 @@ export function ProductsSection({ query }: { query: URLSearchParams }) {
         <h2>{showPractice ? 'Catálogo de práctica' : 'Catálogo de este dispositivo'}</h2>
         {showPractice ? <PracticeBadge label="Práctica · precios y códigos sin informar" /> : <Badge>{official.length} productos</Badge>}
       </div>
-      <div className="row" style={{ marginBottom: 14 }}>
-        <div className="search-box" style={{ flex: '1 1 240px' }}>
+      <div className="toolbar">
+        <div className="search-box">
           <Search aria-hidden="true" />
           <label htmlFor="prod-q" className="sr-only">Buscar productos</label>
-          <input id="prod-q" className="input" type="search" placeholder="Buscar por nombre, código o variante" value={text} onChange={(e) => setText(e.target.value)} style={{ minHeight: 46 }} />
+          <input id="prod-q" className="input" type="search" placeholder="Buscar por nombre, código o variante" value={text} onChange={(e) => setText(e.target.value)} />
         </div>
         <label htmlFor="prod-cat" className="sr-only">Categoría</label>
-        <select id="prod-cat" className="input" style={{ width: 'auto', minWidth: 170 }} value={cat} onChange={(e) => setCat(e.target.value)}>
+        <select id="prod-cat" className="input" value={cat} onChange={(e) => setCat(e.target.value)}>
           <option value="">Todas las categorías</option>
           {categories.map((c) => <option key={c}>{c}</option>)}
         </select>

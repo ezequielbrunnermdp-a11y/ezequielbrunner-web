@@ -1,28 +1,45 @@
 /* Ilustraciones SVG originales del campus: taza, vapor, cuaderno y escenas. */
 
 export function HeroCup({ className }: { className?: string }) {
+  const bean = (x: number, y: number, r: number) => (
+    <g transform={`translate(${x} ${y}) rotate(${r})`}>
+      <ellipse rx="13" ry="18" fill="#6b4a2b" stroke="#cda676" strokeWidth="1.2" strokeOpacity="0.55" />
+      <path d="M0 -15c-5 8 5 22 0 30" fill="none" stroke="#2a231e" strokeWidth="2" strokeLinecap="round" />
+    </g>
+  );
   return (
-    <svg className={className} viewBox="0 0 300 280" role="img" aria-label="Ilustración de una taza de café con vapor">
+    <svg className={className} viewBox="0 0 340 320" role="img" aria-label="Ilustración de una taza de café humeante con granos de café">
       <defs>
-        <linearGradient id="cupG" x1="0" x2="1">
-          <stop offset="0" stopColor="#f6f2ea" />
-          <stop offset="1" stopColor="#e6dccb" />
+        <linearGradient id="hc-cup" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stopColor="#fffdfa" />
+          <stop offset="1" stopColor="#e9dfcf" />
         </linearGradient>
+        <radialGradient id="hc-coffee" cx="0.5" cy="0.4" r="0.7">
+          <stop offset="0" stopColor="#8a5d36" />
+          <stop offset="1" stopColor="#4a3020" />
+        </radialGradient>
       </defs>
-      <circle cx="150" cy="150" r="118" fill="#2b241f" />
-      <circle cx="150" cy="150" r="118" fill="none" stroke="#a77c49" strokeOpacity="0.5" strokeDasharray="2 7" />
-      <g fill="none" stroke="#c9a273" strokeWidth="5" strokeLinecap="round">
-        <path className="steam" d="M122 104c-12-14 10-22-2-38" />
-        <path className="steam s2" d="M150 98c-12-14 10-22-2-40" />
-        <path className="steam s3" d="M178 104c-12-14 10-22-2-38" />
+      <g fill="none" stroke="#cda676" strokeOpacity="0.22">
+        <circle cx="170" cy="168" r="140" />
+        <circle cx="170" cy="168" r="112" strokeDasharray="1 7" strokeLinecap="round" strokeOpacity="0.5" />
       </g>
-      <ellipse cx="150" cy="222" rx="96" ry="14" fill="#a77c49" opacity="0.55" />
-      <ellipse cx="150" cy="216" rx="86" ry="11" fill="#c9a273" />
-      <path d="M86 128h128v34c0 36-28 58-64 58s-64-22-64-58z" fill="url(#cupG)" />
-      <path d="M214 138h10a22 22 0 0 1 0 44h-16" fill="none" stroke="#e6dccb" strokeWidth="10" strokeLinecap="round" />
-      <ellipse cx="150" cy="128" rx="64" ry="11" fill="#6b4a2b" />
-      <ellipse cx="150" cy="127" rx="52" ry="7" fill="#8a6038" />
-      <path d="M118 158c10 8 54 8 64 0" fill="none" stroke="#a77c49" strokeWidth="2" strokeLinecap="round" />
+      <g fill="none" stroke="#cda676" strokeWidth="3.5" strokeLinecap="round">
+        <path className="steam" d="M142 108c-12-14 10-24-2-42" />
+        <path className="steam s2" d="M170 100c-12-14 10-24-2-44" />
+        <path className="steam s3" d="M198 108c-12-14 10-24-2-42" />
+      </g>
+      <ellipse cx="170" cy="250" rx="112" ry="18" fill="#000" opacity="0.25" />
+      <ellipse cx="170" cy="242" rx="104" ry="17" fill="#e9dfcf" />
+      <ellipse cx="170" cy="238" rx="80" ry="10" fill="#d8cab4" />
+      <path d="M100 132h140v40c0 40-31 66-70 66s-70-26-70-66z" fill="url(#hc-cup)" />
+      <path d="M240 144h8a24 24 0 0 1 0 48h-14" fill="none" stroke="#e9dfcf" strokeWidth="11" strokeLinecap="round" />
+      <ellipse cx="170" cy="132" rx="70" ry="12" fill="#e9dfcf" />
+      <ellipse cx="170" cy="132" rx="60" ry="8.5" fill="url(#hc-coffee)" />
+      <path d="M150 131c10 4 30 4 40 0" stroke="#cda676" strokeOpacity="0.6" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      <path d="M112 176c14 10 102 10 116 0" stroke="#a77c49" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.7" />
+      {bean(62, 236, -28)}
+      {bean(276, 222, 32)}
+      {bean(292, 262, -12)}
     </svg>
   );
 }

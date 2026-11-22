@@ -1,45 +1,91 @@
-/* Identidad provisoria de El Cóndor. Ajustar a los colores del logo oficial cuando se incorpore.
-   Contrastes verificados (WCAG AA, texto normal ≥ 4,5:1):
-   espresso/marfil 15,1 · gris cálido/marfil 5,8 · bronce texto/marfil 6,0 · marfil/bronce texto 6,6
-   bronce claro/espresso 7,2 · éxito 6,5 · error 6,5 · advertencia 6,1 · info 7,3 · borde de campo 3,75 */
+/* Sistema visual de El Cóndor · Campus de formación
+   Concepto: cafetería de autor. Espresso para la estructura, marfil para la lectura,
+   cobre/bronce del logo solo en detalles. Una única serif con carácter (Fraunces) y una
+   sans muy legible (Manrope).
+
+   Contrastes verificados (WCAG AA, texto normal ≥ 4,5:1; componentes ≥ 3:1):
+   espresso / marfil 15,1 · espresso / superficie 16,6 · gris cálido #70675F / marfil 5,0 y / superficie 5,5
+   bronce texto #7A5426 / marfil 6,0 · marfil / bronce texto 6,6 · bronce claro #CDA676 / espresso 7,6
+   borde de control #8C8174 / superficie 3,75 · éxito 6,5 · error 6,5 · advertencia 6,1 · info 7,3
+   El bronce #A77C49 (3,35:1) se usa solo como detalle decorativo, nunca para texto. */
 :root {
-  --ivory: #f6f2ea;
-  --paper: #fffdf9;
-  --sand: #efe8dc;
-  --sand-2: #e7dece;
-  --line: #e1d7c6;
-  --line-strong: #8c8174; /* bordes de campos y controles: 3,75:1 */
+  /* Color */
   --espresso: #211c18;
-  --espresso-2: #2b241f;
-  --espresso-3: #3a312a;
+  --espresso-2: #2a231e;
+  --espresso-3: #3a3029;
+  --espresso-line: #4a3f36;
+  --ivory: #f6f2ea;
+  --ivory-2: #efe8dc;
+  --surface: #fffdfa;
+  --surface-2: #fbf7f0;
+  --line: #e6dccd;
+  --line-soft: #efe7da;
+  --line-strong: #8c8174;
   --ink: #211c18;
-  --muted: #665d55;
-  --bronze: #a77c49; /* solo decorativo: 3,35:1 */
-  --bronze-text: #7a5426; /* bronce legible sobre marfil */
-  --bronze-light: #c9a273; /* bronce legible sobre espresso */
-  --bronze-wash: #f3e9da;
+  --muted: #70675f;
+  --bronze: #a77c49;
+  --bronze-text: #7a5426;
+  --bronze-light: #cda676;
+  --bronze-wash: #f4eadb;
+  --bronze-wash-2: #ead9bf;
+  --on-dark: #f6f2ea;
+  --on-dark-muted: #c8bdb0;
 
   --ok: #286140;
-  --ok-bg: #e7f1ea;
+  --ok-bg: #e9f2ec;
+  --ok-line: #bcd7c5;
   --err: #9a3328;
-  --err-bg: #f8e8e5;
+  --err-bg: #f9ebe8;
+  --err-line: #e8c3bc;
   --warn: #7d5200;
-  --warn-bg: #f8eed9;
+  --warn-bg: #f8efdc;
+  --warn-line: #e6d1a6;
   --info: #2c5468;
-  --info-bg: #e5eef2;
+  --info-bg: #e8f0f3;
+  --info-line: #c2d6df;
 
-  --font-serif: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+  /* Tipografía */
+  --font-serif: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --fs-display: clamp(2.35rem, 1.6rem + 3vw, 3.9rem);
+  --fs-h1: clamp(2rem, 1.55rem + 1.9vw, 2.9rem);
+  --fs-h2: clamp(1.45rem, 1.25rem + 0.8vw, 1.85rem);
+  --fs-h3: 1.28rem;
+  --fs-h4: 1.06rem;
+  --fs-lead: 1.1rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.72rem;
+  --lh-body: 1.65;
 
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 18px;
-  --shadow-1: 0 1px 2px rgba(33, 28, 24, 0.05), 0 2px 8px rgba(33, 28, 24, 0.04);
-  --shadow-2: 0 2px 6px rgba(33, 28, 24, 0.06), 0 12px 32px rgba(33, 28, 24, 0.08);
-  --focus: 0 0 0 3px var(--paper), 0 0 0 5px var(--bronze-text);
+  /* Espaciado (base 4 px) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
 
-  --sidebar-w: 260px;
-  --content-max: 1080px;
-  --bottom-nav-h: 64px;
+  /* Forma */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(33, 28, 24, 0.04), 0 2px 10px rgba(33, 28, 24, 0.04);
+  --shadow-2: 0 2px 6px rgba(33, 28, 24, 0.05), 0 14px 34px rgba(33, 28, 24, 0.09);
+  --shadow-3: 0 30px 80px rgba(33, 28, 24, 0.3);
+  --focus: 0 0 0 2px var(--surface), 0 0 0 4px var(--bronze-text);
+
+  /* Estructura */
+  --sidebar-w: 272px;
+  --content-max: 1120px;
+  --reading-max: 68ch;
+  --bottom-nav-h: 68px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 0.18s;
+  --t-med: 0.32s;
 }

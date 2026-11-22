@@ -21,7 +21,7 @@ export function CasesList() {
           return (
             <a key={id} className="card card-link module-card" href={`#/casos/${id}`}>
               <div className="row-between">
-                <span className="eyebrow" style={{ margin: 0 }}>{id === 'sim-mesa' ? 'Simulador' : `Caso ${i + 1}`} · Módulo {MODULE_BY_ID[sc.moduleId].number}</span>
+                <span className="module-cat" style={{ margin: 0 }}>{id === 'sim-mesa' ? 'Simulador' : `Caso ${i + 1}`} · Módulo {MODULE_BY_ID[sc.moduleId].number}</span>
                 {rec?.completedAt ? <Badge tone="ok" icon={<CheckCircle2 aria-hidden="true" />}>Resuelto</Badge> : <Badge>Pendiente</Badge>}
               </div>
               <h3>{sc.title}</h3>
@@ -73,7 +73,7 @@ export function FacilitatorPage({ moduleFilter, index }: { moduleFilter: string 
       </div>
       <section className="card" aria-live="polite">
         <div className="row-between">
-          <span className="eyebrow" style={{ margin: 0 }}>{q.id} · Módulo {MODULE_BY_ID[q.moduleId].number}</span>
+          <span className="module-cat" style={{ margin: 0 }}>{q.id} · Módulo {MODULE_BY_ID[q.moduleId].number}</span>
           <span className="small muted">Pregunta {i + 1} de {list.length}</span>
         </div>
         <h2 style={{ fontSize: 'clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem)', margin: '14px 0 20px' }}>{q.prompt}</h2>

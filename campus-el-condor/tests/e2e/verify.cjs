@@ -172,11 +172,11 @@ const ok = (cond, msg) => { console.log(`${cond ? '✓' : '✗'} ${msg}`); if (!
   await page.locator('#np-alias').fill('Prueba B');
   await page.getByRole('button', { name: 'Crear y usar' }).click();
   await go('#/progreso');
-  ok((await page.locator('.stat strong').first().innerText()).startsWith('0/'), 'Un perfil nuevo empieza sin progreso');
+  ok(/^0\s*\//.test(await page.locator('.stat strong').first().innerText()), 'Un perfil nuevo empieza sin progreso');
   await go('#/perfiles');
   await page.getByRole('button', { name: 'Usar este perfil' }).first().click();
   await go('#/progreso');
-  ok(!(await page.locator('.stat strong').first().innerText()).startsWith('0/'), 'El perfil anterior conserva su progreso');
+  ok(/^[1-9]\d*\s*\//.test(await page.locator('.stat strong').first().innerText()), 'El perfil anterior conserva su progreso');
   await go('#/perfiles');
   await page.getByRole('button', { name: 'Eliminar Prueba B' }).click();
   ok(await page.getByText('No se puede deshacer').isVisible(), 'Eliminar un perfil pide confirmación');

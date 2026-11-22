@@ -115,14 +115,14 @@ export function CodesSection({ query }: { query: URLSearchParams }) {
             <p className="small muted" style={{ margin: 0 }}>{codes.length} códigos en este dispositivo · Fuente: {codesInfo.source || 'sin indicar'} · Importados: {formatTimestamp(codesInfo.importedAt)}</p>
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => setImportOpen(true)}><FileUp aria-hidden="true" />Importar</button>
           </div>
-          <div className="row" style={{ marginBottom: 14 }}>
-            <div className="search-box" style={{ flex: '1 1 240px' }}>
+          <div className="toolbar">
+            <div className="search-box">
               <Search aria-hidden="true" />
               <label htmlFor="code-q" className="sr-only">Buscar por código o nombre</label>
-              <input id="code-q" className="input" type="search" inputMode="search" placeholder="Código o nombre" value={text} onChange={(e) => setText(e.target.value)} style={{ minHeight: 46 }} />
+              <input id="code-q" className="input" type="search" inputMode="search" placeholder="Código o nombre" value={text} onChange={(e) => setText(e.target.value)} />
             </div>
             {cats.length > 0 && (
-              <select className="input" aria-label="Categoría" style={{ width: 'auto', minWidth: 160 }} value={cat} onChange={(e) => setCat(e.target.value)}>
+              <select className="input" aria-label="Categoría" value={cat} onChange={(e) => setCat(e.target.value)}>
                 <option value="">Todas las categorías</option>{cats.map((c) => <option key={c}>{c}</option>)}
               </select>
             )}

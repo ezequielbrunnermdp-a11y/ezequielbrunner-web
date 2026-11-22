@@ -94,19 +94,24 @@ export function LibrarySection({ query }: { query: URLSearchParams }) {
           const Icon = KIND_ICON[r.kind];
           const available = r.kind === 'leccion' || !!(r.fileId || r.href);
           return (
-            <article key={r.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div className="row-between" style={{ flexWrap: 'nowrap' }}>
-                <span className="row small muted" style={{ gap: 6 }}><Icon size={16} aria-hidden="true" />{r.category} · {KIND_LABEL[r.kind]}</span>
+            <article key={r.id} className="card doc-card">
+              <div className="doc-top">
+                <span className={`doc-ico${available ? '' : ' pending'}`} aria-hidden="true"><Icon /></span>
+                <div>
+                  <span className="doc-kind">{r.category} · {KIND_LABEL[r.kind]}</span>
+                  <h3>{r.title}</h3>
+                </div>
                 <FavoriteButton id={`resource:${r.id}`} label={r.title} />
               </div>
-              <h3 style={{ margin: 0 }}>{r.title}</h3>
-              <p className="small muted" style={{ margin: 0 }}>{r.description}</p>
+              <p>{r.description}</p>
               <div className="badges">
                 {r.kind === 'leccion' ? <ProposedBadge /> : available ? <Badge tone="ok">Disponible en este dispositivo</Badge> : <Badge tone="warn" icon={<Clock aria-hidden="true" />}>Pendiente</Badge>}
                 {r.version && <Badge>Versión {r.version}</Badge>}
-                <Badge>{r.updatedAt ? `Actualizado: ${formatCivil(r.updatedAt)}` : 'Sin fecha de actualización'}</Badge>
               </div>
-              <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: 'auto' }} onClick={() => setQuery({ r: r.id })}>{available ? 'Ver material' : 'Ver estado'}</button>
+              <div className="doc-foot">
+                <span className="small muted">{r.updatedAt ? `Actualizado: ${formatCivil(r.updatedAt)}` : 'Sin fecha de actualización'}</span>
+                <button type="button" className="btn btn-secondary btn-sm" onClick={() => setQuery({ r: r.id })}>{available ? 'Ver material' : 'Ver estado'}</button>
+              </div>
             </article>
           );
         })}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, CheckCircle2, Download, Eye, List, Map as MapIcon, RotateCcw, Save, XCircle, AlertTriangle } from 'lucide-react';
+import { PenLine, Check, CheckCircle2, Download, Eye, List, Map as MapIcon, RotateCcw, Save, XCircle, AlertTriangle } from 'lucide-react';
 import type { Exercise } from '../../content/types';
 import { Badge, Callout, Feedback, Field, toast } from '../../components/ui';
 import { HAZARDS, HazardScene } from '../../components/Illustrations';
@@ -26,8 +26,8 @@ export function ExerciseView({ ex, moduleTitle, href }: { ex: Exercise; moduleTi
     <section className="exercise" id={ex.id} aria-labelledby={`${ex.id}-title`}>
       <div className="exercise-head">
         <div>
-          <p className="eyebrow" style={{ marginBottom: 4 }}>Práctica</p>
-          <h3 id={`${ex.id}-title`}>{ex.title}</h3>
+          <p className="exercise-kicker"><PenLine aria-hidden="true" />Práctica</p>
+          <h2 id={`${ex.id}-title`}>{ex.title}</h2>
         </div>
         {rec?.completedAt ? (
           <Badge tone="ok" icon={<CheckCircle2 aria-hidden="true" />}>Completada · {rec.attempts} intento{rec.attempts === 1 ? '' : 's'}</Badge>
@@ -65,8 +65,8 @@ function Flashcards({ id, cards, ctx }: { id: string; cards: { front: string; ba
             <button type="button" aria-pressed={!!flipped[i]} aria-label={flipped[i] ? `Respuesta: ${c.back}. Tocá para ver la pregunta.` : `Pregunta: ${c.front}. Tocá para ver la respuesta.`}
               onClick={() => setFlipped((f) => ({ ...f, [i]: !f[i] }))}>
               <span className="flash-inner">
-                <span className="flash-face flash-front" aria-hidden={!!flipped[i]}><span className="flash-hint">Pregunta {i + 1}</span><p>{c.front}</p></span>
-                <span className="flash-face flash-back" aria-hidden={!flipped[i]}><span className="flash-hint">Respuesta</span><p>{c.back}</p></span>
+                <span className="flash-face flash-front" aria-hidden={!!flipped[i]}><span className="flash-hint"><span>Pregunta {i + 1}</span><span>Tocá para girar</span></span><p>{c.front}</p></span>
+                <span className="flash-face flash-back" aria-hidden={!flipped[i]}><span className="flash-hint"><span>Respuesta</span><span>{i + 1} de {cards.length}</span></span><p>{c.back}</p></span>
               </span>
             </button>
           </div>

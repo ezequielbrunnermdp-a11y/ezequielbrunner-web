@@ -9,6 +9,7 @@ export const MODULES: Module[] = [
     id: 'm1',
     number: 1,
     title: 'Tu primer día',
+    category: 'Inducción',
     short: 'Ubicarte, conocer el circuito y saber a quién consultar.',
     objective: 'Conocer el recorrido y saber a quién consultar.',
     intro:
@@ -82,6 +83,7 @@ export const MODULES: Module[] = [
     id: 'm2',
     number: 2,
     title: 'Cinco momentos para cuidar la atención',
+    category: 'Atención',
     short: 'Recibir, escuchar, entregar, acompañar y cerrar.',
     objective: 'Conectar las acciones del equipo con la experiencia de la mesa.',
     intro:
@@ -178,6 +180,7 @@ export const MODULES: Module[] = [
     id: 'm3',
     number: 3,
     title: 'Del ingreso a la próxima mesa',
+    category: 'Servicio',
     short: 'El recorrido operativo completo, en ocho estaciones.',
     objective: 'Entender el recorrido operativo completo.',
     intro:
@@ -264,6 +267,7 @@ export const MODULES: Module[] = [
     id: 'm4',
     number: 4,
     title: 'Conocer lo que ofrecemos',
+    category: 'Producto',
     short: 'Consultar productos y recomendar con información confiable.',
     objective: 'Consultar productos y recomendar con información confiable.',
     intro:
@@ -327,6 +331,7 @@ export const MODULES: Module[] = [
     id: 'm5',
     number: 5,
     title: 'Comandas y códigos',
+    category: 'Registro',
     short: 'Registrar lo solicitado sin confundir productos ni variantes.',
     objective: 'Registrar lo solicitado sin confundir productos o variantes.',
     intro:
@@ -384,6 +389,7 @@ export const MODULES: Module[] = [
     id: 'm6',
     number: 6,
     title: 'Trabajar en equipo',
+    category: 'Equipo',
     short: 'Coordinar tareas y convivir con respeto.',
     objective: 'Coordinar tareas y mantener una convivencia respetuosa.',
     intro:
@@ -447,6 +453,7 @@ export const MODULES: Module[] = [
     id: 'm7',
     number: 7,
     title: 'Consumos, mercadería y registros',
+    category: 'Control',
     short: 'Para qué registrar movimientos y excepciones.',
     objective: 'Entender para qué sirve registrar movimientos y excepciones.',
     intro:
@@ -516,6 +523,7 @@ export const MODULES: Module[] = [
     id: 'm8',
     number: 8,
     title: 'Higiene, orden y prevención',
+    category: 'Seguridad',
     short: 'Reconocer riesgos y saber cuándo corregir o informar.',
     objective: 'Reconocer situaciones que requieren corregir o informar un riesgo.',
     intro:
@@ -579,6 +587,7 @@ export const MODULES: Module[] = [
     id: 'm9',
     number: 9,
     title: 'Promociones y medios de pago',
+    category: 'Pagos',
     short: 'Informar condiciones sin prometer beneficios no confirmados.',
     objective: 'Informar condiciones sin prometer beneficios no confirmados.',
     intro:
@@ -631,6 +640,7 @@ export const MODULES: Module[] = [
     id: 'm10',
     number: 10,
     title: 'Aprender y mejorar',
+    category: 'Desarrollo',
     short: 'Usar la práctica y las devoluciones para crecer.',
     objective: 'Usar la práctica y las devoluciones para identificar qué aprender después.',
     intro:

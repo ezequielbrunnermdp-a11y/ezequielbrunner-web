@@ -5,7 +5,7 @@ Nada de esta lista fue inventado: precios, códigos, alérgenos, promociones y p
 
 | Material | Dónde impacta | Cómo incorporarlo | Estado |
 | --- | --- | --- | --- |
-| **Logo oficial** (SVG o PNG transparente; versión clara opcional) | Barra lateral, encabezado móvil, impresión | Copiar a `public/brand/` y completar `logo` en `src/brand.config.ts`. Ajustar colores en `src/styles/tokens.css` si el logo lo pide. | Pendiente: se muestra el nombre en texto |
+| **Logo oficial** | Barra lateral, encabezado móvil, portada | Incorporado: `public/brand/logo-el-condor*.webp` (fondo quitado del JPEG recibido; original en `brand-source/`). Una versión vectorial (SVG) mejoraría la nitidez. | Incorporado · SVG opcional |
 | **Carta oficial** vigente, con fecha | Catálogo de productos, módulo 4 | Gestionar contenido → Productos, o importar JSON de configuración; PDF en la biblioteca | Pendiente: vista “Práctica” con 6 nombres genéricos sin precio |
 | **Códigos oficiales** del sistema de caja | Consulta de códigos, práctica de asociación, módulo 5 | CSV/JSON con columnas `codigo;nombre;categoria;variante;observaciones` | Pendiente: tabla vacía |
 | **Fichas técnicas** (composición, formato, variantes autorizadas) | Ficha de producto | Gestionar contenido → Productos / Biblioteca | Pendiente |

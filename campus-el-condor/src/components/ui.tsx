@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
-import { AlertTriangle, Check, CheckCircle2, ChevronDown, Clock, FileClock, Info, Star, X, XCircle } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Check, CheckCircle2, ChevronDown, Clock, FileClock, Info, Star, X, XCircle } from 'lucide-react';
 import type { ContentMeta } from '../content/types';
 import { APPROVAL_LABEL, PUBLICATION_LABEL } from '../content/meta';
 import { formatCivil } from '../lib/format';
@@ -11,10 +11,7 @@ export function PageHeader({ eyebrow, title, lead, children, crumbs }: { eyebrow
       {crumbs && (
         <nav className="breadcrumb" aria-label="Ruta de navegación">
           {crumbs.map((c) => (
-            <span key={c.href} className="row" style={{ gap: 6 }}>
-              <a href={c.href}>{c.label}</a>
-              <span aria-hidden="true">/</span>
-            </span>
+            <a key={c.href} href={c.href}><ArrowLeft size={15} aria-hidden="true" />{c.label}</a>
           ))}
         </nav>
       )}
@@ -80,14 +77,16 @@ export function EmptyState({ art, title, children, actions }: { art?: ReactNode;
   );
 }
 
-export function Meter({ value, label, detail }: { value: number; label?: string; detail?: string }) {
+export function Meter({ value, label, detail, compact }: { value: number; label?: string; detail?: string; compact?: boolean }) {
   const v = Math.max(0, Math.min(100, Math.round(value)));
   return (
     <div>
-      {(label || detail) && (
+      {compact ? (
+        <div className="meter-label"><span className="sr-only">{label}</span><span>{v} %</span></div>
+      ) : (label || detail) && (
         <div className="meter-label"><span>{label}</span><span>{detail ?? `${v} %`}</span></div>
       )}
-      <div className="meter" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={v} aria-label={label ?? 'Avance'}>
+      <div className={v === 100 ? 'meter ok' : 'meter'} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={v} aria-label={label ?? 'Avance'}>
         <span style={{ width: `${v}%` }} />
       </div>
     </div>
@@ -192,7 +191,8 @@ export function Feedback({ tone, title, children }: { tone: 'ok' | 'err' | 'part
   const Icon = tone === 'ok' ? CheckCircle2 : tone === 'err' ? XCircle : tone === 'partial' ? AlertTriangle : Info;
   return (
     <div className={`feedback ${tone}`} role="status" aria-live="polite">
-      <h4><Icon aria-hidden="true" />{title}</h4>
+      <span className="fb-ico" aria-hidden="true"><Icon /></span>
+      <h4>{title}</h4>
       {children}
     </div>
   );
@@ -215,7 +215,7 @@ let toasts: ToastMsg[] = [];
 const toastSubs = new Set<(t: ToastMsg[]) => void>();
 export function toast(text: string) {
   const t = { id: Date.now() + Math.random(), text };
-  toasts = [...toasts, t];
+  toasts = [...toasts.filter((x) => x.text !== text), t].slice(-2);
   toastSubs.forEach((s) => s(toasts));
   setTimeout(() => { toasts = toasts.filter((x) => x.id !== t.id); toastSubs.forEach((s) => s(toasts)); }, 3200);
 }

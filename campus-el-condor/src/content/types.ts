@@ -102,6 +102,7 @@ export interface Module {
   id: string; // m1..m10
   number: number;
   title: string;
+  category: string;
   short: string;
   objective: string;
   intro: string;

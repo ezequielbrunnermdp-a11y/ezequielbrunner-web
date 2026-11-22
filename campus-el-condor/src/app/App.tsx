@@ -103,7 +103,7 @@ export function App() {
   }, [r.path.join('/')]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const link = (it: (typeof PRIMARY)[number]) => (
-    <a key={it.href} className="nav-link" href={it.href} aria-current={section === it.section ? 'page' : undefined}><it.Icon aria-hidden="true" />{it.label}</a>
+    <a key={it.href} className="nav-link" href={it.href} aria-current={section === it.section ? 'page' : undefined}><span className="nav-ico"><it.Icon aria-hidden="true" /></span>{it.label}</a>
   );
   const profiles = store.get().profiles;
   const idx = profiles.findIndex((p) => p.id === profile.id);
@@ -113,23 +113,24 @@ export function App() {
       <a className="skip-link" href="#contenido" onClick={(e) => { e.preventDefault(); mainRef.current?.focus(); }}>Saltar al contenido</a>
       <aside className="sidebar" aria-label="Navegación principal">
         <Brand onDark />
+        <p className="sidebar-tag">Campus de formación</p>
         <nav aria-label="Secciones">
           <div className="nav-group">{PRIMARY.map(link)}</div>
           <div className="nav-group"><div className="nav-group-label">Practicar</div>{PRACTICE.map(link)}</div>
           <div className="nav-group"><div className="nav-group-label">Herramientas</div>{TOOLS.map(link)}</div>
         </nav>
         <div className="sidebar-foot">
-          <a className="sidebar-profile" href="#/perfiles" style={{ textDecoration: 'none' }}>
+          <a className="sidebar-profile" href="#/perfiles">
             <span className="avatar" aria-hidden="true"><UserRound size={16} /></span>
-            <span><span style={{ display: 'block', fontWeight: 600 }}>{profileName(profile, idx)}</span><span className="small" style={{ color: '#bdb3a8' }}>Perfil local · cambiar</span></span>
+            <span><strong>{profileName(profile, idx)}</strong><span className="sub">Perfil local · cambiar</span></span>
           </a>
-          Progreso guardado solo en este navegador.
+          Tu progreso se guarda solo en este navegador.
         </div>
       </aside>
 
       <div className="content-area">
         <header className="topbar">
-          <Brand />
+          <Brand tag="Campus de formación" />
           <a className="icon-btn" href="#/perfiles" aria-label={`Perfil local: ${profileName(profile, idx)}`}><UserRound aria-hidden="true" /></a>
         </header>
         <main id="contenido" ref={mainRef} className="main" tabIndex={-1} style={{ outline: 'none' }}>
@@ -139,18 +140,18 @@ export function App() {
 
       <nav className="bottom-nav" aria-label="Navegación principal">
         {PRIMARY.map((it) => (
-          <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined}><it.Icon aria-hidden="true" />{it.label}</a>
+          <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined}><span className="bn-ico"><it.Icon aria-hidden="true" /></span>{it.label}</a>
         ))}
         <button type="button" onClick={() => setMenuOpen(true)} aria-haspopup="dialog" aria-expanded={menuOpen}
-          aria-current={[...PRACTICE, ...TOOLS].some((x) => x.section === section) ? 'page' : undefined}><Menu aria-hidden="true" />Más</button>
+          aria-current={[...PRACTICE, ...TOOLS].some((x) => x.section === section) ? 'page' : undefined}><span className="bn-ico"><Menu aria-hidden="true" /></span>Más</button>
       </nav>
 
       <Modal open={menuOpen} onClose={() => setMenuOpen(false)} title="Más funciones" sheet>
         <nav className="menu-list" aria-label="Más funciones">
-          <p className="nav-group-label" style={{ color: 'var(--muted)', padding: '0 12px' }}>Practicar</p>
-          {PRACTICE.map((it) => <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined} onClick={() => setMenuOpen(false)}><it.Icon aria-hidden="true" />{it.label}</a>)}
-          <p className="nav-group-label" style={{ color: 'var(--muted)', padding: '8px 12px 0' }}>Herramientas</p>
-          {TOOLS.map((it) => <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined} onClick={() => setMenuOpen(false)}><it.Icon aria-hidden="true" />{it.label}</a>)}
+          <p className="menu-label">Practicar</p>
+          {PRACTICE.map((it) => <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined} onClick={() => setMenuOpen(false)}><span className="tile-ico"><it.Icon aria-hidden="true" /></span>{it.label}</a>)}
+          <p className="menu-label">Herramientas</p>
+          {TOOLS.map((it) => <a key={it.href} href={it.href} aria-current={section === it.section ? 'page' : undefined} onClick={() => setMenuOpen(false)}><span className="tile-ico"><it.Icon aria-hidden="true" /></span>{it.label}</a>)}
         </nav>
       </Modal>
       <Toasts />

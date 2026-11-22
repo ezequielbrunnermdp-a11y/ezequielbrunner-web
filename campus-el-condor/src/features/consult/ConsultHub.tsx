@@ -73,10 +73,10 @@ function SearchSection({ q, cat }: { q: string; cat: string }) {
       <p className="sr-only" role="status">{q ? `${shown.length} resultados para ${q}` : ''}</p>
       {!q ? (
         <div style={{ marginTop: 24 }}>
-          <h2 style={{ fontSize: '1.4rem' }}>Consultas frecuentes</h2>
+          <div className="section-title"><h2>Consultas frecuentes</h2></div>
           <div className="grid-2">
             {FAQ.slice(0, 6).map((f) => (
-              <a key={f.id} className="result" href={f.link}><span className="small muted">Ayuda rápida</span><h3>{f.q}</h3><p>{f.a}</p></a>
+              <a key={f.id} className="result" href={f.link}><span className="result-cat">Ayuda rápida</span><h3>{f.q}</h3><p>{f.a}</p></a>
             ))}
           </div>
           <p className="small muted" style={{ marginTop: 16 }}>La búsqueda recorre el texto de este campus y los datos cargados en este dispositivo. No busca dentro de PDF ni imágenes, salvo que se haya cargado su texto en “Gestionar contenido”.</p>
@@ -88,13 +88,13 @@ function SearchSection({ q, cat }: { q: string; cat: string }) {
       ) : (
         <ul className="list-plain" aria-label="Resultados">
           {shown.map(({ doc, snip }) => (
-            <li key={doc.category + doc.id} className="row" style={{ alignItems: 'stretch', flexWrap: 'nowrap', gap: 8 }}>
-              <a className="result" href={doc.href} style={{ flex: 1, minWidth: 0 }}>
-                <span className="small muted">{doc.category} · {doc.context}</span>
+            <li key={doc.category + doc.id} className="result-row">
+              <a className="result" href={doc.href}>
+                <span className="result-cat">{doc.category}<span>{doc.context}</span></span>
                 <h3>{doc.title}</h3>
                 {snip && <p>{snip.before}<mark>{snip.match}</mark>{snip.after}</p>}
               </a>
-              {doc.favId && <div style={{ alignSelf: 'center' }}><FavoriteButton id={doc.favId} label={doc.title} /></div>}
+              {doc.favId && <FavoriteButton id={doc.favId} label={doc.title} />}
             </li>
           ))}
         </ul>
@@ -144,8 +144,8 @@ function FavoritesSection() {
   return (
     <ul className="list-plain">
       {items.map((d) => (
-        <li key={d.favId} className="row" style={{ flexWrap: 'nowrap' }}>
-          <a className="result" href={d.href} style={{ flex: 1, minWidth: 0 }}><span className="small muted">{d.category} · {d.context}</span><h3>{d.title}</h3></a>
+        <li key={d.favId} className="result-row">
+          <a className="result" href={d.href}><span className="result-cat">{d.category}<span>{d.context}</span></span><h3>{d.title}</h3></a>
           <FavoriteButton id={d.favId!} label={d.title} />
         </li>
       ))}

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, CheckCircle2, ListChecks, RotateCcw, XCircle, Trophy, BookOpen, Play } from 'lucide-react';
+import { ArrowRight, GraduationCap, CheckCircle2, ListChecks, RotateCcw, XCircle, Trophy, BookOpen, Play } from 'lucide-react';
 import { Badge, Callout, Feedback, PageHeader } from '../../components/ui';
 import { QUESTION_BY_ID } from '../../content/questions';
 import { MODULES, MODULE_BY_ID } from '../../content/modules';
@@ -20,24 +20,28 @@ export function EvaluationHub() {
       <Callout tone="info" title="Resultados pedagógicos">
         El umbral de {settings.threshold} % es un parámetro de práctica configurable, no un requisito aprobado por El Cóndor. Las respuestas están incluidas en la aplicación: estas evaluaciones sirven para aprender, no son un examen inviolable ni una certificación.
       </Callout>
-      <section className="card" style={{ marginBottom: 24 }}>
-        <div className="row-between">
+      <section className="card card-dark" style={{ marginBottom: 32, padding: '32px 28px' }}>
+        <div className="next-step">
+          <span className="tile-ico" style={{ width: 56, height: 56, borderRadius: 16, background: 'var(--bronze-light)', color: 'var(--espresso)' }}><GraduationCap aria-hidden="true" /></span>
           <div>
-            <p className="eyebrow">Cuestionario integrador</p>
+            <p className="eyebrow" style={{ color: 'var(--bronze-light)', marginBottom: 6 }}>Cuestionario integrador</p>
             <h2 style={{ marginBottom: 6 }}>Quince preguntas de todo el recorrido</h2>
             <p className="muted" style={{ margin: 0 }}>Una pregunta de cada módulo y cinco adicionales, sin repetir. {lastFinal ? `Último resultado: ${pct(lastFinal)} %. Intentos: ${finals.length}.` : 'Sin intentos todavía.'}</p>
           </div>
-          <a className="btn btn-primary" href="#/evaluacion/final">{progress.active.final ? 'Continuar intento' : 'Empezar'}<ArrowRight aria-hidden="true" /></a>
+          <a className="btn btn-primary" style={{ background: 'var(--bronze-light)', color: 'var(--espresso)' }} href="#/evaluacion/final">{progress.active.final ? 'Continuar intento' : 'Empezar'}<ArrowRight aria-hidden="true" /></a>
         </div>
       </section>
-      <h2>Por módulo</h2>
+      <div className="section-title"><h2>Por módulo</h2></div>
       <div className="grid">
         {MODULES.map((m) => {
           const s = moduleStats(progress, m);
           return (
             <a key={m.id} className="card card-link" href={`#/evaluacion/${m.id}`}>
-              <p className="eyebrow" style={{ marginBottom: 4 }}>Módulo {m.number}</p>
-              <h3>{m.title}</h3>
+              <div className="module-top" style={{ marginBottom: 10 }}>
+                <span className="module-num" style={{ fontSize: '2.2rem' }} aria-hidden="true">{String(m.number).padStart(2, '0')}</span>
+                <span className="module-cat">{m.category}</span>
+              </div>
+              <h3><span className="sr-only">Módulo {m.number}: </span>{m.title}</h3>
               <div className="badges">
                 {progress.active[m.id] ? <Badge tone="warn">Intento en curso</Badge> : null}
                 {s.best ? <Badge tone={s.quizPassed ? 'ok' : 'err'}>Mejor resultado: {pct(s.best)} %</Badge> : <Badge>Sin intentos</Badge>}

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Download, Upload, RotateCcw, CheckCircle2, BookOpen, ClipboardCheck, ListChecks, Clock } from 'lucide-react';
-import { Badge, Callout, ConfirmModal, EmptyState, Meter, Modal, PageHeader, Ring, toast } from '../../components/ui';
+import { Badge, Callout, ConfirmModal, EmptyState, Meter, Modal, PageHeader, toast } from '../../components/ui';
 import { EmptyBook } from '../../components/Illustrations';
 import { store, useActiveProfile, useProgress, useStore, profileName } from '../../storage/store';
 import { overallStats, pct, passed } from '../../lib/learning';
@@ -41,43 +41,49 @@ export function ProgressPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Progreso" title={`Avance de ${profileName(profile)}`} lead="Datos reales de tu perfil local: lecturas, prácticas, evaluaciones y errores para repasar.">
+      <PageHeader eyebrow={profile.alias ? `Progreso · ${profile.alias}` : 'Progreso · perfil local'} title="Tu avance en el campus" lead="Datos reales de tu perfil local: lecturas, prácticas, evaluaciones y errores para repasar.">
         <button type="button" className="btn btn-secondary" onClick={() => downloadJSON(`progreso-el-condor-${new Date().toISOString().slice(0, 10)}.json`, buildProgressBackup(profile, progress))}><Download aria-hidden="true" />Exportar respaldo</button>
         <button type="button" className="btn btn-secondary" onClick={() => fileRef.current?.click()}><Upload aria-hidden="true" />Importar respaldo</button>
         <input ref={fileRef} type="file" accept=".json,application/json" hidden onChange={(e) => { onImport(e.target.files?.[0]); e.target.value = ''; }} />
       </PageHeader>
       {errors && <Callout tone="err" title="No se importó el respaldo">Tu progreso actual no cambió. {errors.join(' ')}</Callout>}
 
-      <section className="card row" style={{ gap: 24, marginBottom: 24 }}>
-        <Ring value={overall} />
-        <div className="grid-3" style={{ flex: 1 }}>
-          <div className="stat"><strong>{stats.lessonsRead}/{stats.lessonsTotal}</strong><span>Lecciones leídas</span></div>
-          <div className="stat"><strong>{stats.practicesDone}/{stats.practicesTotal}</strong><span>Prácticas completadas</span></div>
-          <div className="stat"><strong>{progress.attempts.length}</strong><span>Intentos de evaluación</span></div>
-          <div className="stat"><strong>{wrong.length}</strong><span>Errores para repasar</span></div>
+      <section className="card" style={{ marginBottom: 16, padding: '28px' }} aria-label="Resumen del avance">
+        <div className="summary">
+          <div className="ring lg" style={{ ['--p' as string]: overall }} role="img" aria-label={`${overall} % del recorrido completo`}>
+            <span>{overall}%<small>del recorrido</small></span>
+          </div>
+          <div className="stack" style={{ width: '100%' }}>
+            <div className="stats">
+              <div className="stat"><strong>{stats.lessonsRead}<small> / {stats.lessonsTotal}</small></strong><span>Lecciones leídas</span></div>
+              <div className="stat"><strong>{stats.practicesDone}<small> / {stats.practicesTotal}</small></strong><span>Prácticas completadas</span></div>
+              <div className="stat"><strong>{progress.attempts.length}</strong><span>Intentos de evaluación</span></div>
+              <div className="stat"><strong>{wrong.length}</strong><span>Errores para repasar</span></div>
+            </div>
+            <p className="small muted" style={{ margin: 0 }}><Clock size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Última actividad: {progress.lastActivity ? <><a href={progress.lastActivity.href}>{progress.lastActivity.label}</a><br /><span style={{ marginLeft: 20 }}>{formatTimestamp(progress.lastActivity.at)}</span></> : 'sin actividad registrada'}</p>
+          </div>
         </div>
       </section>
-      <p className="small muted"><Clock size={14} aria-hidden="true" /> Última actividad: {progress.lastActivity ? `${progress.lastActivity.label} · ${formatTimestamp(progress.lastActivity.at)}` : 'Sin actividad registrada'}</p>
 
       <section className="section">
-        <h2>Por módulo</h2>
-        <div className="table-wrap">
-          <table className="responsive">
-            <thead><tr><th>Módulo</th><th>Estado</th><th>Lecturas</th><th>Prácticas</th><th>Evaluación</th><th>Intentos</th></tr></thead>
-            <tbody>
-              {stats.per.map(({ m, s }) => (
-                <tr key={m.id}>
-                  <td data-label="Módulo"><a href={`#/aprender/${m.id}`}>{m.number}. {m.title}</a><div style={{ marginTop: 6, maxWidth: 220 }}><Meter value={s.percent} label={`Avance del módulo ${m.number}`} /></div></td>
-                  <td data-label="Estado"><StatusBadge status={s.status} /></td>
-                  <td data-label="Lecturas"><BookOpen size={14} aria-hidden="true" /> {s.lessonsRead}/{m.lessons.length}</td>
-                  <td data-label="Prácticas"><ClipboardCheck size={14} aria-hidden="true" /> {s.practicesDone}/{m.exercises.length}</td>
-                  <td data-label="Evaluación">{s.best ? `${pct(s.best)} % (mejor)` : 'Sin intentos'}</td>
-                  <td data-label="Intentos">{s.attempts}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <div className="section-title"><h2>Por módulo</h2><span className="small muted">Lecturas, prácticas y evaluación cuentan por separado.</span></div>
+        <ul className="mod-rows">
+          {stats.per.map(({ m, s }) => (
+            <li key={m.id} className="mod-row">
+              <span className="mnum" aria-hidden="true">{String(m.number).padStart(2, '0')}</span>
+              <div style={{ minWidth: 0 }}>
+                <a className="mtitle" href={`#/aprender/${m.id}`}><span className="sr-only">Módulo {m.number}: </span>{m.title}</a>
+                <div className="mmeta">
+                  <span><BookOpen aria-hidden="true" />{s.lessonsRead}/{m.lessons.length} lecturas</span>
+                  <span><ClipboardCheck aria-hidden="true" />{s.practicesDone}/{m.exercises.length} prácticas</span>
+                  <span><ListChecks aria-hidden="true" />{s.best ? `${pct(s.best)} % mejor resultado` : 'sin evaluación'}{s.attempts ? ` · ${s.attempts} intento${s.attempts === 1 ? '' : 's'}` : ''}</span>
+                </div>
+              </div>
+              <div className="mbar"><Meter value={s.percent} label={`Avance del módulo ${m.number}`} compact /></div>
+              <div className="mstatus"><StatusBadge status={s.status} /></div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="section">
