@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ShieldAlert, FileSignature, History, Pencil, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, FileSignature, History, Pencil, ChevronDown, Trash2 } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { supabase, friendlyError } from '../lib/supabase';
 import { useSession } from '../lib/session';
@@ -13,6 +13,7 @@ import AuditRunner from './AuditRunner';
 import { PdfButtons, auditPdfJob } from '../components/PdfActions';
 import { PhotoGrid } from '../components/Photos';
 import { CategoryExtras } from '../components/CategoryExtras';
+import { CodeConfirm } from '../components/CodeConfirm';
 import { Card, ClassBadge, ErrorBox, Field, Input, Loading, Modal, NcStatusBadge, Notice, ScorePill, SeverityBadge, Textarea, cx, isOverdue } from '../components/ui';
 
 export default function AuditPage() {
@@ -82,6 +83,8 @@ function AuditView({ bundle, reload, isAdmin, receiptEnabled, isFranchisee, onBa
   const [recName, setRecName] = useState('');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [delOpen, setDelOpen] = useState(false);
+  const nav = useNavigate();
   const [revisions, setRevisions] = useState<{ id: string; revision: number; reason: string; created_at: string; snapshot: { audit: { final_score: number } } }[]>([]);
   const [prev, setPrev] = useState<{ id: string; visit_date: string; final_score: number } | null>(null);
 
@@ -152,6 +155,9 @@ function AuditView({ bundle, reload, isAdmin, receiptEnabled, isFranchisee, onBa
         {a.receipt_at && <span className="chip bg-[#2f6b4f]/10 py-1.5 text-[#2f6b4f]">Recibido por {a.receipt_name} · {fmtDateTime(a.receipt_at)}</span>}
         {a.status === 'finalizada' && isAdmin && (
           <button className="btn-outline" onClick={() => setCorrOpen(true)}><Pencil className="h-4 w-4" /> Corrección autorizada</button>
+        )}
+        {isAdmin && (
+          <button className="btn-ghost text-[#a33b2b]" onClick={() => setDelOpen(true)}><Trash2 className="h-4 w-4" /> Eliminar auditoría</button>
         )}
       </div>
 
@@ -281,6 +287,14 @@ function AuditView({ bundle, reload, isAdmin, receiptEnabled, isFranchisee, onBa
 
       <ErrorBox>{err}</ErrorBox>
 
+      <CodeConfirm open={delOpen} onClose={() => setDelOpen(false)} title="Eliminar auditoría" confirmLabel="Eliminar"
+        onConfirm={async (code) => {
+          const { error } = await supabase.rpc('admin_delete_audit', { p_audit: a.id, p_code: code });
+          if (error) throw error;
+          nav('/reportes', { replace: true });
+        }}>
+        <p>Se eliminará la auditoría de <strong>{a.branches?.name}</strong> del {fmtDate(a.visit_date)}{a.report_number ? ` (informe ${a.report_number})` : ''}, con sus respuestas, fotos, incumplimientos y alertas.</p>
+      </CodeConfirm>
       <Modal open={corrOpen} onClose={() => setCorrOpen(false)} title="Corrección autorizada"
         footer={<><button className="btn-ghost" onClick={() => setCorrOpen(false)}>Cancelar</button><button className="btn-primary" disabled={busy || reason.trim().length < 10} onClick={correction}>Autorizar corrección</button></>}>
         <div className="space-y-3 text-sm">

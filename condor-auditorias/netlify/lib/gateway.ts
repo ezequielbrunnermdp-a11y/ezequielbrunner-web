@@ -327,7 +327,12 @@ async function rest(req: Request, env: GatewayEnv, path: string, url: URL): Prom
         : fn.composite ? `select to_json(_f) as data from ${call} _f`
         : `select to_json(${call}) as data`;
       const rows = await withRole(env, uid, (c) => c.query(sql, values));
-      return json(200, rows.rows[0]?.data ?? null);
+      const data = rows.rows[0]?.data ?? null;
+      // Funciones de borrado: eliminar también el contenido de los archivos.
+      if (data && typeof data === 'object' && Array.isArray((data as { deleted_files?: unknown }).deleted_files)) {
+        for (const f of (data as { deleted_files: string[] }).deleted_files) await env.blobs.delete(blobKey('evidencias', f)).catch(() => undefined);
+      }
+      return json(200, data);
     }
 
     const table = path.replace(/\/$/, '');

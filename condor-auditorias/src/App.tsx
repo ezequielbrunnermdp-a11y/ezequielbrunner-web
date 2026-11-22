@@ -24,6 +24,7 @@ const Users = lazy(() => import('./pages/admin/Users'));
 const Questionnaire = lazy(() => import('./pages/admin/Questionnaire'));
 const BrandAdmin = lazy(() => import('./pages/admin/BrandAdmin'));
 const ActivityLog = lazy(() => import('./pages/admin/ActivityLog'));
+const DataReset = lazy(() => import('./pages/admin/DataReset'));
 
 function RequireRole({ roles, children }: { roles: string[]; children: ReactNode }) {
   const { profile } = useSession();
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="admin/cuestionario" element={<RequireRole roles={['admin']}><Questionnaire /></RequireRole>} />
           <Route path="admin/marca" element={<RequireRole roles={['admin']}><BrandAdmin /></RequireRole>} />
           <Route path="admin/registro" element={<RequireRole roles={['admin']}><ActivityLog /></RequireRole>} />
+          <Route path="admin/reiniciar" element={<RequireRole roles={['admin']}><DataReset /></RequireRole>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

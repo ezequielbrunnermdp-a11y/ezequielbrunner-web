@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, ClipboardPlus, Store, FileText, AlertTriangle, ListChecks, BarChart3, BookOpen,
-  Users, SlidersHorizontal, Palette, LogOut, Bell, Menu, X, History, KeyRound,
+  Users, SlidersHorizontal, Palette, LogOut, Bell, Menu, X, History, KeyRound, RotateCcw,
 } from 'lucide-react';
 import { useSession } from '../lib/session';
 import { supabase } from '../lib/supabase';
@@ -28,6 +28,7 @@ const ADMIN_NAV: NavItem[] = [
   { to: '/admin/cuestionario', label: 'Cuestionario', icon: <SlidersHorizontal className="h-[18px] w-[18px]" />, roles: ['admin'] },
   { to: '/admin/marca', label: 'Identidad visual', icon: <Palette className="h-[18px] w-[18px]" />, roles: ['admin'] },
   { to: '/admin/registro', label: 'Registro de operaciones', icon: <History className="h-[18px] w-[18px]" />, roles: ['admin'] },
+  { to: '/admin/reiniciar', label: 'Reiniciar datos', icon: <RotateCcw className="h-[18px] w-[18px]" />, roles: ['admin'] },
 ];
 
 function SideLink({ item, onClick }: { item: NavItem; onClick?: () => void }) {

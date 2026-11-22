@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Pencil, RotateCcw } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, CheckCircle2, Pencil, RotateCcw, Trash2 } from 'lucide-react';
 import { supabase, friendlyError } from '../lib/supabase';
 import { useSession } from '../lib/session';
 import { loadQuestionnaire } from '../lib/api';
@@ -8,6 +8,7 @@ import { uploadEvidence, deleteAttachment } from '../lib/files';
 import { ALERT_TYPE_LABEL, NC_STATUS_LABEL, fmtDate, fmtDateTime, todayISO } from '../lib/format';
 import type { Attachment, Category, NcEvent, NcStatus, Nonconformity } from '../lib/types';
 import { NcModal } from '../components/NcModal';
+import { CodeConfirm } from '../components/CodeConfirm';
 import { PhotoGrid, PhotoPickerButtons } from '../components/Photos';
 import { Card, ErrorBox, Field, Input, Loading, NcStatusBadge, Notice, PageHeader, Select, SeverityBadge, Textarea, isOverdue } from '../components/ui';
 
@@ -25,6 +26,8 @@ export default function NonconformityDetail() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [missing, setMissing] = useState(false);
+  const [delOpen, setDelOpen] = useState(false);
+  const navigate = useNavigate();
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -84,7 +87,10 @@ export default function NonconformityDetail() {
     <div className="fade-in mx-auto max-w-4xl space-y-5">
       <Link to="/incumplimientos" className="btn-ghost -ml-2 px-2 text-sm"><ArrowLeft className="h-4 w-4" /> Seguimiento</Link>
       <PageHeader eyebrow={`${nc.branches?.name} · ${nc.categories?.name ?? 'General'}`} title={nc.description}
-        actions={isStaff && !closed && <button className="btn-outline" onClick={() => setEdit(true)}><Pencil className="h-4 w-4" /> Editar</button>} />
+        actions={<>
+          {isStaff && !closed && <button className="btn-outline" onClick={() => setEdit(true)}><Pencil className="h-4 w-4" /> Editar</button>}
+          {isAdmin && <button className="btn-ghost text-[#a33b2b]" onClick={() => setDelOpen(true)}><Trash2 className="h-4 w-4" /> Eliminar</button>}
+        </>} />
       <div className="flex flex-wrap gap-2"><SeverityBadge s={nc.severity} /><NcStatusBadge s={nc.status} overdue={isOverdue(nc.due_date, nc.status)} />{nc.alert_type && <span className="chip bg-[#a33b2b]/10 text-[#a33b2b]">{ALERT_TYPE_LABEL[nc.alert_type]}</span>}</div>
 
       <Card>
@@ -165,6 +171,14 @@ export default function NonconformityDetail() {
         </ol>
       </Card>
 
+      <CodeConfirm open={delOpen} onClose={() => setDelOpen(false)} title="Eliminar incumplimiento" confirmLabel="Eliminar"
+        onConfirm={async (code) => {
+          const { error } = await supabase.rpc('admin_delete_nonconformity', { p_nc: nc.id, p_code: code });
+          if (error) throw error;
+          navigate('/incumplimientos', { replace: true });
+        }}>
+        <p>Se eliminará «{nc.description}» con su historial, alertas y evidencias.</p>
+      </CodeConfirm>
       <NcModal open={edit} onClose={() => setEdit(false)} branchId={nc.branch_id} branchName={nc.branches?.name ?? ''} auditId={nc.audit_id} categories={cats} initial={nc} onSaved={() => load()} />
     </div>
   );

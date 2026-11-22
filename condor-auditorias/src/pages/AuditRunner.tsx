@@ -15,6 +15,7 @@ import { QuestionCard } from '../components/QuestionCard';
 import { NcModal } from '../components/NcModal';
 import { CategoryExtras, EXTRAS_TITLE } from '../components/CategoryExtras';
 import { Card, ClassBadge, ErrorBox, Field, Modal, Notice, Textarea, cx } from '../components/ui';
+import { CodeConfirm } from '../components/CodeConfirm';
 
 function emptyAnswer(auditId: string, questionId: string): Answer {
   return { audit_id: auditId, question_id: questionId, score: null, not_applicable: false, na_reason: null, observation: null, recommendation: null, is_critical: false, doc_status: null, doc_expiry: null };
@@ -30,7 +31,8 @@ function SyncIndicator({ status, pending, lastSaved, onRetry }: { status: string
 
 export default function AuditRunner({ bundle, onFinalized }: { bundle: AuditBundle; onFinalized: () => void }) {
   const { audit, categories } = bundle;
-  const { brand } = useSession();
+  const { brand, isAdmin } = useSession();
+  const [delOpen, setDelOpen] = useState(false);
   const nav = useNavigate();
   const [answers, setAnswers] = useState<Record<string, Answer>>(bundle.answers);
   const [states, setStates] = useState<Record<string, CategoryState>>(bundle.states);
@@ -354,11 +356,22 @@ export default function AuditRunner({ bundle, onFinalized }: { bundle: AuditBund
             <CheckCircle2 className="h-5 w-5" /> FINALIZAR AUDITORÍA
           </button>
           <button className="btn-ghost w-full text-sm" onClick={() => nav('/')}>Guardar borrador y salir</button>
+          {isAdmin && <button className="btn-ghost w-full text-sm text-[#a33b2b]" onClick={() => setDelOpen(true)}>Eliminar este borrador</button>}
         </div>
       )}
 
       {view !== 'cierre' && err && <div className="mt-4"><ErrorBox>{err}</ErrorBox></div>}
 
+      <CodeConfirm open={delOpen} onClose={() => setDelOpen(false)} title="Eliminar borrador" confirmLabel="Eliminar"
+        onConfirm={async (code) => {
+          await sync.flush().catch(() => undefined);
+          const { error } = await supabase.rpc('admin_delete_audit', { p_audit: audit.id, p_code: code });
+          if (error) throw error;
+          await clearLocal(audit.id);
+          nav('/', { replace: true });
+        }}>
+        <p>Se eliminará el borrador de <strong>{branchName}</strong> del {fmtDate(audit.visit_date)} con todo lo cargado.</p>
+      </CodeConfirm>
       <NcModal open={ncModal.open} onClose={() => setNcModal({ open: false, initial: null })} branchId={audit.branch_id} branchName={branchName}
         auditId={audit.id} categories={categories} initial={ncModal.initial} onSaved={onNcSaved} offlineQueue={sync.queueNc} />
 

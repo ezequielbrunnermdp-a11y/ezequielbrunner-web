@@ -210,6 +210,28 @@ set role app_authenticated;
 select pg_temp.check((select count(*) from public.branches) = 0 and (select count(*) from public.questions) = 0, 'Un usuario inactivo no accede a datos');
 reset role;
 
+-- ---------------------------------------------------------------------
+-- Borrado de registros y reinicio (clave 1532, solo administración)
+-- ---------------------------------------------------------------------
+select pg_temp.as_user('00000000-0000-0000-0000-0000000000b1');
+set role app_authenticated;
+select pg_temp.expect_error($$select public.admin_reset_data('1532')$$, 'Un auditor no puede reiniciar los datos');
+select pg_temp.expect_error($$select public.admin_delete_audit('11111111-1111-1111-1111-111111111111', '1532')$$, 'Un auditor no puede borrar auditorías');
+reset role;
+select pg_temp.as_user('00000000-0000-0000-0000-0000000000a1');
+set role app_authenticated;
+select pg_temp.expect_error($$select public.admin_reset_data('0000')$$, 'Clave incorrecta rechazada');
+select pg_temp.expect_error($$select public.check_reset_code('1532')$$, 'La verificación de clave no se puede invocar directamente');
+select public.admin_delete_audit('11111111-1111-1111-1111-111111111111', '1532');
+select pg_temp.check((select count(*) from public.audits where id = '11111111-1111-1111-1111-111111111111') = 0
+  and (select count(*) from public.audit_revisions) = 0 and (select count(*) from public.audit_answers) = 0, 'Borrar una auditoría finalizada elimina respuestas y versiones');
+select public.admin_reset_data('1532');
+select pg_temp.check((select count(*) from public.audits) = 0 and (select count(*) from public.nonconformities) = 0
+  and (select count(*) from public.alerts) = 0 and (select count(*) from public.branches) = 9
+  and (select count(*) from public.questions) > 0, 'Reiniciar borra los datos operativos y conserva sucursales y cuestionario');
+select pg_temp.check((select count(*) from public.activity_log where action = 'reiniciar_datos') = 1, 'El reinicio queda registrado');
+reset role;
+
 -- Anónimo: solo la configuración de marca
 set role app_anon;
 select pg_temp.check((select count(*) from public.brand_settings) = 1, 'La marca es legible en la pantalla de ingreso');
