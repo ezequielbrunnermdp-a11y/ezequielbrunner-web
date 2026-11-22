@@ -1076,7 +1076,8 @@
       "slug": "sube-domingo-22-mantenimiento-recargas-12-horas",
       "status": "published",
       "created_by": "Windsor.ai",
-      "post_id": "18105213884170049"
+      "post_id": "18105213884170049",
+      "story_id": "17984956506135120"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
