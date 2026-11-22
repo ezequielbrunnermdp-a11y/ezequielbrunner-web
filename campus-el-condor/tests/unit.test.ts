@@ -11,6 +11,8 @@ import { previewCodes, mergeCodes } from '../src/lib/codesImport';
 import { normalize, snippet } from '../src/lib/text';
 import { validateProgressBackup, validateContentBackup, buildProgressBackup, PROGRESS_KIND } from '../src/storage/backup';
 import { PRACTICE_PROMOTION } from '../src/content/library';
+import { OFFICIAL_CODES } from '../src/data/officialCodes';
+import { mergeContent } from '../src/storage/store';
 
 describe('contenido', () => {
   it('tiene 10 módulos, 30 preguntas con 3 opciones y respuesta esperada', () => {
@@ -98,6 +100,20 @@ describe('promociones y fechas', () => {
     expect(parseAmount('12.500,50')).toBe(12500.5);
     expect(parseAmount('30.000')).toBe(30000);
     expect(parseAmount('abc')).toBeNull();
+  });
+});
+
+describe('listado oficial de códigos', () => {
+  it('incluye los 1.025 códigos activos de la Sucursal Güemes como texto', () => {
+    expect(OFFICIAL_CODES).toHaveLength(1025);
+    expect(new Set(OFFICIAL_CODES.map((c) => c.code)).size).toBe(1025);
+    expect(OFFICIAL_CODES.every((c) => typeof c.code === 'string' && c.name.length > 0 && c.category.length > 0)).toBe(true);
+    expect(OFFICIAL_CODES.some((c) => c.code === '00001')).toBe(true);
+  });
+  it('se usa por defecto y vuelve cuando se descarta una importación local', () => {
+    expect(mergeContent(null).codes).toHaveLength(1025);
+    expect(mergeContent({ codes: [], codesInfo: { source: '', importedAt: null } }).codes).toHaveLength(1025);
+    expect(mergeContent({ codes: [{ code: 'X1', name: 'X', category: '', variant: '', notes: '' }], codesInfo: { source: 'local', importedAt: '2026-11-22T10:00:00Z' } }).codes).toHaveLength(1);
   });
 });
 

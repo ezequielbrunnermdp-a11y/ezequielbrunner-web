@@ -125,29 +125,42 @@ const ok = (cond, msg) => { console.log(`${cond ? '✓' : '✗'} ${msg}`); if (!
   await go('#/consultar/promociones');
   ok((await text()).includes('No hay promociones de El Cóndor confirmadas'), 'Promociones reales vacías con estado diseñado');
   await go('#/consultar/codigos');
-  ok((await text()).includes('Tabla oficial de códigos vacía'), 'Códigos vacíos con importación');
+  ok(await seen(page.getByText('Listado oficial · Sucursal Güemes')), 'Códigos oficiales de la Sucursal Güemes cargados');
+  ok(await seen(page.getByText('1.025 códigos activos')), 'Se muestran los 1.025 códigos activos');
+  await page.locator('#code-q').fill('00001');
+  ok(await seen(page.locator('td.code', { hasText: /^00001$/ })), 'La búsqueda por código conserva los ceros iniciales (00001)');
+  await page.locator('#code-q').fill('cafe');
+  ok((await page.locator('td.code').count()) > 0, 'La búsqueda por nombre sin tildes encuentra productos');
+  await page.locator('#code-q').fill('');
 
-  // Importación de códigos: vista previa con errores, cancelar sin cambios, importar
+  // Importación local: vista previa con errores, cancelar sin cambios, importar y volver al oficial
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'condor-'));
   const csvPath = path.join(tmp, 'codigos.csv');
-  fs.writeFileSync(csvPath, 'codigo;nombre;categoria\n012;Café chico;Cafetería\n013;Café mediano;Cafetería\n014;Té;Infusiones\n015;Medialuna;Panadería\n012;Repetido;X\n');
-  await page.getByRole('button', { name: 'Importar CSV o JSON' }).click();
+  fs.writeFileSync(csvPath, 'codigo;nombre;categoria\nT012;Prueba uno;Prueba\nT013;Prueba dos;Prueba\nT014;Prueba tres;Prueba\nT015;Prueba cuatro;Prueba\nT012;Repetido;X\n');
+  await page.getByRole('button', { name: 'Importar', exact: true }).click();
   await page.locator('dialog input[type=file]').setInputFiles(csvPath);
-  ok(await seen(page.getByText(/Fila 6: Código “012” duplicado/)), 'Errores por fila en la vista previa');
+  ok(await seen(page.getByText(/Fila 6: Código “T012” duplicado/)), 'Errores por fila en la vista previa');
   await page.getByRole('button', { name: 'Cancelar sin cambios' }).click();
   await page.keyboard.press('Escape');
   await page.waitForTimeout(200);
-  ok((await text()).includes('Tabla oficial de códigos vacía'), 'Cancelar no modifica el catálogo');
-  await page.getByRole('button', { name: 'Importar CSV o JSON' }).click();
+  ok(await seen(page.getByText('Listado oficial · Sucursal Güemes')), 'Cancelar no modifica el catálogo');
+  await page.getByRole('button', { name: 'Importar', exact: true }).click();
   await page.locator('dialog input[type=file]').setInputFiles(csvPath);
   await page.getByRole('button', { name: /Importar 4 códigos/ }).click();
   await page.waitForTimeout(300);
-  ok(await page.locator('td.code', { hasText: '012' }).isVisible(), 'Códigos importados conservando ceros iniciales');
-  ok(await page.getByText('Práctica de códigos del catálogo cargado').isVisible(), 'La práctica de códigos se activa con registros válidos');
+  await page.locator('#code-q').fill('T012');
+  ok(await seen(page.locator('td.code', { hasText: 'T012' })), 'Importación local combinada con el listado');
+  ok(await seen(page.getByText('Práctica de códigos del catálogo cargado')), 'La práctica de códigos está activa');
 
   // Recarga directa de una sección
   await page.reload(); await page.waitForTimeout(300);
-  ok(await page.locator('td.code', { hasText: '012' }).isVisible(), 'Abrir y recargar una sección directamente funciona');
+  await page.locator('#code-q').fill('T012');
+  ok(await seen(page.locator('td.code', { hasText: 'T012' })), 'Abrir y recargar una sección directamente funciona');
+  await go('#/gestionar?t=codigos');
+  await page.getByRole('button', { name: 'Volver al listado oficial' }).click();
+  await page.getByRole('button', { name: 'Descartar importación' }).click();
+  await go('#/consultar/codigos');
+  ok(await seen(page.getByText('Listado oficial · Sucursal Güemes')), 'Se puede volver al listado oficial');
 
   // Respaldo: exportar, rechazar inválido sin pérdida, detectar conflicto
   await go('#/progreso');

@@ -1,3 +1,4 @@
+import { OFFICIAL_CODES, OFFICIAL_CODES_INFO } from '../data/officialCodes';
 import type { CodeRecord, ContentMeta, Product, Promotion, Resource } from '../content/types';
 
 export const SCHEMA_VERSION = 1;
@@ -113,8 +114,8 @@ export function emptyContent(): LocalContent {
     meta: {},
     categories: ['Cafetería', 'Infusiones', 'Panadería', 'Pastelería', 'Salados', 'Bebidas'],
     products: [],
-    codes: [],
-    codesInfo: { source: '', importedAt: null },
+    codes: OFFICIAL_CODES,
+    codesInfo: { ...OFFICIAL_CODES_INFO },
     promotions: [],
     resources: {},
     customResources: [],

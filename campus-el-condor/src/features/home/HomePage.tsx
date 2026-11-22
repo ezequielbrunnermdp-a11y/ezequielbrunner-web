@@ -111,7 +111,7 @@ export function HomePage() {
           {[
             { href: '#/casos', Icon: ClipboardList, t: 'Casos interactivos', d: 'Seis situaciones del servicio y un simulador de mesa.' },
             { href: '#/evaluacion/final', Icon: BookOpen, t: 'Cuestionario integrador', d: 'Quince preguntas con explicación.' },
-            { href: '#/consultar/codigos', Icon: Hash, t: 'Códigos', d: content.codes.length ? `${content.codes.length} códigos cargados.` : 'Tabla oficial pendiente de carga.' },
+            { href: '#/consultar/codigos', Icon: Hash, t: 'Códigos', d: content.codes.length ? `${content.codes.length.toLocaleString('es-AR')} códigos activos para consultar.` : 'Tabla oficial pendiente de carga.' },
             { href: '#/consultar/biblioteca', Icon: Library, t: 'Biblioteca', d: 'Materiales y estado de cada documento.' },
             { href: '#/videos', Icon: Video, t: 'Videos', d: 'Tres guiones con su texto equivalente.' },
             { href: '#/facilitador', Icon: Users, t: 'Modo facilitador', d: 'Evaluación oral con respuestas esperadas.' },

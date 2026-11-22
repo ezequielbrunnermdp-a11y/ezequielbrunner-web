@@ -17,7 +17,7 @@ de la referencia se trasladó como propio.
 | Despedida y mesa siguiente | 2 y 3 | Momento 5, ordenar ocho estaciones, Q09 | Procedimiento de armado de mesa |
 | Tiempos de servicio | 3 | Tabla de metas con hitos (vacía: “Meta sin definir”) | Metas propias |
 | Conocimiento de productos | 4 | Catálogo con estados de verificación, caso 2, Q10–Q12 | Carta, fichas, ingredientes, alérgenos, fotos |
-| Códigos de caja | 5 | Consulta con búsqueda, filtros y favoritos; importación CSV/JSON; práctica de asociación (se activa con ≥ 4 códigos) | Listado oficial de códigos |
+| Códigos de caja | 5 | Consulta con búsqueda, filtros y favoritos; importación CSV/JSON; práctica de asociación (se activa con ≥ 4 códigos) | Listados de otras sucursales, si difieren |
 | Integración al equipo | 1 | Lecciones, checklist de orientación, tarjetas, Q01–Q03, video 1 | Organigrama / referentes |
 | Cultura y convivencia | 1 y 6 | Valores “Contenido propuesto”, lección de dificultades, Q18 | Valores aprobados |
 | Presentación personal | 6 | Espacio para documento propio | Documento de vestimenta |

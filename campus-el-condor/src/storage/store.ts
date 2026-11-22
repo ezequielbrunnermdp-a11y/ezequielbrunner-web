@@ -37,6 +37,11 @@ function write(key: string, value: unknown): boolean {
   }
 }
 
+/** El listado oficial viaja con la aplicación: no hace falta copiarlo en cada navegador. */
+function persistable(c: LocalContent): LocalContent {
+  return c.codesInfo.importedAt ? c : { ...c, codes: [] };
+}
+
 interface ProfilesState { profiles: Profile[]; activeId: string | null }
 
 interface State {
@@ -65,7 +70,10 @@ export function mergeContent(c: Partial<LocalContent> | null): LocalContent {
     ...base,
     ...c,
     texts: { ...base.texts, ...(c.texts ?? {}), modules: { ...(c.texts?.modules ?? {}) } },
-    codesInfo: { ...base.codesInfo, ...(c.codesInfo ?? {}) },
+    // Sin una importación local propia, se usa el listado oficial incluido en el campus.
+    ...(!c.codes?.length && !c.codesInfo?.importedAt
+      ? { codes: base.codes, codesInfo: base.codesInfo }
+      : { codesInfo: { ...base.codesInfo, ...(c.codesInfo ?? {}) } }),
     settings: { ...base.settings, ...(c.settings ?? {}) },
     timeGoals: c.timeGoals?.length ? c.timeGoals : base.timeGoals,
     schemaVersion: SCHEMA_VERSION,
@@ -112,15 +120,16 @@ export const store = {
   },
 
   updateContent(fn: (c: LocalContent) => LocalContent) {
-    const next = { ...fn(state.content), updatedAt: new Date().toISOString() };
+    const next = mergeContent({ ...fn(state.content), updatedAt: new Date().toISOString() });
     state = { ...state, content: next };
-    write(K_CONTENT, next);
+    write(K_CONTENT, persistable(next));
     emit();
   },
 
-  replaceContent(c: LocalContent) {
+  replaceContent(raw: LocalContent) {
+    const c = mergeContent(raw);
     state = { ...state, content: c };
-    write(K_CONTENT, c);
+    write(K_CONTENT, persistable(c));
     emit();
   },
 

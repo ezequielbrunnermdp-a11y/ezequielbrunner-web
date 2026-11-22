@@ -250,14 +250,14 @@ function CodesTab() {
         <CodeImporter />
       </div>
       <div className="card row-between">
-        <div><strong>{c.codes.length} códigos en este dispositivo</strong><p className="small muted" style={{ margin: 0 }}>Fuente: {c.codesInfo.source || 'sin indicar'} · {formatTimestamp(c.codesInfo.importedAt)}</p></div>
+        <div><strong>{c.codes.length.toLocaleString('es-AR')} códigos {c.codesInfo.importedAt ? 'importados en este dispositivo' : 'del listado oficial'}</strong><p className="small muted" style={{ margin: 0 }}>{c.codesInfo.source || 'Fuente sin indicar'}{c.codesInfo.importedAt ? ` · ${formatTimestamp(c.codesInfo.importedAt)}` : ''}</p></div>
         <div className="row">
           <a className="btn btn-secondary btn-sm" href="#/consultar/codigos">Consultar tabla</a>
-          <button type="button" className="btn btn-danger btn-sm" disabled={!c.codes.length} onClick={() => setClear(true)}><Trash2 aria-hidden="true" />Vaciar tabla</button>
+          <button type="button" className="btn btn-danger btn-sm" disabled={!c.codesInfo.importedAt} onClick={() => setClear(true)}><Trash2 aria-hidden="true" />Volver al listado oficial</button>
         </div>
       </div>
-      <ConfirmModal open={clear} onClose={() => setClear(false)} title="Vaciar códigos" confirmLabel="Vaciar" danger onConfirm={() => { store.updateContent((x) => ({ ...x, codes: [], codesInfo: { source: '', importedAt: null } })); toast('Tabla de códigos vaciada'); }}>
-        <p>Se eliminarán los {c.codes.length} códigos cargados en este dispositivo.</p>
+      <ConfirmModal open={clear} onClose={() => setClear(false)} title="Volver al listado oficial" confirmLabel="Descartar importación" danger onConfirm={() => { store.updateContent((x) => ({ ...x, codes: [], codesInfo: { source: '', importedAt: null } })); toast('Se restauró el listado oficial'); }}>
+        <p>Se descartarán los {c.codes.length.toLocaleString('es-AR')} códigos importados en este dispositivo y se volverá a usar el listado oficial incluido en el campus.</p>
       </ConfirmModal>
     </section>
   );

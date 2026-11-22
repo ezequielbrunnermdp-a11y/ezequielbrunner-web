@@ -5,10 +5,18 @@ import { Feedback } from '../../components/ui';
 import { recordPractice } from '../practice/recordPractice';
 import type { CodeRecord } from '../../content/types';
 
+function shuffle<T>(a: T[]): T[] {
+  const x = [...a];
+  for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; }
+  return x;
+}
+
+/** Elige un código y tres alternativas del mismo rubro, para practicar distinguir productos parecidos. */
 function pickRound(codes: CodeRecord[]) {
-  const shuffled = [...codes].sort(() => Math.random() - 0.5);
-  const target = shuffled[0];
-  const options = shuffled.slice(0, Math.min(4, shuffled.length)).sort(() => Math.random() - 0.5);
+  const target = codes[Math.floor(Math.random() * codes.length)];
+  const sameCat = codes.filter((c) => c.code !== target.code && c.category === target.category);
+  const pool = sameCat.length >= 3 ? sameCat : codes.filter((c) => c.code !== target.code);
+  const options = shuffle([target, ...shuffle(pool).slice(0, 3)]);
   return { target, options };
 }
 
@@ -23,7 +31,8 @@ export function CodePractice() {
   return (
     <div>
       <h4>Práctica de códigos del catálogo cargado</h4>
-      <p>¿Qué producto corresponde al código <strong className="kbd" style={{ fontSize: '1rem' }}>{round.target.code}</strong>?</p>
+      <p className="small muted">Las alternativas son del mismo rubro, para practicar cómo distinguir productos parecidos.</p>
+      <p>¿Qué producto corresponde al código <strong className="kbd" style={{ fontSize: '1rem' }}>{round.target.code}</strong>?{round.target.category && <span className="small muted"> · Rubro: {round.target.category}</span>}</p>
       <div className="options">
         {round.options.map((o, i) => {
           const isRight = o.code === round.target.code;

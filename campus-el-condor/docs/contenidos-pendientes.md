@@ -7,7 +7,7 @@ Nada de esta lista fue inventado: precios, códigos, alérgenos, promociones y p
 | --- | --- | --- | --- |
 | **Logo oficial** | Barra lateral, encabezado móvil, portada | Incorporado: `public/brand/logo-el-condor*.webp` (fondo quitado del JPEG recibido; original en `brand-source/`). Una versión vectorial (SVG) mejoraría la nitidez. | Incorporado · SVG opcional |
 | **Carta oficial** vigente, con fecha | Catálogo de productos, módulo 4 | Gestionar contenido → Productos, o importar JSON de configuración; PDF en la biblioteca | Pendiente: vista “Práctica” con 6 nombres genéricos sin precio |
-| **Códigos oficiales** del sistema de caja | Consulta de códigos, práctica de asociación, módulo 5 | CSV/JSON con columnas `codigo;nombre;categoria;variante;observaciones` | Pendiente: tabla vacía |
+| **Códigos oficiales** del sistema de caja | Consulta de códigos, práctica de asociación, módulo 5 | Incorporados: 1.025 códigos activos de la **Sucursal Güemes** (exportación del 22/11/2026) en `src/data/codigos-guemes.json`. Faltan los listados de otras sucursales, si difieren. | Incorporado · Güemes |
 | **Fichas técnicas** (composición, formato, variantes autorizadas) | Ficha de producto | Gestionar contenido → Productos / Biblioteca | Pendiente |
 | **Ingredientes y alérgenos** verificados | Ficha de producto, módulo 4 | Cargar con estado “Verificado con ficha técnica” solo si existe la ficha | Pendiente: estado “Desconocido” |
 | **Promociones verificadas** (entidad, fechas, días, medio, tope, condiciones, fuente, fecha de verificación, sucursales) | Promociones, módulo 9 | Gestionar contenido → Promociones | Pendiente: lista vacía; ejemplo de práctica separado |

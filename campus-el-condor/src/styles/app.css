@@ -810,3 +810,20 @@ details.card-flat[open] > summary::after { transform: rotate(-135deg); }
   .option .state { margin-left: 44px; }
   .meter-label { flex-wrap: wrap; }
 }
+
+/* Tabla de códigos */
+.codes-table td.code { width: 90px; font-size: 1rem; }
+.codes-table td.ccat { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.02em; white-space: nowrap; }
+.codes-table td.cfav { width: 64px; text-align: right; padding-block: 6px; }
+.codes-table td.cname { font-weight: 550; }
+@media (max-width: 640px) {
+  .codes-table thead { display: none; }
+  .codes-table, .codes-table tbody { display: block; }
+  .codes-table tr { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; grid-template-areas: 'code name fav' 'code cat fav'; column-gap: 12px; align-items: center; padding: 12px 8px 12px 14px; border-bottom: 1px solid var(--line-soft); }
+  .codes-table tr:last-child { border-bottom: 0; }
+  .codes-table td { border: 0; padding: 0; background: none !important; }
+  .codes-table td.code { grid-area: code; width: auto; }
+  .codes-table td.cname { grid-area: name; font-size: 0.92rem; line-height: 1.35; }
+  .codes-table td.ccat { grid-area: cat; white-space: normal; font-size: 0.75rem; margin-top: 2px; }
+  .codes-table td.cfav { grid-area: fav; width: auto; }
+}

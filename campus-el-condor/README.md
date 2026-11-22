@@ -58,6 +58,14 @@ tests/          Pruebas unitarias y verificación de punta a punta
   Ver [docs/contenidos-pendientes.md](docs/contenidos-pendientes.md).
 - El umbral de 80 % de las evaluaciones es un parámetro de práctica configurable, no un requisito oficial.
 
+## Códigos oficiales
+
+`src/data/codigos-guemes.json` contiene los 1.025 códigos activos de la Sucursal Güemes, tomados de la hoja “Activos”
+de `Codigos_El_Condor_Guemes.xlsx` (exportación del sistema de gestión, 22/11/2026). Los inhabilitados quedan afuera.
+Viajan con la aplicación, así que todo el equipo los ve sin importar nada. Para actualizarlos, regenerá ese JSON
+(un objeto por línea con `code`, `name`, `category`, `variant`, `notes`; los códigos siempre como texto) y volvé a compilar.
+Una importación desde “Gestionar contenido” solo reemplaza el listado en ese navegador y se puede descartar.
+
 ## Persistencia y límites
 
 - Progreso por **perfil local** en `localStorage` con claves versionadas (`condor.v1.*`); archivos propios como binarios en **IndexedDB**

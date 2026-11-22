@@ -439,8 +439,8 @@ function Comanda({ id, ctx }: { id: string; ctx: Ctx }) {
   const validCodes = content.codes.length;
   return (
     <div>
-      <Callout tone="pending" title="Práctica sin códigos oficiales">
-        {validCodes >= 4 ? `Hay ${validCodes} códigos cargados en este dispositivo: abajo podés practicar la asociación entre código y producto.` : 'La práctica de códigos se activa cuando se carguen al menos cuatro códigos válidos de El Cóndor. Mientras tanto, practicá cantidades, variantes y confirmación con nombres genéricos.'}
+      <Callout tone={validCodes >= 4 ? 'info' : 'pending'} title={validCodes >= 4 ? 'Práctica con los códigos de El Cóndor' : 'Práctica sin códigos oficiales'}>
+        {validCodes >= 4 ? `Primero practicá cantidades y variantes. Después, más abajo, asociá códigos reales con su producto (${validCodes.toLocaleString('es-AR')} códigos disponibles).` : 'La práctica de códigos se activa cuando se carguen al menos cuatro códigos válidos de El Cóndor. Mientras tanto, practicá cantidades, variantes y confirmación con nombres genéricos.'}
       </Callout>
       {!done ? (
         <div>
