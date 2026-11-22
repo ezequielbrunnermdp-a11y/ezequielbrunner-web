@@ -1,0 +1,45 @@
+/* Identidad provisoria de El Cóndor. Ajustar a los colores del logo oficial cuando se incorpore.
+   Contrastes verificados (WCAG AA, texto normal ≥ 4,5:1):
+   espresso/marfil 15,1 · gris cálido/marfil 5,8 · bronce texto/marfil 6,0 · marfil/bronce texto 6,6
+   bronce claro/espresso 7,2 · éxito 6,5 · error 6,5 · advertencia 6,1 · info 7,3 · borde de campo 3,75 */
+:root {
+  --ivory: #f6f2ea;
+  --paper: #fffdf9;
+  --sand: #efe8dc;
+  --sand-2: #e7dece;
+  --line: #e1d7c6;
+  --line-strong: #8c8174; /* bordes de campos y controles: 3,75:1 */
+  --espresso: #211c18;
+  --espresso-2: #2b241f;
+  --espresso-3: #3a312a;
+  --ink: #211c18;
+  --muted: #665d55;
+  --bronze: #a77c49; /* solo decorativo: 3,35:1 */
+  --bronze-text: #7a5426; /* bronce legible sobre marfil */
+  --bronze-light: #c9a273; /* bronce legible sobre espresso */
+  --bronze-wash: #f3e9da;
+
+  --ok: #286140;
+  --ok-bg: #e7f1ea;
+  --err: #9a3328;
+  --err-bg: #f8e8e5;
+  --warn: #7d5200;
+  --warn-bg: #f8eed9;
+  --info: #2c5468;
+  --info-bg: #e5eef2;
+
+  --font-serif: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --shadow-1: 0 1px 2px rgba(33, 28, 24, 0.05), 0 2px 8px rgba(33, 28, 24, 0.04);
+  --shadow-2: 0 2px 6px rgba(33, 28, 24, 0.06), 0 12px 32px rgba(33, 28, 24, 0.08);
+  --focus: 0 0 0 3px var(--paper), 0 0 0 5px var(--bronze-text);
+
+  --sidebar-w: 260px;
+  --content-max: 1080px;
+  --bottom-nav-h: 64px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
