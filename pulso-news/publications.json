@@ -1118,6 +1118,13 @@
       "status": "published",
       "post_id": "17914252650664767",
       "story_id": "18106379621036797"
+    },
+    {
+      "date": "2026-11-23",
+      "slug": "aldosivi-san-lorenzo-estudiantes-futbol-femenino-22",
+      "created_by": "Windsor.ai",
+      "status": "feed_published_story_pending",
+      "post_id": "18142414993725839"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
