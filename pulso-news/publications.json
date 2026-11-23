@@ -1100,7 +1100,8 @@
       "slug": "lunes-23-clima-24-grados-rafagas-mdp",
       "created_by": "Windsor.ai",
       "post_id": "17917593456509759",
-      "status": "feed_published_story_pending"
+      "status": "published",
+      "story_id": "18137895103781918"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
