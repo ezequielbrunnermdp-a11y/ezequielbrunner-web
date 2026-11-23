@@ -1107,8 +1107,9 @@
       "date": "2026-11-23",
       "slug": "domingo-lluvia-choques-cables-independencia-moreno",
       "created_by": "Windsor.ai",
-      "status": "feed_published_story_pending",
-      "post_id": "18121284142967918"
+      "status": "published",
+      "post_id": "18121284142967918",
+      "story_id": "17938519092403214"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
