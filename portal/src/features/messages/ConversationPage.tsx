@@ -165,7 +165,7 @@ export function ConversationPage() {
             const sender = memberMap.get(m.sender_id);
             return (
               <div key={m.id}>
-                {showDay && <div className="my-4 text-center"><span className="rounded-full bg-surface-2 px-3 py-1 text-2xs font-medium capitalize text-ink-3">{fmtDayLong(m.created_at)}</span></div>}
+                {showDay && <div className="my-4 text-center"><span className="inline-block rounded-full bg-surface-2 px-3 py-1 text-2xs font-medium text-ink-3 first-letter:uppercase">{fmtDayLong(m.created_at)}</span></div>}
                 <div className={cx('flex', mine ? 'justify-end' : 'justify-start', !grouped && 'mt-2.5')}>
                   <button type="button" onClick={() => !m.deleted_at && !m.pending && setMsgMenu(m)}
                     className={cx('max-w-[82%] rounded-[18px] px-3.5 py-2 text-left text-[15px] leading-snug shadow-[0_1px_0_rgb(0_0_0/0.03)] sm:max-w-[65%]',

@@ -38,7 +38,7 @@ export function AttendanceHistoryPage() {
       <PageHeader title="Historial de fichajes" actions={<Button variant="secondary" icon={<ClipboardEdit className="h-4 w-4" />} onClick={() => setCorr({})}>Solicitar corrección</Button>} />
       <div className="flex items-center justify-between">
         <Button variant="ghost" size="sm" aria-label="Mes anterior" icon={<ChevronLeft className="h-4 w-4" />} onClick={() => setMonth(addDays(from, -1).slice(0, 7))} />
-        <div className="text-center"><p className="font-semibold capitalize">{label}</p><p className="text-xs text-ink-3">{durationLabel(total)} registradas</p></div>
+        <div className="text-center"><p className="font-semibold first-letter:uppercase">{label}</p><p className="text-xs text-ink-3">{durationLabel(total)} registradas</p></div>
         <Button variant="ghost" size="sm" aria-label="Mes siguiente" icon={<ChevronRight className="h-4 w-4" />} onClick={() => setMonth(next.slice(0, 7))} />
       </div>
       {q.isLoading ? <LoadingList /> : q.isError ? <ErrorState error={q.error} /> : !q.data?.length ? <EmptyState title="Sin registros en este mes" compact /> : (
@@ -49,7 +49,7 @@ export function AttendanceHistoryPage() {
               <Card as="li" key={r.session_id ?? `p${i}`} className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="font-semibold capitalize">{fmtDayShort(r.started_at ?? r.ended_at!)}</p>
+                    <p className="font-semibold first-letter:uppercase">{fmtDayShort(r.started_at ?? r.ended_at!)}</p>
                     <p className="text-[13px] text-ink-3">{r.branch_name}{r.shift_starts && ` · Turno ${fmtTime(r.shift_starts)}–${fmtTime(r.shift_ends!)}`}</p>
                   </div>
                   <Badge tone={tone(r.status)}>{r.session_id ? ({ open: 'En curso', closed: 'Cerrada', needs_review: 'A revisar' } as Record<string, string>)[r.status] : PUNCH_STATUS[r.status]}</Badge>

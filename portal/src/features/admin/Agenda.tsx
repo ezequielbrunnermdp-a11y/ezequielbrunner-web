@@ -35,7 +35,7 @@ export default function Agenda() {
           const header = tab === 'agenda' && day !== lastDay ? (lastDay = day) : null;
           return (
             <li key={m.id}>
-              {header && <p className="mb-2 mt-4 text-sm font-semibold capitalize text-ink-2">{fmtDayLong(m.scheduled_at!)}</p>}
+              {header && <p className="mb-2 mt-4 text-sm font-semibold first-letter:uppercase text-ink-2">{fmtDayLong(m.scheduled_at!)}</p>}
               <Card className="p-4">
                 <div className="flex items-start justify-between gap-2"><p className="font-semibold">{names.data?.get(m.requester_id) ?? '…'} · {m.reason}</p><Badge tone={MEETING_STATUS[m.status]![1]}>{MEETING_STATUS[m.status]![0]}</Badge></div>
                 {m.description && <p className="mt-1 text-sm text-ink-2">{m.description}</p>}

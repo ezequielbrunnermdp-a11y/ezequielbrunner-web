@@ -40,7 +40,7 @@ export function HomePage() {
   return (
     <div className="space-y-5 animate-fade-in">
       <div>
-        <p className="text-sm capitalize text-ink-3">{fmtDayLong(new Date())}</p>
+        <p className="text-sm first-letter:uppercase text-ink-3">{fmtDayLong(new Date())}</p>
         <h1 className="mt-0.5 text-[26px] font-semibold tracking-[-0.02em]">{greeting()}, {ctx?.profile?.first_name}</h1>
       </div>
 

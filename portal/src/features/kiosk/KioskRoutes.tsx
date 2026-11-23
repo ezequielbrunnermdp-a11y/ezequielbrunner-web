@@ -48,7 +48,7 @@ function KioskFrame({ children, info }: { children: React.ReactNode; info?: Info
     <div className="flex min-h-dvh select-none flex-col bg-bg">
       <header className="flex items-center justify-between px-8 py-5">
         <div><p className="text-lg font-semibold tracking-tight">{info?.branch.brand ?? 'Fichaje'}</p><p className="text-sm text-ink-3">{info?.branch.name}</p></div>
-        <div className="text-right"><p className="tabular text-3xl font-semibold tracking-tight">{fmtTime(now)}</p><p className="text-sm capitalize text-ink-3">{fmtDayLong(now)}</p></div>
+        <div className="text-right"><p className="tabular text-3xl font-semibold tracking-tight">{fmtTime(now)}</p><p className="text-sm first-letter:uppercase text-ink-3">{fmtDayLong(now)}</p></div>
       </header>
       {!online && <div className="mx-8 mb-2 flex items-center gap-2 rounded-xl bg-bad-soft px-4 py-3 text-sm font-medium text-bad"><WifiOff className="h-4 w-4" />Sin conexión: no es posible registrar fichadas. Usá el procedimiento de contingencia con tu encargado.</div>}
       <main className="flex flex-1 items-center justify-center px-6 pb-10">{children}</main>
