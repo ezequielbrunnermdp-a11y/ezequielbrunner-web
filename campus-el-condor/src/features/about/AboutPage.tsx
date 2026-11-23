@@ -1,11 +1,13 @@
 import { Callout, PageHeader } from '../../components/ui';
+import { AUTH_ENABLED } from '../../auth/config';
 
 export function AboutPage() {
   return (
     <>
-      <PageHeader eyebrow="Acerca del campus" title="Cómo funciona esta versión" lead="Una primera versión estática: no tiene servidor, cuentas ni base de datos. Todo lo que hacés queda en el navegador que estás usando." />
+      <PageHeader eyebrow="Acerca del campus" title="Cómo funciona el campus" lead={AUTH_ENABLED ? 'Cada persona ingresa con su usuario. El progreso se guarda en el servidor del campus y los administradores gestionan los usuarios.' : 'Versión local: no tiene servidor ni cuentas. Todo lo que hacés queda en el navegador que estás usando.'} />
+      {AUTH_ENABLED && <Callout tone="ok" title="Con usuarios">Tu progreso (lecturas, prácticas, evaluaciones, favoritos y plan de repaso) se guarda en tu usuario y se sincroniza entre dispositivos. Los administradores pueden crear usuarios, restablecer contraseñas y ver el avance general. La sección “Gestionar contenido” sigue guardando sus cambios solo en el navegador donde se hacen.</Callout>}
       <div className="grid-2">
-        <section className="card">
+        {!AUTH_ENABLED && <section className="card">
           <h2 style={{ fontSize: '1.4rem' }}>Dónde se guarda tu progreso</h2>
           <ul>
             <li>Los datos permanecen en este navegador, en este dispositivo.</li>
@@ -14,7 +16,7 @@ export function AboutPage() {
             <li>Podés exportar un respaldo desde <a href="#/progreso">Progreso</a> e importarlo en otro dispositivo.</li>
             <li>No existen reportes colectivos ni resultados de otras personas.</li>
           </ul>
-        </section>
+        </section>}
         <section className="card">
           <h2 style={{ fontSize: '1.4rem' }}>Contenido y aprobaciones</h2>
           <ul>

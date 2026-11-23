@@ -193,6 +193,20 @@ export const store = {
     emit();
   },
 
+  /** Modo con cuentas: el perfil activo es el usuario que inició sesión. */
+  setAccount(profile: Profile, progress: Partial<Progress> | null) {
+    const merged = progress ? mergeProgress(progress) : mergeProgress(read<Progress>(kProgress(profile.id)));
+    write(kProgress(profile.id), merged);
+    state = { ...state, profiles: [profile], activeId: profile.id, progress: merged };
+    emit();
+  },
+
+  clearAccount() {
+    const fresh = emptyProgress();
+    state = { ...state, profiles: [], activeId: null, progress: fresh };
+    emit();
+  },
+
   readProgressOf(id: string): Progress {
     return mergeProgress(read<Progress>(kProgress(id)));
   },
@@ -207,7 +221,7 @@ export const useContent = () => useStore((s) => s.content);
 export function useActiveProfile() {
   const profiles = useStore((s) => s.profiles);
   const activeId = useStore((s) => s.activeId);
-  return profiles.find((p) => p.id === activeId) ?? profiles[0];
+  return profiles.find((p) => p.id === activeId) ?? profiles[0] ?? { id: 'sin-perfil', alias: '', sector: '', createdAt: '' };
 }
 
 export function profileName(p: Profile | undefined, index?: number) {

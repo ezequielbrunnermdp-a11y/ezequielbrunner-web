@@ -20,6 +20,7 @@ node tests/e2e/verify.cjs http://localhost:4173/   # verificación en navegador 
 ```
 
 Para publicar, ver [docs/publicacion-cloudflare.md](docs/publicacion-cloudflare.md).
+Para activar el ingreso con usuarios y el administrador, ver [docs/usuarios-y-publicacion.md](docs/usuarios-y-publicacion.md).
 
 ## Estructura
 

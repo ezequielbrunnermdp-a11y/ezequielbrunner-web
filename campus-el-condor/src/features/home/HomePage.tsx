@@ -6,6 +6,7 @@ import { useContent, useProgress, useActiveProfile, store } from '../../storage/
 import { nextStep, overallStats, reviewRecommendations, moduleStats, STATUS_LABEL } from '../../lib/learning';
 import { useModules } from '../learn/useModule';
 import { formatTimestamp } from '../../lib/format';
+import { AUTH_ENABLED } from '../../auth/config';
 
 export function HomePage() {
   const progress = useProgress();
@@ -126,7 +127,7 @@ export function HomePage() {
 
       {!store.storageOk() && <Callout tone="err" title="El progreso no se está guardando">Este navegador bloquea el almacenamiento local (por ejemplo, en modo privado). Podés usar el campus, pero al cerrarlo se perderá el avance.</Callout>}
       <p className="small muted row" style={{ gap: 8, justifyContent: 'center', textAlign: 'center' }}>
-        <Info size={15} aria-hidden="true" />Tu progreso queda en este dispositivo y no se sincroniza con otros teléfonos. <a href="#/acerca">Ver límites</a>
+        <Info size={15} aria-hidden="true" />{AUTH_ENABLED ? 'Tu progreso se guarda en tu usuario: podés seguir desde cualquier dispositivo.' : 'Tu progreso queda en este dispositivo y no se sincroniza con otros teléfonos.'} <a href="#/acerca">Ver más</a>
       </p>
     </div>
   );

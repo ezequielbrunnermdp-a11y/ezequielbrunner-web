@@ -9,6 +9,7 @@ import { MODULE_BY_ID } from '../../content/modules';
 import { formatTimestamp } from '../../lib/format';
 import { buildProgressBackup, downloadJSON, readJSONFile, validateProgressBackup, type ProgressBackup } from '../../storage/backup';
 import { StatusBadge } from '../learn/LearnPages';
+import { AUTH_ENABLED } from '../../auth/config';
 import { VIDEO_SCRIPTS } from '../../content/library';
 import { watchedPercent } from '../videos/VideosPage';
 
@@ -147,9 +148,9 @@ export function ProgressPage() {
         </ul>
       </section>
 
-      <Callout tone="info" title="Límites del progreso local">Este progreso está guardado en este navegador. Se pierde si se borra el almacenamiento del navegador, y no se sincroniza entre dispositivos. Exportá un respaldo si vas a cambiar de teléfono. No hay reportes colectivos del equipo.</Callout>
+      {AUTH_ENABLED ? <Callout tone="info" title="Progreso guardado en tu usuario">Tu avance se guarda en el servidor del campus y lo ves desde cualquier dispositivo al ingresar con tu usuario. Los administradores pueden ver el avance general del equipo. Igual podés exportar un respaldo.</Callout> : <Callout tone="info" title="Límites del progreso local">Este progreso está guardado en este navegador. Se pierde si se borra el almacenamiento del navegador, y no se sincroniza entre dispositivos. Exportá un respaldo si vas a cambiar de teléfono. No hay reportes colectivos del equipo.</Callout>}
       <div className="row">
-        <a className="btn btn-ghost" href="#/perfiles">Administrar perfiles locales</a>
+        {!AUTH_ENABLED && <a className="btn btn-ghost" href="#/perfiles">Administrar perfiles locales</a>}
         <button type="button" className="btn btn-danger btn-sm" onClick={() => setResetOpen(true)}>Borrar el progreso de este perfil</button>
       </div>
 

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { BookOpen, ClipboardList, Film, GraduationCap, Home, Info, Library, Menu, Search, Settings, TrendingUp, UserRound, Users } from 'lucide-react';
+import { BookOpen, ClipboardList, Cloud, CloudOff, Film, GraduationCap, Home, Info, Library, Menu, Search, Settings, ShieldCheck, TrendingUp, UserRound, Users } from 'lucide-react';
 import { useRoute, type Route } from './router';
 import { Brand } from '../components/Brand';
 import { Modal, Toasts } from '../components/ui';
@@ -16,6 +16,10 @@ import { ProfilesPage } from '../features/profiles/ProfilesPage';
 import { AboutPage } from '../features/about/AboutPage';
 import { profileName, store, useActiveProfile } from '../storage/store';
 import { PageHeader } from '../components/ui';
+import { AUTH_ENABLED } from '../auth/config';
+import { getSession, restoreSession, useSession } from '../auth/session';
+import { ForcePasswordPage, LoginPage } from '../features/account/LoginPage';
+import { AccountPage, UsersPage } from '../features/account/UsersPage';
 
 const PRIMARY = [
   { href: '#/', section: '', label: 'Inicio', Icon: Home },
@@ -29,12 +33,23 @@ const PRACTICE = [
   { href: '#/videos', section: 'videos', label: 'Videos', Icon: Film },
   { href: '#/consultar/biblioteca', section: 'biblioteca', label: 'Biblioteca', Icon: Library },
 ];
-const TOOLS = [
+const LOCAL_TOOLS = [
   { href: '#/facilitador', section: 'facilitador', label: 'Modo facilitador', Icon: Users },
   { href: '#/gestionar', section: 'gestionar', label: 'Gestionar contenido', Icon: Settings },
   { href: '#/perfiles', section: 'perfiles', label: 'Perfiles locales', Icon: UserRound },
   { href: '#/acerca', section: 'acerca', label: 'Acerca y límites', Icon: Info },
 ];
+
+function toolsFor(role: 'admin' | 'empleado' | null) {
+  if (!AUTH_ENABLED) return LOCAL_TOOLS;
+  return [
+    ...(role === 'admin' ? [{ href: '#/usuarios', section: 'usuarios', label: 'Usuarios', Icon: ShieldCheck }] : []),
+    { href: '#/facilitador', section: 'facilitador', label: 'Modo facilitador', Icon: Users },
+    ...(role === 'admin' ? [{ href: '#/gestionar', section: 'gestionar', label: 'Gestionar contenido', Icon: Settings }] : []),
+    { href: '#/cuenta', section: 'cuenta', label: 'Mi cuenta', Icon: UserRound },
+    { href: '#/acerca', section: 'acerca', label: 'Acerca del campus', Icon: Info },
+  ];
+}
 
 function currentSection(r: Route) {
   if (r.path[0] === 'consultar' && r.path[1] === 'biblioteca') return 'biblioteca';
@@ -42,7 +57,7 @@ function currentSection(r: Route) {
   return r.path[0] ?? '';
 }
 
-const TITLES: Record<string, string> = { '': 'Inicio', aprender: 'Aprender', consultar: 'Consultar', progreso: 'Progreso', casos: 'Casos', evaluacion: 'Evaluaciones', videos: 'Videos', biblioteca: 'Biblioteca', facilitador: 'Modo facilitador', gestionar: 'Gestionar contenido', perfiles: 'Perfiles', acerca: 'Acerca' };
+const TITLES: Record<string, string> = { '': 'Inicio', aprender: 'Aprender', consultar: 'Consultar', progreso: 'Progreso', casos: 'Casos', evaluacion: 'Evaluaciones', videos: 'Videos', biblioteca: 'Biblioteca', facilitador: 'Modo facilitador', gestionar: 'Gestionar contenido', perfiles: 'Perfiles', acerca: 'Acerca', cuenta: 'Mi cuenta', usuarios: 'Usuarios' };
 
 function Page({ r }: { r: Route }) {
   const [a, b] = r.path;
@@ -56,8 +71,10 @@ function Page({ r }: { r: Route }) {
     case 'consultar': return <ConsultHub section={b ?? ''} query={r.query} />;
     case 'progreso': return <ProgressPage />;
     case 'videos': return <VideosPage focus={r.query.get('v')} />;
-    case 'gestionar': return <ManagePage tab={r.query.get('t') ?? 'textos'} />;
-    case 'perfiles': return <ProfilesPage />;
+    case 'gestionar': return AUTH_ENABLED && getSession().user?.role !== 'admin' ? <PageHeader title="Sin permiso" lead="La gestión de contenido es solo para administradores." /> : <ManagePage tab={r.query.get('t') ?? 'textos'} />;
+    case 'perfiles': return AUTH_ENABLED ? <AccountPage /> : <ProfilesPage />;
+    case 'cuenta': return AUTH_ENABLED ? <AccountPage /> : <ProfilesPage />;
+    case 'usuarios': return AUTH_ENABLED ? <UsersPage /> : <ProfilesPage />;
     case 'acerca': return <AboutPage />;
     default: return <PageHeader title="Sección no encontrada" lead={<>La dirección no corresponde a ninguna sección. <a href="#/">Volver al inicio</a>.</>} />;
   }
@@ -87,7 +104,19 @@ function useScrollMemory(r: Route) {
 }
 
 export function App() {
+  const session = useSession();
+  useEffect(() => { void restoreSession(); }, []);
+  if (!AUTH_ENABLED) return <Shell />;
+  if (session.status === 'loading') return <div className="auth-screen" aria-busy="true"><p className="auth-foot">Cargando el campus…</p></div>;
+  if (session.status !== 'authenticated' || !session.user) return <><LoginPage /><Toasts /></>;
+  if (session.user.mustChangePassword) return <><ForcePasswordPage /><Toasts /></>;
+  return <Shell />;
+}
+
+function Shell() {
   const r = useRoute();
+  const session = useSession();
+  const TOOLS = toolsFor(session.user?.role ?? null);
   const section = currentSection(r);
   const profile = useActiveProfile();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -106,7 +135,7 @@ export function App() {
     <a key={it.href} className="nav-link" href={it.href} aria-current={section === it.section ? 'page' : undefined}><span className="nav-ico"><it.Icon aria-hidden="true" /></span>{it.label}</a>
   );
   const profiles = store.get().profiles;
-  const idx = profiles.findIndex((p) => p.id === profile.id);
+  const idx = profiles.findIndex((p) => p.id === profile?.id);
 
   return (
     <div className="shell">
@@ -120,18 +149,31 @@ export function App() {
           <div className="nav-group"><div className="nav-group-label">Herramientas</div>{TOOLS.map(link)}</div>
         </nav>
         <div className="sidebar-foot">
-          <a className="sidebar-profile" href="#/perfiles">
-            <span className="avatar" aria-hidden="true"><UserRound size={16} /></span>
-            <span><strong>{profileName(profile, idx)}</strong><span className="sub">Perfil local · cambiar</span></span>
-          </a>
-          Tu progreso se guarda solo en este navegador.
+          {AUTH_ENABLED && session.user ? (
+            <>
+              <a className="sidebar-profile" href="#/cuenta">
+                <span className="avatar" aria-hidden="true">{session.user.role === 'admin' ? <ShieldCheck size={16} /> : <UserRound size={16} />}</span>
+                <span><strong>{session.user.displayName || session.user.username}</strong><span className="sub">@{session.user.username} · Mi cuenta</span></span>
+              </a>
+              <span className="sync-line">{session.sync === 'offline' || session.sync === 'error' ? <CloudOff size={14} aria-hidden="true" /> : <Cloud size={14} aria-hidden="true" />}
+                {session.sync === 'saving' ? 'Guardando progreso…' : session.sync === 'offline' ? 'Sin conexión: se guardará luego' : session.sync === 'error' ? 'Reintentando guardar…' : 'Progreso guardado en tu usuario'}</span>
+            </>
+          ) : (
+            <>
+              <a className="sidebar-profile" href="#/perfiles">
+                <span className="avatar" aria-hidden="true"><UserRound size={16} /></span>
+                <span><strong>{profileName(profile, idx)}</strong><span className="sub">Perfil local · cambiar</span></span>
+              </a>
+              Tu progreso se guarda solo en este navegador.
+            </>
+          )}
         </div>
       </aside>
 
       <div className="content-area">
         <header className="topbar">
           <Brand tag="Campus de formación" />
-          <a className="icon-btn" href="#/perfiles" aria-label={`Perfil local: ${profileName(profile, idx)}`}><UserRound aria-hidden="true" /></a>
+          <a className="icon-btn" href={AUTH_ENABLED ? '#/cuenta' : '#/perfiles'} aria-label={AUTH_ENABLED ? `Mi cuenta: ${session.user?.username ?? ''}` : `Perfil local: ${profileName(profile, idx)}`}><UserRound aria-hidden="true" /></a>
         </header>
         <main id="contenido" ref={mainRef} className="main" tabIndex={-1} style={{ outline: 'none' }}>
           <Page r={r} />
