@@ -423,6 +423,54 @@ section('Extra — Correcciones, solicitudes y privacidad');
   ok(!!vote.error, 'no se vota en encuestas inexistentes o ajenas');
 }
 
+section('Extra — Cambio de turno, grupos y almacenamiento');
+{
+  // Turnos publicados futuros para emp1 y emp2 en Güemes (días distintos, sin solaparse)
+  const [s1] = await q(`insert into shifts (branch_id, user_id, starts_at, ends_at, status) values ($1,$2, now() + interval '10 days', now() + interval '10 days 6 hours', 'published') returning id`, [guemes.id, U.emp1]);
+  const [s2] = await q(`insert into shifts (branch_id, user_id, starts_at, ends_at, status) values ($1,$2, now() + interval '12 days', now() + interval '12 days 6 hours', 'published') returning id`, [guemes.id, U.emp2]);
+  const cand = await as(U.emp1, `select * from public.swap_candidates($1)`, [s1.id]);
+  ok(cand.rows.some((c) => c.shift_id === s2.id), 'el empleado ve turnos compatibles para intercambiar');
+  const req = await one(U.emp1, `select public.request_shift_swap($1, $2, $3, 'Tengo un turno médico') as id`, [s1.id, U.emp2, s2.id]);
+  const early = await as(U.manager, `select public.review_shift_swap($1, true)`, [req.id]);
+  ok(!!early.error, 'gerencia no puede aprobar antes de que acepte el compañero');
+  await one(U.emp2, `select public.respond_shift_swap($1, true)`, [req.id]);
+  const self = await as(U.emp1, `select public.review_shift_swap($1, true)`, [req.id]);
+  ok(!!self.error, 'el empleado no puede autoaprobar el cambio');
+  const appr = await as(U.manager, `select public.review_shift_swap($1, true, 'OK')`, [req.id]);
+  ok(!appr.error, 'el responsable aprueba el cambio', appr.error?.message);
+  const after = await q(`select id, user_id from shifts where id in ($1, $2)`, [s1.id, s2.id]);
+  ok(after.find((x) => x.id === s1.id).user_id === U.emp2 && after.find((x) => x.id === s2.id).user_id === U.emp1, 'los turnos quedan intercambiados');
+  const hist = await q(`select count(*)::int n from shift_changes where shift_id in ($1,$2) and change_type = 'swapped'`, [s1.id, s2.id]);
+  ok(hist[0].n === 2, 'el intercambio queda en el historial');
+
+  const g = await as(U.emp1, `insert into groups (organization_id, brand_id, name, kind, join_policy, created_by) values ($1,$2,'Baristas','interest','open',$3) returning id`, [org.id, guemes.brand_id, U.emp1]);
+  ok(!g.error, 'un empleado crea un grupo de interés', g.error?.message);
+  const j = await one(U.emp2, `select public.join_group($1) as r`, [g.rows[0].id]);
+  ok(j.r === 'active', 'otro empleado se une');
+  const gp = await as(U.emp2, `select public.create_post('Hola grupo', 'group', '{}', $1) as id`, [g.rows[0].id]);
+  const seen3 = await as(U.emp3, `select * from posts where id = $1`, [gp.rows[0]?.id]);
+  ok(!gp.error && seen3.rows.length === 0, 'publicación de grupo: no visible para no miembros');
+  const inst = await as(U.admin, `insert into groups (organization_id, name, kind, created_by) values ($1, 'Oficial', 'official', $2)`, [org.id, U.emp1]);
+  ok(!!inst.error, 'no se puede crear un grupo a nombre de otra persona');
+
+  const conv = await one(U.emp1, `select public.start_direct_conversation($1) as id`, [U.emp2]);
+  await q(`insert into storage.objects (bucket_id, name) values ('chat', $1)`, [`conv/${conv.id}/foto.jpg`]);
+  const c1 = await as(U.emp2, `select name from storage.objects where bucket_id = 'chat'`);
+  const c2 = await as(U.manager, `select name from storage.objects where bucket_id = 'chat'`);
+  ok(c1.rows.length === 1 && c2.rows.length === 0, 'adjuntos de chat: solo participantes');
+  const up = await as(U.emp3, `insert into storage.objects (bucket_id, name) values ('chat', $1)`, [`conv/${conv.id}/intruso.jpg`]);
+  ok(!!up.error, 'un tercero no puede subir archivos a una conversación ajena');
+  const mediaOk = await as(U.emp1, `insert into storage.objects (bucket_id, name) values ('media', $1)`, [`org/${org.id}/u/${U.emp1}/a.jpg`]);
+  const mediaBad = await as(U.emp1, `insert into storage.objects (bucket_id, name) values ('media', $1)`, [`org/${org.id}/u/${U.emp2}/a.jpg`]);
+  const mediaB = await as(U.empB, `select name from storage.objects where bucket_id = 'media'`);
+  ok(!mediaOk.error && !!mediaBad.error && mediaB.rows.length === 0, 'fotos: cada uno sube solo en su carpeta; otra empresa no las ve');
+
+  const boardOther = await as(U.manager, `select count(*)::int n from public.attendance_board(current_date) where branch_id = $1`, [casino.id]);
+  ok(boardOther.rows[0].n === 0, 'un gerente de sucursal no ve la asistencia de otras sucursales');
+  const fp = await as(U.empB, `select * from public.feed_post($1)`, [postId]);
+  ok(fp.rows.length === 0, 'feed_post respeta la visibilidad');
+}
+
 await db.end();
 console.log(results.join('\n'));
 console.log(`\n${passed} pruebas superadas, ${failed} fallidas`);

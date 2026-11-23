@@ -1,0 +1,41 @@
+# Configuración para Supabase CLI (desarrollo local y despliegue de funciones).
+project_id = "portal-empleados"
+
+[api]
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 500
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173/activar", "http://localhost:5173/nueva-clave"]
+# Sin registro público: las cuentas se crean solo por invitación.
+enable_signup = false
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+minimum_password_length = 10
+password_requirements = "letters_digits"
+
+[auth.email]
+enable_signup = false
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+
+[auth.mfa]
+max_enrolled_factors = 5
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.rate_limit]
+email_sent = 4
+sign_in_sign_ups = 30
+token_verifications = 30
+
+[storage]
+file_size_limit = "20MiB"
+
+[functions.invite-employee]
+verify_jwt = true

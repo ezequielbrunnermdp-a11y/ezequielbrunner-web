@@ -402,6 +402,9 @@ begin
   if r.id is null or r.status <> 'pending_manager' or not app.has_perm_branch('schedules.manage', s.branch_id) then
     raise exception 'Solicitud no disponible' using errcode = '42501';
   end if;
+  if auth.uid() in (r.requester_id, r.target_user_id) then
+    raise exception 'No podés aprobar un cambio de turno propio' using errcode = '42501';
+  end if;
   if p_approve then
     begin
       if r.target_shift_id is not null then
