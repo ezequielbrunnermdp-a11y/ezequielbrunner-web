@@ -10,4 +10,5 @@
 
 # Herramientas del repositorio: no forman parte del sitio.
 /tools/*   /404.html   404!
+/portal/*  /404.html   404!
 /DISENO-Y-ENTREGA.md   /404.html   404!
