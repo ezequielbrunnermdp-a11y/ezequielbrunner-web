@@ -1094,6 +1094,13 @@
       "created_by": "Windsor.ai",
       "post_id": "18168175285500503",
       "story_id": "18131083600881448"
+    },
+    {
+      "date": "2026-11-23",
+      "slug": "lunes-23-clima-24-grados-rafagas-mdp",
+      "created_by": "Windsor.ai",
+      "post_id": "17917593456509759",
+      "status": "feed_published_story_pending"
     }
   ],
   "note": "No volver a publicar fecha+slug+formato si existe ID. Las imágenes de cada publicación en Instagram son copias de los JPG de ese momento. Cambiar los JPEG de GitHub no modifica los medios ya publicados."
