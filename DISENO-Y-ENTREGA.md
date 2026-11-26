@@ -145,7 +145,7 @@ No se agregaron clientes, cifras, premios ni publicaciones que no estuvieran pub
 | Menú del celular | En tres equipos: abre, mantiene el foco adentro, cierra con Escape y lleva a la sección |
 | Escritorio y tableta | 1920, 1440, 1280, 1024, 1180, 820 y 768 px: 7 de 7 sin observaciones |
 | axe-core | Sin violaciones en escritorio y celular: portada, lista de publicaciones abierta, menú abierto, visor de fotos y 404 |
-| Lighthouse, celular | Rendimiento 99; accesibilidad, prácticas y SEO 100. LCP de 2,0 s, bloqueo de 0 a 20 ms y CLS 0 |
+| Lighthouse, celular | Rendimiento 99; accesibilidad, prácticas y SEO 100. LCP de 2,0 s, bloqueo de 0 a 110 ms según la corrida y CLS 0 |
 | Lighthouse, escritorio | 100 en las cuatro categorías |
 | Sin JavaScript | Todo el contenido visible; el menú funciona como ancla |
 | Movimiento reducido | Ninguna animación en marcha |
