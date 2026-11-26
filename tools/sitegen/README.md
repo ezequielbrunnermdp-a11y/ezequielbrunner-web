@@ -1,65 +1,51 @@
 # Generador del sitio
 
-Las seis páginas (`index.html`, `gastronomia.html`, `inteligencia-artificial.html`, `trayectoria.html`, `publicaciones.html` y `404.html`) se generan con este generador. Así comparten encabezado, menú, pie, formularios y datos estructurados sin copias a mano. El HTML generado se guarda en el repositorio y Netlify lo publica tal cual: no hay un paso de compilación en Netlify.
+El sitio es una sola página (`index.html`) más la página de error (`404.html`) y el `sitemap.xml`. Los tres se generan con este generador y se guardan en el repositorio: Netlify publica los archivos tal cual, sin paso de compilación.
 
 ## Cómo cambiar un texto
 
-1. Editá `content.py`. Ahí están los textos, los servicios, la trayectoria, las preguntas frecuentes, los siete ejes de Gastronomía (`AXES`), los procesos de la demostración de IA (`DEMO`) y los servicios por área.
-2. Para las publicaciones, editá `data/publicaciones.json` (doctrina, dossier, artículos y notas, con sus enlaces originales).
+1. Editá `content.py`. Ahí están todos los textos: portada, servicios, sobre mí, proyectos, galería, contacto y datos para buscadores.
+2. Para las notas de prensa y las publicaciones, editá `data/publicaciones.json` (cada una con su medio, título, fecha y enlace original). Las tres destacadas se eligen por su enlace en `PRESS['featured']` de `content.py`; el resto aparece en «Ver todas las publicaciones», de la más nueva a la más vieja.
 3. Generá las páginas:
 
 ```bash
 python3 tools/sitegen/build.py
 ```
 
-Necesita Python 3.12 o posterior, sin dependencias externas. Después revisá el resultado y guardá los cambios.
+Necesita Python 3.10 o posterior, sin dependencias externas. Después revisá el resultado y guardá los cambios.
+
+### Instagram
+
+Cuando esté la cuenta, completá `INSTAGRAM` (dirección) e `INSTAGRAM_HANDLE` (por ejemplo `@usuario`) en `content.py` y generá de nuevo: aparece sola en Contacto y en los datos estructurados.
 
 ## Archivos
 
 | Archivo | Qué contiene |
 | --- | --- |
-| `content.py` | Contenido real del sitio. No se publican cifras, clientes ni reconocimientos que no estén acreditados |
-| `data/publicaciones.json` | Doctrina, dossier, medios y prensa gastronómica |
-| `tpl.py` | Piezas comunes: `<head>`, encabezado, menú, barra inferior, pie, formularios y filas de publicaciones |
-| `build.py` | Composición de cada página |
+| `content.py` | Todo el texto visible. Solo hechos ya publicados o dados por el titular: nada de clientes, resultados, premios ni publicaciones inventadas |
+| `data/publicaciones.json` | Prensa, artículos de autor, doctrina, investigación y el dossier de la Biblioteca del Congreso |
+| `build.py` | Arma las páginas: `<head>` con datos para buscadores y redes, encabezado, menú, secciones, pie, visor de fotos |
+| `art.py` | Ilustraciones en SVG: la red de la portada (Gastronomía, Negocios y Tecnología) y las seis portadas de proyectos |
+| `site.css` | La hoja de estilos. Se incrusta minificada en cada página: no hay un archivo CSS aparte |
+| `og.py` | Imagen para compartir en redes (`assets/og/inicio.jpg`, 1200 × 630). Usa Chromium sin ventana |
 
-## Estilos y comportamiento (en `assets/`)
+## Fuera de esta carpeta
 
 | Archivo | Uso |
 | --- | --- |
-| `css/main.css` | Sistema común: fuentes, colores, tipografía, botones, navegación global, menú, pie, apariciones, publicaciones como índice, lenguaje cinematográfico (luz de color, vidrio) y la firma con el retrato pequeño |
-| `css/home.css` | Portada: escena 3D, nombre, propuesta y accesos; quién soy (titular y firma), trayectoria resumida, publicaciones destacadas y contacto |
-| `css/trayectoria.css` | Trayectoria: dirección gastronómica con línea de tiempo, formación, investigación, publicaciones y medios |
-| `css/areas.css` | Gastronomía e IA: portada, índice de la página, los siete ejes y la calculadora, demostración con procesos, casos, método, contacto |
-| `css/publicaciones.css` | Biblioteca de publicaciones |
-| `js/main.js` | Común: menú, desplazamiento suave, apariciones, formularios, pestañas, filtros, barra inferior |
-| `js/home.js` | Portada: los accesos le avisan a la escena (cálido o frío), elección del área, última visita y transición |
-| `js/scene.js`, `scene-engine.js`, `scene-worker.js` | Escena 3D de la portada («la operación y su capa de información»): WebGL2 y GLSL propios, en un hilo aparte cuando el navegador lo permite; imagen fija sin WebGL2 (`assets/img/escena*.avif\|webp`). El encuadre lo define el CSS con `--scene-l/r/t/b` |
-| `js/lines.js`, `lines-engine.js`, `lines-worker.js` | Líneas de datos con red de nodos (portada de IA). Corren en un hilo aparte cuando el navegador lo permite |
-| `js/gastronomia.js` | Los siete ejes: índice que sigue la lectura, visuales que se dibujan y calculadora de costo de un plato |
-| `js/ia.js` | Demostración interactiva: cuatro procesos y cinco etapas |
+| `assets/js/site.js` | Comportamiento: encabezado, menú del celular, sección activa, apariciones, pausa de la animación fuera de pantalla, tarjetas deslizables, visor de fotos, copiar el email y botón flotante de WhatsApp |
+| `assets/fonts/` | Fraunces (romana variable y una itálica fija para títulos), Geist y Geist Mono. Licencia SIL Open Font License |
+| `assets/img/` | Retrato y fotos de la galería en AVIF y WebP, en los tamaños que usa la página |
+| `tools/imagenes/fotos.py` | Genera esas imágenes a partir de las fuentes de `tools/imagenes/fuente/` |
+| `tools/imagenes/recorte-retrato.py` | Recorta el fondo del retrato original (solo la pared; no toca el rostro ni la ropa) |
+| `_redirects` | Direcciones del sitio anterior que llevan a su sección, y carpetas que no se publican |
 
-## Retrato de la portada
+## Animación
 
-El retrato es la foto real (`assets/profile.jpeg`), recortada en el equipo con OpenCV, sin IA generativa: solo se quita la pared del fondo y no se toca el rostro. Para regenerarlo:
+Todo el movimiento está en `site.css`, sin bibliotecas:
 
-```bash
-pip install opencv-python-headless pillow
-python3 tools/imagenes/recorte-retrato.py             # deja el recorte y dos vistas de control en tools/imagenes/
-python3 tools/imagenes/recorte-retrato.py --exportar  # además escribe assets/img/retrato-recorte*.avif|webp
-python3 tools/imagenes/firma-retrato.py               # la firma discreta (96 y 192 px, blanco y negro) a partir del recorte
-```
+- **Portada.** El anillo se dibuja, los tres nodos aparecen y una señal cálida recorre el anillo de Gastronomía a Negocios y a Tecnología, cada 7,5 s. La animación se pausa cuando la portada sale de la pantalla.
+- **Proyectos.** Las portadas se animan al pasar el cursor; en pantallas táctiles, una vez al aparecer.
+- **Resto.** Una aparición suave por bloque.
 
-Si se cambia la foto, hay que revisar las zonas marcadas a mano en el script (el mueble junto al hombro derecho). Los PNG y JPG de control no se guardan en el repositorio.
-
-## Formularios
-
-Por defecto envían la consulta por WhatsApp; el visitante puede elegir email. Para guardar las consultas en Netlify Forms:
-
-1. Activá la detección de formularios en Netlify.
-2. En `tpl.py`, función `form`, cambiá `data-endpoint="whatsapp"` por `data-endpoint="netlify"`.
-3. Volvé a generar las páginas.
-
-## Publicación
-
-Netlify publica la rama `main`. La regla de `netlify.toml` evita publicar cuando solo cambian archivos de Pulso Informativo. Esta carpeta no forma parte del sitio publicado: `_redirects` la responde con un 404.
+Con «reducir movimiento» activado en el sistema, todo queda quieto.
