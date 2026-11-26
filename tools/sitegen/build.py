@@ -298,17 +298,18 @@ def services():
 def about():
     A = C.ABOUT
     facts = ''.join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in A['facts'])
+    img = '/assets/img/retrato-firma'
+    firma = (f'<figure class="firma"><span class="firma-ph"><picture>'
+             f'<source type="image/avif" srcset="{img}-96.avif 96w, {img}-192.avif 192w, {img}-256.avif 256w" sizes="(min-width: 900px) 84px, 72px">'
+             f'<img src="{img}-192.webp" srcset="{img}-96.webp 96w, {img}-192.webp 192w, {img}-256.webp 256w" sizes="(min-width: 900px) 84px, 72px" '
+             f'width="192" height="192" alt="{esc(A["photo_alt"])}" loading="lazy" decoding="async"></picture></span>'
+             f'<figcaption><span class="firma-n">{esc(C.NAME)}</span><span class="firma-m">{esc(A["sign_place"])}</span></figcaption></figure>')
     return f"""<section class="sec about" id="sobre-mi" aria-labelledby="sobre-mi-t" data-sec>
 <div class="wrap about-in">
-<figure class="about-ph" data-rv>
-<picture>
-<source type="image/avif" srcset="/assets/img/retrato-420.avif 420w, /assets/img/retrato-697.avif 697w" sizes="(min-width: 900px) 38vw, 82vw">
-<img src="/assets/img/retrato-697.webp" srcset="/assets/img/retrato-420.webp 420w, /assets/img/retrato-697.webp 697w" sizes="(min-width: 900px) 38vw, 82vw" width="697" height="1046" alt="{esc(A['photo_alt'])}" loading="lazy" decoding="async">
-</picture>
-</figure>
+<h2 class="kicker about-k" id="sobre-mi-t" data-rv>{esc(A['h2'])}</h2>
 <div class="about-tx" data-rv>
-<h2 class="kicker" id="sobre-mi-t">{esc(A['h2'])}</h2>
 <p class="about-st">{esc(A['text'])}</p>
+{firma}
 <dl class="about-dl">{facts}</dl>
 <a class="link" href="{C.LINKEDIN}" {EXT}>{esc(A['linkedin'])}{ico('ne', 'ar')}</a>
 </div>
@@ -437,7 +438,7 @@ def footer(home=True):
     base = '' if home else '/'
     return f"""<footer class="ftr">
 <div class="wrap ftr-in">
-<p>{esc(C.FOOTER['rights'])}<span class="ftr-sep" aria-hidden="true"> · </span><span class="ftr-pl">{esc(C.PLACE)}</span></p>
+<p>{esc(C.FOOTER['rights'])}</p>
 <a class="ftr-top" href="{base}#inicio">{esc(C.FOOTER['top'])}{ico('up')}</a>
 </div>
 </footer>"""

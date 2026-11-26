@@ -99,6 +99,8 @@ ABOUT = {
         ('Formación', 'Abogacía en la Universidad Kennedy (en curso), análisis de sistemas y gerenciamiento gastronómico.'),
     ],
     'photo_alt': 'Retrato de Ezequiel Brunner',
+    # la firma: el retrato chico, el nombre y el lugar, como en el sitio anterior
+    'sign_place': 'Mar del Plata · Argentina',
     'linkedin': 'Trayectoria completa en LinkedIn',
 }
 

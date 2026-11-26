@@ -1,7 +1,9 @@
 """Genera las imágenes del sitio a partir de las fotos propias.
 
-- Retrato: el recorte del retrato profesional sobre el negro de la página, con una luz cálida muy suave
-  detrás de la cabeza para separar el pelo del fondo.
+- Firma: el retrato chico y discreto de «Sobre mí». Cabeza y hombros, en blanco y negro y un poco apagado,
+  sobre el negro de la página; se muestra redondo, de 72 a 84 px.
+- Retrato grande (697 px): no se muestra en la página; lo usan los datos estructurados y las direcciones
+  de las imágenes del sitio anterior.
 - Galería: las dos fotos de eventos. Estaban oscurecidas para el diseño anterior; se les devuelve
   su rango tonal natural (niveles, una curva suave y un poco de color).
 
@@ -12,7 +14,7 @@ Escribe en assets/img/ los tamaños que usa la página, en AVIF y WebP.
 """
 import os
 import numpy as np
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageOps
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 IMG = os.path.join(ROOT, 'assets', 'img')
@@ -38,7 +40,18 @@ def retrato():
     base += glow[..., None] * np.array([26, 20, 15], np.float32)
     bg = Image.fromarray(np.clip(base, 0, 255).astype(np.uint8)).convert('RGBA')
     bg.alpha_composite(cut)
-    save(bg.convert('RGB'), 'retrato', (420, 697))
+    bg.convert('RGB').save(os.path.join(IMG, 'retrato-697.webp'), quality=82, method=6)
+
+
+def firma():
+    cut = Image.open(os.path.join(SRC, 'retrato-recorte.webp')).convert('RGBA')
+    base = Image.new('RGBA', cut.size, BG + (255,))
+    base.alpha_composite(cut)
+    # cuadro de cabeza y hombros, con el rostro un poco arriba del centro (queda bien dentro del círculo)
+    sq = base.crop((88, 44, 608, 564)).convert('RGB')
+    sq = ImageOps.grayscale(sq).convert('RGB')
+    sq = ImageEnhance.Brightness(sq).enhance(0.9)  # un poco más apagado: acompaña, no protagoniza
+    save(sq, 'retrato-firma', (96, 192, 256), q_avif=62, q_webp=82)
 
 
 def evento(name, hi=228, sat=1.12):
@@ -54,6 +67,7 @@ def evento(name, hi=228, sat=1.12):
 
 if __name__ == '__main__':
     retrato()
+    firma()
     for n in ('equipo', 'operacion'):
         evento(n)
     print('listo')

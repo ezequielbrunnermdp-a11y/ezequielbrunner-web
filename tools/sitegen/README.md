@@ -35,7 +35,7 @@ Cuando esté la cuenta, completá `INSTAGRAM` (dirección) e `INSTAGRAM_HANDLE` 
 | --- | --- |
 | `assets/js/site.js` | Comportamiento: encabezado, menú del celular, sección activa, apariciones, pausa de la animación fuera de pantalla, tarjetas deslizables, visor de fotos, copiar el email y botón flotante de WhatsApp |
 | `assets/fonts/` | Fraunces (romana variable y una itálica fija para títulos), Geist y Geist Mono. Licencia SIL Open Font License |
-| `assets/img/` | Retrato y fotos de la galería en AVIF y WebP, en los tamaños que usa la página |
+| `assets/img/` | La firma (retrato chico en blanco y negro) y las fotos de la galería, en AVIF y WebP. `retrato-697.webp` no se muestra: lo usan los datos estructurados |
 | `tools/imagenes/fotos.py` | Genera esas imágenes a partir de las fuentes de `tools/imagenes/fuente/` |
 | `tools/imagenes/recorte-retrato.py` | Recorta el fondo del retrato original (solo la pared; no toca el rostro ni la ropa) |
 | `_redirects` | Direcciones del sitio anterior que llevan a su sección, y carpetas que no se publican |

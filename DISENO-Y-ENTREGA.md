@@ -17,7 +17,7 @@ Una web personal profesional que genere interés, confianza y oportunidades: neg
 | --- | --- |
 | Portada | «Gastronomía, negocios y tecnología.», la frase de propuesta, los botones Servicios y Contactar, y la animación de las tres áreas conectadas |
 | Servicios | Los cuatro servicios, cada uno con un acceso a WhatsApp con el mensaje ya escrito |
-| Sobre mí | Retrato profesional, el texto breve y tres datos: trayectoria, sectores y formación |
+| Sobre mí | El texto breve con una firma (el retrato chico, redondo y en blanco y negro, con el nombre y el lugar) y tres datos: trayectoria, sectores y formación |
 | Proyectos y experiencia | Seis tarjetas: El Cóndor Coffee Shop, Puerto de Palos, la asignación de salones por desempeño, las barras para eventos multitudinarios, el ranking semanal de ventas y el sector cervecero |
 | En los medios | Tres notas destacadas y «Ver todas las publicaciones» con las 26 restantes, de la más nueva a la más vieja, cada una con medio, título, fecha y enlace original |
 | Galería | Las dos fotos reales de eventos, grandes, con visor a pantalla completa |
@@ -43,7 +43,7 @@ El menú tiene cuatro accesos: **Inicio · Servicios · Proyectos · Contacto**.
     - la semana con el ranking que llega por email;
     - Mar del Plata y las franquicias, con coordenadas reales.
 - **Fotos.**
-  - Solo las propias: el retrato, sobre el negro de la página, y las dos fotos de eventos. Estas estaban oscurecidas para el diseño anterior y se les devolvió su rango natural.
+  - Solo las propias. El retrato va como firma, discreto: chico, redondo y en blanco y negro, junto al nombre, como en el sitio anterior. Las dos fotos de eventos estaban oscurecidas para el diseño anterior y se les devolvió su rango natural.
   - Las imágenes de stock o generadas del sitio anterior no se usan.
 
 ## 4. Movimiento
