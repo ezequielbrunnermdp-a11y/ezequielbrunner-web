@@ -1,13 +1,27 @@
-# Las notas de actualidad sobre IA se retiraron del sitio: sus enlaces llevan a las publicaciones profesionales.
-/article.html     /publicaciones    301
-/article          /publicaciones    301
-/articulo.html    /publicaciones    301
-/articulo         /publicaciones    301
-/news-data.js     /publicaciones    301
+# El sitio es una sola página. Las direcciones del sitio anterior llevan a su sección.
+/gastronomia                     /#servicios   301
+/gastronomia.html                /#servicios   301
+/inteligencia-artificial         /#servicios   301
+/inteligencia-artificial.html    /#servicios   301
+/automatizacion                  /#servicios   301
+/trayectoria                     /#sobre-mi    301
+/trayectoria.html                /#sobre-mi    301
+/publicaciones                   /#medios      301
+/publicaciones.html              /#medios      301
 
-# Dirección corta para el área de automatización.
-/automatizacion   /inteligencia-artificial    301
+# Notas de actualidad retiradas: llevan a «En los medios».
+/article.html     /#medios    301
+/article          /#medios    301
+/articulo.html    /#medios    301
+/articulo         /#medios    301
+/news-data.js     /#medios    301
 
-# Herramientas del repositorio: no forman parte del sitio.
-/tools/*   /404.html   404!
+# Archivos del repositorio que no forman parte del sitio.
+/tools/*               /404.html   404!
+/respaldo/*            /404.html   404!
 /DISENO-Y-ENTREGA.md   /404.html   404!
+
+# Imágenes del sitio anterior que pueden estar enlazadas desde afuera (buscadores, redes).
+/assets/ezequiel-brunner-perfil.webp   /assets/img/retrato-697.webp   301
+/assets/profile.jpeg                   /assets/img/retrato-697.webp   301
+/assets/og/*                           /assets/og/inicio.jpg          301

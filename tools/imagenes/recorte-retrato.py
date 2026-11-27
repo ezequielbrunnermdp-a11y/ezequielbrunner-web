@@ -2,14 +2,13 @@
 # Recorte local del retrato real (GrabCut de OpenCV): solo se quita la pared del fondo.
 # No se generan ni se modifican píxeles del rostro o la ropa; el borde se suaviza para integrarlo sobre negro.
 # Sin --exportar deja retrato-recorte.png y dos vistas de control junto a este script (no se guardan en el repositorio).
-# Con --exportar, además escribe assets/img/retrato-recorte(.avif|.webp) y retrato-recorte-480(.avif|.webp), con transparencia,
-# (el sitio ya no usa la silueta --sil ni las luces de borde: el retrato se muestra como firma pequeña,
-# generada a partir de este recorte con tools/imagenes/firma-retrato.py).
+# Con --exportar, además actualiza fuente/retrato-recorte.webp (con transparencia), que usa tools/imagenes/fotos.py
+# para armar el retrato de «Sobre mí».
 import cv2, numpy as np, sys, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
-SRC = os.path.join(ROOT, 'assets', 'profile.jpeg')
+SRC = os.path.join(HERE, 'fuente', 'retrato-original.jpeg')
 OUT = HERE
 img = cv2.imread(SRC)
 h, w = img.shape[:2]
@@ -77,25 +76,10 @@ for frac in (0.25, 0.30, 0.35, 0.45, 0.55):
     xx = np.where(row)[0]
     print(f'fila {frac:.2f}: x {xx.min()}–{xx.max()} ancho {xx.max() - xx.min()}')
 
-# exportación para la web: AVIF y WebP con canal alfa, en el ancho original y en 480 px (celulares)
+# exportación: el recorte con transparencia queda en fuente/ y fotos.py arma las versiones para la web
 if '--exportar' in sys.argv:
     from PIL import Image
     im = Image.open(OUT + '/retrato-recorte.png').convert('RGBA')
-    for ww in (im.width, 480):
-        x = im if ww == im.width else im.resize((ww, round(im.height * ww / im.width)), Image.LANCZOS)
-        base = os.path.join(ROOT, 'assets', 'img', 'retrato-recorte' + ('' if ww == im.width else '-480'))
-        x.save(base + '.webp', 'WEBP', quality=86, method=6)
-        x.save(base + '.avif', 'AVIF', quality=62, speed=4)
-        print(os.path.relpath(base, ROOT), 'webp', os.path.getsize(base + '.webp') // 1024, 'KB · avif', os.path.getsize(base + '.avif') // 1024, 'KB')
-    # silueta como trazado SVG (error menor al 0,05 % de los píxeles): va en línea en home.css, sin otra descarga
-    import re
-    _, mm = cv2.threshold(alpha, 127, 255, cv2.THRESH_BINARY)
-    cs, _ = cv2.findContours(mm, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    ap = cv2.approxPolyDP(max(cs, key=cv2.contourArea), 0.8, True).reshape(-1, 2)
-    d = 'M' + ' '.join(f'{x} {y}' for x, y in ap) + 'Z'
-    sil = f"url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {w} {h}'><path d='{d}'/></svg>\")"
-    css_path = os.path.join(ROOT, 'assets', 'css', 'main.css')
-    css = open(css_path, encoding='utf8').read()
-    css, n = re.subn(r'^(\s*--sil: ).*;$', lambda mo: mo.group(1) + sil + ';', css, count=1, flags=re.M)
-    open(css_path, 'w', encoding='utf8').write(css)
-    print('silueta:', len(ap), 'puntos ·', 'main.css actualizado' if n else 'no se encontró --sil en main.css')
+    dest = os.path.join(HERE, 'fuente', 'retrato-recorte.webp')
+    im.save(dest, 'WEBP', quality=92, method=6)
+    print(os.path.relpath(dest, ROOT), os.path.getsize(dest) // 1024, 'KB · ahora: python3 tools/imagenes/fotos.py')
